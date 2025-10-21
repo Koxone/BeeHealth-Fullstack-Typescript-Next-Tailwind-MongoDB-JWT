@@ -9,7 +9,7 @@ export default function DoctorLayout({ children }) {
   const { currentUser } = useAuthStore();
 
   return (
-    <RoleGuard allowedRoles={['medic']}>
+    <RoleGuard allowedRoles={['medic', 'admin']}>
       <div className="flex min-h-screen bg-gray-50">
         <Sidebar role={currentUser?.role} />
         <div className="flex flex-1 flex-col">
