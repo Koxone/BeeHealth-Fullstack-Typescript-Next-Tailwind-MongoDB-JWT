@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 
 export default function MedicalHistoryForm() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState('peso'); // "peso" o "estetico"
+  const [activeTab, setActiveTab] = useState('peso'); 
   const [formData, setFormData] = useState({
     // Datos comunes
     edad: '',
@@ -90,7 +90,7 @@ export default function MedicalHistoryForm() {
 
       alert('¡Registro completado exitosamente!');
       localStorage.removeItem('signupData');
-      router.push('/patient/dashboard');
+      router.push('/login');
     } catch (error) {
       console.error(error);
       alert('Hubo un problema al completar el registro');
