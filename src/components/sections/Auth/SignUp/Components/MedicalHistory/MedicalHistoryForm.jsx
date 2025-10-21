@@ -46,31 +46,55 @@ export default function MedicalHistoryForm() {
     }
   }, [router]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Obtener datos del paso 1
     const signupData = JSON.parse(localStorage.getItem('signupData') || '{}');
 
-    // Combinar todos los datos
     const completeData = {
-      ...signupData,
       ...formData,
       tipoConsulta: activeTab,
       fechaRegistro: new Date().toISOString(),
     };
 
-    // Aquí normalmente se enviaría al backend
-    console.log('Datos completos del registro:', completeData);
+    try {
+      // 1. Crear el usuario primero
+      const resUser = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: signupData.nombre,
+          email: signupData.email,
+          phone: signupData.telefono,
+          password: signupData.password,
+        }),
+      });
 
-    // Limpiar localStorage
-    localStorage.removeItem('signupData');
+      const userData = await resUser.json();
+      if (!resUser.ok) throw new Error(userData.error || 'Error al crear usuario');
 
-    // Mostrar mensaje de éxito
-    alert('¡Registro completado exitosamente! Bienvenido a MedTrack');
+      const patientId = userData.user.id;
 
-    // Redirigir al dashboard del paciente
-    router.push('/patient/dashboard');
+      // 2. Crear historial clínico ligado al usuario
+      const resRecord = await fetch('/api/clinical-records', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...completeData,
+          patientId,
+        }),
+      });
+
+      const recordData = await resRecord.json();
+      if (!resRecord.ok) throw new Error(recordData.error || 'Error al crear historial clínico');
+
+      alert('¡Registro completado exitosamente!');
+      localStorage.removeItem('signupData');
+      router.push('/patient/dashboard');
+    } catch (error) {
+      console.error(error);
+      alert('Hubo un problema al completar el registro');
+    }
   };
 
   const updateField = (field, value) => {

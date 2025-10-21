@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const ClinicalRecordSchema = new mongoose.Schema(
   {
-    patientId: { type: mongoose.Schema.Types.ObjectId, ref: 'Patient', required: true },
+    patientId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     assignedMedic: { type: mongoose.Schema.Types.ObjectId, ref: 'Medic' },
 
     edad: { type: Number, required: true },
