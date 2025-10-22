@@ -86,10 +86,10 @@ export default function AccountingSummary({ data, onVerMas }) {
       </div>
 
       {/* Total general */}
-      <div className="border-b-2 border-gray-200 bg-gradient-to-br from-gray-50 to-blue-50 px-6 py-4">
+      <div className="border-b-2 border-gray-200 bg-linear-to-br from-gray-50 to-blue-50 px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 p-2 shadow-lg">
+            <div className="rounded-lg bg-linear-to-br from-blue-500 to-indigo-600 p-2 shadow-lg">
               <TrendingUp className="h-5 w-5 text-white" />
             </div>
             <div>
@@ -121,7 +121,7 @@ export default function AccountingSummary({ data, onVerMas }) {
             >
               {/* Elemento decorativo de fondo */}
               <div
-                className={`absolute -right-4 -bottom-4 h-24 w-24 bg-gradient-to-br ${item.gradient} rounded-full opacity-5 transition-all duration-300 group-hover:scale-150`}
+                className={`absolute -right-4 -bottom-4 h-24 w-24 bg-linear-to-br ${item.gradient} rounded-full opacity-5 transition-all duration-300 group-hover:scale-150`}
               />
 
               <div className="relative z-10 flex flex-1 items-center gap-3">

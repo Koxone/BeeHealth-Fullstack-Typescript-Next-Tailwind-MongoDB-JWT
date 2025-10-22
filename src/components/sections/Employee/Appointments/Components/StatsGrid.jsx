@@ -40,11 +40,11 @@ export default function StatsGrid({ stats, icons }) {
           <div
             key={stat.label}
             style={{ animationDelay: `${index * 100}ms` }}
-            className={`bg-gradient-to-br ${stat.bg} animate-fadeInUp rounded-2xl border-2 border-gray-200 p-4 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-lg`}
+            className={`bg-linear-to-br ${stat.bg} animate-fadeInUp rounded-2xl border-2 border-gray-200 p-4 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-lg`}
           >
             <div className="mb-2 flex items-center justify-between">
               <p className="text-xs font-medium text-gray-600 md:text-sm">{stat.label}</p>
-              <div className={`bg-gradient-to-br p-1.5 ${stat.gradient} rounded-lg`}>
+              <div className={`bg-linear-to-br p-1.5 ${stat.gradient} rounded-lg`}>
                 <Icon className="h-4 w-4 text-white" />
               </div>
             </div>

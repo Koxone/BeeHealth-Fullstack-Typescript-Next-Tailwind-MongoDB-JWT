@@ -9,7 +9,7 @@ export default function Home() {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-green-50">
       {/* Header */}
       <header className="sticky top-0 z-50 border-b bg-white/80 backdrop-blur-sm">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
@@ -126,7 +126,7 @@ export default function Home() {
               </button>
             </div>
           </div>
-          <div className="rounded-2xl bg-gradient-to-br from-blue-100 to-green-100 p-8 shadow-xl md:p-12">
+          <div className="rounded-2xl bg-linear-to-br from-blue-100 to-green-100 p-8 shadow-xl md:p-12">
             <div className="rounded-xl bg-white p-6 shadow-lg md:p-8">
               <Activity className="mx-auto mb-4 h-12 w-12 text-blue-500 md:h-16 md:w-16" />
               <h3 className="text-center text-lg font-semibold text-gray-900 md:text-xl">

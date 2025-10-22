@@ -6,7 +6,7 @@ import { Users, Calendar, DollarSign, Package } from 'lucide-react';
 /* grid */
 export default function QuickActions({ onPacientes, onCalendario, onContabilidad, onInventario }) {
   return (
-    <div className="rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 p-4 text-white shadow-sm md:p-6">
+    <div className="rounded-xl bg-linear-to-br from-blue-500 to-purple-600 p-4 text-white shadow-sm md:p-6">
       <h2 className="mb-4 text-lg font-semibold md:text-xl">Acciones Rápidas</h2>
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
         <button

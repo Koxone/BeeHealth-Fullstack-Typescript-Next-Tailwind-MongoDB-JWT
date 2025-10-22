@@ -166,7 +166,7 @@ export default function InventoryAlerts({ items, onVerMas }) {
                 >
                   {/* Elemento decorativo de fondo */}
                   <div
-                    className={`absolute -right-4 -bottom-4 h-24 w-24 bg-gradient-to-br ${config.gradient} rounded-full opacity-5 transition-all duration-300 group-hover:scale-150`}
+                    className={`absolute -right-4 -bottom-4 h-24 w-24 bg-linear-to-br ${config.gradient} rounded-full opacity-5 transition-all duration-300 group-hover:scale-150`}
                   />
 
                   <div className="relative z-10 flex min-w-0 flex-1 items-center gap-3">
@@ -218,7 +218,7 @@ export default function InventoryAlerts({ items, onVerMas }) {
                       </p>
                     </div>
                     <AlertTriangle
-                      className={`h-6 w-6 ${config.iconColor} flex-shrink-0 ${alertLevel === 'critical' ? 'animate-bounce' : ''}`}
+                      className={`h-6 w-6 ${config.iconColor} shrink-0 ${alertLevel === 'critical' ? 'animate-bounce' : ''}`}
                     />
                   </div>
 
@@ -234,7 +234,7 @@ export default function InventoryAlerts({ items, onVerMas }) {
           /* Empty state mejorado */
           <div className="py-12 text-center">
             <div className="relative mb-4 inline-block">
-              <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-green-100 to-emerald-100">
+              <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-linear-to-br from-green-100 to-emerald-100">
                 <Package className="h-10 w-10 text-green-600" />
               </div>
               <div className="absolute -top-1 -right-1 flex h-8 w-8 items-center justify-center rounded-full bg-green-500 shadow-lg">

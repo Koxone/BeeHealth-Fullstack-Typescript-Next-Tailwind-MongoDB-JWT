@@ -51,32 +51,34 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
   ];
 
   return (
-    <header className="sticky top-0 z-40 border-b-2 border-gray-200 bg-white/95 backdrop-blur-lg shadow-lg">
+    <header className="sticky top-0 z-40 border-b-2 border-gray-200 bg-white/95 shadow-lg backdrop-blur-lg">
       {/* Mobile Header */}
       <div className="flex items-center justify-between px-4 py-3 md:hidden">
         <div className="flex items-center gap-3">
-          <div className={`relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${roleInfo.gradient} shadow-lg`}>
+          <div
+            className={`relative flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br ${roleInfo.gradient} shadow-lg`}
+          >
             <User className="h-5 w-5 text-white" />
-            <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-green-500 border-2 border-white" />
+            <div className="absolute -right-0.5 -bottom-0.5 h-3 w-3 rounded-full border-2 border-white bg-green-500" />
           </div>
           <div>
             <p className="text-sm font-bold text-gray-900">{roleInfo.title}</p>
             <div className="flex items-center gap-1.5">
-              <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-              <p className="text-xs text-gray-500 font-medium">{roleInfo.subtitle}</p>
+              <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500" />
+              <p className="text-xs font-medium text-gray-500">{roleInfo.subtitle}</p>
             </div>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
           {/* Notifications button mobile */}
-          <button 
+          <button
             onClick={() => setShowNotifications(!showNotifications)}
-            className="relative rounded-xl p-2 transition-all duration-200 hover:bg-gray-100 active:scale-95 group"
+            className="group relative rounded-xl p-2 transition-all duration-200 hover:bg-gray-100 active:scale-95"
           >
-            <Bell className="h-5 w-5 text-gray-600 group-hover:text-blue-600 transition-colors duration-200" />
+            <Bell className="h-5 w-5 text-gray-600 transition-colors duration-200 group-hover:text-blue-600" />
             {notificationCount > 0 && (
-              <span className="absolute top-0.5 right-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-r from-red-500 to-rose-600 text-[10px] font-bold text-white shadow-lg animate-pulse">
+              <span className="absolute top-0.5 right-0.5 flex h-5 w-5 animate-pulse items-center justify-center rounded-full bg-gradient-to-r from-red-500 to-rose-600 text-[10px] font-bold text-white shadow-lg">
                 {notificationCount}
               </span>
             )}
@@ -98,13 +100,17 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
       {/* Desktop Header */}
       <div className="hidden items-center justify-between px-6 py-4 md:flex">
         <div className="flex items-center gap-4">
-          <div className={`p-3 bg-gradient-to-br ${roleInfo.gradient} rounded-2xl shadow-lg`}>
+          <div className={`bg-linear-to-br p-3 ${roleInfo.gradient} rounded-2xl shadow-lg`}>
             <Sparkles className="h-6 w-6 text-white" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 tracking-tight">MedTrack</h2>
-            <p className="text-sm text-gray-500 font-medium">
-              {role === 'patient' ? 'Panel de Paciente' : role === 'employee' ? 'Panel de Empleado' : 'Panel Médico'}
+            <h2 className="text-2xl font-bold tracking-tight text-gray-900">MedTrack</h2>
+            <p className="text-sm font-medium text-gray-500">
+              {role === 'patient'
+                ? 'Panel de Paciente'
+                : role === 'employee'
+                  ? 'Panel de Empleado'
+                  : 'Panel Médico'}
             </p>
           </div>
         </div>
@@ -112,11 +118,11 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
         <div className="flex items-center gap-3">
           {/* Notifications */}
           <div className="relative">
-            <button 
+            <button
               onClick={() => setShowNotifications(!showNotifications)}
-              className="group relative rounded-xl p-3 transition-all duration-200 hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50 active:scale-95 border-2 border-transparent hover:border-blue-200"
+              className="group relative rounded-xl border-2 border-transparent p-3 transition-all duration-200 hover:border-blue-200 hover:bg-linear-to-br hover:from-blue-50 hover:to-indigo-50 active:scale-95"
             >
-              <Bell className="h-5 w-5 text-gray-600 group-hover:text-blue-600 transition-colors duration-200" />
+              <Bell className="h-5 w-5 text-gray-600 transition-colors duration-200 group-hover:text-blue-600" />
               {notificationCount > 0 && (
                 <span className="absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-r from-red-500 to-rose-600 text-xs font-bold text-white shadow-lg">
                   {notificationCount}
@@ -127,37 +133,36 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
             {/* Notifications Dropdown */}
             {showNotifications && (
               <>
-                <div 
-                  className="fixed inset-0 z-40" 
-                  onClick={() => setShowNotifications(false)}
-                />
-                <div className="absolute top-full right-0 z-50 mt-2 w-80 rounded-2xl border-2 border-gray-200 bg-white shadow-2xl animate-slideDown">
-                  <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 rounded-t-xl">
+                <div className="fixed inset-0 z-40" onClick={() => setShowNotifications(false)} />
+                <div className="animate-slideDown absolute top-full right-0 z-50 mt-2 w-80 rounded-2xl border-2 border-gray-200 bg-white shadow-2xl">
+                  <div className="rounded-t-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3">
                     <h3 className="text-sm font-bold text-white">Notificaciones</h3>
                   </div>
                   <div className="max-h-96 overflow-y-auto p-2">
                     {mockNotifications.map((notif) => (
                       <div
                         key={notif.id}
-                        className={`group flex items-start gap-3 rounded-xl p-3 transition-all duration-200 hover:bg-blue-50 cursor-pointer ${
+                        className={`group flex cursor-pointer items-start gap-3 rounded-xl p-3 transition-all duration-200 hover:bg-blue-50 ${
                           notif.unread ? 'bg-blue-50/50' : ''
                         }`}
                       >
-                        <div className={`p-2 rounded-lg ${notif.unread ? 'bg-blue-500' : 'bg-gray-300'}`}>
+                        <div
+                          className={`rounded-lg p-2 ${notif.unread ? 'bg-blue-500' : 'bg-gray-300'}`}
+                        >
                           <Bell className="h-4 w-4 text-white" />
                         </div>
-                        <div className="flex-1 min-w-0">
+                        <div className="min-w-0 flex-1">
                           <p className="text-sm font-semibold text-gray-900">{notif.title}</p>
                           <p className="text-xs text-gray-500">{notif.time}</p>
                         </div>
                         {notif.unread && (
-                          <div className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 mt-1.5" />
+                          <div className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-blue-600" />
                         )}
                       </div>
                     ))}
                   </div>
                   <div className="border-t-2 border-gray-200 p-3">
-                    <button className="w-full py-2 text-sm font-semibold text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200">
+                    <button className="w-full rounded-lg py-2 text-sm font-semibold text-blue-600 transition-all duration-200 hover:bg-blue-50">
                       Ver todas las notificaciones
                     </button>
                   </div>
@@ -171,8 +176,8 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
             <div className="text-right">
               <p className="text-sm font-bold text-gray-900">{roleInfo.title}</p>
               <div className="flex items-center justify-end gap-1.5">
-                <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                <p className="text-xs text-gray-500 font-medium">{roleInfo.subtitle}</p>
+                <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500" />
+                <p className="text-xs font-medium text-gray-500">{roleInfo.subtitle}</p>
               </div>
             </div>
             <button
@@ -181,10 +186,10 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
                 else if (role === 'patient') router.push('/patient/profile');
                 else if (role === 'employee') router.push('/employee/profile');
               }}
-              className={`group relative flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${roleInfo.gradient} shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-110 active:scale-95`}
+              className={`group relative flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br ${roleInfo.gradient} shadow-lg transition-all duration-200 hover:scale-110 hover:shadow-xl active:scale-95`}
             >
               <User className="h-6 w-6 text-white" />
-              <div className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full bg-green-500 border-2 border-white" />
+              <div className="absolute -right-0.5 -bottom-0.5 h-3.5 w-3.5 rounded-full border-2 border-white bg-green-500" />
             </button>
           </div>
 
@@ -194,10 +199,10 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
               logout();
               router.push('/');
             }}
-            className="group rounded-xl p-3 transition-all duration-200 hover:bg-red-50 active:scale-95 border-2 border-transparent hover:border-red-200"
+            className="group rounded-xl border-2 border-transparent p-3 transition-all duration-200 hover:border-red-200 hover:bg-red-50 active:scale-95"
             title="Cerrar sesión"
           >
-            <LogOut className="h-5 w-5 text-gray-600 group-hover:text-red-600 transition-colors duration-200" />
+            <LogOut className="h-5 w-5 text-gray-600 transition-colors duration-200 group-hover:text-red-600" />
           </button>
         </div>
       </div>
@@ -206,15 +211,19 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
       {showMenu && (
         <>
           <div
-            className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm md:hidden animate-fadeIn"
+            className="animate-fadeIn fixed inset-0 z-40 bg-black/40 backdrop-blur-sm md:hidden"
             onClick={() => setShowMenu(false)}
           />
-          <div className="absolute top-full right-4 z-50 mt-2 w-64 rounded-2xl border-2 border-gray-200 bg-white shadow-2xl md:hidden animate-slideDown">
+          <div className="animate-slideDown absolute top-full right-4 z-50 mt-2 w-64 rounded-2xl border-2 border-gray-200 bg-white shadow-2xl md:hidden">
             {/* Menu Header */}
-            <div className={`bg-gradient-to-r ${roleInfo.gradient} px-4 py-4 rounded-t-xl relative overflow-hidden`}>
-              <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full -mr-10 -mt-10" />
+            <div
+              className={`bg-gradient-to-r ${roleInfo.gradient} relative overflow-hidden rounded-t-xl px-4 py-4`}
+            >
+              <div className="absolute top-0 right-0 -mt-10 -mr-10 h-20 w-20 rounded-full bg-white/10" />
               <div className="relative z-10 flex items-center gap-3">
-                <div className={`flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm shadow-lg`}>
+                <div
+                  className={`flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 shadow-lg backdrop-blur-sm`}
+                >
                   <User className="h-6 w-6 text-white" />
                 </div>
                 <div>
@@ -228,12 +237,18 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
               <button
                 onClick={() => {
                   setShowMenu(false);
-                  router.push(role === 'patient' ? '/patient/profile' : role === 'employee' ? '/employee/profile' : '/doctor/profile');
+                  router.push(
+                    role === 'patient'
+                      ? '/patient/profile'
+                      : role === 'employee'
+                        ? '/employee/profile'
+                        : '/doctor/profile'
+                  );
                 }}
                 className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-gray-700 transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 active:scale-95"
               >
-                <div className="p-2 bg-blue-100 rounded-lg group-hover:bg-blue-500 transition-all duration-200">
-                  <User className="h-4 w-4 text-blue-600 group-hover:text-white transition-colors duration-200" />
+                <div className="rounded-lg bg-blue-100 p-2 transition-all duration-200 group-hover:bg-blue-500">
+                  <User className="h-4 w-4 text-blue-600 transition-colors duration-200 group-hover:text-white" />
                 </div>
                 <span className="text-sm font-semibold">Mi Perfil</span>
               </button>
@@ -245,8 +260,8 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
                 }}
                 className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-gray-700 transition-all duration-200 hover:bg-gradient-to-r hover:from-amber-50 hover:to-orange-50 active:scale-95"
               >
-                <div className="p-2 bg-amber-100 rounded-lg group-hover:bg-amber-500 transition-all duration-200 relative">
-                  <Bell className="h-4 w-4 text-amber-600 group-hover:text-white transition-colors duration-200" />
+                <div className="relative rounded-lg bg-amber-100 p-2 transition-all duration-200 group-hover:bg-amber-500">
+                  <Bell className="h-4 w-4 text-amber-600 transition-colors duration-200 group-hover:text-white" />
                   {notificationCount > 0 && (
                     <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[8px] font-bold text-white">
                       {notificationCount}
@@ -264,8 +279,8 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
                   }}
                   className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-gray-700 transition-all duration-200 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 active:scale-95"
                 >
-                  <div className="p-2 bg-purple-100 rounded-lg group-hover:bg-purple-500 transition-all duration-200">
-                    <HelpCircle className="h-4 w-4 text-purple-600 group-hover:text-white transition-colors duration-200" />
+                  <div className="rounded-lg bg-purple-100 p-2 transition-all duration-200 group-hover:bg-purple-500">
+                    <HelpCircle className="h-4 w-4 text-purple-600 transition-colors duration-200 group-hover:text-white" />
                   </div>
                   <span className="text-sm font-semibold">Soporte</span>
                 </button>
@@ -278,8 +293,8 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
                 }}
                 className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-gray-700 transition-all duration-200 hover:bg-gradient-to-r hover:from-gray-50 hover:to-slate-50 active:scale-95"
               >
-                <div className="p-2 bg-gray-100 rounded-lg group-hover:bg-gray-500 transition-all duration-200">
-                  <Settings className="h-4 w-4 text-gray-600 group-hover:text-white transition-colors duration-200" />
+                <div className="rounded-lg bg-gray-100 p-2 transition-all duration-200 group-hover:bg-gray-500">
+                  <Settings className="h-4 w-4 text-gray-600 transition-colors duration-200 group-hover:text-white" />
                 </div>
                 <span className="text-sm font-semibold">Configuración</span>
               </button>
@@ -294,8 +309,8 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
                 }}
                 className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-red-600 transition-all duration-200 hover:bg-gradient-to-r hover:from-red-50 hover:to-rose-50 active:scale-95"
               >
-                <div className="p-2 bg-red-100 rounded-lg group-hover:bg-red-500 transition-all duration-200">
-                  <LogOut className="h-4 w-4 text-red-600 group-hover:text-white transition-colors duration-200" />
+                <div className="rounded-lg bg-red-100 p-2 transition-all duration-200 group-hover:bg-red-500">
+                  <LogOut className="h-4 w-4 text-red-600 transition-colors duration-200 group-hover:text-white" />
                 </div>
                 <span className="text-sm font-bold">Cerrar Sesión</span>
               </button>

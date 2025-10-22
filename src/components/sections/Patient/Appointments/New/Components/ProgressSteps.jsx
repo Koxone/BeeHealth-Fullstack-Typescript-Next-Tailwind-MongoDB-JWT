@@ -36,12 +36,12 @@ export default function ProgressSteps({ getStepStatus }) {
           return (
             <div
               key={step.number}
-              className="flex flex-col items-center gap-2 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 px-2 py-1"
+              className="flex flex-col items-center gap-2 rounded-xl bg-linear-to-br from-blue-50 to-indigo-50 px-2 py-1"
             >
               <div
                 className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold transition-all duration-300 ${
                   status === 'complete'
-                    ? 'scale-110 bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-lg'
+                    ? 'scale-110 bg-linear-to-br from-blue-600 to-blue-700 text-white shadow-lg'
                     : status === 'current'
                       ? 'scale-105 border-2 border-blue-600 bg-white text-blue-600 shadow-md'
                       : 'bg-gray-200 text-gray-400'

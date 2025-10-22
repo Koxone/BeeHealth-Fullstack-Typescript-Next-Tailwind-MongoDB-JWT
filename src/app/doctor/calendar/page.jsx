@@ -1,27 +1,119 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, Clock, User, Phone, Mail, TrendingUp, Users, CheckCircle, Sparkles } from "lucide-react";
+import { useState } from 'react';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Calendar as CalendarIcon,
+  Clock,
+  User,
+  Phone,
+  Mail,
+  TrendingUp,
+  Users,
+  CheckCircle,
+  Sparkles,
+} from 'lucide-react';
 
 // Datos de ejemplo de citas
 const appointmentsData = {
-  "2024-10-21": [
-    { id: 1, hora: "09:00", paciente: "Juan Pérez", telefono: "+52 55 1234 5678", email: "juan@email.com", motivo: "Control de peso", avatar: "JP" },
-    { id: 2, hora: "10:00", paciente: "María López", telefono: "+52 55 8765 4321", email: "maria@email.com", motivo: "Seguimiento", avatar: "ML" },
-    { id: 3, hora: "15:00", paciente: "Carlos Ruiz", telefono: "+52 55 5555 5555", email: "carlos@email.com", motivo: "Primera consulta", avatar: "CR" },
+  '2024-10-21': [
+    {
+      id: 1,
+      hora: '09:00',
+      paciente: 'Juan Pérez',
+      telefono: '+52 55 1234 5678',
+      email: 'juan@email.com',
+      motivo: 'Control de peso',
+      avatar: 'JP',
+    },
+    {
+      id: 2,
+      hora: '10:00',
+      paciente: 'María López',
+      telefono: '+52 55 8765 4321',
+      email: 'maria@email.com',
+      motivo: 'Seguimiento',
+      avatar: 'ML',
+    },
+    {
+      id: 3,
+      hora: '15:00',
+      paciente: 'Carlos Ruiz',
+      telefono: '+52 55 5555 5555',
+      email: 'carlos@email.com',
+      motivo: 'Primera consulta',
+      avatar: 'CR',
+    },
   ],
-  "2024-10-22": [
-    { id: 4, hora: "09:00", paciente: "Ana Martínez", telefono: "+52 55 1111 2222", email: "ana@email.com", motivo: "Revisión", avatar: "AM" },
-    { id: 5, hora: "14:00", paciente: "Pedro García", telefono: "+52 55 3333 4444", email: "pedro@email.com", motivo: "Control mensual", avatar: "PG" },
+  '2024-10-22': [
+    {
+      id: 4,
+      hora: '09:00',
+      paciente: 'Ana Martínez',
+      telefono: '+52 55 1111 2222',
+      email: 'ana@email.com',
+      motivo: 'Revisión',
+      avatar: 'AM',
+    },
+    {
+      id: 5,
+      hora: '14:00',
+      paciente: 'Pedro García',
+      telefono: '+52 55 3333 4444',
+      email: 'pedro@email.com',
+      motivo: 'Control mensual',
+      avatar: 'PG',
+    },
   ],
-  "2024-10-23": [
-    { id: 6, hora: "11:00", paciente: "Laura Sánchez", telefono: "+52 55 6666 7777", email: "laura@email.com", motivo: "Tratamiento estético", avatar: "LS" },
-    { id: 7, hora: "15:00", paciente: "Roberto Díaz", telefono: "+52 55 8888 9999", email: "roberto@email.com", motivo: "Consulta nutricional", avatar: "RD" },
+  '2024-10-23': [
+    {
+      id: 6,
+      hora: '11:00',
+      paciente: 'Laura Sánchez',
+      telefono: '+52 55 6666 7777',
+      email: 'laura@email.com',
+      motivo: 'Tratamiento estético',
+      avatar: 'LS',
+    },
+    {
+      id: 7,
+      hora: '15:00',
+      paciente: 'Roberto Díaz',
+      telefono: '+52 55 8888 9999',
+      email: 'roberto@email.com',
+      motivo: 'Consulta nutricional',
+      avatar: 'RD',
+    },
   ],
-  "2024-10-24": [
-    { id: 8, hora: "10:00", paciente: "Sofia Torres", telefono: "+52 55 2222 3333", email: "sofia@email.com", motivo: "Control de peso", avatar: "ST" },
-    { id: 9, hora: "14:00", paciente: "Miguel Ángel", telefono: "+52 55 4444 5555", email: "miguel@email.com", motivo: "Seguimiento", avatar: "MA" },
-    { id: 10, hora: "16:00", paciente: "Isabel Ramírez", telefono: "+52 55 7777 8888", email: "isabel@email.com", motivo: "Primera consulta", avatar: "IR" },
+  '2024-10-24': [
+    {
+      id: 8,
+      hora: '10:00',
+      paciente: 'Sofia Torres',
+      telefono: '+52 55 2222 3333',
+      email: 'sofia@email.com',
+      motivo: 'Control de peso',
+      avatar: 'ST',
+    },
+    {
+      id: 9,
+      hora: '14:00',
+      paciente: 'Miguel Ángel',
+      telefono: '+52 55 4444 5555',
+      email: 'miguel@email.com',
+      motivo: 'Seguimiento',
+      avatar: 'MA',
+    },
+    {
+      id: 10,
+      hora: '16:00',
+      paciente: 'Isabel Ramírez',
+      telefono: '+52 55 7777 8888',
+      email: 'isabel@email.com',
+      motivo: 'Primera consulta',
+      avatar: 'IR',
+    },
   ],
 };
 
@@ -38,20 +130,20 @@ export default function DoctorCalendar() {
     const startingDayOfWeek = firstDay.getDay();
 
     const days = [];
-    
+
     for (let i = 0; i < startingDayOfWeek; i++) {
       days.push(null);
     }
-    
+
     for (let day = 1; day <= daysInMonth; day++) {
       days.push(new Date(year, month, day));
     }
-    
+
     return days;
   };
 
   const formatDate = (date) => {
-    if (!date) return "";
+    if (!date) return '';
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
@@ -88,69 +180,75 @@ export default function DoctorCalendar() {
 
   // Calcular estadísticas del mes
   const totalAppointmentsThisMonth = Object.keys(appointmentsData)
-    .filter(dateStr => {
+    .filter((dateStr) => {
       const date = new Date(dateStr);
-      return date.getMonth() === currentMonth.getMonth() && date.getFullYear() === currentMonth.getFullYear();
+      return (
+        date.getMonth() === currentMonth.getMonth() &&
+        date.getFullYear() === currentMonth.getFullYear()
+      );
     })
     .reduce((total, dateStr) => total + appointmentsData[dateStr].length, 0);
 
-  const daysWithAppointments = Object.keys(appointmentsData).filter(dateStr => {
+  const daysWithAppointments = Object.keys(appointmentsData).filter((dateStr) => {
     const date = new Date(dateStr);
     return date.getMonth() === currentMonth.getMonth();
   }).length;
 
   const todayAppointments = getAppointmentsForDate(new Date()).length;
-  const averagePerDay = totalAppointmentsThisMonth > 0 ? Math.round(totalAppointmentsThisMonth / daysWithAppointments) : 0;
+  const averagePerDay =
+    totalAppointmentsThisMonth > 0
+      ? Math.round(totalAppointmentsThisMonth / daysWithAppointments)
+      : 0;
 
   return (
     <div className="min-h-screen pb-8">
       {/* Header mejorado */}
-      <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 -mx-4 -mt-4 px-4 pt-6 pb-8 mb-6 md:rounded-2xl">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center gap-4 mb-6">
-            <div className="p-3 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl shadow-lg">
-              <CalendarIcon className="w-8 h-8 text-white" />
+      <div className="-mx-4 -mt-4 mb-6 bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 px-4 pt-6 pb-8 md:rounded-2xl">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-6 flex items-center gap-4">
+            <div className="rounded-2xl bg-linear-to-br from-blue-600 to-indigo-600 p-3 shadow-lg">
+              <CalendarIcon className="h-8 w-8 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
+              <h1 className="text-3xl font-bold tracking-tight text-gray-900 md:text-4xl">
                 Mi Calendario
               </h1>
-              <p className="text-base md:text-lg text-gray-600">
+              <p className="text-base text-gray-600 md:text-lg">
                 Visualiza y gestiona tus citas médicas
               </p>
             </div>
           </div>
 
           {/* Estadísticas mejoradas */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
             {[
-              { 
-                label: "Citas este mes", 
-                value: totalAppointmentsThisMonth, 
+              {
+                label: 'Citas este mes',
+                value: totalAppointmentsThisMonth,
                 icon: CalendarIcon,
-                gradient: "from-blue-500 to-indigo-600",
-                bg: "from-blue-50 to-indigo-50",
+                gradient: 'from-blue-500 to-indigo-600',
+                bg: 'from-blue-50 to-indigo-50',
               },
-              { 
-                label: "Días con citas", 
+              {
+                label: 'Días con citas',
                 value: daysWithAppointments,
                 icon: CheckCircle,
-                gradient: "from-emerald-500 to-green-600",
-                bg: "from-emerald-50 to-green-50",
+                gradient: 'from-emerald-500 to-green-600',
+                bg: 'from-emerald-50 to-green-50',
               },
-              { 
-                label: "Citas hoy", 
+              {
+                label: 'Citas hoy',
                 value: todayAppointments,
                 icon: Clock,
-                gradient: "from-amber-500 to-orange-600",
-                bg: "from-amber-50 to-orange-50",
+                gradient: 'from-amber-500 to-orange-600',
+                bg: 'from-amber-50 to-orange-50',
               },
-              { 
-                label: "Promedio/día", 
+              {
+                label: 'Promedio/día',
                 value: averagePerDay,
                 icon: TrendingUp,
-                gradient: "from-purple-500 to-pink-600",
-                bg: "from-purple-50 to-pink-50",
+                gradient: 'from-purple-500 to-pink-600',
+                bg: 'from-purple-50 to-pink-50',
               },
             ].map((stat, index) => {
               const Icon = stat.icon;
@@ -158,17 +256,19 @@ export default function DoctorCalendar() {
                 <div
                   key={index}
                   style={{ animationDelay: `${index * 100}ms` }}
-                  className={`bg-gradient-to-br ${stat.bg} rounded-2xl shadow-sm border-2 border-gray-200 p-4 hover:shadow-lg hover:scale-105 transition-all duration-300 animate-fadeInUp relative overflow-hidden group`}
+                  className={`bg-linear-to-br ${stat.bg} animate-fadeInUp group relative overflow-hidden rounded-2xl border-2 border-gray-200 p-4 shadow-sm transition-all duration-300 hover:scale-105 hover:shadow-lg`}
                 >
-                  <div className={`absolute -right-4 -bottom-4 w-20 h-20 bg-gradient-to-br ${stat.gradient} opacity-10 rounded-full transition-all duration-300 group-hover:scale-150`} />
+                  <div
+                    className={`absolute -right-4 -bottom-4 h-20 w-20 bg-linear-to-br ${stat.gradient} rounded-full opacity-10 transition-all duration-300 group-hover:scale-150`}
+                  />
                   <div className="relative z-10">
-                    <div className="flex items-center justify-between mb-2">
-                      <p className="text-xs md:text-sm text-gray-600 font-medium">{stat.label}</p>
-                      <div className={`p-1.5 bg-gradient-to-br ${stat.gradient} rounded-lg`}>
-                        <Icon className="w-4 h-4 text-white" />
+                    <div className="mb-2 flex items-center justify-between">
+                      <p className="text-xs font-medium text-gray-600 md:text-sm">{stat.label}</p>
+                      <div className={`bg-linear-to-br p-1.5 ${stat.gradient} rounded-lg`}>
+                        <Icon className="h-4 w-4 text-white" />
                       </div>
                     </div>
-                    <p className="text-2xl md:text-3xl font-bold text-gray-900">{stat.value}</p>
+                    <p className="text-2xl font-bold text-gray-900 md:text-3xl">{stat.value}</p>
                   </div>
                 </div>
               );
@@ -177,34 +277,41 @@ export default function DoctorCalendar() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-3">
           {/* Calendario mejorado */}
-          <div className="lg:col-span-2 bg-white rounded-2xl shadow-lg border-2 border-gray-200 p-6 hover:shadow-xl transition-all duration-300">
+          <div className="rounded-2xl border-2 border-gray-200 bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-xl lg:col-span-2">
             {/* Header del calendario */}
-            <div className="flex items-center justify-between mb-6 pb-4 border-b-2 border-gray-200">
+            <div className="mb-6 flex items-center justify-between border-b-2 border-gray-200 pb-4">
               <button
                 onClick={handlePrevMonth}
-                className="group p-3 hover:bg-blue-50 rounded-xl transition-all duration-200 active:scale-95 border border-gray-200 hover:border-blue-300"
+                className="group rounded-xl border border-gray-200 p-3 transition-all duration-200 hover:border-blue-300 hover:bg-blue-50 active:scale-95"
               >
-                <ChevronLeft className="w-5 h-5 text-gray-600 group-hover:text-blue-600 group-hover:-translate-x-1 transition-all duration-200" />
+                <ChevronLeft className="h-5 w-5 text-gray-600 transition-all duration-200 group-hover:-translate-x-1 group-hover:text-blue-600" />
               </button>
               <div className="text-center">
-                <h2 className="text-xl md:text-2xl font-bold text-gray-900 capitalize">{monthName}</h2>
-                <p className="text-sm text-gray-500 mt-1">{totalAppointmentsThisMonth} citas programadas</p>
+                <h2 className="text-xl font-bold text-gray-900 capitalize md:text-2xl">
+                  {monthName}
+                </h2>
+                <p className="mt-1 text-sm text-gray-500">
+                  {totalAppointmentsThisMonth} citas programadas
+                </p>
               </div>
               <button
                 onClick={handleNextMonth}
-                className="group p-3 hover:bg-blue-50 rounded-xl transition-all duration-200 active:scale-95 border border-gray-200 hover:border-blue-300"
+                className="group rounded-xl border border-gray-200 p-3 transition-all duration-200 hover:border-blue-300 hover:bg-blue-50 active:scale-95"
               >
-                <ChevronRight className="w-5 h-5 text-gray-600 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-200" />
+                <ChevronRight className="h-5 w-5 text-gray-600 transition-all duration-200 group-hover:translate-x-1 group-hover:text-blue-600" />
               </button>
             </div>
 
             {/* Días de la semana */}
-            <div className="grid grid-cols-7 gap-2 mb-3">
-              {["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"].map((day) => (
-                <div key={day} className="text-center text-xs md:text-sm font-bold text-gray-500 py-2">
+            <div className="mb-3 grid grid-cols-7 gap-2">
+              {['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'].map((day) => (
+                <div
+                  key={day}
+                  className="py-2 text-center text-xs font-bold text-gray-500 md:text-sm"
+                >
                   {day}
                 </div>
               ))}
@@ -226,23 +333,27 @@ export default function DoctorCalendar() {
                   <button
                     key={index}
                     onClick={() => handleDateClick(date)}
-                    className={`group aspect-square flex flex-col items-center justify-center rounded-xl text-sm font-semibold transition-all duration-200 relative ${
+                    className={`group relative flex aspect-square flex-col items-center justify-center rounded-xl text-sm font-semibold transition-all duration-200 ${
                       isSelected
-                        ? "bg-gradient-to-br from-blue-600 to-indigo-600 text-white shadow-lg scale-110 z-10"
+                        ? 'z-10 scale-110 bg-linear-to-br from-blue-600 to-indigo-600 text-white shadow-lg'
                         : hasApts
-                        ? "bg-gradient-to-br from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 border-2 border-blue-300 text-gray-900 hover:scale-105 hover:shadow-md"
-                        : "bg-gray-50 hover:bg-gray-100 text-gray-600 hover:scale-105"
-                    } ${isToday && !isSelected ? "ring-2 ring-blue-500 ring-offset-2" : ""} active:scale-95`}
+                          ? 'border-2 border-blue-300 bg-linear-to-br from-blue-50 to-indigo-50 text-gray-900 hover:scale-105 hover:from-blue-100 hover:to-indigo-100 hover:shadow-md'
+                          : 'bg-gray-50 text-gray-600 hover:scale-105 hover:bg-gray-100'
+                    } ${isToday && !isSelected ? 'ring-2 ring-blue-500 ring-offset-2' : ''} active:scale-95`}
                   >
                     <span className="mb-1">{date.getDate()}</span>
                     {hasApts && (
-                      <div className={`flex items-center gap-1 ${isSelected ? "text-white" : "text-blue-600"}`}>
-                        <div className={`w-1.5 h-1.5 rounded-full ${isSelected ? "bg-white" : "bg-blue-600"}`} />
+                      <div
+                        className={`flex items-center gap-1 ${isSelected ? 'text-white' : 'text-blue-600'}`}
+                      >
+                        <div
+                          className={`h-1.5 w-1.5 rounded-full ${isSelected ? 'bg-white' : 'bg-blue-600'}`}
+                        />
                         <span className="text-xs font-bold">{aptCount}</span>
                       </div>
                     )}
                     {isToday && !isSelected && (
-                      <div className="absolute -top-1 -right-1 w-2 h-2 bg-blue-600 rounded-full animate-pulse" />
+                      <div className="absolute -top-1 -right-1 h-2 w-2 animate-pulse rounded-full bg-blue-600" />
                     )}
                   </button>
                 );
@@ -250,44 +361,46 @@ export default function DoctorCalendar() {
             </div>
 
             {/* Leyenda mejorada */}
-            <div className="mt-6 pt-4 border-t-2 border-gray-200 flex flex-wrap items-center gap-4 text-xs">
+            <div className="mt-6 flex flex-wrap items-center gap-4 border-t-2 border-gray-200 pt-4 text-xs">
               <div className="flex items-center gap-2">
-                <div className="w-5 h-5 bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-300 rounded-lg"></div>
+                <div className="h-5 w-5 rounded-lg border-2 border-blue-300 bg-linear-to-br from-blue-50 to-indigo-50"></div>
                 <span className="font-medium text-gray-700">Con citas</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-5 h-5 bg-gray-50 rounded-lg border border-gray-300"></div>
+                <div className="h-5 w-5 rounded-lg border border-gray-300 bg-gray-50"></div>
                 <span className="font-medium text-gray-700">Sin citas</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-5 h-5 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg shadow-sm"></div>
+                <div className="h-5 w-5 rounded-lg bg-linear-to-br from-blue-600 to-indigo-600 shadow-sm"></div>
                 <span className="font-medium text-gray-700">Seleccionado</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-5 h-5 ring-2 ring-blue-500 ring-offset-2 rounded-lg"></div>
+                <div className="h-5 w-5 rounded-lg ring-2 ring-blue-500 ring-offset-2"></div>
                 <span className="font-medium text-gray-700">Hoy</span>
               </div>
             </div>
           </div>
 
           {/* Lista de citas mejorada */}
-          <div className="bg-white rounded-2xl shadow-lg border-2 border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300">
+          <div className="overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
             {/* Header */}
-            <div className="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-5 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-12 -mt-12" />
+            <div className="relative overflow-hidden bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-5">
+              <div className="absolute top-0 right-0 -mt-12 -mr-12 h-24 w-24 rounded-full bg-white/10" />
               <div className="relative z-10 flex items-center gap-3">
-                <div className="p-2 bg-white/20 backdrop-blur-sm rounded-xl">
-                  <Users className="w-5 h-5 text-white" />
+                <div className="rounded-xl bg-white/20 p-2 backdrop-blur-sm">
+                  <Users className="h-5 w-5 text-white" />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-white">
                     {selectedDate
                       ? selectedDate.toLocaleDateString('es-ES', { day: 'numeric', month: 'long' })
-                      : "Selecciona un día"}
+                      : 'Selecciona un día'}
                   </h3>
                   {selectedDate && selectedAppointments.length > 0 && (
                     <p className="text-sm text-indigo-100">
-                      {selectedAppointments.length} cita{selectedAppointments.length !== 1 ? 's' : ''} programada{selectedAppointments.length !== 1 ? 's' : ''}
+                      {selectedAppointments.length} cita
+                      {selectedAppointments.length !== 1 ? 's' : ''} programada
+                      {selectedAppointments.length !== 1 ? 's' : ''}
                     </p>
                   )}
                 </div>
@@ -297,79 +410,83 @@ export default function DoctorCalendar() {
             {/* Lista de citas */}
             <div className="p-6">
               {selectedDate && selectedAppointments.length > 0 ? (
-                <div className="space-y-3 max-h-[600px] overflow-y-auto scrollbar-thin">
+                <div className="scrollbar-thin max-h-[600px] space-y-3 overflow-y-auto">
                   {selectedAppointments.map((apt, index) => (
                     <div
                       key={apt.id}
                       style={{ animationDelay: `${index * 100}ms` }}
-                      className="group border-2 border-gray-200 rounded-xl p-4 hover:border-blue-300 hover:shadow-lg transition-all duration-300 animate-fadeInUp relative overflow-hidden"
+                      className="group animate-fadeInUp relative overflow-hidden rounded-xl border-2 border-gray-200 p-4 transition-all duration-300 hover:border-blue-300 hover:shadow-lg"
                     >
-                      <div className="absolute -right-4 -bottom-4 w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-600 opacity-5 rounded-full transition-all duration-300 group-hover:scale-150" />
-                      
+                      <div className="absolute -right-4 -bottom-4 h-20 w-20 rounded-full bg-linear-to-br from-blue-500 to-indigo-600 opacity-5 transition-all duration-300 group-hover:scale-150" />
+
                       <div className="relative z-10">
                         {/* Header con hora */}
-                        <div className="flex items-center justify-between mb-3">
-                          <div className="flex items-center gap-2 bg-blue-50 px-3 py-1.5 rounded-lg">
-                            <Clock className="w-4 h-4 text-blue-600" />
+                        <div className="mb-3 flex items-center justify-between">
+                          <div className="flex items-center gap-2 rounded-lg bg-blue-50 px-3 py-1.5">
+                            <Clock className="h-4 w-4 text-blue-600" />
                             <span className="font-bold text-gray-900">{apt.hora}</span>
                           </div>
-                          <div className="p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg text-white font-bold text-xs">
+                          <div className="rounded-lg bg-linear-to-br from-blue-500 to-indigo-600 p-2 text-xs font-bold text-white">
                             #{apt.id}
                           </div>
                         </div>
 
                         {/* Info del paciente */}
-                        <div className="flex items-start gap-3 mb-3">
-                          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-md flex-shrink-0">
+                        <div className="mb-3 flex items-start gap-3">
+                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-blue-500 to-purple-600 text-sm font-bold text-white shadow-md">
                             {apt.avatar}
                           </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-1">
-                              <User className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                              <span className="font-bold text-gray-900 truncate">{apt.paciente}</span>
+                          <div className="min-w-0 flex-1">
+                            <div className="mb-1 flex items-center gap-2">
+                              <User className="h-4 w-4 shrink-0 text-gray-400" />
+                              <span className="truncate font-bold text-gray-900">
+                                {apt.paciente}
+                              </span>
                             </div>
-                            <div className="flex items-center gap-2 mb-1">
-                              <Phone className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
+                            <div className="mb-1 flex items-center gap-2">
+                              <Phone className="h-3.5 w-3.5 shrink-0 text-gray-400" />
                               <span className="text-xs text-gray-600">{apt.telefono}</span>
                             </div>
                             <div className="flex items-center gap-2">
-                              <Mail className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
-                              <span className="text-xs text-gray-600 truncate">{apt.email}</span>
+                              <Mail className="h-3.5 w-3.5 shrink-0 text-gray-400" />
+                              <span className="truncate text-xs text-gray-600">{apt.email}</span>
                             </div>
                           </div>
                         </div>
 
                         {/* Motivo */}
-                        <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-3 border border-purple-200">
+                        <div className="rounded-lg border border-purple-200 bg-gradient-to-r from-purple-50 to-pink-50 p-3">
                           <div className="flex items-start gap-2">
-                            <Sparkles className="w-4 h-4 text-purple-600 flex-shrink-0 mt-0.5" />
+                            <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-purple-600" />
                             <div>
-                              <p className="text-xs font-semibold text-purple-900 mb-1">Motivo de consulta</p>
-                              <p className="text-sm text-gray-700 font-medium">{apt.motivo}</p>
+                              <p className="mb-1 text-xs font-semibold text-purple-900">
+                                Motivo de consulta
+                              </p>
+                              <p className="text-sm font-medium text-gray-700">{apt.motivo}</p>
                             </div>
                           </div>
                         </div>
                       </div>
 
                       {/* Barra decorativa */}
-                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-all duration-300" />
+                      <div className="absolute right-0 bottom-0 left-0 h-1 bg-gradient-to-r from-blue-500 to-purple-600 opacity-0 transition-all duration-300 group-hover:opacity-100" />
                     </div>
                   ))}
                 </div>
               ) : selectedDate ? (
-                <div className="text-center py-12">
-                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <CalendarIcon className="w-8 h-8 text-gray-400" />
+                <div className="py-12 text-center">
+                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
+                    <CalendarIcon className="h-8 w-8 text-gray-400" />
                   </div>
-                  <p className="text-gray-900 font-semibold mb-1">No hay citas programadas</p>
+                  <p className="mb-1 font-semibold text-gray-900">No hay citas programadas</p>
                   <p className="text-sm text-gray-500">Este día está libre</p>
                 </div>
               ) : (
-                <div className="text-center py-12">
-                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <CalendarIcon className="w-8 h-8 text-blue-600" />
+                <div className="py-12 text-center">
+                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
+                    <CalendarIcon className="h-8 w-8 text-blue-600" />
                   </div>
-                  <p className="text-gray-900 font-semibold mb-1">Selecciona un día</p>
+                  <p className="mb-1 font-semibold text-gray-900">Selecciona un día</p>
                   <p className="text-sm text-gray-500">Haz clic en una fecha del calendario</p>
                 </div>
               )}

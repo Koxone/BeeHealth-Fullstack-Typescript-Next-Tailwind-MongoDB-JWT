@@ -17,7 +17,7 @@ export default function MetricsGrid({
   return (
     <div className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
       {/* total día */}
-      <div className="rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 p-4 text-white shadow-sm md:p-6">
+      <div className="rounded-xl bg-linear-to-br from-blue-500 to-blue-600 p-4 text-white shadow-sm md:p-6">
         <div className="mb-2 flex items-center justify-between">
           <DollarSign className="h-8 w-8 opacity-80" />
           <span className="rounded bg-white/20 px-2 py-1 text-xs">Hoy</span>

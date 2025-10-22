@@ -57,11 +57,11 @@ export default function PatientHistory() {
   return (
     <div className="min-h-screen pb-8">
       {/* Header mejorado */}
-      <div className="-mx-4 -mt-4 mb-6 bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 px-4 pt-6 pb-8 md:rounded-2xl">
+      <div className="-mx-4 -mt-4 mb-6 bg-linear-to-br from-purple-50 via-pink-50 to-blue-50 px-4 pt-6 pb-8 md:rounded-2xl">
         <div className="mx-auto max-w-7xl">
           <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="flex items-start gap-4">
-              <div className="rounded-2xl bg-gradient-to-br from-purple-600 to-pink-600 p-3 shadow-lg">
+              <div className="rounded-2xl bg-linear-to-br from-purple-600 to-pink-600 p-3 shadow-lg">
                 <Activity className="h-8 w-8 text-white" />
               </div>
               <div>
@@ -118,7 +118,7 @@ export default function PatientHistory() {
               </p>
             </div>
 
-            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-600 to-pink-600 p-4 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl">
+            <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-purple-600 to-pink-600 p-4 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl">
               <div className="absolute top-0 right-0 -mt-10 -mr-10 h-20 w-20 rounded-full bg-white/10" />
               <div className="relative z-10">
                 <div className="mb-2 flex items-center justify-between">
@@ -235,7 +235,7 @@ export default function PatientHistory() {
                 <div
                   key={record.id}
                   style={{ animationDelay: `${index * 50}ms` }}
-                  className="animate-fadeInUp rounded-xl border-2 border-gray-200 bg-gradient-to-br from-purple-50 to-pink-50 p-4 transition-all duration-300 hover:border-purple-300 hover:shadow-lg"
+                  className="animate-fadeInUp rounded-xl border-2 border-gray-200 bg-linear-to-br from-purple-50 to-pink-50 p-4 transition-all duration-300 hover:border-purple-300 hover:shadow-lg"
                 >
                   <div className="mb-3 flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -272,7 +272,7 @@ export default function PatientHistory() {
 
         {/* Empty state */}
         {historyData.length === 0 && (
-          <div className="rounded-2xl border-2 border-dashed border-gray-300 bg-gradient-to-br from-gray-50 to-purple-50 p-12 text-center">
+          <div className="rounded-2xl border-2 border-dashed border-gray-300 bg-linear-to-br from-gray-50 to-purple-50 p-12 text-center">
             <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-purple-100">
               <FileText className="h-10 w-10 text-purple-600" />
             </div>
@@ -356,9 +356,9 @@ export default function PatientHistory() {
                   ></textarea>
                 </div>
 
-                <div className="rounded-lg border-l-4 border-blue-500 bg-gradient-to-br from-blue-50 to-indigo-50 p-4">
+                <div className="rounded-lg border-l-4 border-blue-500 bg-linear-to-br from-blue-50 to-indigo-50 p-4">
                   <div className="flex gap-3">
-                    <AlertCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-blue-600" />
+                    <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-blue-600" />
                     <div>
                       <p className="mb-1 text-sm font-semibold text-blue-900">Consejo</p>
                       <p className="text-sm text-blue-800">

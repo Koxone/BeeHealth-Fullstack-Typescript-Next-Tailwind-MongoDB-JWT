@@ -37,7 +37,7 @@ export default function AppointmentCard({ apt, index, canModify, onReschedule, o
 
           {/* doctor */}
           <div className="flex items-start gap-3 pl-1">
-            <div className="mt-0.5 rounded-lg bg-gradient-to-br from-blue-100 to-indigo-100 p-2">
+            <div className="mt-0.5 rounded-lg bg-linear-to-br from-blue-100 to-indigo-100 p-2">
               <User className="h-5 w-5 text-blue-700" />
             </div>
             <div>

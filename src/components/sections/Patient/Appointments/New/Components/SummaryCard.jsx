@@ -6,7 +6,7 @@ import { Sparkles, User, Calendar as CalendarIcon, Clock } from 'lucide-react'; 
 /* summary */
 export default function SummaryCard({ doctor, date, time }) {
   return (
-    <div className="animate-slideDown relative overflow-hidden rounded-2xl border-2 border-blue-500 bg-gradient-to-br from-blue-600 to-indigo-700 p-6 text-white shadow-2xl">
+    <div className="animate-slideDown relative overflow-hidden rounded-2xl border-2 border-blue-500 bg-linear-to-br from-blue-600 to-indigo-700 p-6 text-white shadow-2xl">
       <div className="absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full bg-white/10" />
       <div className="absolute bottom-0 left-0 -mb-12 -ml-12 h-24 w-24 rounded-full bg-white/10" />
 

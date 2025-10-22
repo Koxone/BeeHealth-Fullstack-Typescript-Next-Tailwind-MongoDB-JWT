@@ -131,10 +131,10 @@ export default function EmployeeConsultations() {
   return (
     <div className="min-h-screen pb-8">
       {/* Header mejorado */}
-      <div className="-mx-4 -mt-4 mb-6 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 px-4 pt-6 pb-8 md:rounded-2xl">
+      <div className="-mx-4 -mt-4 mb-6 bg-linear-to-br from-indigo-50 via-purple-50 to-pink-50 px-4 pt-6 pb-8 md:rounded-2xl">
         <div className="mx-auto max-w-7xl">
           <div className="mb-6 flex items-start gap-4">
-            <div className="rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-600 p-3 shadow-lg">
+            <div className="rounded-2xl bg-linear-to-br from-indigo-600 to-purple-600 p-3 shadow-lg">
               <DollarSign className="h-8 w-8 text-white" />
             </div>
             <div>
@@ -149,7 +149,7 @@ export default function EmployeeConsultations() {
 
           {/* Métricas mejoradas */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
-            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-700 p-5 text-white shadow-lg md:col-span-1">
+            <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-indigo-600 to-purple-700 p-5 text-white shadow-lg md:col-span-1">
               <div className="absolute top-0 right-0 -mt-12 -mr-12 h-24 w-24 rounded-full bg-white/10" />
               <div className="relative z-10">
                 <div className="mb-3 flex items-center justify-between">
@@ -333,7 +333,7 @@ export default function EmployeeConsultations() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-sm font-bold text-white shadow-md">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-indigo-500 to-purple-600 text-sm font-bold text-white shadow-md">
                           {consulta.avatar}
                         </div>
                         <span className="text-sm font-semibold text-gray-900">
@@ -424,11 +424,11 @@ export default function EmployeeConsultations() {
               <div
                 key={consulta.id}
                 style={{ animationDelay: `${index * 50}ms` }}
-                className="animate-fadeInUp rounded-xl border-2 border-gray-200 bg-gradient-to-br from-indigo-50 to-purple-50 p-4 transition-all duration-300 hover:border-indigo-300 hover:shadow-lg"
+                className="animate-fadeInUp rounded-xl border-2 border-gray-200 bg-linear-to-br from-indigo-50 to-purple-50 p-4 transition-all duration-300 hover:border-indigo-300 hover:shadow-lg"
               >
                 <div className="mb-3 flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 font-bold text-white shadow-md">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-indigo-500 to-purple-600 font-bold text-white shadow-md">
                       {consulta.avatar}
                     </div>
                     <div>
@@ -638,7 +638,7 @@ export default function EmployeeConsultations() {
                   </div>
                 </div>
 
-                <div className="rounded-xl border-2 border-indigo-200 bg-gradient-to-br from-blue-50 to-indigo-50 p-4">
+                <div className="rounded-xl border-2 border-indigo-200 bg-linear-to-br from-blue-50 to-indigo-50 p-4">
                   <label className="flex cursor-pointer items-center gap-3">
                     <input
                       type="checkbox"
@@ -709,9 +709,9 @@ export default function EmployeeConsultations() {
                   ¿Estás seguro de que deseas eliminar esta consulta del registro?
                 </p>
 
-                <div className="rounded-xl border-2 border-gray-200 bg-gradient-to-br from-gray-50 to-red-50 p-5">
+                <div className="rounded-xl border-2 border-gray-200 bg-linear-to-br from-gray-50 to-red-50 p-5">
                   <div className="mb-3 flex items-start gap-3">
-                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-red-500 to-rose-600 font-bold text-white shadow-lg">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-red-500 to-rose-600 font-bold text-white shadow-lg">
                       {itemToDelete.avatar}
                     </div>
                     <div className="min-w-0 flex-1">

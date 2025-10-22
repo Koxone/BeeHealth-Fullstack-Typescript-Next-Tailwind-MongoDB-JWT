@@ -7,7 +7,7 @@ import { Filter } from 'lucide-react'; // icon
 export default function FiltersBar({ filters, active, onChange }) {
   return (
     <div className="scrollbar-hide flex items-center gap-3 overflow-x-auto pb-2">
-      <Filter className="h-5 w-5 flex-shrink-0 text-gray-400" />
+      <Filter className="h-5 w-5 shrink-0 text-gray-400" />
       {filters.map((f) => (
         <button
           key={f.label}

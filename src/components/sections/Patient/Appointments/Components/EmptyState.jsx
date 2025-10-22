@@ -7,7 +7,7 @@ import { Calendar, Plus } from 'lucide-react'; // icons
 export default function EmptyState({ activeFilter, onNew }) {
   const isAll = activeFilter === 'Todas';
   return (
-    <div className="rounded-2xl border-2 border-dashed border-gray-300 bg-gradient-to-br from-gray-50 to-blue-50 p-12 text-center shadow-sm md:p-16">
+    <div className="rounded-2xl border-2 border-dashed border-gray-300 bg-linear-to-br from-gray-50 to-blue-50 p-12 text-center shadow-sm md:p-16">
       <div className="mx-auto max-w-md">
         <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-blue-100">
           <Calendar className="h-10 w-10 text-blue-600" />

@@ -36,7 +36,7 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 via-white to-green-50 p-4">
+    <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-blue-50 via-white to-green-50 p-4">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="mb-6 text-center md:mb-8">

@@ -26,7 +26,7 @@ export default function TimeSlots({ dateLabel, times, selectedTime, onSelectTime
             onClick={() => onSelectTime(time)}
             className={`group animate-fadeInUp relative flex flex-col items-center justify-center gap-1.5 overflow-hidden rounded-xl border-2 px-3 py-4 transition-all duration-300 ${
               selectedTime === time
-                ? 'scale-110 border-purple-600 bg-gradient-to-br from-purple-50 to-pink-50 shadow-lg'
+                ? 'scale-110 border-purple-600 bg-linear-to-br from-purple-50 to-pink-50 shadow-lg'
                 : 'border-gray-200 bg-white hover:border-purple-300 hover:shadow-md active:scale-95'
             }`}
           >

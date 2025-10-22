@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 
 export default function MedicalHistoryForm() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState('peso'); 
+  const [activeTab, setActiveTab] = useState('peso');
   const [formData, setFormData] = useState({
     // Datos comunes
     edad: '',
@@ -102,7 +102,7 @@ export default function MedicalHistoryForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 p-4 py-6 md:py-10">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-green-50 p-4 py-6 md:py-10">
       <div className="mx-auto max-w-4xl">
         {/* Header */}
         <div className="mb-6 text-center">

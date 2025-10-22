@@ -389,7 +389,7 @@ export default function PatientExercises() {
                   <ol className="space-y-2">
                     {selectedEjercicio.instrucciones.map((inst, index) => (
                       <li key={index} className="flex gap-3">
-                        <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-blue-500 text-sm font-medium text-white">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-500 text-sm font-medium text-white">
                           {index + 1}
                         </span>
                         <span className="pt-0.5 text-gray-700">{inst}</span>

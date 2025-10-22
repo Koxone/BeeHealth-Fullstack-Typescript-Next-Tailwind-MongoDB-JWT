@@ -65,9 +65,9 @@ export default function AppointmentsList({ citas, onReagendar, onCancelar, getEs
 
           <div className="relative z-10 flex flex-col gap-4 sm:flex-row sm:items-center">
             {/* Avatar mejorado */}
-            <div className="flex-shrink-0">
+            <div className="shrink-0">
               <div
-                className={`relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${
+                className={`relative flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-br ${
                   cita.estado === 'Cancelada'
                     ? 'from-gray-300 to-gray-400'
                     : 'from-blue-500 to-purple-600 shadow-lg shadow-blue-500/30 group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-blue-500/40'
@@ -121,7 +121,7 @@ export default function AppointmentsList({ citas, onReagendar, onCancelar, getEs
 
             {/* Botones de acción mejorados */}
             {cita.estado !== 'Cancelada' && cita.estado !== 'Completada' && (
-              <div className="flex flex-shrink-0 gap-2 sm:flex-col lg:flex-row">
+              <div className="flex shrink-0 gap-2 sm:flex-col lg:flex-row">
                 <button
                   onClick={() => onReagendar(cita)}
                   className="group/btn flex items-center justify-center gap-2 rounded-xl border-2 border-blue-200 px-4 py-2.5 text-sm font-medium text-blue-600 transition-all duration-200 hover:border-blue-400 hover:bg-blue-50 hover:shadow-md active:scale-95"
@@ -173,7 +173,7 @@ export default function AppointmentsList({ citas, onReagendar, onCancelar, getEs
 
       {/* Empty state si no hay citas */}
       {citas.length === 0 && (
-        <div className="rounded-2xl border-2 border-dashed border-gray-300 bg-gradient-to-br from-gray-50 to-blue-50 p-12 text-center">
+        <div className="rounded-2xl border-2 border-dashed border-gray-300 bg-linear-to-br from-gray-50 to-blue-50 p-12 text-center">
           <div className="mx-auto max-w-md">
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
               <Calendar className="h-8 w-8 text-blue-600" />

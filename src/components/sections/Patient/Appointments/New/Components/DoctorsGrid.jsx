@@ -26,7 +26,7 @@ export default function DoctorsGrid({ doctors, selectedDoctor, onSelect }) {
             onClick={() => onSelect(doctor.id)}
             className={`group animate-fadeInUp relative overflow-hidden rounded-xl border-2 p-5 text-left transition-all duration-300 ${
               selectedDoctor === doctor.id
-                ? 'scale-105 border-blue-600 bg-gradient-to-br from-blue-50 to-indigo-50 shadow-lg'
+                ? 'scale-105 border-blue-600 bg-linear-to-br from-blue-50 to-indigo-50 shadow-lg'
                 : 'border-gray-200 hover:border-blue-300 hover:shadow-md active:scale-95'
             }`}
           >
@@ -35,8 +35,8 @@ export default function DoctorsGrid({ doctors, selectedDoctor, onSelect }) {
                 <div
                   className={`flex h-14 w-14 items-center justify-center rounded-full text-lg font-bold transition-all duration-300 ${
                     selectedDoctor === doctor.id
-                      ? 'bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-lg'
-                      : 'bg-gradient-to-br from-blue-100 to-indigo-100 text-blue-600 group-hover:scale-110'
+                      ? 'bg-linear-to-br from-blue-600 to-blue-700 text-white shadow-lg'
+                      : 'bg-linear-to-br from-blue-100 to-indigo-100 text-blue-600 group-hover:scale-110'
                   }`}
                 >
                   {doctor.avatar}
@@ -52,7 +52,7 @@ export default function DoctorsGrid({ doctors, selectedDoctor, onSelect }) {
             </div>
 
             {selectedDoctor === doctor.id && (
-              <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-blue-400/10 to-indigo-400/10" />
+              <div className="absolute inset-0 animate-pulse bg-linear-to-br from-blue-400/10 to-indigo-400/10" />
             )}
           </button>
         ))}

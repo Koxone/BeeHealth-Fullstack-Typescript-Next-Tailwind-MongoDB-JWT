@@ -89,7 +89,7 @@ export default function UserProfile() {
 
         <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm md:p-8">
           <div className="mb-8 flex flex-col items-center">
-            <div className="mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-pink-500 text-3xl font-bold text-white">
+            <div className="mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-linear-to-br from-purple-500 to-pink-500 text-3xl font-bold text-white">
               {empleado.nombre
                 .split(' ')
                 .map((n) => n[0])

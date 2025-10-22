@@ -27,10 +27,10 @@ export default function AppointmentCard({
         <div className="flex min-w-0 flex-1 items-start gap-4">
           {/* avatar */}
           <div
-            className={`relative flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl font-bold text-white shadow-lg transition-all duration-300 ${
+            className={`relative flex h-14 w-14 shrink-0 items-center justify-center rounded-xl font-bold text-white shadow-lg transition-all duration-300 ${
               cita.estado === 'Cancelada'
-                ? 'bg-gradient-to-br from-gray-300 to-gray-400'
-                : 'bg-gradient-to-br from-emerald-500 to-teal-600 group-hover:scale-110 group-hover:shadow-xl'
+                ? 'bg-linear-to-br from-gray-300 to-gray-400'
+                : 'bg-linear-to-br from-emerald-500 to-teal-600 group-hover:scale-110 group-hover:shadow-xl'
             }`}
           >
             {cita.avatar}
@@ -54,26 +54,26 @@ export default function AppointmentCard({
 
             <div className="mb-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
               <div className="flex items-center gap-2 rounded-lg bg-blue-50 px-3 py-1.5">
-                <Calendar className="h-4 w-4 flex-shrink-0 text-blue-600" />
+                <Calendar className="h-4 w-4 shrink-0 text-blue-600" />
                 <span className="text-sm font-semibold text-gray-700">{cita.fecha}</span>
               </div>
               <div className="flex items-center gap-2 rounded-lg bg-purple-50 px-3 py-1.5">
-                <Clock className="h-4 w-4 flex-shrink-0 text-purple-600" />
+                <Clock className="h-4 w-4 shrink-0 text-purple-600" />
                 <span className="text-sm font-semibold text-gray-700">{cita.hora}</span>
               </div>
               <div className="flex items-center gap-2 rounded-lg bg-green-50 px-3 py-1.5">
-                <Phone className="h-4 w-4 flex-shrink-0 text-green-600" />
+                <Phone className="h-4 w-4 shrink-0 text-green-600" />
                 <span className="text-sm font-medium text-gray-700">{cita.telefono}</span>
               </div>
               <div className="flex min-w-0 items-center gap-2 rounded-lg bg-amber-50 px-3 py-1.5">
-                <Mail className="h-4 w-4 flex-shrink-0 text-amber-600" />
+                <Mail className="h-4 w-4 shrink-0 text-amber-600" />
                 <span className="truncate text-sm font-medium text-gray-700">{cita.email}</span>
               </div>
             </div>
 
             <div className="rounded-lg border border-indigo-200 bg-gradient-to-r from-indigo-50 to-purple-50 p-3">
               <div className="flex items-start gap-2">
-                <Sparkles className="mt-0.5 h-4 w-4 flex-shrink-0 text-indigo-600" />
+                <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-indigo-600" />
                 <div>
                   <p className="mb-1 text-xs font-semibold text-indigo-900">Motivo de consulta</p>
                   <p className="text-sm font-medium text-gray-700">{cita.motivo}</p>
@@ -85,7 +85,7 @@ export default function AppointmentCard({
 
         {/* actions */}
         {cita.estado !== 'Cancelada' ? (
-          <div className="flex flex-shrink-0 gap-2 sm:flex-col lg:flex-row">
+          <div className="flex shrink-0 gap-2 sm:flex-col lg:flex-row">
             <button
               onClick={onEdit}
               className="group/btn flex items-center justify-center gap-2 rounded-xl border-2 border-blue-200 p-3 text-blue-600 transition-all duration-200 hover:border-blue-400 hover:bg-blue-50 active:scale-95"
@@ -102,7 +102,7 @@ export default function AppointmentCard({
             </button>
           </div>
         ) : (
-          <div className="flex flex-shrink-0 items-center gap-2 rounded-xl border border-rose-200 bg-rose-50 px-4 py-2">
+          <div className="flex shrink-0 items-center gap-2 rounded-xl border border-rose-200 bg-rose-50 px-4 py-2">
             <div className="h-2 w-2 animate-pulse rounded-full bg-rose-500" />
             <span className="text-sm font-semibold whitespace-nowrap text-rose-600">
               Cita cancelada

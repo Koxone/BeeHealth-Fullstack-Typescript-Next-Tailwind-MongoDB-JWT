@@ -35,7 +35,7 @@ export default function CancelModal({ apt, onClose, onConfirm }) {
               ¿Estás seguro de que deseas cancelar esta cita médica?
             </p>
 
-            <div className="rounded-xl border border-gray-200 bg-gradient-to-br from-gray-50 to-blue-50 p-5">
+            <div className="rounded-xl border border-gray-200 bg-linear-to-br from-gray-50 to-blue-50 p-5">
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
                   <div className="rounded-lg bg-white p-2">
@@ -62,7 +62,7 @@ export default function CancelModal({ apt, onClose, onConfirm }) {
 
             <div className="rounded-lg border-l-4 border-amber-400 bg-amber-50 p-4">
               <div className="flex gap-3">
-                <AlertCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-600" />
+                <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" />
                 <div>
                   <p className="mb-1 text-sm font-semibold text-amber-900">
                     Política de cancelación
