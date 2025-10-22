@@ -1,71 +1,205 @@
 'use client';
 
-/* imports */
-import { RefreshCw, X, Clock, FileText } from 'lucide-react';
+import {
+  RefreshCw,
+  X,
+  Clock,
+  FileText,
+  Calendar,
+  User,
+  AlertCircle,
+  CheckCircle,
+  XCircle,
+  Loader,
+} from 'lucide-react';
 
-/* list */
 export default function AppointmentsList({ citas, onReagendar, onCancelar, getEstadoBadge }) {
+  const getEstadoIcon = (estado) => {
+    switch (estado) {
+      case 'Confirmada':
+        return <CheckCircle className="h-4 w-4" />;
+      case 'Pendiente':
+        return <Loader className="h-4 w-4" />;
+      case 'Completada':
+        return <CheckCircle className="h-4 w-4" />;
+      case 'Cancelada':
+        return <XCircle className="h-4 w-4" />;
+      default:
+        return <AlertCircle className="h-4 w-4" />;
+    }
+  };
+
+  const getEstadoColor = (estado) => {
+    switch (estado) {
+      case 'Confirmada':
+        return 'from-emerald-500 to-green-600';
+      case 'Pendiente':
+        return 'from-amber-500 to-orange-600';
+      case 'Completada':
+        return 'from-slate-400 to-gray-600';
+      case 'Cancelada':
+        return 'from-rose-500 to-red-600';
+      default:
+        return 'from-gray-400 to-gray-600';
+    }
+  };
+
   return (
-    <div className="space-y-3">
-      {citas.map((cita) => (
+    <div className="space-y-4">
+      {citas.map((cita, index) => (
         <div
           key={cita.id}
-          className={`rounded-xl border-2 p-4 transition ${
+          style={{ animationDelay: `${index * 50}ms` }}
+          className={`group animate-fadeInUp relative overflow-hidden rounded-2xl border-2 p-5 transition-all duration-300 ${
             cita.estado === 'Cancelada'
-              ? 'border-gray-200 bg-gray-50 opacity-60'
-              : 'border-gray-200 bg-white hover:border-blue-300'
+              ? 'border-rose-200 bg-gradient-to-r from-rose-50/50 to-white opacity-75'
+              : 'border-gray-200 bg-white hover:scale-[1.02] hover:border-blue-300 hover:shadow-xl'
           }`}
         >
-          <div className="flex items-center gap-4">
-            {/* avatar */}
-            <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-500 font-semibold text-white">
-              {cita.avatar}
+          {/* Decorative background element */}
+          <div
+            className={`absolute -top-8 -right-8 h-32 w-32 rounded-full opacity-5 transition-all duration-300 ${
+              cita.estado === 'Cancelada' ? 'bg-rose-500' : 'bg-blue-500 group-hover:scale-150'
+            }`}
+          />
+
+          <div className="relative z-10 flex flex-col gap-4 sm:flex-row sm:items-center">
+            {/* Avatar mejorado */}
+            <div className="flex-shrink-0">
+              <div
+                className={`relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${
+                  cita.estado === 'Cancelada'
+                    ? 'from-gray-300 to-gray-400'
+                    : 'from-blue-500 to-purple-600 shadow-lg shadow-blue-500/30 group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-blue-500/40'
+                } font-bold text-white transition-all duration-300`}
+              >
+                {cita.avatar}
+
+                {/* Status indicator dot */}
+                <div
+                  className={`absolute -right-1 -bottom-1 flex h-4 w-4 items-center justify-center rounded-full border-2 border-white ${
+                    cita.estado === 'Confirmada'
+                      ? 'bg-emerald-500'
+                      : cita.estado === 'Pendiente'
+                        ? 'animate-pulse bg-amber-500'
+                        : cita.estado === 'Completada'
+                          ? 'bg-slate-500'
+                          : 'bg-rose-500'
+                  }`}
+                >
+                  <div className="h-1.5 w-1.5 rounded-full bg-white" />
+                </div>
+              </div>
             </div>
 
-            {/* info */}
-            <div className="min-w-0 flex-1">
-              <div className="mb-1 flex items-center gap-2">
-                <h3 className="truncate font-semibold text-gray-900">{cita.paciente}</h3>
+            {/* Info mejorada */}
+            <div className="min-w-0 flex-1 space-y-2">
+              {/* Header con nombre y estado */}
+              <div className="flex flex-wrap items-center gap-2">
+                <h3 className="truncate text-lg font-bold text-gray-900">{cita.paciente}</h3>
                 <span
-                  className={`rounded-full border px-2 py-0.5 text-xs font-medium ${getEstadoBadge(cita.estado)}`}
+                  className={`inline-flex items-center gap-1.5 rounded-xl border px-3 py-1 text-xs font-semibold transition-all duration-200 ${getEstadoBadge(cita.estado)}`}
                 >
-                  {cita.estado}
+                  {getEstadoIcon(cita.estado)}
+                  <span>{cita.estado}</span>
                 </span>
               </div>
-              <div className="flex items-center gap-3 text-sm text-gray-600">
-                <div className="flex items-center gap-1">
-                  <Clock className="h-4 w-4" />
-                  <span>{cita.hora}</span>
+
+              {/* Detalles en cards pequeñas */}
+              <div className="flex flex-wrap gap-2">
+                <div className="flex items-center gap-2 rounded-lg border border-blue-100 bg-gradient-to-r from-blue-50 to-indigo-50 px-3 py-1.5">
+                  <Clock className="h-4 w-4 text-blue-600" />
+                  <span className="text-sm font-semibold text-gray-700">{cita.hora}</span>
                 </div>
-                <div className="hidden items-center gap-1 sm:flex">
-                  <FileText className="h-4 w-4" />
-                  <span>{cita.tipo}</span>
+
+                <div className="flex items-center gap-2 rounded-lg border border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50 px-3 py-1.5">
+                  <FileText className="h-4 w-4 text-purple-600" />
+                  <span className="text-sm font-medium text-gray-700">{cita.tipo}</span>
                 </div>
               </div>
             </div>
 
-            {/* actions */}
-            {cita.estado !== 'Cancelada' && (
-              <div className="flex flex-shrink-0 gap-2">
+            {/* Botones de acción mejorados */}
+            {cita.estado !== 'Cancelada' && cita.estado !== 'Completada' && (
+              <div className="flex flex-shrink-0 gap-2 sm:flex-col lg:flex-row">
                 <button
                   onClick={() => onReagendar(cita)}
-                  className="rounded-lg p-2 text-blue-600 transition hover:bg-blue-50 active:scale-95"
+                  className="group/btn flex items-center justify-center gap-2 rounded-xl border-2 border-blue-200 px-4 py-2.5 text-sm font-medium text-blue-600 transition-all duration-200 hover:border-blue-400 hover:bg-blue-50 hover:shadow-md active:scale-95"
                   title="Reagendar"
                 >
-                  <RefreshCw className="h-5 w-5" />
+                  <RefreshCw className="h-4 w-4 transition-transform duration-300 group-hover/btn:rotate-180" />
+                  <span className="hidden xl:inline">Reagendar</span>
                 </button>
                 <button
                   onClick={() => onCancelar(cita)}
-                  className="rounded-lg p-2 text-red-600 transition hover:bg-red-50 active:scale-95"
+                  className="group/btn flex items-center justify-center gap-2 rounded-xl border-2 border-rose-200 px-4 py-2.5 text-sm font-medium text-rose-600 transition-all duration-200 hover:border-rose-400 hover:bg-rose-50 hover:shadow-md active:scale-95"
                   title="Cancelar"
                 >
-                  <X className="h-5 w-5" />
+                  <X className="h-4 w-4 transition-transform duration-200 group-hover/btn:rotate-90" />
+                  <span className="hidden xl:inline">Cancelar</span>
                 </button>
               </div>
             )}
+
+            {/* Estado para citas completadas */}
+            {cita.estado === 'Completada' && (
+              <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-2">
+                <div className="h-2 w-2 rounded-full bg-slate-400" />
+                <span className="text-sm font-medium whitespace-nowrap text-slate-600">
+                  Consulta finalizada
+                </span>
+              </div>
+            )}
+
+            {/* Estado para citas canceladas */}
+            {cita.estado === 'Cancelada' && (
+              <div className="flex items-center gap-2 rounded-xl border border-rose-200 bg-rose-50 px-4 py-2">
+                <div className="h-2 w-2 animate-pulse rounded-full bg-rose-500" />
+                <span className="text-sm font-semibold whitespace-nowrap text-rose-600">
+                  Cita cancelada
+                </span>
+              </div>
+            )}
           </div>
+
+          {/* Barra de color según estado */}
+          <div
+            className={`absolute right-0 bottom-0 left-0 h-1 bg-gradient-to-r ${getEstadoColor(cita.estado)} rounded-b-xl transition-all duration-300 ${
+              cita.estado !== 'Cancelada' ? 'group-hover:h-1.5' : ''
+            }`}
+          />
         </div>
       ))}
+
+      {/* Empty state si no hay citas */}
+      {citas.length === 0 && (
+        <div className="rounded-2xl border-2 border-dashed border-gray-300 bg-gradient-to-br from-gray-50 to-blue-50 p-12 text-center">
+          <div className="mx-auto max-w-md">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
+              <Calendar className="h-8 w-8 text-blue-600" />
+            </div>
+            <h3 className="mb-2 text-xl font-bold text-gray-900">No hay citas programadas</h3>
+            <p className="text-gray-600">Las citas aparecerán aquí cuando sean agendadas</p>
+          </div>
+        </div>
+      )}
+
+      <style jsx global>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fadeInUp {
+          animation: fadeInUp 0.4s ease-out forwards;
+        }
+      `}</style>
     </div>
   );
 }
