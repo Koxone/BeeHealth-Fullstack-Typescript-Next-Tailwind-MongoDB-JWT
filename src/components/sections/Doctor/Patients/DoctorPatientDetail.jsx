@@ -1,12 +1,10 @@
 'use client';
 
-/* state */
 import { useRouter, useParams } from 'next/navigation';
 import { useState, useEffect, useMemo } from 'react';
 import moment from 'moment';
 import 'moment/locale/es';
 
-/* icons */
 import {
   ArrowLeft,
   User,
@@ -26,7 +24,6 @@ import {
   ClipboardList,
 } from 'lucide-react';
 
-/* components */
 import BackButton from './Components/BackButton';
 import PatientHeader from './Components/PatientHeader';
 import QuickStats from './Components/QuickStats';
@@ -34,7 +31,6 @@ import WeightChart from './Components/WeightChart';
 import ClinicalHistory from './Components/ClinicalHistory';
 import HistoryModal from './Components/HistoryModal';
 
-/* container */
 export default function DoctorPatientDetail() {
   /* router */
   const router = useRouter();
@@ -238,8 +234,6 @@ export default function DoctorPatientDetail() {
         />
       )}
 
-      {/* animations */
-      /* global keyframes */}
       <style jsx>{`
         @keyframes fadeIn {
           from {

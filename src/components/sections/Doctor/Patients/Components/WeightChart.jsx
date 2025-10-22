@@ -18,7 +18,7 @@ export default function WeightChart({ data, icons }) {
     <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-lg">
       <div className="mb-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-blue-500 to-cyan-500">
             <TrendIcon className="h-6 w-6 text-white" />
           </div>
           <div>

@@ -4,7 +4,7 @@
 export default function PatientHeader({ patient, icons, moment }) {
   const { User, Mail, Phone, CalendarIcon, Activity, Stethoscope } = icons;
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500 via-blue-600 to-cyan-600 p-8 shadow-xl">
+    <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-blue-500 via-blue-600 to-cyan-600 p-8 shadow-xl">
       <div className="absolute -top-10 -right-10 h-40 w-40 rounded-full bg-white/10 blur-3xl" />
       <div className="absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-white/10 blur-3xl" />
 

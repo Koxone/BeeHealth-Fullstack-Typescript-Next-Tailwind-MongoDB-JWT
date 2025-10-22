@@ -7,7 +7,7 @@ export default function ClinicalHistory({ records, onAdd, onEdit, icons }) {
     <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-lg">
       <div className="mb-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-green-500 to-emerald-500">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-green-500 to-emerald-500">
             <ClipboardList className="h-6 w-6 text-white" />
           </div>
           <div>
@@ -29,7 +29,7 @@ export default function ClinicalHistory({ records, onAdd, onEdit, icons }) {
           {records.map((r, index) => (
             <div
               key={r._id}
-              className="group rounded-xl border-2 border-gray-200 bg-gradient-to-br from-gray-50 to-white p-4 transition hover:border-blue-300 hover:shadow-md"
+              className="group rounded-xl border-2 border-gray-200 bg-linear-to-br from-gray-50 to-white p-4 transition hover:border-blue-300 hover:shadow-md"
               style={{
                 animationDelay: `${index * 100}ms`,
                 animation: 'slideIn 0.3s ease-out forwards',
