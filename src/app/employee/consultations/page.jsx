@@ -521,7 +521,7 @@ export default function EmployeeConsultations() {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="relative sticky top-0 z-10 overflow-hidden rounded-t-3xl bg-linear-to-r from-indigo-600 to-purple-600 px-6 py-5">
+              <div className="sticky top-0 z-10 overflow-hidden rounded-t-3xl bg-linear-to-r from-indigo-600 to-purple-600 px-6 py-5">
                 <div className="absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full bg-white/10" />
                 <div className="relative z-10 flex items-center justify-between">
                   <div className="flex items-center gap-3">
