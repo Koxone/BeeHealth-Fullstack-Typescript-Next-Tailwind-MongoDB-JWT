@@ -12,6 +12,7 @@ import {
   X,
   Phone,
   Mail,
+  Sparkles,
   AlertCircle,
   CheckCircle,
   Filter,

@@ -85,27 +85,6 @@ export default function Sidebar({ role = 'patient' }) {
     <>
       {/* Desktop Sidebar */}
       <aside className="hidden min-h-screen w-72 flex-col border-r-2 border-gray-200 bg-linear-to-b from-white to-gray-50 shadow-xl md:flex">
-        {/* Header mejorado */}
-        <div className={`bg-linear-to-r ${getRoleGradient()} relative overflow-hidden p-6`}>
-          <div className="absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full bg-white/10" />
-          <div className="absolute bottom-0 left-0 -mb-12 -ml-12 h-24 w-24 rounded-full bg-white/10" />
-
-          <div className="relative z-10">
-            <div className="mb-3 flex items-center gap-3">
-              <div className="rounded-xl bg-white/20 p-2.5 backdrop-blur-sm">
-                <Heart className="h-7 w-7 text-white" />
-              </div>
-              <div>
-                <span className="text-2xl font-bold text-white">MedTrack</span>
-                <div className="mt-0.5 flex items-center gap-1.5">
-                  <Sparkles className="h-3 w-3 text-white/80" />
-                  <span className="text-xs font-medium text-white/90">{getRoleName()}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Navigation */}
         <nav className="flex-1 space-y-1 p-4">
           {menu.map((item, index) => {

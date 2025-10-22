@@ -12,7 +12,7 @@ export default function EmployeeLayout({ children }) {
       <div className="min-h-screen bg-gray-50">
         <Header role={currentUser?.role} />
         <div className="flex">
-          <Sidebar role="employee" />
+          <Sidebar role={currentUser?.role} />
           <main className="flex-1 p-4 pb-20 md:p-6 md:pb-6">
             <div className="mx-auto max-w-7xl">{children}</div>
           </main>
