@@ -139,32 +139,49 @@ export default function DoctorExercises() {
         {filteredEjercicios.map((e) => (
           <div
             key={e.id}
-            className="rounded-xl border border-gray-200 bg-white p-4 shadow hover:border-blue-400"
+            className="group relative rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition-all duration-200 hover:border-blue-300 hover:shadow-lg"
           >
-            <img
-              src={e.imagenPrincipal}
-              alt={e.nombre}
-              className="h-40 w-full rounded object-cover"
-            />
-            <h3 className="mt-3 font-semibold text-gray-900">{e.nombre}</h3>
-            <p className="text-sm text-gray-600">{e.categoria}</p>
-            <div className="mt-3 flex gap-2">
+            {/* Imagen */}
+            <div className="relative h-40 w-full overflow-hidden rounded-lg">
+              <img
+                src={e.imagenPrincipal}
+                alt={e.nombre}
+                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            </div>
+
+            {/* Nombre y categoría */}
+            <div className="mt-3">
+              <h3 className="text-base font-semibold text-gray-900 transition-colors group-hover:text-blue-600">
+                {e.nombre}
+              </h3>
+              <p className="text-sm text-gray-600">{e.categoria}</p>
+            </div>
+
+            {/* Botones */}
+            <div className="mt-4 flex gap-2">
               <button
                 onClick={() => handleEdit(e)}
-                className="flex-1 rounded-lg bg-blue-50 py-2 text-blue-600"
+                className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-blue-50 py-2 text-sm font-medium text-blue-600 transition hover:bg-blue-100 active:scale-95"
               >
-                <Edit2 className="inline h-4 w-4" /> Editar
+                <Edit2 className="h-4 w-4" />
+                Editar
               </button>
               <button
                 onClick={() => {
                   setEjercicioToDelete(e);
                   setShowDeleteModal(true);
                 }}
-                className="flex-1 rounded-lg bg-red-50 py-2 text-red-600"
+                className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-red-50 py-2 text-sm font-medium text-red-600 transition hover:bg-red-100 active:scale-95"
               >
-                <Trash2 className="inline h-4 w-4" /> Eliminar
+                <Trash2 className="h-4 w-4" />
+                Eliminar
               </button>
             </div>
+
+            {/* Overlay de acción rápida */}
+            <div className="pointer-events-none absolute inset-0 rounded-xl bg-blue-50/10 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
           </div>
         ))}
       </div>
