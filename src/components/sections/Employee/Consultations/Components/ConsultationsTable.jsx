@@ -6,7 +6,7 @@ export default function ConsultationsTable({ rows, icons, totals, onEdit, onDele
   return (
     <div className="hidden overflow-x-auto md:block">
       <table className="w-full">
-        <thead className="border-b-2 border-gray-200 bg-gradient-to-r from-gray-50 to-indigo-50">
+        <thead className="border-b-2 border-gray-200 bg-linear-to-r from-gray-50 to-indigo-50">
           <tr>
             <th className="px-6 py-4 text-left">
               <div className="flex items-center gap-2">
@@ -45,7 +45,7 @@ export default function ConsultationsTable({ rows, icons, totals, onEdit, onDele
             <tr
               key={c.id}
               style={{ animationDelay: `${i * 50}ms` }}
-              className="group animate-fadeInUp transition hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50"
+              className="group animate-fadeInUp transition hover:bg-linear-to-r hover:from-indigo-50 hover:to-purple-50"
             >
               <td className="px-6 py-4">
                 <div className="flex items-center gap-3">
@@ -107,7 +107,7 @@ export default function ConsultationsTable({ rows, icons, totals, onEdit, onDele
             </tr>
           ))}
         </tbody>
-        <tfoot className="border-t-2 border-gray-200 bg-gradient-to-r from-gray-50 to-indigo-50">
+        <tfoot className="border-t-2 border-gray-200 bg-linear-to-r from-gray-50 to-indigo-50">
           <tr className="font-bold">
             <td colSpan="3" className="px-6 py-4 text-sm text-gray-900">
               <div className="flex items-center gap-2">

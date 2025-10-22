@@ -15,7 +15,7 @@ export default function DeleteModal({ item, onClose, onConfirm, icons }) {
           className="animate-slideUp pointer-events-auto w-full max-w-md rounded-3xl border border-gray-100 bg-white shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="relative overflow-hidden rounded-t-3xl bg-gradient-to-r from-red-600 to-rose-600 px-6 py-5">
+          <div className="relative overflow-hidden rounded-t-3xl bg-linear-to-r from-red-600 to-rose-600 px-6 py-5">
             <div className="absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full bg-white/10" />
             <div className="relative z-10 flex items-center gap-3">
               <div className="rounded-xl bg-white/20 p-2 backdrop-blur-sm">
@@ -60,7 +60,7 @@ export default function DeleteModal({ item, onClose, onConfirm, icons }) {
               </button>
               <button
                 onClick={onConfirm}
-                className="flex-1 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 px-6 py-3 font-semibold text-white shadow-lg transition hover:from-red-700 hover:to-rose-700 active:scale-95"
+                className="flex-1 rounded-xl bg-linear-to-r from-red-600 to-rose-600 px-6 py-3 font-semibold text-white shadow-lg transition hover:from-red-700 hover:to-rose-700 active:scale-95"
               >
                 Sí, Eliminar
               </button>

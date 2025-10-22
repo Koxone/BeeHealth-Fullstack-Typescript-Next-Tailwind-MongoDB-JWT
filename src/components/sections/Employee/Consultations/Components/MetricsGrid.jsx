@@ -43,7 +43,7 @@ export default function MetricsGrid({ icons, totals, porcentajeCobrado }) {
         <div className="mt-2 flex items-center gap-1">
           <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-gray-200">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-green-600"
+              className="h-full rounded-full bg-linear-to-r from-emerald-500 to-green-600"
               style={{ width: `${porcentajeCobrado}%` }}
             />
           </div>

@@ -14,7 +14,7 @@ export default function AddEditModal({ editingItem, form, setForm, onClose, onSu
           className="animate-slideUp pointer-events-auto max-h-[90vh] w-full max-w-md overflow-y-auto rounded-3xl border border-gray-100 bg-white shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="sticky top-0 z-10 overflow-hidden rounded-t-3xl bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-5">
+          <div className="sticky top-0 z-10 overflow-hidden rounded-t-3xl bg-linear-to-r from-indigo-600 to-purple-600 px-6 py-5">
             <div className="absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full bg-white/10" />
             <div className="relative z-10 flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -153,7 +153,7 @@ export default function AddEditModal({ editingItem, form, setForm, onClose, onSu
               </button>
               <button
                 type="submit"
-                className="flex-1 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 font-semibold text-white shadow-lg shadow-indigo-500/30 transition hover:from-indigo-700 hover:to-purple-700 active:scale-95"
+                className="flex-1 rounded-xl bg-linear-to-r from-indigo-600 to-purple-600 px-6 py-3 font-semibold text-white shadow-lg shadow-indigo-500/30 transition hover:from-indigo-700 hover:to-purple-700 active:scale-95"
               >
                 {editingItem ? 'Actualizar' : 'Guardar'}
               </button>
