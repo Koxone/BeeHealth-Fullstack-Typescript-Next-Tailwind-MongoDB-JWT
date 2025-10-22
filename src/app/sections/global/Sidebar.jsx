@@ -190,7 +190,7 @@ export default function Sidebar({ role = 'patient' }) {
               >
                 {/* Active background */}
                 {isActive && (
-                  <div className="animate-fadeIn absolute inset-0 rounded-xl bg-gradient-to-t from-blue-50 to-indigo-50" />
+                  <div className="animate-fadeIn absolute inset-0 rounded-xl bg-linear-to-t from-blue-50 to-indigo-50" />
                 )}
 
                 <div className="relative z-10">

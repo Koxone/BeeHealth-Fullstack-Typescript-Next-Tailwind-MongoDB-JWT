@@ -38,7 +38,7 @@ export default function DoctorDiets() {
             {/* Imagen/Icono */}
             <div className="relative mb-4 flex h-32 w-full items-center justify-center overflow-hidden rounded-lg bg-linear-to-br from-green-100 to-blue-100">
               <Apple className="h-12 w-12 text-green-600 transition-transform duration-300 group-hover:scale-110" />
-              <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/10 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+              <div className="absolute inset-0 bg-linear-to-t from-transparent via-white/10 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
             </div>
 
             {/* Título */}
