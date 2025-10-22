@@ -3,7 +3,7 @@
 /* banner */
 export default function MotivationalBanner({ message, ctaLabel, onCta }) {
   return (
-    <div className="rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 p-4 text-white shadow-sm md:p-6">
+    <div className="rounded-xl bg-linear-to-r from-blue-500 to-blue-600 p-4 text-white shadow-sm md:p-6">
       <div className="flex items-start gap-4">
         <div className="rounded-lg bg-white/20 p-3" aria-hidden />
         <div className="flex-1">

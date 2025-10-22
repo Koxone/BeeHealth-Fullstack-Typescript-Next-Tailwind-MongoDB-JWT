@@ -138,7 +138,7 @@ export default function PatientHistory() {
         {/* Tabla mejorada */}
         <div className="overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
           {/* Header de la tabla */}
-          <div className="relative overflow-hidden bg-gradient-to-r from-purple-600 to-pink-600 px-6 py-4">
+          <div className="relative overflow-hidden bg-linear-to-r from-purple-600 to-pink-600 px-6 py-4">
             <div className="absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full bg-white/10" />
             <div className="relative z-10 flex items-center gap-3">
               <div className="rounded-xl bg-white/20 p-2 backdrop-blur-sm">
@@ -154,7 +154,7 @@ export default function PatientHistory() {
           {/* Desktop Table */}
           <div className="hidden overflow-x-auto md:block">
             <table className="w-full">
-              <thead className="border-b-2 border-gray-200 bg-gradient-to-r from-gray-50 to-blue-50">
+              <thead className="border-b-2 border-gray-200 bg-linear-to-r from-gray-50 to-blue-50">
                 <tr>
                   <th className="px-6 py-4 text-left">
                     <div className="flex items-center gap-2">
@@ -189,7 +189,7 @@ export default function PatientHistory() {
                     <tr
                       key={record.id}
                       style={{ animationDelay: `${index * 50}ms` }}
-                      className="group animate-fadeInUp transition-all duration-200 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50"
+                      className="group animate-fadeInUp transition-all duration-200 hover:bg-linear-to-r hover:from-purple-50 hover:to-pink-50"
                     >
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
@@ -282,7 +282,7 @@ export default function PatientHistory() {
             </p>
             <button
               onClick={() => setShowModal(true)}
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 px-6 py-3 font-semibold text-white shadow-lg transition-all duration-200 hover:from-purple-700 hover:to-pink-700"
+              className="inline-flex items-center gap-2 rounded-xl bg-linear-to-r from-purple-600 to-pink-600 px-6 py-3 font-semibold text-white shadow-lg transition-all duration-200 hover:from-purple-700 hover:to-pink-700"
             >
               <Plus className="h-5 w-5" />
               Agregar Primer Registro
@@ -304,7 +304,7 @@ export default function PatientHistory() {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header del modal */}
-              <div className="relative overflow-hidden rounded-t-3xl bg-gradient-to-r from-purple-600 to-pink-600 px-6 py-5">
+              <div className="relative overflow-hidden rounded-t-3xl bg-linear-to-r from-purple-600 to-pink-600 px-6 py-5">
                 <div className="absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full bg-white/10" />
                 <div className="relative z-10 flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -384,7 +384,7 @@ export default function PatientHistory() {
                       setPeso('');
                       setNotas('');
                     }}
-                    className="flex-1 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 px-6 py-3 font-semibold text-white shadow-lg shadow-purple-500/30 transition-all duration-200 hover:from-purple-700 hover:to-pink-700 active:scale-95"
+                    className="flex-1 rounded-xl bg-linear-to-r from-purple-600 to-pink-600 px-6 py-3 font-semibold text-white shadow-lg shadow-purple-500/30 transition-all duration-200 hover:from-purple-700 hover:to-pink-700 active:scale-95"
                   >
                     Guardar
                   </button>

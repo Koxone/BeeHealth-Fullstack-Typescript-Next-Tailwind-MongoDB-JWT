@@ -181,7 +181,7 @@ export default function EmployeeConsultations() {
               <div className="mt-2 flex items-center gap-1">
                 <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-gray-200">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-green-600 transition-all duration-500"
+                    className="h-full rounded-full bg-linear-to-r from-emerald-500 to-green-600 transition-all duration-500"
                     style={{ width: `${porcentajeCobrado}%` }}
                   />
                 </div>
@@ -249,7 +249,7 @@ export default function EmployeeConsultations() {
                 });
                 setShowModal(true);
               }}
-              className="group flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 font-semibold text-white shadow-lg shadow-indigo-500/30 transition-all duration-200 hover:from-indigo-700 hover:to-purple-700 active:scale-95"
+              className="group flex items-center justify-center gap-2 rounded-xl bg-linear-to-r from-indigo-600 to-purple-600 px-6 py-3 font-semibold text-white shadow-lg shadow-indigo-500/30 transition-all duration-200 hover:from-indigo-700 hover:to-purple-700 active:scale-95"
             >
               <Plus className="h-5 w-5 transition-transform duration-200 group-hover:rotate-90" />
               <span>Registrar Consulta</span>
@@ -260,7 +260,7 @@ export default function EmployeeConsultations() {
         {/* Lista de consultas mejorada */}
         <div className="overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
           {/* Header de la lista */}
-          <div className="relative overflow-hidden bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-4">
+          <div className="relative overflow-hidden bg-linear-to-r from-indigo-600 to-purple-600 px-6 py-4">
             <div className="absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full bg-white/10" />
             <div className="relative z-10 flex items-center gap-3">
               <div className="rounded-xl bg-white/20 p-2 backdrop-blur-sm">
@@ -279,7 +279,7 @@ export default function EmployeeConsultations() {
           {/* Desktop Table */}
           <div className="hidden overflow-x-auto md:block">
             <table className="w-full">
-              <thead className="border-b-2 border-gray-200 bg-gradient-to-r from-gray-50 to-indigo-50">
+              <thead className="border-b-2 border-gray-200 bg-linear-to-r from-gray-50 to-indigo-50">
                 <tr>
                   <th className="px-6 py-4 text-left">
                     <div className="flex items-center gap-2">
@@ -318,7 +318,7 @@ export default function EmployeeConsultations() {
                   <tr
                     key={consulta.id}
                     style={{ animationDelay: `${index * 50}ms` }}
-                    className="group animate-fadeInUp transition-all duration-200 hover:bg-gradient-to-r hover:from-indigo-50 hover:to-purple-50"
+                    className="group animate-fadeInUp transition-all duration-200 hover:bg-linear-to-r hover:from-indigo-50 hover:to-purple-50"
                   >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
@@ -396,7 +396,7 @@ export default function EmployeeConsultations() {
                   </tr>
                 ))}
               </tbody>
-              <tfoot className="border-t-2 border-gray-200 bg-gradient-to-r from-gray-50 to-indigo-50">
+              <tfoot className="border-t-2 border-gray-200 bg-linear-to-r from-gray-50 to-indigo-50">
                 <tr className="font-bold">
                   <td colSpan="3" className="px-6 py-4 text-sm text-gray-900">
                     <div className="flex items-center gap-2">
@@ -521,7 +521,7 @@ export default function EmployeeConsultations() {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="relative sticky top-0 z-10 overflow-hidden rounded-t-3xl bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-5">
+              <div className="relative sticky top-0 z-10 overflow-hidden rounded-t-3xl bg-linear-to-r from-indigo-600 to-purple-600 px-6 py-5">
                 <div className="absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full bg-white/10" />
                 <div className="relative z-10 flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -666,7 +666,7 @@ export default function EmployeeConsultations() {
                   </button>
                   <button
                     type="submit"
-                    className="flex-1 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 font-semibold text-white shadow-lg shadow-indigo-500/30 transition-all duration-200 hover:from-indigo-700 hover:to-purple-700 active:scale-95"
+                    className="flex-1 rounded-xl bg-linear-to-r from-indigo-600 to-purple-600 px-6 py-3 font-semibold text-white shadow-lg shadow-indigo-500/30 transition-all duration-200 hover:from-indigo-700 hover:to-purple-700 active:scale-95"
                   >
                     {editingItem ? 'Actualizar' : 'Guardar'}
                   </button>
@@ -690,7 +690,7 @@ export default function EmployeeConsultations() {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="relative overflow-hidden rounded-t-3xl bg-gradient-to-r from-red-600 to-rose-600 px-6 py-5">
+              <div className="relative overflow-hidden rounded-t-3xl bg-linear-to-r from-red-600 to-rose-600 px-6 py-5">
                 <div className="absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full bg-white/10" />
                 <div className="relative z-10 flex items-center gap-3">
                   <div className="rounded-xl bg-white/20 p-2 backdrop-blur-sm">
@@ -736,7 +736,7 @@ export default function EmployeeConsultations() {
                   </button>
                   <button
                     onClick={handleDelete}
-                    className="flex-1 rounded-xl bg-gradient-to-r from-red-600 to-rose-600 px-6 py-3 font-semibold text-white shadow-lg shadow-red-500/30 transition-all duration-200 hover:from-red-700 hover:to-rose-700 active:scale-95"
+                    className="flex-1 rounded-xl bg-linear-to-r from-red-600 to-rose-600 px-6 py-3 font-semibold text-white shadow-lg shadow-red-500/30 transition-all duration-200 hover:from-red-700 hover:to-rose-700 active:scale-95"
                   >
                     Sí, Eliminar
                   </button>

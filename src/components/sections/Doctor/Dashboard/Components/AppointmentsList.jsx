@@ -52,7 +52,7 @@ export default function AppointmentsList({ citas, onReagendar, onCancelar, getEs
           style={{ animationDelay: `${index * 50}ms` }}
           className={`group animate-fadeInUp relative overflow-hidden rounded-2xl border-2 p-5 transition-all duration-300 ${
             cita.estado === 'Cancelada'
-              ? 'border-rose-200 bg-gradient-to-r from-rose-50/50 to-white opacity-75'
+              ? 'border-rose-200 bg-linear-to-r from-rose-50/50 to-white opacity-75'
               : 'border-gray-200 bg-white hover:scale-[1.02] hover:border-blue-300 hover:shadow-xl'
           }`}
         >
@@ -107,12 +107,12 @@ export default function AppointmentsList({ citas, onReagendar, onCancelar, getEs
 
               {/* Detalles en cards pequeñas */}
               <div className="flex flex-wrap gap-2">
-                <div className="flex items-center gap-2 rounded-lg border border-blue-100 bg-gradient-to-r from-blue-50 to-indigo-50 px-3 py-1.5">
+                <div className="flex items-center gap-2 rounded-lg border border-blue-100 bg-linear-to-r from-blue-50 to-indigo-50 px-3 py-1.5">
                   <Clock className="h-4 w-4 text-blue-600" />
                   <span className="text-sm font-semibold text-gray-700">{cita.hora}</span>
                 </div>
 
-                <div className="flex items-center gap-2 rounded-lg border border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50 px-3 py-1.5">
+                <div className="flex items-center gap-2 rounded-lg border border-purple-100 bg-linear-to-r from-purple-50 to-pink-50 px-3 py-1.5">
                   <FileText className="h-4 w-4 text-purple-600" />
                   <span className="text-sm font-medium text-gray-700">{cita.tipo}</span>
                 </div>
@@ -164,7 +164,7 @@ export default function AppointmentsList({ citas, onReagendar, onCancelar, getEs
 
           {/* Barra de color según estado */}
           <div
-            className={`absolute right-0 bottom-0 left-0 h-1 bg-gradient-to-r ${getEstadoColor(cita.estado)} rounded-b-xl transition-all duration-300 ${
+            className={`absolute right-0 bottom-0 left-0 h-1 bg-linear-to-r ${getEstadoColor(cita.estado)} rounded-b-xl transition-all duration-300 ${
               cita.estado !== 'Cancelada' ? 'group-hover:h-1.5' : ''
             }`}
           />

@@ -15,7 +15,7 @@ export default function CancelModal({ cita, onClose, onConfirm, icons }) {
           onClick={(e) => e.stopPropagation()}
         >
           {/* header */}
-          <div className="relative overflow-hidden rounded-t-3xl bg-gradient-to-r from-rose-600 to-red-600 px-6 py-5">
+          <div className="relative overflow-hidden rounded-t-3xl bg-linear-to-r from-rose-600 to-red-600 px-6 py-5">
             <div className="absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full bg-white/10" />
             <div className="relative z-10 flex items-center gap-3">
               <div className="rounded-xl bg-white/20 p-2 backdrop-blur-sm">
@@ -61,7 +61,7 @@ export default function CancelModal({ cita, onClose, onConfirm, icons }) {
               </button>
               <button
                 onClick={onConfirm}
-                className="flex-1 rounded-xl bg-gradient-to-r from-rose-600 to-red-600 px-6 py-3 font-semibold text-white shadow-lg shadow-rose-500/30 transition-all duration-200 hover:from-rose-700 hover:to-red-700 active:scale-95"
+                className="flex-1 rounded-xl bg-linear-to-r from-rose-600 to-red-600 px-6 py-3 font-semibold text-white shadow-lg shadow-rose-500/30 transition-all duration-200 hover:from-rose-700 hover:to-red-700 active:scale-95"
               >
                 Sí, Cancelar
               </button>

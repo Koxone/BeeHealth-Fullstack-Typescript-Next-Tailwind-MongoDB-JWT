@@ -15,7 +15,7 @@ export default function AppointmentCard({
       style={{ animationDelay: `${index * 50}ms` }}
       className={`group animate-fadeInUp relative overflow-hidden rounded-2xl border-2 bg-white p-5 transition-all duration-300 hover:shadow-xl ${
         cita.estado === 'Cancelada'
-          ? 'border-rose-200 bg-gradient-to-r from-rose-50/50 to-white opacity-75'
+          ? 'border-rose-200 bg-linear-to-r from-rose-50/50 to-white opacity-75'
           : 'border-gray-200 hover:scale-[1.01] hover:border-emerald-300'
       }`}
     >
@@ -71,7 +71,7 @@ export default function AppointmentCard({
               </div>
             </div>
 
-            <div className="rounded-lg border border-indigo-200 bg-gradient-to-r from-indigo-50 to-purple-50 p-3">
+            <div className="rounded-lg border border-indigo-200 bg-linear-to-r from-indigo-50 to-purple-50 p-3">
               <div className="flex items-start gap-2">
                 <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-indigo-600" />
                 <div>
@@ -112,7 +112,7 @@ export default function AppointmentCard({
       </div>
 
       {cita.estado !== 'Cancelada' && (
-        <div className="absolute right-0 bottom-0 left-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-600 opacity-0 transition-all duration-300 group-hover:opacity-100" />
+        <div className="absolute right-0 bottom-0 left-0 h-1 bg-linear-to-r from-emerald-500 to-teal-600 opacity-0 transition-all duration-300 group-hover:opacity-100" />
       )}
     </div>
   );

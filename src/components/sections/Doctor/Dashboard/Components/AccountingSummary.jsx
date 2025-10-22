@@ -60,7 +60,7 @@ export default function AccountingSummary({ data, onVerMas }) {
   return (
     <div className="overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
       {/* Header mejorado con gradiente */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 px-6 py-5">
+      <div className="relative overflow-hidden bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 px-6 py-5">
         <div className="absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full bg-white/10" />
         <div className="absolute bottom-0 left-0 -mb-12 -ml-12 h-24 w-24 rounded-full bg-white/10" />
 
@@ -98,7 +98,7 @@ export default function AccountingSummary({ data, onVerMas }) {
             </div>
           </div>
           <div className="text-right">
-            <p className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-3xl font-bold text-transparent">
+            <p className="bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-3xl font-bold text-transparent">
               ${totalIngresos.toLocaleString()}
             </p>
             <p className="flex items-center justify-end gap-1 text-xs font-semibold text-green-600">
@@ -117,7 +117,7 @@ export default function AccountingSummary({ data, onVerMas }) {
             <div
               key={index}
               style={{ animationDelay: `${index * 100}ms` }}
-              className={`group relative flex items-center justify-between rounded-xl bg-gradient-to-r ${item.bgGradient} border-2 p-4 ${item.borderColor} ${item.hoverBorder} animate-fadeInUp overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg`}
+              className={`group relative flex items-center justify-between rounded-xl bg-linear-to-r ${item.bgGradient} border-2 p-4 ${item.borderColor} ${item.hoverBorder} animate-fadeInUp overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg`}
             >
               {/* Elemento decorativo de fondo */}
               <div
@@ -163,7 +163,7 @@ export default function AccountingSummary({ data, onVerMas }) {
 
               {/* Barra de progreso decorativa */}
               <div
-                className={`absolute right-0 bottom-0 left-0 h-1 bg-gradient-to-r ${item.gradient} opacity-0 transition-all duration-300 group-hover:opacity-100`}
+                className={`absolute right-0 bottom-0 left-0 h-1 bg-linear-to-r ${item.gradient} opacity-0 transition-all duration-300 group-hover:opacity-100`}
               />
             </div>
           );
@@ -171,7 +171,7 @@ export default function AccountingSummary({ data, onVerMas }) {
       </div>
 
       {/* Footer con acciones rápidas */}
-      <div className="border-t-2 border-gray-200 bg-gradient-to-r from-gray-50 to-blue-50 px-6 py-4">
+      <div className="border-t-2 border-gray-200 bg-linear-to-r from-gray-50 to-blue-50 px-6 py-4">
         <div className="flex items-center justify-between text-sm">
           <div className="flex items-center gap-2 text-gray-600">
             <Clock className="h-4 w-4" />

@@ -78,7 +78,7 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
           >
             <Bell className="h-5 w-5 text-gray-600 transition-colors duration-200 group-hover:text-blue-600" />
             {notificationCount > 0 && (
-              <span className="absolute top-0.5 right-0.5 flex h-5 w-5 animate-pulse items-center justify-center rounded-full bg-gradient-to-r from-red-500 to-rose-600 text-[10px] font-bold text-white shadow-lg">
+              <span className="absolute top-0.5 right-0.5 flex h-5 w-5 animate-pulse items-center justify-center rounded-full bg-linear-to-r from-red-500 to-rose-600 text-[10px] font-bold text-white shadow-lg">
                 {notificationCount}
               </span>
             )}
@@ -124,7 +124,7 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
             >
               <Bell className="h-5 w-5 text-gray-600 transition-colors duration-200 group-hover:text-blue-600" />
               {notificationCount > 0 && (
-                <span className="absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-r from-red-500 to-rose-600 text-xs font-bold text-white shadow-lg">
+                <span className="absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-linear-to-r from-red-500 to-rose-600 text-xs font-bold text-white shadow-lg">
                   {notificationCount}
                 </span>
               )}
@@ -135,7 +135,7 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
               <>
                 <div className="fixed inset-0 z-40" onClick={() => setShowNotifications(false)} />
                 <div className="animate-slideDown absolute top-full right-0 z-50 mt-2 w-80 rounded-2xl border-2 border-gray-200 bg-white shadow-2xl">
-                  <div className="rounded-t-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3">
+                  <div className="rounded-t-xl bg-linear-to-r from-blue-600 to-indigo-600 px-4 py-3">
                     <h3 className="text-sm font-bold text-white">Notificaciones</h3>
                   </div>
                   <div className="max-h-96 overflow-y-auto p-2">
@@ -217,7 +217,7 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
           <div className="animate-slideDown absolute top-full right-4 z-50 mt-2 w-64 rounded-2xl border-2 border-gray-200 bg-white shadow-2xl md:hidden">
             {/* Menu Header */}
             <div
-              className={`bg-gradient-to-r ${roleInfo.gradient} relative overflow-hidden rounded-t-xl px-4 py-4`}
+              className={`bg-linear-to-r ${roleInfo.gradient} relative overflow-hidden rounded-t-xl px-4 py-4`}
             >
               <div className="absolute top-0 right-0 -mt-10 -mr-10 h-20 w-20 rounded-full bg-white/10" />
               <div className="relative z-10 flex items-center gap-3">
@@ -245,7 +245,7 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
                         : '/doctor/profile'
                   );
                 }}
-                className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-gray-700 transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 active:scale-95"
+                className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-gray-700 transition-all duration-200 hover:bg-linear-to-r hover:from-blue-50 hover:to-indigo-50 active:scale-95"
               >
                 <div className="rounded-lg bg-blue-100 p-2 transition-all duration-200 group-hover:bg-blue-500">
                   <User className="h-4 w-4 text-blue-600 transition-colors duration-200 group-hover:text-white" />
@@ -258,7 +258,7 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
                   setShowMenu(false);
                   setShowNotifications(true);
                 }}
-                className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-gray-700 transition-all duration-200 hover:bg-gradient-to-r hover:from-amber-50 hover:to-orange-50 active:scale-95"
+                className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-gray-700 transition-all duration-200 hover:bg-linear-to-r hover:from-amber-50 hover:to-orange-50 active:scale-95"
               >
                 <div className="relative rounded-lg bg-amber-100 p-2 transition-all duration-200 group-hover:bg-amber-500">
                   <Bell className="h-4 w-4 text-amber-600 transition-colors duration-200 group-hover:text-white" />
@@ -277,7 +277,7 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
                     setShowMenu(false);
                     router.push('/patient/support');
                   }}
-                  className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-gray-700 transition-all duration-200 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 active:scale-95"
+                  className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-gray-700 transition-all duration-200 hover:bg-linear-to-r hover:from-purple-50 hover:to-pink-50 active:scale-95"
                 >
                   <div className="rounded-lg bg-purple-100 p-2 transition-all duration-200 group-hover:bg-purple-500">
                     <HelpCircle className="h-4 w-4 text-purple-600 transition-colors duration-200 group-hover:text-white" />
@@ -291,7 +291,7 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
                   setShowMenu(false);
                   // Configuración
                 }}
-                className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-gray-700 transition-all duration-200 hover:bg-gradient-to-r hover:from-gray-50 hover:to-slate-50 active:scale-95"
+                className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-gray-700 transition-all duration-200 hover:bg-linear-to-r hover:from-gray-50 hover:to-slate-50 active:scale-95"
               >
                 <div className="rounded-lg bg-gray-100 p-2 transition-all duration-200 group-hover:bg-gray-500">
                   <Settings className="h-4 w-4 text-gray-600 transition-colors duration-200 group-hover:text-white" />
@@ -307,7 +307,7 @@ export default function Header({ userName = 'Usuario', role = 'patient' }) {
                   setShowMenu(false);
                   router.push('/');
                 }}
-                className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-red-600 transition-all duration-200 hover:bg-gradient-to-r hover:from-red-50 hover:to-rose-50 active:scale-95"
+                className="group flex w-full items-center gap-3 rounded-xl px-4 py-3 text-red-600 transition-all duration-200 hover:bg-linear-to-r hover:from-red-50 hover:to-rose-50 active:scale-95"
               >
                 <div className="rounded-lg bg-red-100 p-2 transition-all duration-200 group-hover:bg-red-500">
                   <LogOut className="h-4 w-4 text-red-600 transition-colors duration-200 group-hover:text-white" />

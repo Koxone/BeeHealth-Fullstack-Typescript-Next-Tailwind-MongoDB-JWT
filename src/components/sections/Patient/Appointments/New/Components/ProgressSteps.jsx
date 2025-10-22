@@ -16,7 +16,7 @@ export default function ProgressSteps({ getStepStatus }) {
       <div className="relative flex items-center justify-between">
         <div className="absolute top-5 right-0 left-0 -z-10 h-1 bg-gray-200">
           <div
-            className="h-full bg-gradient-to-r from-blue-500 to-blue-600 transition-all duration-500 ease-out"
+            className="h-full bg-linear-to-r from-blue-500 to-blue-600 transition-all duration-500 ease-out"
             style={{
               width:
                 getStepStatus(3) === 'complete' || getStepStatus(3) === 'current'

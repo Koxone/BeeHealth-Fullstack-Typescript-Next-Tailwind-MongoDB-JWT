@@ -84,20 +84,20 @@ export default function Sidebar({ role = 'patient' }) {
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="hidden min-h-screen w-72 flex-col border-r-2 border-gray-200 bg-gradient-to-b from-white to-gray-50 md:flex shadow-xl">
+      <aside className="hidden min-h-screen w-72 flex-col border-r-2 border-gray-200 bg-gradient-to-b from-white to-gray-50 shadow-xl md:flex">
         {/* Header mejorado */}
-        <div className={`bg-gradient-to-r ${getRoleGradient()} p-6 relative overflow-hidden`}>
-          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16" />
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full -ml-12 -mb-12" />
-          
+        <div className={`bg-linear-to-r ${getRoleGradient()} relative overflow-hidden p-6`}>
+          <div className="absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full bg-white/10" />
+          <div className="absolute bottom-0 left-0 -mb-12 -ml-12 h-24 w-24 rounded-full bg-white/10" />
+
           <div className="relative z-10">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="p-2.5 bg-white/20 backdrop-blur-sm rounded-xl">
+            <div className="mb-3 flex items-center gap-3">
+              <div className="rounded-xl bg-white/20 p-2.5 backdrop-blur-sm">
                 <Heart className="h-7 w-7 text-white" />
               </div>
               <div>
                 <span className="text-2xl font-bold text-white">MedTrack</span>
-                <div className="flex items-center gap-1.5 mt-0.5">
+                <div className="mt-0.5 flex items-center gap-1.5">
                   <Sparkles className="h-3 w-3 text-white/80" />
                   <span className="text-xs font-medium text-white/90">{getRoleName()}</span>
                 </div>
@@ -107,7 +107,7 @@ export default function Sidebar({ role = 'patient' }) {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 p-4 space-y-1">
+        <nav className="flex-1 space-y-1 p-4">
           {menu.map((item, index) => {
             const Icon = item.icon;
             const isActive = pathname === item.path;
@@ -117,47 +117,55 @@ export default function Sidebar({ role = 'patient' }) {
                 key={item.path}
                 onClick={() => router.push(item.path)}
                 style={{ animationDelay: `${index * 50}ms` }}
-                className={`group flex w-full items-center justify-between gap-3 rounded-xl px-4 py-3.5 transition-all duration-200 animate-fadeInLeft relative overflow-hidden ${
+                className={`group animate-fadeInLeft relative flex w-full items-center justify-between gap-3 overflow-hidden rounded-xl px-4 py-3.5 transition-all duration-200 ${
                   isActive
-                    ? 'bg-gradient-to-r from-blue-50 to-indigo-50 font-semibold text-blue-600 shadow-md scale-105 border-2 border-blue-200'
-                    : 'text-gray-700 hover:bg-white hover:shadow-md hover:scale-105 active:scale-95 border-2 border-transparent'
+                    ? 'scale-105 border-2 border-blue-200 bg-linear-to-r from-blue-50 to-indigo-50 font-semibold text-blue-600 shadow-md'
+                    : 'border-2 border-transparent text-gray-700 hover:scale-105 hover:bg-white hover:shadow-md active:scale-95'
                 }`}
               >
                 {/* Elemento decorativo de fondo */}
                 {isActive && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-indigo-500/5 animate-pulse" />
+                  <div className="absolute inset-0 animate-pulse bg-linear-to-r from-blue-500/5 to-indigo-500/5" />
                 )}
-                
-                <div className="relative z-10 flex items-center gap-3 flex-1">
-                  <div className={`p-2 rounded-lg transition-all duration-200 ${
-                    isActive 
-                      ? 'bg-blue-500 shadow-lg' 
-                      : 'bg-gray-100 group-hover:bg-blue-100 group-hover:scale-110'
-                  }`}>
-                    <Icon className={`h-5 w-5 ${isActive ? 'text-white' : 'text-gray-600 group-hover:text-blue-600'}`} />
+
+                <div className="relative z-10 flex flex-1 items-center gap-3">
+                  <div
+                    className={`rounded-lg p-2 transition-all duration-200 ${
+                      isActive
+                        ? 'bg-blue-500 shadow-lg'
+                        : 'bg-gray-100 group-hover:scale-110 group-hover:bg-blue-100'
+                    }`}
+                  >
+                    <Icon
+                      className={`h-5 w-5 ${isActive ? 'text-white' : 'text-gray-600 group-hover:text-blue-600'}`}
+                    />
                   </div>
                   <span className="text-sm">{item.label}</span>
                 </div>
 
                 {/* Badge */}
                 {item.badge && (
-                  <span className={`relative z-10 px-2 py-1 rounded-full text-xs font-bold ${
-                    isActive 
-                      ? 'bg-blue-500 text-white' 
-                      : 'bg-gray-200 text-gray-700 group-hover:bg-blue-500 group-hover:text-white'
-                  } transition-all duration-200`}>
+                  <span
+                    className={`relative z-10 rounded-full px-2 py-1 text-xs font-bold ${
+                      isActive
+                        ? 'bg-blue-500 text-white'
+                        : 'bg-gray-200 text-gray-700 group-hover:bg-blue-500 group-hover:text-white'
+                    } transition-all duration-200`}
+                  >
                     {item.badge}
                   </span>
                 )}
 
                 {/* Arrow indicator */}
                 {isActive && (
-                  <ChevronRight className="relative z-10 h-4 w-4 text-blue-600 animate-pulse" />
+                  <ChevronRight className="relative z-10 h-4 w-4 animate-pulse text-blue-600" />
                 )}
 
                 {/* Active indicator bar */}
                 {isActive && (
-                  <div className={`absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b ${getRoleGradient()} rounded-r-full`} />
+                  <div
+                    className={`absolute top-0 bottom-0 left-0 w-1.5 bg-gradient-to-b ${getRoleGradient()} rounded-r-full`}
+                  />
                 )}
               </button>
             );
@@ -166,7 +174,7 @@ export default function Sidebar({ role = 'patient' }) {
       </aside>
 
       {/* Mobile Bottom Navigation mejorada */}
-      <nav className="safe-area-inset-bottom fixed right-0 bottom-0 left-0 z-50 border-t-2 border-gray-200 bg-white/95 backdrop-blur-lg shadow-2xl md:hidden">
+      <nav className="safe-area-inset-bottom fixed right-0 bottom-0 left-0 z-50 border-t-2 border-gray-200 bg-white/95 shadow-2xl backdrop-blur-lg md:hidden">
         <div className="grid grid-cols-5 gap-1 px-2 py-3">
           {menu.slice(0, 5).map((item, index) => {
             const Icon = item.icon;
@@ -177,36 +185,38 @@ export default function Sidebar({ role = 'patient' }) {
                 key={item.path}
                 onClick={() => router.push(item.path)}
                 className={`relative flex flex-col items-center justify-center rounded-xl px-1 py-2.5 transition-all duration-200 ${
-                  isActive 
-                    ? 'text-blue-600 scale-110' 
-                    : 'text-gray-600 active:scale-95'
+                  isActive ? 'scale-110 text-blue-600' : 'text-gray-600 active:scale-95'
                 }`}
               >
                 {/* Active background */}
                 {isActive && (
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-50 to-indigo-50 rounded-xl animate-fadeIn" />
+                  <div className="animate-fadeIn absolute inset-0 rounded-xl bg-gradient-to-t from-blue-50 to-indigo-50" />
                 )}
 
                 <div className="relative z-10">
                   <div className={`relative ${isActive ? 'animate-bounce-slow' : ''}`}>
                     <Icon className={`mb-1 h-6 w-6 ${isActive ? 'stroke-[2.5]' : ''}`} />
-                    
+
                     {/* Badge para mobile */}
                     {item.badge && (
-                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
+                      <div className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500">
                         <span className="text-[8px] font-bold text-white">{item.badge}</span>
                       </div>
                     )}
                   </div>
-                  
-                  <span className={`text-[10px] font-semibold ${isActive ? 'text-blue-600' : 'text-gray-600'}`}>
+
+                  <span
+                    className={`text-[10px] font-semibold ${isActive ? 'text-blue-600' : 'text-gray-600'}`}
+                  >
                     {item.label}
                   </span>
                 </div>
 
                 {/* Active indicator */}
                 {isActive && (
-                  <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-8 h-1 bg-gradient-to-r ${getRoleGradient()} rounded-b-full`} />
+                  <div
+                    className={`absolute top-0 left-1/2 h-1 w-8 -translate-x-1/2 bg-linear-to-r ${getRoleGradient()} rounded-b-full`}
+                  />
                 )}
               </button>
             );
@@ -236,7 +246,8 @@ export default function Sidebar({ role = 'patient' }) {
         }
 
         @keyframes bounce-slow {
-          0%, 100% {
+          0%,
+          100% {
             transform: translateY(0);
           }
           50% {

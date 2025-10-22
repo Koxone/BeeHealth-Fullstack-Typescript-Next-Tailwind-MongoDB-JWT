@@ -17,7 +17,7 @@ export default function CancelModal({ apt, onClose, onConfirm }) {
           onClick={(e) => e.stopPropagation()}
         >
           {/* header */}
-          <div className="border-b border-gray-100 bg-gradient-to-r from-rose-50 to-red-50 px-6 py-5">
+          <div className="border-b border-gray-100 bg-linear-to-r from-rose-50 to-red-50 px-6 py-5">
             <div className="flex items-center gap-3">
               <div className="rounded-xl bg-white p-3 shadow-sm">
                 <AlertCircle className="h-6 w-6 text-rose-600" />

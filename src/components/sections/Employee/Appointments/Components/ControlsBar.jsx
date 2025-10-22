@@ -39,7 +39,7 @@ export default function ControlsBar({
           </div>
           <button
             onClick={onCreate}
-            className="group flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-6 py-3 font-semibold text-white shadow-lg shadow-emerald-500/30 transition-all duration-200 hover:from-emerald-700 hover:to-teal-700 active:scale-95"
+            className="group flex items-center gap-2 rounded-xl bg-linear-to-r from-emerald-600 to-teal-600 px-6 py-3 font-semibold text-white shadow-lg shadow-emerald-500/30 transition-all duration-200 hover:from-emerald-700 hover:to-teal-700 active:scale-95"
           >
             <Plus className="h-5 w-5 transition-transform duration-200 group-hover:rotate-90" />
             <span className="hidden sm:inline">Agendar</span>

@@ -11,7 +11,7 @@ export default function AppointmentCard({ apt, index, canModify, onReschedule, o
       style={{ animationDelay: `${index * 50}ms` }}
       className={`animate-fadeInUp rounded-2xl border-2 bg-white p-5 shadow-sm transition-all duration-300 hover:shadow-xl md:p-6 ${
         apt.estado === 'Cancelada'
-          ? 'border-rose-200 bg-gradient-to-r from-rose-50/50 to-white'
+          ? 'border-rose-200 bg-linear-to-r from-rose-50/50 to-white'
           : 'border-gray-200 hover:border-blue-300'
       }`}
     >

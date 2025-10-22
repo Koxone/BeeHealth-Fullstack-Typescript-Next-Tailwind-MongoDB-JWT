@@ -22,7 +22,7 @@ export default function AddEditModal({
           onClick={(e) => e.stopPropagation()}
         >
           {/* header */}
-          <div className="relative sticky top-0 z-10 overflow-hidden rounded-t-3xl bg-gradient-to-r from-emerald-600 to-teal-600 px-6 py-5">
+          <div className="relative sticky top-0 z-10 overflow-hidden rounded-t-3xl bg-linear-to-r from-emerald-600 to-teal-600 px-6 py-5">
             <div className="absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full bg-white/10" />
             <div className="relative z-10 flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -153,7 +153,7 @@ export default function AddEditModal({
               </button>
               <button
                 type="submit"
-                className="flex-1 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-6 py-3 font-semibold text-white shadow-lg shadow-emerald-500/30 transition-all duration-200 hover:from-emerald-700 hover:to-teal-700 active:scale-95"
+                className="flex-1 rounded-xl bg-linear-to-r from-emerald-600 to-teal-600 px-6 py-3 font-semibold text-white shadow-lg shadow-emerald-500/30 transition-all duration-200 hover:from-emerald-700 hover:to-teal-700 active:scale-95"
               >
                 {editingCita ? 'Actualizar Cita' : 'Agendar Cita'}
               </button>

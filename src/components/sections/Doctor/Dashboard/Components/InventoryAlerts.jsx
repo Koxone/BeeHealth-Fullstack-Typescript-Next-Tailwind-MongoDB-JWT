@@ -85,7 +85,7 @@ export default function InventoryAlerts({ items, onVerMas }) {
   return (
     <div className="overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
       {/* Header mejorado con gradiente */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-rose-600 via-red-600 to-orange-600 px-6 py-5">
+      <div className="relative overflow-hidden bg-linear-to-r from-rose-600 via-red-600 to-orange-600 px-6 py-5">
         <div className="absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 animate-pulse rounded-full bg-white/10" />
         <div className="absolute bottom-0 left-0 -mb-12 -ml-12 h-24 w-24 rounded-full bg-white/10" />
 
@@ -121,7 +121,7 @@ export default function InventoryAlerts({ items, onVerMas }) {
 
       {/* Estadísticas rápidas */}
       {items.length > 0 && (
-        <div className="grid grid-cols-3 gap-4 border-b-2 border-gray-200 bg-gradient-to-r from-gray-50 to-rose-50 px-6 py-4">
+        <div className="grid grid-cols-3 gap-4 border-b-2 border-gray-200 bg-linear-to-r from-gray-50 to-rose-50 px-6 py-4">
           <div className="text-center">
             <div className="mb-1 flex items-center justify-center gap-1">
               <AlertCircle className="h-4 w-4 text-rose-600" />
@@ -162,7 +162,7 @@ export default function InventoryAlerts({ items, onVerMas }) {
                 <div
                   key={index}
                   style={{ animationDelay: `${index * 50}ms` }}
-                  className={`group relative flex items-center justify-between rounded-xl bg-gradient-to-r ${config.bgGradient} border-2 p-4 ${config.border} ${config.hoverBorder} animate-fadeInUp overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg`}
+                  className={`group relative flex items-center justify-between rounded-xl bg-linear-to-r ${config.bgGradient} border-2 p-4 ${config.border} ${config.hoverBorder} animate-fadeInUp overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg`}
                 >
                   {/* Elemento decorativo de fondo */}
                   <div
@@ -200,7 +200,7 @@ export default function InventoryAlerts({ items, onVerMas }) {
                         {/* Barra de progreso */}
                         <div className="h-1.5 w-full overflow-hidden rounded-full bg-gray-200">
                           <div
-                            className={`h-full bg-gradient-to-r ${config.gradient} rounded-full transition-all duration-500`}
+                            className={`h-full bg-linear-to-r ${config.gradient} rounded-full transition-all duration-500`}
                             style={{ width: `${Math.min(stockPercentage, 100)}%` }}
                           />
                         </div>
@@ -250,8 +250,8 @@ export default function InventoryAlerts({ items, onVerMas }) {
 
       {/* Footer con acción rápida */}
       {items.length > 0 && (
-        <div className="border-t-2 border-gray-200 bg-gradient-to-r from-gray-50 to-rose-50 px-6 py-4">
-          <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 font-semibold text-white shadow-lg transition-all duration-200 hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl active:scale-95">
+        <div className="border-t-2 border-gray-200 bg-linear-to-r from-gray-50 to-rose-50 px-6 py-4">
+          <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r from-blue-600 to-indigo-600 px-4 py-3 font-semibold text-white shadow-lg transition-all duration-200 hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl active:scale-95">
             <ShoppingCart className="h-5 w-5" />
             <span>Generar Orden de Compra</span>
           </button>
