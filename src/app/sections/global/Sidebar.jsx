@@ -163,24 +163,6 @@ export default function Sidebar({ role = 'patient' }) {
             );
           })}
         </nav>
-
-        {/* Footer con información extra */}
-        <div className="p-4 border-t-2 border-gray-200">
-          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border-2 border-blue-200">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 bg-blue-500 rounded-lg">
-                <HelpCircle className="h-4 w-4 text-white" />
-              </div>
-              <span className="text-sm font-semibold text-gray-900">¿Necesitas ayuda?</span>
-            </div>
-            <p className="text-xs text-gray-600 mb-3">
-              Estamos aquí para apoyarte en todo momento
-            </p>
-            <button className="w-full py-2 bg-blue-500 text-white rounded-lg text-xs font-semibold hover:bg-blue-600 transition-all duration-200 active:scale-95">
-              Contactar Soporte
-            </button>
-          </div>
-        </div>
       </aside>
 
       {/* Mobile Bottom Navigation mejorada */}
