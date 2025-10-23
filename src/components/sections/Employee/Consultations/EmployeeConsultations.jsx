@@ -27,7 +27,7 @@ import SearchAddBar from './Components/SearchAddBar';
 import ConsultationsTable from './Components/ConsultationsTable';
 import ConsultationsMobile from './Components/ConsultationsMobile';
 import EmptyState from './Components/EmptyState';
-import AddEditModal from './Components/AddEditModal';
+import AddEditModal from './Components/AddEditModal/AddEditModal';
 import DeleteModal from './Components/DeleteModal';
 
 /* container */
@@ -181,7 +181,7 @@ export default function EmployeeConsultations() {
   };
 
   return (
-    <div className="min-h-screen pb-8">
+    <div className="h-full overflow-y-auto overflow-x-hidden pb-8">
       {/* header */}
       <HeaderBar icons={{ DollarSign }} />
 

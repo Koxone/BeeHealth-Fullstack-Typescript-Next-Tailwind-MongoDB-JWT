@@ -1,8 +1,61 @@
 'use client';
 
+import MockVentaMedicamentos from './Components/MockVentaMedicamentos';
+
 /* modal */
 export default function AddEditModal({ editingItem, form, setForm, onClose, onSubmit, icons }) {
   const { X, Edit2, Plus, Calendar, Clock, Users, FileText, DollarSign, CreditCard } = icons;
+
+  // mock de medicamentos
+  const medicamentosMock = [
+    // Analgésicos y antipiréticos
+    'Paracetamol 500mg',
+    'Ibuprofeno 400mg',
+    'Naproxeno 250mg',
+    'Diclofenaco 50mg',
+    'Ketorolaco 10mg',
+
+    // Antibióticos
+    'Amoxicilina 875mg',
+    'Azitromicina 500mg',
+    'Ciprofloxacino 500mg',
+    'Cefalexina 500mg',
+    'Clindamicina 300mg',
+
+    // Gastrointestinales
+    'Omeprazol 20mg',
+    'Pantoprazol 40mg',
+    'Ranitidina 150mg',
+    'Metoclopramida 10mg',
+    'Loperamida 2mg',
+
+    // Metabólicos
+    'Metformina 850mg',
+    'Glibenclamida 5mg',
+    'Insulina NPH 100 UI/ml',
+    'Levotiroxina 50mcg',
+
+    // Cardiovasculares
+    'Losartán 50mg',
+    'Enalapril 10mg',
+    'Amlodipino 5mg',
+    'Atorvastatina 40mg',
+    'Hidroclorotiazida 25mg',
+
+    // Respiratorios
+    'Salbutamol Inhalador 100mcg',
+    'Budesonida Inhalador 200mcg',
+    'Loratadina 10mg',
+    'Montelukast 10mg',
+
+    // Otros
+    'Ácido Fólico 5mg',
+    'Vitamina D 2000UI',
+    'Clonazepam 0.5mg',
+    'Sertralina 50mg',
+    'Melatonina 3mg',
+  ];
+
   return (
     <>
       <div
@@ -85,6 +138,7 @@ export default function AddEditModal({ editingItem, form, setForm, onClose, onSu
               />
             </div>
 
+            {/* Consultation Type */}
             <div>
               <label className="mb-3 flex items-center gap-2 text-sm font-bold text-gray-900">
                 <FileText className="h-4 w-4 text-indigo-600" />
@@ -104,6 +158,9 @@ export default function AddEditModal({ editingItem, form, setForm, onClose, onSu
                 <option value="Urgencia">Urgencia</option>
               </select>
             </div>
+
+            {/* Medication */}
+            <MockVentaMedicamentos />
 
             <div>
               <label className="mb-3 flex items-center gap-2 text-sm font-bold text-gray-900">
