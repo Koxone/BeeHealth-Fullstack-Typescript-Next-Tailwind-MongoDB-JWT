@@ -114,7 +114,7 @@ export default function PatientAppointments() {
   ];
 
   return (
-    <div className="min-h-screen pb-8">
+    <div className="h-full overflow-y-auto pb-8">
       {/* header */}
       <HeaderBar onNew={handleNew} />
 

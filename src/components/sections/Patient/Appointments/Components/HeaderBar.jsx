@@ -6,7 +6,7 @@ import { Plus } from 'lucide-react'; // icon
 /* header */
 export default function HeaderBar({ onNew }) {
   return (
-    <div className="-mx-4 -mt-4 mb-6 bg-linear-to-br from-blue-50 to-indigo-50 px-4 pt-6 pb-8 md:rounded-2xl">
+    <div className="-mx-4 -mt-4 mb-6 w-full bg-linear-to-br from-blue-50 to-indigo-50 px-4 pt-6 pb-8 md:rounded-2xl">
       <div className="mx-auto max-w-7xl">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
