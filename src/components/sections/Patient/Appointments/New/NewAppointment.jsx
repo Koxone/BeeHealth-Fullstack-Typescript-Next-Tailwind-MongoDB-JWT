@@ -132,7 +132,7 @@ export default function NewAppointment() {
   };
 
   return (
-    <div className="min-h-screen pb-8">
+    <div className="h-full overflow-y-auto overflow-x-hidden pb-8">
       {/* header */}
       <HeaderBar onBack={() => router.back()} />
 
