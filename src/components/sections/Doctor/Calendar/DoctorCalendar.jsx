@@ -215,7 +215,7 @@ export default function DoctorCalendar() {
       : 0;
 
   return (
-    <div className="min-h-screen pb-8">
+    <div className="h-full space-y-4 overflow-x-hidden overflow-y-auto md:space-y-6">
       {/* header */}
       <HeaderBar icons={{ CalendarIcon }} />
 
