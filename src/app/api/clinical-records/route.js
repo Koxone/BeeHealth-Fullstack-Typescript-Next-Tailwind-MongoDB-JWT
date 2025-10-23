@@ -3,6 +3,9 @@ import { connectDB } from '@/lib/mongodb';
 import ClinicalRecord from '@/Models/ClinicalRecord';
 import User from '@/Models/User';
 
+// @route    POST /api/clinical-records
+// @desc     Crear un Clinical Record
+// @access   Privado (puedes dejarlo público de momento)
 export async function POST(req) {
   try {
     await connectDB();
@@ -61,5 +64,37 @@ export async function POST(req) {
   } catch (error) {
     console.error('Error al crear el historial clínico:', error);
     return NextResponse.json({ error: 'Error al guardar el historial clínico' }, { status: 500 });
+  }
+}
+
+// @route    PUT /api/clinical-records
+// @desc     Modificar un Clinical Record
+// @access   Privado (puedes dejarlo público de momento)
+export async function PUT(req) {
+  try {
+    await connectDB();
+    const body = await req.json();
+    const { recordId, updates } = body;
+
+    if (!recordId) {
+      return NextResponse.json({ error: 'Falta el ID del historial' }, { status: 400 });
+    }
+
+    const updated = await ClinicalRecord.findByIdAndUpdate(recordId, updates, { new: true });
+
+    if (!updated) {
+      return NextResponse.json({ error: 'Historial no encontrado' }, { status: 404 });
+    }
+
+    return NextResponse.json(
+      { message: 'Historial actualizado correctamente', record: updated },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error('Error al actualizar historial clínico:', error);
+    return NextResponse.json(
+      { error: 'Error al actualizar el historial clínico' },
+      { status: 500 }
+    );
   }
 }

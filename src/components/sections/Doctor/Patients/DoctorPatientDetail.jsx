@@ -148,46 +148,67 @@ export default function DoctorPatientDetail() {
     e.preventDefault();
 
     try {
-      const res = await fetch('/api/clinical-records', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          // Required fields
-          edad: 0,
-          genero: 'masculino',
-          altura: 0,
-          pesoActual: parseFloat(historyForm.peso),
-          pesoObjetivo: parseFloat(historyForm.peso),
-          habitosAlimenticios: 'N/A',
-          motivoConsulta: historyForm.diagnostico || 'Consulta general',
-          tipoConsulta: 'general',
-          fechaRegistro: historyForm.fecha,
-          patientId,
+      const url = editingHistory ? '/api/clinical-records' : '/api/clinical-records';
+      const method = editingHistory ? 'PUT' : 'POST';
 
-          // Optional fields
-          actividadFisica: 'sedentario',
-          horasSueno: 0,
-          consumoAgua: 0,
-          enfermedadesCronicas: '',
-          medicamentosActuales: '',
-          alergias: '',
-          cirugiasPrevias: '',
-          indiceMasaCorporal: parseFloat(historyForm.imc) || null,
-          presionArterial: historyForm.presionArterial || '',
-          glucosa: historyForm.glucosa || '',
-          colesterol: historyForm.colesterol || '',
-          notas: historyForm.notas || '',
-          tratamiento: historyForm.tratamiento || '',
-        }),
+      const body = editingHistory
+        ? {
+            recordId: editingHistory._id,
+            updates: {
+              pesoActual: parseFloat(historyForm.peso),
+              indiceMasaCorporal: parseFloat(historyForm.imc) || null,
+              presionArterial: historyForm.presionArterial || '',
+              glucosa: historyForm.glucosa || '',
+              colesterol: historyForm.colesterol || '',
+              notas: historyForm.notas || '',
+              diagnostico: historyForm.diagnostico || '',
+              tratamiento: historyForm.tratamiento || '',
+              fechaRegistro: historyForm.fecha || new Date().toISOString(),
+            },
+          }
+        : {
+            edad: 0,
+            genero: 'masculino',
+            altura: 0,
+            pesoActual: parseFloat(historyForm.peso),
+            pesoObjetivo: parseFloat(historyForm.peso),
+            habitosAlimenticios: 'N/A',
+            motivoConsulta: historyForm.diagnostico || 'Consulta general',
+            tipoConsulta: 'general',
+            fechaRegistro: historyForm.fecha,
+            patientId,
+            actividadFisica: 'sedentario',
+            horasSueno: 0,
+            consumoAgua: 0,
+            enfermedadesCronicas: '',
+            medicamentosActuales: '',
+            alergias: '',
+            cirugiasPrevias: '',
+            indiceMasaCorporal: parseFloat(historyForm.imc) || null,
+            presionArterial: historyForm.presionArterial || '',
+            glucosa: historyForm.glucosa || '',
+            colesterol: historyForm.colesterol || '',
+            notas: historyForm.notas || '',
+            tratamiento: historyForm.tratamiento || '',
+          };
+
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        alert('Historial guardado correctamente');
+        alert(editingHistory ? 'Historial actualizado' : 'Historial creado');
         closeHistoryModal();
 
-        setRecords((prev) => [data.record, ...prev]);
+        if (editingHistory) {
+          setRecords((prev) => prev.map((r) => (r._id === editingHistory._id ? data.record : r)));
+        } else {
+          setRecords((prev) => [data.record, ...prev]);
+        }
       } else {
         alert(data.error || 'Error al guardar historial clínico');
       }
