@@ -7,7 +7,7 @@ export default function PatientDietDetail({ params }) {
   const router = useRouter();
 
   return (
-    <div className="space-y-4 md:space-y-6">
+    <div className="h-screen space-y-4 overflow-y-auto pb-40 md:space-y-6">
       <button
         onClick={() => router.back()}
         className="flex items-center gap-2 text-gray-600 transition hover:text-gray-900"
