@@ -293,7 +293,7 @@ export default function EmployeeInventory() {
   }, [medicamentos, recetas, suministros]);
 
   return (
-    <div className="space-y-6">
+    <div className="h-full space-y-6 overflow-x-hidden overflow-y-auto">
       {/* header */}
       <HeaderBar />
 

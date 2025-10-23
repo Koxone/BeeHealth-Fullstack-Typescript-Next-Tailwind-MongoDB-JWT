@@ -124,19 +124,7 @@ export default function AddEditModal({
                   />
                 </div>
               </div>
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">Ubicación</label>
-                <input
-                  type="text"
-                  required
-                  value={medicamentoForm.ubicacion}
-                  onChange={(e) =>
-                    setMedicamentoForm({ ...medicamentoForm, ubicacion: e.target.value })
-                  }
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-blue-500"
-                  placeholder="A-1"
-                />
-              </div>
+
               <div className="flex gap-3 pt-2">
                 <button
                   type="button"
