@@ -74,21 +74,6 @@ export default function AppointmentsList({ citas, onReagendar, onCancelar, getEs
                 } font-bold text-white transition-all duration-300`}
               >
                 {cita.avatar}
-
-                {/* Status indicator dot */}
-                <div
-                  className={`absolute -right-1 -bottom-1 flex h-4 w-4 items-center justify-center rounded-full border-2 border-white ${
-                    cita.estado === 'Confirmada'
-                      ? 'bg-emerald-500'
-                      : cita.estado === 'Pendiente'
-                        ? 'animate-pulse bg-amber-500'
-                        : cita.estado === 'Completada'
-                          ? 'bg-slate-500'
-                          : 'bg-rose-500'
-                  }`}
-                >
-                  <div className="h-1.5 w-1.5 rounded-full bg-white" />
-                </div>
               </div>
             </div>
 
