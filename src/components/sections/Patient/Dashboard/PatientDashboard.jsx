@@ -147,7 +147,7 @@ export default function PatientDashboard() {
 
   // Return ui
   return (
-    <div className="space-y-4 md:space-y-6">
+    <div className="space-y-4 md:space-y-6 h-full overflow-y-auto">
       {/* Header */}
       <HeaderWelcome />
 
