@@ -1,175 +1,150 @@
 'use client';
 import { Scale, Activity, Stethoscope, Pill, Ruler, HeartPulse, Droplet } from 'lucide-react';
 
-/* history list */
+/* Clinical history */
 export default function ClinicalHistory({ records, onAdd, onEdit, icons }) {
-  const { ClipboardList, Plus, Edit2, Scale, Heart, Activity, Droplet } = icons;
+  const { ClipboardList, Plus, Edit2 } = icons;
+
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-lg">
+    <div className="rounded-2xl border border-(--med-gray-border) bg-(--med-gray) p-6 shadow-sm">
+      {/* Header */}
       <div className="mb-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-green-500 to-emerald-500">
-            <ClipboardList className="h-6 w-6 text-white" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-(--med-blue-light)">
+            <ClipboardList className="h-6 w-6 text-(--med-blue)" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-gray-900">Historial Clínico</h2>
-            <p className="text-sm text-gray-500">Registros médicos del paciente</p>
+            <h2 className="text-xl font-semibold text-(--med-text-dark)">Historial Clínico</h2>
+            <p className="text-sm text-(--med-text-muted)">Registros médicos del paciente</p>
           </div>
         </div>
+
         <button
           onClick={onAdd}
-          className="group flex items-center gap-2 rounded-xl bg-linear-to-r from-blue-500 to-blue-600 px-5 py-3 font-semibold text-white shadow-lg transition hover:scale-105 hover:shadow-xl active:scale-95"
+          className="flex items-center gap-2 rounded-lg bg-(--med-blue) px-5 py-2.5 text-sm font-medium text-white shadow-md transition hover:bg-blue-700 active:scale-95"
         >
-          <Plus className="h-5 w-5 transition-transform group-hover:rotate-90" />
+          <Plus className="h-4 w-4" />
           Agregar
         </button>
       </div>
 
+      {/* Records */}
       {records.length > 0 ? (
-        <div className="space-y-3">
-          {/* Card */}
+        <div className="space-y-4">
           {records.map((r, index) => (
             <div
               key={r._id}
-              className="group rounded-xl border-2 border-gray-200 bg-linear-to-br from-gray-50 to-white p-4 transition hover:border-blue-300 hover:shadow-md"
+              className="rounded-xl border border-(--med-gray-border) bg-white p-4 shadow-sm transition hover:shadow-md"
               style={{
                 animationDelay: `${index * 100}ms`,
-                animation: 'slideIn 0.3s ease-out forwards',
+                animation: 'fadeIn 0.3s ease-out forwards',
               }}
             >
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex flex-1 items-start gap-4">
-                  {/* Left Date */}
-                  <div className="flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded-xl bg-blue-50 text-blue-600">
-                    <span className="text-xs font-medium">
-                      {new Date(r.createdAt)
-                        .toLocaleDateString('es-MX', { month: 'short' })
-                        .toUpperCase()}
-                    </span>
-                    <span className="text-xl font-bold">
-                      {new Date(r.createdAt).toLocaleDateString('es-MX', { day: '2-digit' })}
-                    </span>
-                  </div>
+              <div className="flex justify-between gap-4">
+                {/* Date */}
+                <div className="flex h-14 w-14 flex-col items-center justify-center rounded-lg bg-(--med-blue-light) text-(--med-blue)">
+                  <span className="text-xs font-medium uppercase">
+                    {new Date(r.createdAt).toLocaleDateString('es-MX', { month: 'short' })}
+                  </span>
+                  <span className="text-lg font-bold">
+                    {new Date(r.fechaRegistro).toLocaleDateString('es-MX', { day: '2-digit' })}
+                  </span>
+                </div>
 
-                  <div className="flex-1">
-                    {/* <div className="mb-3 flex items-center gap-2">
-                      <span className="text-sm font-semibold text-gray-900">
-                        {new Date(r.fechaRegistro).toLocaleDateString('es-MX', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                        })}
-                      </span>
-                      <span className="rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-800">
-                        Consulta
-                      </span>
-                    </div> */}
-
-                    <div className="grid grid-cols-2 grid-rows-2 gap-3 md:grid-cols-3">
-                      {/* Peso */}
-                      <div className="flex items-center gap-2 rounded-lg bg-blue-50 p-2">
-                        <Scale className="h-4 w-4 text-blue-600" />
-                        <div>
-                          <p className="text-xs text-blue-600">Peso</p>
-                          <p className="text-sm font-bold text-blue-900">{r.pesoActual} kg</p>
-                        </div>
+                {/* Info */}
+                <div className="flex-1">
+                  <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+                    {/* Peso */}
+                    <div className="rounded-lg bg-(--med-blue-light) p-2">
+                      <div className="flex items-center gap-2 text-xs font-medium text-(--med-blue)">
+                        <Scale className="h-4 w-4" /> Peso
                       </div>
-
-                      {/* IMC */}
-                      <div className="flex items-center gap-2 rounded-lg bg-green-50 p-2">
-                        <Activity className="h-4 w-4 text-green-600" />
-                        <div>
-                          <p className="text-xs text-green-600">IMC</p>
-                          <p className="text-sm font-bold text-green-900">
-                            {r.indiceMasaCorporal?.toFixed(1)}
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* Enfermedades */}
-                      <div className="flex flex-col items-start gap-2 rounded-lg bg-red-50 p-2">
-                        <div className="flex items-center gap-2">
-                          <Stethoscope className="h-4 w-4 text-red-600" />
-                          <p className="text-xs text-red-600">Enfermedades</p>
-                        </div>
-                        <p className="text-sm font-bold text-red-900">
-                          {r.enfermedadesCronicas || '—'}
-                        </p>
-                      </div>
-
-                      {/* Medicamentos */}
-                      <div className="flex flex-col items-start gap-2 rounded-lg bg-purple-50 p-2">
-                        <div className="flex items-center gap-2">
-                          <Pill className="h-4 w-4 text-purple-600" />
-                          <p className="text-xs text-purple-600">Medicamentos</p>
-                        </div>
-                        <p className="text-sm font-bold text-purple-900">
-                          {r.medicamentosActuales || '—'}
-                        </p>
-                      </div>
-
-                      {/* Talla */}
-                      <div className="flex flex-col items-start gap-2 rounded-lg bg-cyan-50 p-2">
-                        <div className="flex items-center gap-2">
-                          <Ruler className="h-4 w-4 text-cyan-600" />
-                          <p className="text-xs text-cyan-600">Talla</p>
-                        </div>
-                        <p className="text-sm font-bold text-cyan-900">
-                          {r.talla ? `${r.talla} cm` : '—'}
-                        </p>
-                      </div>
-
-                      {/* Presión */}
-                      {r.presionArterial && (
-                        <div className="flex items-center gap-2 rounded-lg bg-rose-50 p-2">
-                          <HeartPulse className="h-4 w-4 text-rose-600" />
-                          <div>
-                            <p className="text-xs text-rose-600">Presión</p>
-                            <p className="text-sm font-bold text-rose-900">{r.presionArterial}</p>
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Glucosa */}
-                      {r.glucosa && (
-                        <div className="flex items-center gap-2 rounded-lg bg-orange-50 p-2">
-                          <Droplet className="h-4 w-4 text-orange-600" />
-                          <div>
-                            <p className="text-xs text-orange-600">Glucosa</p>
-                            <p className="text-sm font-bold text-orange-900">{r.glucosa}</p>
-                          </div>
-                        </div>
-                      )}
+                      <p className="text-sm font-bold text-(--med-text-dark)">{r.pesoActual} kg</p>
                     </div>
 
-                    {r.motivoConsulta && (
-                      <div className="mt-3 rounded-lg bg-gray-50 p-3">
-                        <p className="text-xs font-medium text-gray-600">Motivo de consulta:</p>
-                        <p className="mt-1 text-sm text-gray-900">{r.motivoConsulta}</p>
+                    {/* IMC */}
+                    <div className="rounded-lg bg-(--med-purple)/10 p-2">
+                      <div className="flex items-center gap-2 text-xs font-medium text-(--med-purple)">
+                        <Activity className="h-4 w-4" /> IMC
+                      </div>
+                      <p className="text-sm font-bold text-(--med-text-dark)">
+                        {r.indiceMasaCorporal?.toFixed(1)}
+                      </p>
+                    </div>
+
+                    {/* Enfermedades */}
+                    <div className="rounded-lg bg-(--med-red)/10 p-2">
+                      <div className="flex items-center gap-2 text-xs font-medium text-(--med-red)">
+                        <Stethoscope className="h-4 w-4" /> Enfermedades
+                      </div>
+                      <p className="text-sm font-bold text-(--med-text-dark)">
+                        {r.enfermedadesCronicas || '—'}
+                      </p>
+                    </div>
+
+                    {/* Medicamentos */}
+                    <div className="rounded-lg bg-(--med-purple)/10 p-2">
+                      <div className="flex items-center gap-2 text-xs font-medium text-(--med-purple)">
+                        <Pill className="h-4 w-4" /> Medicamentos
+                      </div>
+                      <p className="text-sm font-bold text-(--med-text-dark)">
+                        {r.medicamentosActuales || '—'}
+                      </p>
+                    </div>
+
+                    {/* Talla */}
+                    <div className="rounded-lg bg-(--med-cyan)/10 p-2">
+                      <div className="flex items-center gap-2 text-xs font-medium text-(--med-cyan)">
+                        <Ruler className="h-4 w-4" /> Talla
+                      </div>
+                      <p className="text-sm font-bold text-(--med-text-dark)">
+                        {r.talla ? `${r.talla} cm` : '—'}
+                      </p>
+                    </div>
+
+                    {/* Glucosa */}
+                    {r.glucosa && (
+                      <div className="rounded-lg bg-(--med-green)/10 p-2">
+                        <div className="flex items-center gap-2 text-xs font-medium text-(--med-green)">
+                          <Droplet className="h-4 w-4" /> Glucosa
+                        </div>
+                        <p className="text-sm font-bold text-(--med-text-dark)">{r.glucosa}</p>
                       </div>
                     )}
                   </div>
+
+                  {/* Motivo */}
+                  {r.motivoConsulta && (
+                    <div className="mt-3 rounded-lg bg-(--med-gray) p-3">
+                      <p className="text-xs font-medium text-(--med-text-muted)">
+                        Motivo de consulta:
+                      </p>
+                      <p className="mt-1 text-sm text-(--med-text-dark)">{r.motivoConsulta}</p>
+                    </div>
+                  )}
                 </div>
 
+                {/* Edit */}
                 <button
                   onClick={() => onEdit(r)}
-                  className="rounded-lg bg-blue-50 p-2.5 transition hover:scale-110 hover:bg-blue-100 active:scale-95"
-                  title="Editar registro"
+                  className="rounded-lg bg-(--med-blue-light) p-2.5 transition hover:bg-(--med-blue) hover:text-white active:scale-95"
                 >
-                  <Edit2 className="h-5 w-5 text-blue-600" />
+                  <Edit2 className="h-5 w-5" />
                 </button>
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 py-16">
-          <ClipboardList className="mb-3 h-12 w-12 text-gray-300" />
-          <p className="mb-1 font-medium text-gray-600">Sin registros clínicos</p>
-          <p className="mb-4 text-sm text-gray-500">Comienza agregando el primer registro</p>
+        <div className="flex flex-col items-center justify-center rounded-xl border border-(--med-gray-border) bg-white py-16 text-center">
+          <ClipboardList className="mb-3 h-12 w-12 text-gray-400" />
+          <p className="mb-1 font-medium text-(--med-text-dark)">Sin registros clínicos</p>
+          <p className="mb-4 text-sm text-(--med-text-muted)">
+            Comienza agregando el primer registro
+          </p>
           <button
             onClick={onAdd}
-            className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-600 active:scale-95"
+            className="flex items-center gap-2 rounded-lg bg-(--med-blue) px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700 active:scale-95"
           >
             <Plus className="h-4 w-4" />
             Agregar Registro

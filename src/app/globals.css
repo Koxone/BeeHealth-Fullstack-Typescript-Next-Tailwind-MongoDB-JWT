@@ -6,11 +6,53 @@ button {
 }
 
 @theme {
+  --color-medtrack-consultation: rgba(185, 248, 207, 0.3);
+  --color-medtrack-weight: rgba(191, 219, 254, 0.3);
+  --color-medtrack-imc: rgba(216, 180, 254, 0.3);
+  --color-medtrack-sickness: #fee2e2;
+  --color-medtrack-meds: rgba(243, 232, 255, 1);
+
+  --color-medtrack-blue-light: #bfdbfe;
+
   --color-asana-cream: #fff9ec;
+  --color-asana-cream-light: #fffdf5;
+  --color-asana-cream-dark: #f7e9d4;
+
   --color-asana-green: #8b9c94;
+  --color-asana-green-light: #a6b5ae;
+  --color-asana-green-dark: #6f867e;
+  --color-asana-olive: #9ea792;
+
   --color-asana-beige: #efe1d5;
+  --color-asana-beige-light: #f5e8dc;
+  --color-asana-beige-dark: #e0cbb6;
+  --color-asana-sand: #dbc6af;
+
   --color-asana-blue: #90acba;
+  --color-asana-blue-light: #b1c8d3;
+  --color-asana-blue-dark: #6e8f9e;
+  --color-asana-sky: #a7c4ce;
+
   --color-asana-white: #ffffff;
+  --color-asana-gray: #dcdcd9;
+  --color-asana-gray-light: #eeeeec;
+  --color-asana-gray-dark: #b9b9b5;
+
+  --color-asana-brown: #c2a891;
+  --color-asana-taupe: #b8a99a;
+  --color-asana-mist: #d6dcd7;
+
+  /* Borrar GPT */
+  --med-blue: #2563eb; 
+  --med-blue-light: #e0ebff;
+  --med-gray: #f8fafc; 
+  --med-gray-border: #e2e8f0;
+  --med-text-dark: #1e293b;
+  --med-text-muted: #64748b;
+  --med-green: #16a34a;
+  --med-red: #dc2626;
+  --med-purple: #6d28d9;
+  --med-cyan: #0891b2;
 }
 
 /* Doctor Patient Detail */

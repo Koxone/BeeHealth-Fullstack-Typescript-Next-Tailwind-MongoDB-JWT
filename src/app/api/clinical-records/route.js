@@ -80,7 +80,16 @@ export async function PUT(req) {
       return NextResponse.json({ error: 'Falta el ID del historial' }, { status: 400 });
     }
 
-    const updated = await ClinicalRecord.findByIdAndUpdate(recordId, updates, { new: true });
+    // Forzar que la fecha se interprete como Date válida
+    if (updates.fechaRegistro) {
+      updates.fechaRegistro = new Date(updates.fechaRegistro);
+    }
+
+    const updated = await ClinicalRecord.findByIdAndUpdate(
+      recordId,
+      { $set: updates },
+      { new: true, runValidators: true }
+    );
 
     if (!updated) {
       return NextResponse.json({ error: 'Historial no encontrado' }, { status: 404 });

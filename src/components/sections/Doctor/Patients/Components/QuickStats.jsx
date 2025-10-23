@@ -3,39 +3,55 @@
 /* quick stats */
 export default function QuickStats({ stats, icons }) {
   const { FileText, Scale, Heart, Activity, TrendingUp } = icons;
+
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-      <div className="group rounded-2xl border-2 border-green-200 bg-linear-to-br from-green-50 to-emerald-100 p-6 shadow-lg transition hover:scale-105">
+      {/* Consultas Totales */}
+      <div className="rounded-2xl border border-(--med-gray-border) bg-white p-6 shadow-sm transition hover:shadow-md">
         <div className="mb-3 flex items-center justify-between">
-          <div className="rounded-xl bg-green-200 p-3 transition group-hover:scale-110">
-            <FileText className="h-6 w-6 text-green-700" />
+          <div className="flex items-center gap-3">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-(--med-green)/10">
+              <FileText className="h-6 w-6 text-(--med-green)" />
+            </div>
+            <div>
+              <p className="text-3xl font-bold text-(--med-text-dark)">{stats.totalConsultas}</p>
+              <p className="text-sm text-(--med-text-muted)">Consultas Totales</p>
+            </div>
           </div>
-          <TrendingUp className="h-5 w-5 text-green-600" />
+          <TrendingUp className="h-5 w-5 text-(--med-green)" />
         </div>
-        <p className="mb-1 text-3xl font-bold text-gray-900">{stats.totalConsultas}</p>
-        <p className="text-sm text-gray-700">Consultas Totales</p>
       </div>
 
-      <div className="group rounded-2xl border-2 border-blue-200 bg-linear-to-br from-blue-50 to-cyan-100 p-6 shadow-lg transition hover:scale-105">
+      {/* Peso Actual */}
+      <div className="rounded-2xl border border-(--med-gray-border) bg-white p-6 shadow-sm transition hover:shadow-md">
         <div className="mb-3 flex items-center justify-between">
-          <div className="rounded-xl bg-blue-200 p-3 transition group-hover:scale-110">
-            <Scale className="h-6 w-6 text-blue-700" />
+          <div className="flex items-center gap-3">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-(--med-blue-light)">
+              <Scale className="h-6 w-6 text-(--med-blue)" />
+            </div>
+            <div>
+              <p className="text-3xl font-bold text-(--med-text-dark)">{stats.ultimoPeso}</p>
+              <p className="text-sm text-(--med-text-muted)">Peso Actual (kg)</p>
+            </div>
           </div>
-          <Activity className="h-5 w-5 text-blue-600" />
+          <Activity className="h-5 w-5 text-(--med-blue)" />
         </div>
-        <p className="mb-1 text-3xl font-bold text-gray-900">{stats.ultimoPeso}</p>
-        <p className="text-sm text-gray-700">Peso Actual (kg)</p>
       </div>
 
-      <div className="group rounded-2xl border-2 border-purple-200 bg-linear-to-br from-purple-50 to-pink-100 p-6 shadow-lg transition hover:scale-105">
+      {/* IMC Actual */}
+      <div className="rounded-2xl border border-(--med-gray-border) bg-white p-6 shadow-sm transition hover:shadow-md">
         <div className="mb-3 flex items-center justify-between">
-          <div className="rounded-xl bg-purple-200 p-3 transition group-hover:scale-110">
-            <Heart className="h-6 w-6 text-purple-700" />
+          <div className="flex items-center gap-3">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-(--med-purple)/10">
+              <Heart className="h-6 w-6 text-(--med-purple)" />
+            </div>
+            <div>
+              <p className="text-3xl font-bold text-(--med-text-dark)">{stats.ultimoIMC}</p>
+              <p className="text-sm text-(--med-text-muted)">IMC Actual</p>
+            </div>
           </div>
-          <Activity className="h-5 w-5 text-purple-600" />
+          <Activity className="h-5 w-5 text-(--med-purple)" />
         </div>
-        <p className="mb-1 text-3xl font-bold text-gray-900">{stats.ultimoIMC}</p>
-        <p className="text-sm text-gray-700">IMC Actual</p>
       </div>
     </div>
   );

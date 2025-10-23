@@ -4,7 +4,7 @@
 export default function PatientHeader({ patient, icons, moment }) {
   const { User, Mail, Phone, CalendarIcon, Activity, Stethoscope } = icons;
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-blue-500 via-blue-600 to-cyan-600 p-8 shadow-xl">
+    <div className="bg-asana-green relative overflow-hidden rounded-2xl p-8 shadow-xl">
       <div className="absolute -top-10 -right-10 h-40 w-40 rounded-full bg-white/10 blur-3xl" />
       <div className="absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-white/10 blur-3xl" />
 
@@ -20,15 +20,18 @@ export default function PatientHeader({ patient, icons, moment }) {
         </div>
 
         <div className="flex-1 text-white">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-1.5 backdrop-blur-sm">
+          {/* Patient Status */}
+          <div className="border-asana-beige/40 mb-3 inline-flex items-center gap-2 rounded-full border bg-black/20 px-4 py-1.5 backdrop-blur-sm">
             <Stethoscope className="h-4 w-4" />
             <span className="text-sm font-medium">Paciente Activo</span>
           </div>
 
+          {/* Patient Name */}
           <h1 className="mb-4 text-4xl font-bold">{patient?.fullName}</h1>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-            <div className="flex items-center gap-3 rounded-xl bg-white/10 p-3 backdrop-blur-sm">
+            {/* Patient Mail */}
+            <div className="border-asana-beige/40 flex items-center gap-3 rounded-xl border bg-black/20 p-3 backdrop-blur-sm">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/20">
                 <Mail className="h-5 w-5 text-white" />
               </div>
@@ -38,7 +41,8 @@ export default function PatientHeader({ patient, icons, moment }) {
               </div>
             </div>
 
-            <div className="flex items-center gap-3 rounded-xl bg-white/10 p-3 backdrop-blur-sm">
+            {/* Patient Phone Number */}
+            <div className="border-asana-beige/40 flex items-center gap-3 rounded-xl border bg-black/20 p-3 backdrop-blur-sm">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/20">
                 <Phone className="h-5 w-5 text-white" />
               </div>
@@ -48,7 +52,8 @@ export default function PatientHeader({ patient, icons, moment }) {
               </div>
             </div>
 
-            <div className="flex items-center gap-3 rounded-xl bg-white/10 p-3 backdrop-blur-sm">
+            {/* Patient First Consultation */}
+            <div className="border-asana-beige/40 flex items-center gap-3 rounded-xl border bg-black/20 p-3 backdrop-blur-sm">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/20">
                 <CalendarIcon className="h-5 w-5 text-white" />
               </div>

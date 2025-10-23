@@ -1,10 +1,6 @@
 'use client';
 
-import { useRouter, useParams } from 'next/navigation';
-import { useState, useEffect, useMemo } from 'react';
-import moment from 'moment';
-import 'moment/locale/es';
-
+// Imports
 import {
   ArrowLeft,
   User,
@@ -22,7 +18,14 @@ import {
   Scale,
   Droplet,
   ClipboardList,
+  Loader2,
 } from 'lucide-react';
+
+import { useRouter, useParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import moment from 'moment';
+import 'moment/locale/es';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import BackButton from './Components/BackButton';
 import PatientHeader from './Components/PatientHeader';
@@ -32,21 +35,19 @@ import ClinicalHistory from './Components/ClinicalHistory';
 import HistoryModal from './Components/HistoryModal';
 
 export default function DoctorPatientDetail() {
-  /* router */
+  // Local
   const router = useRouter();
   const params = useParams();
   const patientId = params.id;
 
-  /* data state */
-  const [patient, setPatient] = useState(null);
-  const [records, setRecords] = useState([]);
-  const [weightData, setWeightData] = useState([]);
+  // Tanstack
+  const queryClient = useQueryClient();
 
-  /* ui state */
+  // Local States
   const [showHistoryModal, setShowHistoryModal] = useState(false);
   const [editingHistory, setEditingHistory] = useState(null);
 
-  /* form state */
+  // Form State
   const [historyForm, setHistoryForm] = useState({
     fecha: '',
     peso: '',
@@ -59,96 +60,64 @@ export default function DoctorPatientDetail() {
     tratamiento: '',
   });
 
-  /* fetch patient */
-  useEffect(() => {
-    const fetchPatient = async () => {
-      try {
-        const res = await fetch(`/api/users/${patientId}`);
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Error al obtener paciente');
-        setPatient(data.user);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    if (patientId) fetchPatient();
-  }, [patientId]);
+  // Fetch Patient
+  const {
+    data: patient,
+    isLoading: loadingPatient,
+    error: errorPatient,
+  } = useQuery({
+    queryKey: ['patient', patientId],
+    queryFn: async () => {
+      const res = await fetch(`/api/users/${patientId}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Error al obtener paciente');
+      return data.user;
+    },
+    enabled: !!patientId,
+  });
 
-  /* fetch records */
-  useEffect(() => {
-    const fetchRecords = async () => {
-      try {
-        const res = await fetch(`/api/clinical-records/user`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ patientId }),
-        });
-        const data = await res.json();
-        if (res.ok) {
-          setRecords(data.records || []);
-          const mapped = (data.records || []).map((r) => ({
-            fecha: new Date(r.fechaRegistro).toLocaleDateString('es-MX', {
-              month: 'short',
-              day: 'numeric',
-            }),
-            peso: r.pesoActual,
-          }));
-          setWeightData(mapped);
-        } else {
-          setRecords([]);
-          setWeightData([]);
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    if (patientId) fetchRecords();
-  }, [patientId]);
-
-  /* modal open */
-  const openHistoryModal = (record = null) => {
-    if (record) {
-      setEditingHistory(record);
-      setHistoryForm({
-        fecha: record.fechaRegistro?.split('T')[0] || '',
-        peso: record.pesoActual || '',
-        imc: record.indiceMasaCorporal || '',
-        presionArterial: record.presionArterial || '',
-        glucosa: record.glucosa || '',
-        colesterol: record.colesterol || '',
-        notas: record.notas || '',
-        diagnostico: record.diagnostico || '',
-        tratamiento: record.tratamiento || '',
+  // Fetch Clinical Records
+  const {
+    data: recordsData,
+    isLoading: loadingRecords,
+    error: errorRecords,
+  } = useQuery({
+    queryKey: ['clinical-records', patientId],
+    queryFn: async () => {
+      const res = await fetch(`/api/clinical-records/user`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ patientId }),
       });
-    } else {
-      setEditingHistory(null);
-      setHistoryForm({
-        fecha: new Date().toISOString().split('T')[0],
-        peso: '',
-        imc: '',
-        presionArterial: '',
-        glucosa: '',
-        colesterol: '',
-        notas: '',
-        diagnostico: '',
-        tratamiento: '',
-      });
-    }
-    setShowHistoryModal(true);
-  };
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Error al obtener registros clínicos');
+      return data.records || [];
+    },
+    enabled: !!patientId,
+  });
 
-  /* modal close */
-  const closeHistoryModal = () => {
-    setShowHistoryModal(false);
-    setEditingHistory(null);
-  };
+  const records = recordsData || [];
 
-  /* Submit */
-  const handleHistorySubmit = async (e) => {
-    e.preventDefault();
+  // Data
+  const weightData = records
+    .filter((r) => r.pesoActual && r.fechaRegistro)
+    .map((r) => ({
+      fecha: new Date(r.fechaRegistro).toLocaleDateString('es-MX', {
+        day: '2-digit',
+        month: 'short',
+      }),
+      peso: Number(r.pesoActual),
+    }))
+    .reverse();
 
-    try {
-      const url = editingHistory ? '/api/clinical-records' : '/api/clinical-records';
+  const totalConsultas = records.length;
+  const ultimoPeso = records.length > 0 ? records[0].pesoActual : 'N/A';
+  const ultimoIMC = records.length > 0 ? records[0].indiceMasaCorporal?.toFixed(1) : 'N/A';
+
+  // Mutation Create-Edit
+  const mutation = useMutation({
+    mutationFn: async () => {
+      const url = '/api/clinical-records';
       const method = editingHistory ? 'PUT' : 'POST';
 
       const body = editingHistory
@@ -199,43 +168,73 @@ export default function DoctorPatientDetail() {
       });
 
       const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Error al guardar historial clínico');
+      return data.record;
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(['clinical-records', patientId]);
+      closeHistoryModal();
+      alert(editingHistory ? 'Historial actualizado' : 'Historial creado');
+    },
+    onError: (err) => {
+      console.error(err);
+      alert('Error al guardar historial clínico');
+    },
+  });
 
-      if (res.ok) {
-        alert(editingHistory ? 'Historial actualizado' : 'Historial creado');
-        closeHistoryModal();
-
-        if (editingHistory) {
-          setRecords((prev) => prev.map((r) => (r._id === editingHistory._id ? data.record : r)));
-        } else {
-          setRecords((prev) => [data.record, ...prev]);
-        }
-      } else {
-        alert(data.error || 'Error al guardar historial clínico');
-      }
-    } catch (err) {
-      console.error('Error al guardar historial clínico:', err);
+  // Modal Handlers
+  const openHistoryModal = (record = null) => {
+    if (record) {
+      setEditingHistory(record);
+      setHistoryForm({
+        fecha: record.fechaRegistro?.split('T')[0] || '',
+        peso: record.pesoActual || '',
+        imc: record.indiceMasaCorporal || '',
+        presionArterial: record.presionArterial || '',
+        glucosa: record.glucosa || '',
+        colesterol: record.colesterol || '',
+        notas: record.notas || '',
+        diagnostico: record.diagnostico || '',
+        tratamiento: record.tratamiento || '',
+      });
+    } else {
+      setEditingHistory(null);
+      setHistoryForm({
+        fecha: new Date().toISOString().split('T')[0],
+        peso: '',
+        imc: '',
+        presionArterial: '',
+        glucosa: '',
+        colesterol: '',
+        notas: '',
+        diagnostico: '',
+        tratamiento: '',
+      });
     }
+    setShowHistoryModal(true);
   };
 
-  /* loading */
-  if (!patient)
+  const closeHistoryModal = () => {
+    setShowHistoryModal(false);
+    setEditingHistory(null);
+  };
+
+  // Loading Screen
+  if (loadingPatient || loadingRecords)
     return (
       <div className="flex min-h-[400px] items-center justify-center">
         <div className="text-center">
-          <div className="mx-auto mb-4 h-16 w-16 animate-spin rounded-full border-4 border-blue-200 border-t-blue-600"></div>
-          <p className="text-lg font-medium text-gray-600">Cargando información del paciente...</p>
+          <Loader2 className="mx-auto mb-4 h-16 w-16 animate-spin text-blue-600" />
+          <p className="text-lg font-medium text-gray-600">Cargando información...</p>
         </div>
       </div>
     );
 
-  /* derived */
-  const totalConsultas = records.length;
-  const ultimoPeso = records.length > 0 ? records[0].pesoActual : 'N/A';
-  const ultimoIMC = records.length > 0 ? records[0].indiceMasaCorporal?.toFixed(1) : 'N/A';
   console.log(records);
+
   return (
     <div className="space-y-6">
-      {/* top */}
+      {/* Top */}
       <div className="grid grid-rows-[auto_1fr]">
         <BackButton onClick={() => router.back()} icon={{ ArrowLeft }} />
         <PatientHeader
@@ -269,7 +268,10 @@ export default function DoctorPatientDetail() {
           form={historyForm}
           setForm={setHistoryForm}
           onClose={closeHistoryModal}
-          onSubmit={handleHistorySubmit}
+          onSubmit={(e) => {
+            e.preventDefault();
+            mutation.mutate();
+          }}
           icons={{ X, FileText, CalendarIcon, Scale, Heart, Activity, Stethoscope }}
         />
       )}
