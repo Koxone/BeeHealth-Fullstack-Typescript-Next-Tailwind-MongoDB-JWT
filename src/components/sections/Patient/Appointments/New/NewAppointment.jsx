@@ -132,7 +132,7 @@ export default function NewAppointment() {
   };
 
   return (
-    <div className="h-full overflow-y-auto overflow-x-hidden pb-8">
+    <div className="h-full overflow-x-hidden overflow-y-auto pb-8">
       {/* header */}
       <HeaderBar onBack={() => router.back()} />
 
@@ -220,36 +220,6 @@ export default function NewAppointment() {
           </div>
         </form>
       </div>
-
-      {/* animations */}
-      <style jsx global>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes slideDown {
-          from {
-            opacity: 0;
-            transform: translateY(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fadeInUp {
-          animation: fadeInUp 0.5s ease-out forwards;
-        }
-        .animate-slideDown {
-          animation: slideDown 0.4s ease-out forwards;
-        }
-      `}</style>
     </div>
   );
 }
