@@ -1,7 +1,7 @@
 'use client';
 
 /* imports */
-import { ArrowLeft, Calendar as CalendarIcon } from 'lucide-react'; // icons
+import { ArrowLeft, Calendar as CalendarIcon } from 'lucide-react';
 
 /* header */
 export default function HeaderBar({ onBack }) {

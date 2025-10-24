@@ -1,7 +1,7 @@
 'use client';
 
 /* imports */
-import { Clock, Check } from 'lucide-react'; // icons
+import { Clock, Check } from 'lucide-react';
 
 /* slots */
 export default function TimeSlots({ dateLabel, times, selectedTime, onSelectTime }) {

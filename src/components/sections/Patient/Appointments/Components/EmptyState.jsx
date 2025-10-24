@@ -1,7 +1,7 @@
 'use client';
 
 /* imports */
-import { Calendar, Plus } from 'lucide-react'; // icons
+import { Calendar, Plus } from 'lucide-react';
 
 /* empty */
 export default function EmptyState({ activeFilter, onNew }) {

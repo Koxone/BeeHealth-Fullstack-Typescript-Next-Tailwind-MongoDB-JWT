@@ -1,10 +1,15 @@
 'use client';
 
-/* imports */
-import { Check, Stethoscope } from 'lucide-react'; // icons
+import { Check, Stethoscope } from 'lucide-react';
 
 /* doctors */
-export default function DoctorsGrid({ doctors, selectedDoctor, onSelect }) {
+export default function DoctorsGrid({ selectedDoctor, onSelect }) {
+  /* Mock Data */
+  const doctors = [
+    { id: 1, nombre: 'Dra. Johana Lemus', especialidad: 'Endocrinología', avatar: 'MG' },
+    { id: 2, nombre: 'Dr. Arturo Lemus', especialidad: 'Medicina Estética', avatar: 'CR' },
+    { id: 3, nombre: 'Dra. Maureen Acosta', especialidad: 'Nutrición', avatar: 'AM' },
+  ];
   return (
     <div className="rounded-2xl border-2 border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-lg">
       <div className="mb-4 flex items-center gap-3">

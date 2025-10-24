@@ -1,7 +1,7 @@
 'use client';
 
 /* imports */
-import { AlertCircle, Calendar, User } from 'lucide-react'; // icons
+import { AlertCircle, Calendar, User } from 'lucide-react';
 
 /* modal */
 export default function CancelModal({ apt, onClose, onConfirm }) {

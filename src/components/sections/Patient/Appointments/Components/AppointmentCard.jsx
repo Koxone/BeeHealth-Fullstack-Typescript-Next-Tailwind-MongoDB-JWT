@@ -1,7 +1,7 @@
 'use client';
 
 /* imports */
-import { Calendar, Clock, User, RefreshCw, X } from 'lucide-react'; // icons
+import { Calendar, Clock, User, RefreshCw, X } from 'lucide-react';
 import { getStatusColor } from '../PatientAppointments'; // helpers
 
 /* card */

@@ -1,7 +1,7 @@
 'use client';
 
 /* imports */
-import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-react'; // icons
+import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 
 /* calendar */
 export default function CalendarPicker({

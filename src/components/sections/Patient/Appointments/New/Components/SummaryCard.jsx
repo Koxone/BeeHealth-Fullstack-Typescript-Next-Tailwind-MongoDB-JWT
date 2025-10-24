@@ -1,7 +1,7 @@
 'use client';
 
 /* imports */
-import { Sparkles, User, Calendar as CalendarIcon, Clock } from 'lucide-react'; // icons
+import { Sparkles, User, Calendar as CalendarIcon, Clock } from 'lucide-react';
 
 /* summary */
 export default function SummaryCard({ doctor, date, time }) {

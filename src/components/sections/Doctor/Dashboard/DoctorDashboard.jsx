@@ -15,7 +15,7 @@ import {
   AlertCircle,
   Package,
   Calendar,
-} from 'lucide-react'; // icons
+} from 'lucide-react';
 import { useAuthStore } from '@/Zustand/useAuthStore'; // auth
 
 /* components */

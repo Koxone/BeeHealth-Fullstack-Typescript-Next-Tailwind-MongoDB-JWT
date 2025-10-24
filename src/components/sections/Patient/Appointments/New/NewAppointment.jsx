@@ -14,13 +14,6 @@ import ReasonField from './Components/ReasonField';
 import SummaryCard from './Components/SummaryCard';
 import { availableSlots } from './Components/AvailableSlots';
 
-/* demo data */
-const doctors = [
-  { id: 1, nombre: 'Dra. Johana Lemus', especialidad: 'Endocrinología', avatar: 'MG' },
-  { id: 2, nombre: 'Dr. Arturo Lemus', especialidad: 'Medicina Estética', avatar: 'CR' },
-  { id: 3, nombre: 'Dra. Maureen Acosta', especialidad: 'Nutrición', avatar: 'AM' },
-];
-
 /* utils */
 const getDaysInMonth = (date) => {
   const year = date.getFullYear();
@@ -141,7 +134,6 @@ export default function NewAppointment() {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* doctors */}
           <DoctorsGrid
-            doctors={doctors}
             selectedDoctor={selectedDoctor}
             onSelect={(id) => {
               setSelectedDoctor(id);
