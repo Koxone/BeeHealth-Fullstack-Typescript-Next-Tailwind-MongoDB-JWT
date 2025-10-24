@@ -230,8 +230,6 @@ export default function DoctorPatientDetail() {
       </div>
     );
 
-  console.log(records);
-
   return (
     <div className="h-full space-y-6 overflow-y-auto">
       {/* Top */}
@@ -244,13 +242,13 @@ export default function DoctorPatientDetail() {
         />
       </div>
 
-      {/* quick stats */}
+      {/* Quick stats */}
       <QuickStats
         stats={{ totalConsultas, ultimoPeso, ultimoIMC }}
         icons={{ FileText, Scale, Heart, Activity, TrendingUp }}
       />
 
-      {/* clinical history */}
+      {/* Clinical history */}
       <ClinicalHistory
         records={records}
         onAdd={() => openHistoryModal()}
@@ -258,10 +256,10 @@ export default function DoctorPatientDetail() {
         icons={{ ClipboardList, Plus, Edit2, Scale, Heart, Activity, Droplet }}
       />
 
-      {/* weight chart */}
+      {/* Weight chart */}
       <WeightChart data={weightData} icons={{ TrendingUp }} />
 
-      {/* modal */}
+      {/* Modal */}
       {showHistoryModal && (
         <HistoryModal
           editingHistory={editingHistory}

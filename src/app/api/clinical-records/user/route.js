@@ -15,7 +15,6 @@ export async function POST(req) {
       return NextResponse.json({ error: 'El ID del paciente es requerido' }, { status: 400 });
     }
 
-    // Buscar todos los registros clínicos asociados al paciente
     const records = await ClinicalRecord.find({ patientId }).sort({ fechaRegistro: -1 });
 
     if (!records || records.length === 0) {

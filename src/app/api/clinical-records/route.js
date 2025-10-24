@@ -79,7 +79,6 @@ export async function PUT(req) {
       return NextResponse.json({ error: 'Falta el ID del historial' }, { status: 400 });
     }
 
-    // Forzar que la fecha se interprete como Date válida
     if (updates.fechaRegistro) {
       updates.fechaRegistro = new Date(updates.fechaRegistro);
     }
