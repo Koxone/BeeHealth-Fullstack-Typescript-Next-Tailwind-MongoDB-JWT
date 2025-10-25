@@ -1,11 +1,14 @@
 'use client';
 
+import { Cross } from 'lucide-react';
+
 /* right panel */
 export default function AppointmentsCard({ selectedDate, appointments, icons }) {
   const { Users, Clock, CalendarIcon, User, Phone, Mail, Sparkles } = icons;
   const title = selectedDate
     ? selectedDate.toLocaleDateString('es-ES', { day: 'numeric', month: 'long' })
     : 'Selecciona un día';
+
   console.log(appointments);
   return (
     <div className="overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg transition hover:shadow-xl">
@@ -40,6 +43,13 @@ export default function AppointmentsCard({ selectedDate, appointments, icons }) 
                 <div className="relative z-10">
                   {/* time */}
                   <div className="mb-3 flex items-center justify-between">
+                    {/* Kind */}
+                    <div className="flex items-center gap-2 rounded-lg bg-blue-50 px-3 py-1.5">
+                      <Cross className="h-4 w-4 text-blue-600" />
+                      <span className="font-bold text-gray-900">{apt.tipo}</span>
+                    </div>
+
+                    {/* Time */}
                     <div className="flex items-center gap-2 rounded-lg bg-blue-50 px-3 py-1.5">
                       <Clock className="h-4 w-4 text-blue-600" />
                       <span className="font-bold text-gray-900">{apt.hora}</span>
@@ -48,14 +58,19 @@ export default function AppointmentsCard({ selectedDate, appointments, icons }) 
                   {/* patient */}
                   <div className="mb-3 flex items-start gap-3">
                     <div className="min-w-0 flex-1">
+                      {/* Name */}
                       <div className="mb-1 flex items-center gap-2">
                         <User className="h-4 w-4 shrink-0 text-gray-400" />
                         <span className="truncate font-bold text-gray-900">{apt.paciente}</span>
                       </div>
+
+                      {/* Phone */}
                       <div className="mb-1 flex items-center gap-2">
                         <Phone className="h-3.5 w-3.5 shrink-0 text-gray-400" />
                         <span className="text-xs text-gray-600">{apt.telefono}</span>
                       </div>
+
+                      {/* Mail */}
                       <div className="flex items-center gap-2">
                         <Mail className="h-3.5 w-3.5 shrink-0 text-gray-400" />
                         <span className="truncate text-xs text-gray-600">{apt.email}</span>

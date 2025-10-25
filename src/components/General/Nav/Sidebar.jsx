@@ -31,7 +31,7 @@ export default function Sidebar({ role = 'patient' }) {
   const patientMenu = [
     { icon: LayoutDashboard, label: 'Inicio', path: '/patient/dashboard', badge: null },
     { icon: Activity, label: 'Historial', path: '/patient/history', badge: null },
-    { icon: Calendar, label: 'Citas', path: '/patient/appointments', badge: '3' },
+    { icon: Calendar, label: 'Agendar Cita', path: '/patient/appointments', badge: null },
     { icon: Apple, label: 'Dietas', path: '/patient/diets', badge: null },
     { icon: Dumbbell, label: 'Ejercicios', path: '/patient/exercises', badge: null },
     { icon: User, label: 'Perfil', path: '/patient/profile', badge: null },

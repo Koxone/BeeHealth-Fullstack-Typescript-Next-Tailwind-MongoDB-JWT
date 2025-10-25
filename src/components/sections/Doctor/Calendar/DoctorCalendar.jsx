@@ -73,6 +73,7 @@ async function fetchAppointments() {
         event.description?.match(/Motivo:\s*([^\n\r]+)/i)?.[1]?.trim() ||
         event.description ||
         'Sin descripción',
+      tipo: event.description?.match(/Tipo:\s*([^\n\r]+)/i)?.[1]?.trim() || 'Sin tipo',
       avatar: event.summary
         ? event.summary
             .split(' ')
@@ -82,8 +83,6 @@ async function fetchAppointments() {
     });
   });
 
-  console.log('Data:', data);
-  console.log('Formatted:', formatted);
   return formatted;
 }
 

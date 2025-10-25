@@ -4,7 +4,6 @@ import HistoryCard from './Components/HistoryCard';
 /* Clinical history */
 export default function ClinicalHistory({ records, onAdd, onEdit, icons }) {
   const { ClipboardList, Plus } = icons;
-  console.log(records);
   return (
     <div className="rounded-2xl border border-(--med-gray-border) bg-(--med-gray) p-4 shadow-sm sm:p-6">
       {/* Header */}

@@ -43,7 +43,7 @@ export async function GET(request) {
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { nombre, telefono, email, motivo, fecha } = body;
+    const { nombre, telefono, email, motivo, fecha, tipo } = body;
 
     if (!nombre || !telefono || !email || !motivo || !fecha) {
       return NextResponse.json(
@@ -54,10 +54,10 @@ export async function POST(request) {
 
     const event = {
       summary: nombre,
-      description: `Paciente: ${nombre}\nTeléfono: ${telefono}\nEmail: ${email}\nMotivo: ${motivo}`,
+      description: `Paciente: ${nombre}\nTeléfono: ${telefono}\nEmail: ${email}\nMotivo: ${motivo}\nTipo: ${tipo}`,
       start: { dateTime: fecha, timeZone: 'America/Mexico_City' },
       end: {
-        dateTime: new Date(new Date(fecha).getTime() + 30 * 60000).toISOString(), 
+        dateTime: new Date(new Date(fecha).getTime() + 30 * 60000).toISOString(),
         timeZone: 'America/Mexico_City',
       },
       reminders: {

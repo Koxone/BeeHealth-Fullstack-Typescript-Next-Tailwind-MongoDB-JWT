@@ -1,12 +1,12 @@
-import PatientAppointments from '@/components/sections/Patient/Appointments/PatientAppointments';
+import NewAppointment from '@/components/sections/Patient/Appointments/New/NewAppointment';
 import React from 'react';
 
-function PatientAppointmentsPage() {
+function PatientNewAppointmentPage() {
   return (
     <div className="h-screen overflow-hidden pb-40">
-      <PatientAppointments />
+      <NewAppointment />
     </div>
   );
 }
 
-export default PatientAppointmentsPage;
+export default PatientNewAppointmentPage;
