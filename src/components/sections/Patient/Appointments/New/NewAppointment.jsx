@@ -13,6 +13,51 @@ import SummaryCard from './Components/SummaryCard';
 import { formatDate, isPastDate, getDaysInMonth } from './Components/NewAppointmentUtils';
 import { useAuthStore } from '@/Zustand/useAuthStore';
 
+function getAvailableSlots(date, tipo) {
+  if (!date) return [];
+
+  const day = date.getDay();
+  const slots = [];
+
+  const addSlots = (startHour, endHour) => {
+    for (let h = startHour; h < endHour; h++) {
+      slots.push(`${String(h).padStart(2, '0')}:00`);
+      slots.push(`${String(h).padStart(2, '0')}:30`);
+    }
+  };
+
+  if (tipo === 'Odontología') {
+    if (day === 0) addSlots(11, 17);
+    return slots;
+  }
+
+  switch (day) {
+    case 1:
+      addSlots(8, 14);
+      addSlots(16, 19);
+      break;
+    case 2:
+    case 3:
+      addSlots(10, 14);
+      addSlots(16, 19);
+      break;
+    case 4:
+      addSlots(16, 19);
+      break;
+    case 5:
+      addSlots(8, 14);
+      addSlots(16, 19);
+      break;
+    case 6:
+      return [];
+    case 0:
+      addSlots(10, 13);
+      break;
+  }
+
+  return slots;
+}
+
 /* ===========================
    Lista de doctores
 =========================== */
@@ -96,26 +141,13 @@ export default function NewAppointment() {
 
   /* horarios disponibles */
   const availableTimesForDate = useMemo(() => {
-    if (!selectedDate) return [];
+    if (!selectedDate || !selectedDoctor) return [];
     const dateStr = formatDate(selectedDate);
-    const allSlots = [
-      '09:00',
-      '09:30',
-      '10:00',
-      '10:30',
-      '11:00',
-      '11:30',
-      '12:00',
-      '12:30',
-      '13:00',
-      '15:00',
-      '15:30',
-      '16:00',
-      '16:30',
-    ];
+    const doctor = doctors.find((d) => d.id === selectedDoctor);
+    const allSlots = getAvailableSlots(selectedDate, doctor.nombre);
     const booked = bookedTimes[dateStr] || [];
     return allSlots.filter((slot) => !booked.includes(slot));
-  }, [selectedDate, bookedTimes]);
+  }, [selectedDate, selectedDoctor, bookedTimes]);
 
   /* helpers */
   const isDateAvailable = (date) => {
