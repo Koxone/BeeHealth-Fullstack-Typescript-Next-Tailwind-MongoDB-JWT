@@ -12,6 +12,7 @@ import ReasonField from './Components/ReasonField';
 import SummaryCard from './Components/SummaryCard';
 import { formatDate, isPastDate, getDaysInMonth } from './Components/NewAppointmentUtils';
 import { useAuthStore } from '@/Zustand/useAuthStore';
+import SuccessModal from './Components/SuccessModal';
 
 function getAvailableSlots(date, tipo) {
   if (!date) return [];
@@ -93,6 +94,24 @@ async function fetchAppointments() {
    Componente principal
 =========================== */
 export default function NewAppointment() {
+  // Modal States
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [successData, setSuccessData] = useState(null);
+  const resetForm = () => {
+    setSelectedDoctor(null);
+    setSelectedDate(null);
+    setSelectedTime(null);
+    setReason('');
+    setCurrentMonth(new Date());
+  };
+
+  // Close modal
+  const closeSuccessModal = () => {
+    setShowSuccessModal(false);
+    setSuccessData(null);
+  };
+
+  // Router
   const router = useRouter();
 
   // Zustand
@@ -211,8 +230,14 @@ export default function NewAppointment() {
       const data = await res.json();
       console.log('Cita creada:', data);
 
-      alert('Cita agendada exitosamente');
-      router.push('/patient/appointments');
+      setSuccessData({
+        doctor,
+        date: selectedDate,
+        time: selectedTime,
+        reason,
+      });
+      setShowSuccessModal(true);
+      resetForm();
     } catch (err) {
       console.error(err);
       alert('Error al crear la cita');
@@ -297,6 +322,9 @@ export default function NewAppointment() {
             </button>
           </div>
         </form>
+
+        {/* Modal */}
+        {showSuccessModal && <SuccessModal data={successData} onClose={closeSuccessModal} />}
       </div>
     </div>
   );
