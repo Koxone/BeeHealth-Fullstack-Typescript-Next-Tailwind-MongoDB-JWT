@@ -7,9 +7,13 @@ import { useRouter } from 'next/navigation';
 import Header from './Components/Header';
 import SearchBar from './Components/SearchBar';
 import PatientsTable from './Components/PatientsTable';
+import { useDoctorStatsStore } from '@/Zustand/useDoctorStatsStore';
 
 /* container */
 export default function DoctorPatients() {
+  // Zustand
+  const setVisiblePatientsCount = useDoctorStatsStore((state) => state.setVisiblePatientsCount);
+
   /* data */
   const router = useRouter();
   const [patients, setPatients] = useState([]);
@@ -46,7 +50,10 @@ export default function DoctorPatients() {
   /* actions */
   const handleView = (id) => router.push(`/doctor/patients/${id}`);
 
-  /* ui */
+  useEffect(() => {
+    setVisiblePatientsCount(filtered.length);
+  }, [filtered.length, setVisiblePatientsCount]);
+  
   return (
     <div className="h-full space-y-6 overflow-y-auto">
       <Header />

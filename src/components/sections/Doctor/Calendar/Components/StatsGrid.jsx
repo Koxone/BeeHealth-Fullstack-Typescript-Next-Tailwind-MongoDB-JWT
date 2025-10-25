@@ -27,7 +27,7 @@ export default function StatsGrid({ stats, icons }) {
     },
   ];
   return (
-    <div className="mx-auto mb-6 max-w-7xl">
+    <div className="mx-auto mb-6 max-w-7xl px-2">
       <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
         {items.map(({ label, value, Icon, gradient, bg }, i) => (
           <div

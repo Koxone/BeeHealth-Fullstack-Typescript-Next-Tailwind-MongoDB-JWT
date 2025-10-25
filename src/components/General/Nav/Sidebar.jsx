@@ -18,10 +18,15 @@ import {
   Sparkles,
   ChevronRight,
 } from 'lucide-react';
+import { useDoctorStatsStore } from '@/Zustand/useDoctorStatsStore';
 
 export default function Sidebar({ role = 'patient' }) {
   const router = useRouter();
   const pathname = usePathname();
+
+  // Zustand
+  const todayAppointments = useDoctorStatsStore((state) => state.todayAppointments);
+  const visiblePatientsCount = useDoctorStatsStore((state) => state.visiblePatientsCount);
 
   const patientMenu = [
     { icon: LayoutDashboard, label: 'Inicio', path: '/patient/dashboard', badge: null },
@@ -35,8 +40,18 @@ export default function Sidebar({ role = 'patient' }) {
 
   const doctorMenu = [
     { icon: LayoutDashboard, label: 'Inicio', path: '/doctor/dashboard', badge: null },
-    { icon: Users, label: 'Pacientes', path: '/doctor/patients', badge: '24' },
-    { icon: Calendar, label: 'Calendario', path: '/doctor/calendar', badge: '8' },
+    {
+      icon: Users,
+      label: 'Pacientes',
+      path: '/doctor/patients',
+      badge: visiblePatientsCount > 0 ? String(visiblePatientsCount) : '0',
+    },
+    {
+      icon: Calendar,
+      label: 'Calendario',
+      path: '/doctor/calendar',
+      badge: todayAppointments > 0 ? String(todayAppointments) : '0',
+    },
     { icon: Apple, label: 'Dietas', path: '/doctor/diets', badge: null },
     { icon: Dumbbell, label: 'Ejercicios', path: '/doctor/exercises', badge: null },
     { icon: DollarSign, label: 'Contabilidad', path: '/doctor/accounting', badge: null },

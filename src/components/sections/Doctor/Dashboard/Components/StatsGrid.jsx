@@ -1,5 +1,6 @@
 'use client';
 
+import { useDoctorStatsStore } from '@/Zustand/useDoctorStatsStore';
 import { Users, DollarSign, AlertTriangle, Activity } from 'lucide-react';
 
 /* layout */
@@ -13,6 +14,11 @@ export default function StatsGrid({
   onClickContabilidad,
   onClickInventario,
 }) {
+  // Zustand
+  const todayAppointments = useDoctorStatsStore((state) => state.todayAppointments);
+  const totalAppointmentsThisMonth = useDoctorStatsStore(
+    (state) => state.totalAppointmentsThisMonth
+  );
   return (
     <div className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
       {/* ingresos */}
@@ -35,10 +41,10 @@ export default function StatsGrid({
         <div className="mb-2 flex items-center justify-between">
           <Users className="h-8 w-8 text-green-500" />
           <span className="rounded bg-green-50 px-2 py-1 text-xs font-medium text-green-700">
-            {totalCitas}
+            {totalAppointmentsThisMonth} este mes
           </span>
         </div>
-        <p className="mb-1 text-2xl font-bold text-gray-900 md:text-3xl">{citasActivas}</p>
+        <p className="mb-1 text-2xl font-bold text-gray-900 md:text-3xl">{todayAppointments}</p>
         <p className="text-xs text-gray-600 md:text-sm">Citas de hoy</p>
       </button>
 

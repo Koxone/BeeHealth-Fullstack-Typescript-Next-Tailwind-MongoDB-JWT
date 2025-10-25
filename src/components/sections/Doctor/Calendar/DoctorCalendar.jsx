@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 
 import {
   ChevronLeft,
@@ -21,6 +21,7 @@ import HeaderBar from './Components/HeaderBar';
 import StatsGrid from './Components/StatsGrid';
 import CalendarCard from './Components/CalendarCard';
 import AppointmentsCard from './Components/AppointmentsCard';
+import { useDoctorStatsStore } from '@/Zustand/useDoctorStatsStore';
 
 /* Utils */
 const formatDate = (date) => {
@@ -91,6 +92,9 @@ export default function DoctorCalendar() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
 
+  // Zustand
+  const setAllStats = useDoctorStatsStore((state) => state.setAllStats);
+
   /* Query */
   const { data: appointmentsData = {}, isLoading } = useQuery({
     queryKey: ['appointments'],
@@ -149,6 +153,14 @@ export default function DoctorCalendar() {
     totalAppointmentsThisMonth > 0 && daysWithAppointments > 0
       ? Math.round(totalAppointmentsThisMonth / daysWithAppointments)
       : 0;
+
+  useEffect(() => {
+    setAllStats({
+      totalAppointmentsThisMonth,
+      daysWithAppointments,
+      todayAppointments,
+    });
+  }, [totalAppointmentsThisMonth, daysWithAppointments, todayAppointments]);
 
   /* Loading */
   if (isLoading)
