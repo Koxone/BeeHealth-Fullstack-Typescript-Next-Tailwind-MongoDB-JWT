@@ -23,7 +23,7 @@ config/service-account.json
 # production
 /build
 
-# misc
+# misc 
 .DS_Store
 *.pem
 
