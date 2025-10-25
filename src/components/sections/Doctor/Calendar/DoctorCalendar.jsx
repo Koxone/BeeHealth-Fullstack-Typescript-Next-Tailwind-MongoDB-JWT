@@ -82,8 +82,6 @@ async function fetchAppointments() {
     });
   });
 
-  console.log('Data:', data);
-  console.log('Formatted:', formatted);
   return formatted;
 }
 

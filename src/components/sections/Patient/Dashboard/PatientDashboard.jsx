@@ -46,7 +46,6 @@ export default function PatientDashboard() {
 
   // Current record (latest)
   const record = clinicalRecords[0];
-  console.log(clinicalRecords);
   if (!record) return <p className="p-6 text-center text-gray-500">Sin registros clínicos.</p>;
 
   // Chart Data

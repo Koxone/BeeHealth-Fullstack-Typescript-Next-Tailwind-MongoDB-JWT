@@ -6,7 +6,6 @@ export default function AppointmentsCard({ selectedDate, appointments, icons }) 
   const title = selectedDate
     ? selectedDate.toLocaleDateString('es-ES', { day: 'numeric', month: 'long' })
     : 'Selecciona un día';
-  console.log(appointments);
   return (
     <div className="overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg transition hover:shadow-xl">
       <div className="relative overflow-hidden bg-linear-to-r from-indigo-600 to-purple-600 px-6 py-5">

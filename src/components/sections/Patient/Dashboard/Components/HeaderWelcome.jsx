@@ -9,7 +9,6 @@ export default function HeaderWelcome({ currentUser }) {
     month: 'long',
     day: 'numeric',
   });
-  console.log(currentUser);
   return (
     <div>
       <h1 className="mb-1 text-2xl font-bold text-gray-900 md:mb-2 md:text-3xl">Dashboard</h1>
