@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import HeaderBar from './Components/HeaderBar';
@@ -10,51 +10,131 @@ import CalendarPicker from './Components/CalendarPicker';
 import TimeSlots from './Components/TimeSlots';
 import ReasonField from './Components/ReasonField';
 import SummaryCard from './Components/SummaryCard';
-import {
-  availableSlots,
-  formatDate,
-  isPastDate,
-  getDaysInMonth,
-} from './Components/NewAppointmentUtils';
+import { formatDate, isPastDate, getDaysInMonth } from './Components/NewAppointmentUtils';
+import { useAuthStore } from '@/Zustand/useAuthStore';
 
+/* ===========================
+   Lista de doctores
+=========================== */
+const doctors = [
+  {
+    id: 1,
+    nombre: 'Control de Peso',
+    especialidad: 'Nutrición y Metabolismo',
+  },
+  {
+    id: 2,
+    nombre: 'Odontología',
+    especialidad: 'Periodoncia',
+  },
+  {
+    id: 3,
+    nombre: 'Tratamientos Estéticos',
+    especialidad: 'Medicina Estética',
+  },
+];
+
+/* ===========================
+   Fetch citas existentes
+=========================== */
+async function fetchAppointments() {
+  const res = await fetch('/api/appointments');
+  if (!res.ok) throw new Error('Error al obtener citas');
+  const data = await res.json();
+  return data;
+}
+
+/* ===========================
+   Componente principal
+=========================== */
 export default function NewAppointment() {
-  /* router */
   const router = useRouter();
 
-  /* ui state */
-  const [currentMonth, setCurrentMonth] = useState(new Date(2024, 9));
+  // Zustand
+  const { currentUser } = useAuthStore();
+  console.log(currentUser);
+
+  const [appointments, setAppointments] = useState([]);
+
+  const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [reason, setReason] = useState('');
 
-  /* derived */
   const days = getDaysInMonth(currentMonth);
   const monthName = currentMonth.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
-  const availableTimesForDate = selectedDate ? availableSlots[formatDate(selectedDate)] || [] : [];
+
+  /* cargar citas existentes */
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const data = await fetchAppointments();
+        setAppointments(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    load();
+  }, []);
+
+  /* citas ocupadas */
+  const bookedTimes = useMemo(() => {
+    const map = {};
+    appointments.forEach((a) => {
+      const date = a.start?.dateTime?.slice(0, 10);
+      const time = new Date(a.start.dateTime).toLocaleTimeString('es-MX', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      });
+      if (!map[date]) map[date] = [];
+      map[date].push(time);
+    });
+    return map;
+  }, [appointments]);
+
+  /* horarios disponibles */
+  const availableTimesForDate = useMemo(() => {
+    if (!selectedDate) return [];
+    const dateStr = formatDate(selectedDate);
+    const allSlots = [
+      '09:00',
+      '09:30',
+      '10:00',
+      '10:30',
+      '11:00',
+      '11:30',
+      '12:00',
+      '12:30',
+      '13:00',
+      '15:00',
+      '15:30',
+      '16:00',
+      '16:30',
+    ];
+    const booked = bookedTimes[dateStr] || [];
+    return allSlots.filter((slot) => !booked.includes(slot));
+  }, [selectedDate, bookedTimes]);
 
   /* helpers */
   const isDateAvailable = (date) => {
-    if (!date || !selectedDoctor) return false;
-    const dateStr = formatDate(date);
-    return availableSlots[dateStr] && availableSlots[dateStr].length > 0;
+    if (!date) return false;
+    return !isPastDate(date);
   };
 
-  /* Handlers */
   const handlePrevMonth = () => {
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
     setSelectedDate(null);
     setSelectedTime(null);
   };
 
-  /* Handlers */
   const handleNextMonth = () => {
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
     setSelectedDate(null);
     setSelectedTime(null);
   };
 
-  /* Handlers */
   const handleDateSelect = (date) => {
     if (!isPastDate(date) && isDateAvailable(date)) {
       setSelectedDate(date);
@@ -62,7 +142,6 @@ export default function NewAppointment() {
     }
   };
 
-  /* Handlers */
   const getStepStatus = (step) => {
     if (step === 1) return selectedDoctor ? 'complete' : 'current';
     if (step === 2) return selectedDate ? 'complete' : selectedDoctor ? 'current' : 'pending';
@@ -70,31 +149,49 @@ export default function NewAppointment() {
     return 'pending';
   };
 
-  /* Handlers */
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!selectedDoctor || !selectedDate || !selectedTime) {
+    if (!selectedDoctor || !selectedDate || !selectedTime || !reason) {
       alert('Por favor completa todos los campos');
       return;
     }
-    const appointmentData = {
-      doctor: doctors.find((d) => d.id === selectedDoctor),
-      fecha: formatDate(selectedDate),
-      hora: selectedTime,
-      motivo: reason,
-    };
-    console.log('Cita agendada:', appointmentData);
-    alert('Cita agendada exitosamente');
-    router.push('/patient/appointments');
+
+    try {
+      const doctor = doctors.find((d) => d.id === selectedDoctor);
+      const fechaISO = new Date(selectedDate);
+      const [hour, minute] = selectedTime.split(':');
+      fechaISO.setHours(parseInt(hour), parseInt(minute), 0, 0);
+
+      const res = await fetch('/api/appointments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nombre: currentUser?.fullName,
+          telefono: currentUser?.phone,
+          email: currentUser?.email,
+          motivo: reason,
+          tipo: doctor.nombre,
+          fecha: fechaISO.toISOString(),
+        }),
+      });
+
+      if (!res.ok) throw new Error('Error al crear la cita');
+      const data = await res.json();
+      console.log('Cita creada:', data);
+
+      alert('Cita agendada exitosamente');
+      router.push('/patient/appointments');
+    } catch (err) {
+      console.error(err);
+      alert('Error al crear la cita');
+    }
   };
 
   return (
     <div className="h-full overflow-x-hidden overflow-y-auto pb-8">
-      {/* Header */}
       <HeaderBar onBack={() => router.back()} />
 
       <div className="mx-auto max-w-4xl">
-        {/* Steps */}
         <ProgressSteps
           getStepStatus={getStepStatus}
           selectedDoctor={selectedDoctor}
@@ -102,9 +199,7 @@ export default function NewAppointment() {
           selectedTime={!!selectedTime}
         />
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Doctors */}
           <DoctorsGrid
             selectedDoctor={selectedDoctor}
             onSelect={(id) => {
@@ -114,7 +209,6 @@ export default function NewAppointment() {
             }}
           />
 
-          {/* Calendar */}
           {selectedDoctor && (
             <CalendarPicker
               monthName={monthName}
@@ -128,7 +222,6 @@ export default function NewAppointment() {
             />
           )}
 
-          {/* Time slots */}
           {selectedDate && (
             <TimeSlots
               dateLabel={selectedDate.toLocaleDateString('es-ES', {
@@ -141,10 +234,8 @@ export default function NewAppointment() {
             />
           )}
 
-          {/* Reason */}
           {selectedTime && <ReasonField value={reason} onChange={setReason} />}
 
-          {/* Summary */}
           {selectedDoctor && selectedDate && selectedTime && (
             <SummaryCard
               doctor={doctors.find((d) => d.id === selectedDoctor)}
@@ -153,7 +244,6 @@ export default function NewAppointment() {
             />
           )}
 
-          {/*Actions */}
           <div className="flex flex-col gap-4 pt-4 sm:flex-row">
             <button
               type="button"
