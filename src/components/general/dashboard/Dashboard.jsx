@@ -52,7 +52,7 @@ export default function GeneralDashboard() {
       )}
 
       {dashboardType === 'patient' && (
-        <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-1">
           <PatientEvolutionChart />
         </div>
       )}
