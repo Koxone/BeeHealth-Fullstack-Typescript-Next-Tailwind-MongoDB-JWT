@@ -126,9 +126,9 @@ export const textColors = {
 
 export const badgeColors = {
   primary: 'bg-white/20 text-white',
-  success: 'bg-green-50 text-green-700',
-  purple: 'bg-purple-50 text-purple-700',
-  danger: 'bg-red-50 text-red-700',
+  success: 'bg-green-100 text-green-700',
+  purple: 'bg-purple-100 text-purple-700',
+  danger: 'bg-red-100  text-red-700',
 };
 
 export const iconColors = {
