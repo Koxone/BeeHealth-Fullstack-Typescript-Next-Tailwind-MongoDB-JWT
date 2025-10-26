@@ -16,7 +16,7 @@ export default function EmployeeInventoryAlerts({ onViewMore }) {
           <ChevronRight className="h-4 w-4" />
         </button>
       </div>
-      <div className="space-y-2">
+      <div className="max-h-[250px] space-y-2 overflow-y-auto">
         {alertasInventarioPreset.map((item, index) => (
           <div
             key={index}
