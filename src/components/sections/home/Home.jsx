@@ -7,7 +7,7 @@ import HomeHeader from './components/HomeHeader';
 
 export default function Home() {
   const router = useRouter();
-  const [showMenu, setShowMenu] = useState<boolean>(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   return (
     <div className="bg-linear-to-br from-blue-50 via-white to-green-50">

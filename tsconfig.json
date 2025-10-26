@@ -30,6 +30,6 @@
     "**/*.mts",
     "**/*.ts",
     "**/*.tsx"
-, "src/components/sections/doctor/dashboard/DoctorDashboard.jsx"  ],
+, "src/components/sections/doctor/dashboard/DoctorDashboard.jsx", "src/components/sections/home/Home.jsx", "src/components/general/nav/sidebar/SideBar.jsx", "src/components/general/nav/Header.jsx", "src/app/(main)/doctor/dashboard/page.jsx", "src/app/(main)/auth/login/page.jsx"  ],
   "exclude": ["node_modules"]
 }

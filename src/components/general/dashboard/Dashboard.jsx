@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 
 import HeaderWelcome from './components/HeaderWelcome';
-import StatsGrid from './components/StatsGrid';
+import StatsGrid from './components/statsGrid/StatsGrid';
 import IncomeChart from './components/IncomeChart';
 import PatientsChart from './components/PatientsChart';
 import AppointmentsList from './components/AppointmentsList';
