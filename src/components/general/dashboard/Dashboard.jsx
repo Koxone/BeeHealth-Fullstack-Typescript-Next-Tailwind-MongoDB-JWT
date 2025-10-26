@@ -1,18 +1,6 @@
 'use client';
 
-import {
-  Users,
-  DollarSign,
-  AlertTriangle,
-  Activity,
-  ChevronRight,
-  Clock,
-  FileText,
-  User,
-  AlertCircle,
-  Package,
-  Calendar,
-} from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 import HeaderWelcome from './components/doctor/HeaderWelcome';
 import StatsGrid from './components/statsGrid/StatsGrid';
