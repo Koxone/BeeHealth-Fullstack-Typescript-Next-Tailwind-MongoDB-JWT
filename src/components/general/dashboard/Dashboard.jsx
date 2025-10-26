@@ -26,7 +26,7 @@ export default function GeneralDashboard() {
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
       {/* Header */}
-      <HeaderWelcome fullName="Dr. Example" />
+      <HeaderWelcome fullName="Example" />
 
       {/* Stats */}
       <StatsGrid />
