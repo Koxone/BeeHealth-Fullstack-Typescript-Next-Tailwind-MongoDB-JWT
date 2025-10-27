@@ -1,7 +1,14 @@
 'use client';
 
-/* modal */
-export default function HistoryModal({ editingHistory, form, setForm, onClose, onSubmit, icons }) {
+export default function HistoryModal({
+  editingHistory,
+  form,
+  setForm,
+  onClose,
+  onSubmit,
+  icons,
+  isReadOnly,
+}) {
   const { X, FileText, CalendarIcon, Scale, Heart, Activity, Stethoscope } = icons;
   return (
     <>
@@ -52,6 +59,7 @@ export default function HistoryModal({ editingHistory, form, setForm, onClose, o
                     </label>
                     <input
                       type="date"
+                      disabled={isReadOnly}
                       required
                       value={form.fecha}
                       onChange={(e) => setForm({ ...form, fecha: e.target.value })}
@@ -66,6 +74,7 @@ export default function HistoryModal({ editingHistory, form, setForm, onClose, o
                       <Scale className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
                       <input
                         type="number"
+                        disabled={isReadOnly}
                         step="0.1"
                         required
                         value={form.peso}
@@ -83,6 +92,7 @@ export default function HistoryModal({ editingHistory, form, setForm, onClose, o
                       <Heart className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
                       <input
                         type="number"
+                        disabled={isReadOnly}
                         step="0.1"
                         value={form.imc}
                         onChange={(e) => setForm({ ...form, imc: e.target.value })}
@@ -107,6 +117,7 @@ export default function HistoryModal({ editingHistory, form, setForm, onClose, o
                     </label>
                     <input
                       type="text"
+                      disabled={isReadOnly}
                       value={form.presionArterial}
                       onChange={(e) => setForm({ ...form, presionArterial: e.target.value })}
                       className="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-3 transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-100"
@@ -119,6 +130,7 @@ export default function HistoryModal({ editingHistory, form, setForm, onClose, o
                     </label>
                     <input
                       type="text"
+                      disabled={isReadOnly}
                       value={form.glucosa}
                       onChange={(e) => setForm({ ...form, glucosa: e.target.value })}
                       className="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-3 transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-100"
@@ -131,6 +143,7 @@ export default function HistoryModal({ editingHistory, form, setForm, onClose, o
                     </label>
                     <input
                       type="text"
+                      disabled={isReadOnly}
                       value={form.colesterol}
                       onChange={(e) => setForm({ ...form, colesterol: e.target.value })}
                       className="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-3 transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-100"
@@ -153,6 +166,7 @@ export default function HistoryModal({ editingHistory, form, setForm, onClose, o
                     </label>
                     <textarea
                       rows="2"
+                      disabled={isReadOnly}
                       value={form.diagnostico}
                       onChange={(e) => setForm({ ...form, diagnostico: e.target.value })}
                       className="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-3 transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-100"
@@ -165,6 +179,7 @@ export default function HistoryModal({ editingHistory, form, setForm, onClose, o
                     </label>
                     <textarea
                       rows="2"
+                      disabled={isReadOnly}
                       value={form.tratamiento}
                       onChange={(e) => setForm({ ...form, tratamiento: e.target.value })}
                       className="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-3 transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-100"
@@ -177,6 +192,7 @@ export default function HistoryModal({ editingHistory, form, setForm, onClose, o
                     </label>
                     <textarea
                       rows="3"
+                      disabled={isReadOnly}
                       value={form.notas}
                       onChange={(e) => setForm({ ...form, notas: e.target.value })}
                       className="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-3 transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-100"
@@ -187,21 +203,23 @@ export default function HistoryModal({ editingHistory, form, setForm, onClose, o
               </div>
             </div>
 
-            <div className="mt-6 flex gap-3">
-              <button
-                type="button"
-                onClick={onClose}
-                className="flex-1 rounded-xl border-2 border-gray-300 bg-white px-6 py-3 font-semibold text-gray-700 transition hover:bg-gray-50 active:scale-95"
-              >
-                Cancelar
-              </button>
-              <button
-                type="submit"
-                className="flex-1 rounded-xl bg-linear-to-r from-blue-500 to-blue-600 px-6 py-3 font-semibold text-white shadow-lg transition hover:scale-105 hover:shadow-xl active:scale-95"
-              >
-                {editingHistory ? 'Actualizar Registro' : 'Guardar Registro'}
-              </button>
-            </div>
+            {!isReadOnly && (
+              <div className="mt-6 flex gap-3">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="flex-1 rounded-xl border-2 border-gray-300 bg-white px-6 py-3 font-semibold text-gray-700 transition hover:bg-gray-50 active:scale-95"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 rounded-xl bg-linear-to-r from-blue-500 to-blue-600 px-6 py-3 font-semibold text-white shadow-lg transition hover:scale-105 hover:shadow-xl active:scale-95"
+                >
+                  {editingHistory ? 'Actualizar Registro' : 'Guardar Registro'}
+                </button>
+              </div>
+            )}
           </form>
         </div>
       </div>

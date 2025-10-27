@@ -114,7 +114,8 @@ export default function DoctorPatientDetail() {
   const weightData = mockWeightData;
 
   /* Modal Handlers */
-  const openHistoryModal = (record = null) => {
+  const openHistoryModal = (record = null, readOnly = false) => {
+    setIsReadOnly(readOnly);
     if (record) {
       setEditingHistory(record);
       setHistoryForm({
@@ -185,7 +186,7 @@ export default function DoctorPatientDetail() {
       <ClinicalHistory
         records={records}
         onAdd={() => openHistoryModal()}
-        onEdit={(r) => openHistoryModal(r)}
+        onEdit={(r, readOnly) => openHistoryModal(r, readOnly)}
         icons={{ ClipboardList, Plus, Edit2, Scale, Heart, Activity, Droplet }}
       />
 
@@ -205,6 +206,7 @@ export default function DoctorPatientDetail() {
             closeHistoryModal();
           }}
           icons={{ X, FileText, CalendarIcon, Scale, Heart, Activity, Stethoscope }}
+          isReadOnly={isReadOnly}
         />
       )}
     </div>

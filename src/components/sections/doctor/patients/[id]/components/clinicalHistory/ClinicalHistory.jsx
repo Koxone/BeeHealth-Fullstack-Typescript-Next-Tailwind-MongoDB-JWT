@@ -45,7 +45,7 @@ export default function ClinicalHistory({ records, onAdd, onEdit, icons }) {
               }}
             >
               {/* History Card */}
-              <HistoryCard r={r} onEdit={onEdit} />
+              <HistoryCard r={r} onEdit={(record, readOnly) => onEdit(record, readOnly)} />
             </div>
           ))}
         </div>
