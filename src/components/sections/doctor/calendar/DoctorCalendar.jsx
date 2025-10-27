@@ -15,9 +15,9 @@ import {
 } from 'lucide-react';
 
 import { useState } from 'react';
-import HeaderBar from './Components/HeaderBar';
-import StatsGrid from './Components/StatsGrid';
-import AppointmentsCard from './Components/AppointmentsCard';
+import HeaderBar from './components/HeaderBar';
+import StatsGrid from './components/StatsGrid';
+import AppointmentsCard from './components/AppointmentsCard';
 import DoctorCalendarCard from './components/DoctorCalendarCard';
 import { mockAppointmentsData } from './components/MockAppointmentsData';
 
