@@ -13,7 +13,7 @@ export default function FooterActions({ onCancel, submitLabel }) {
       </button>
       <button
         type="submit"
-        className="flex-1 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-3 font-semibold text-white shadow-lg transition hover:scale-105 hover:shadow-xl active:scale-95"
+        className="flex-1 rounded-xl bg-linear-to-r from-blue-500 to-blue-600 px-6 py-3 font-semibold text-white shadow-lg transition hover:scale-105 hover:shadow-xl active:scale-95"
       >
         {submitLabel}
       </button>

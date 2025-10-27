@@ -23,16 +23,16 @@ export default function PatientHeader({ patient, icons, moment }) {
           {/* Patient Status */}
           <div className="border-asana-beige/40 mb-3 inline-flex items-center gap-2 rounded-full border bg-black/20 px-4 py-1.5 backdrop-blur-sm">
             <Stethoscope className="h-4 w-4" />
-            <span className="text-sm font-medium">Paciente Activo</span>
+            <span className="text-sm font-medium">Especialidad: Odontologia</span>
           </div>
 
           <div>
             {/* Patient Name */}
             <h1 className="text-4xl font-bold">{patient?.fullName}</h1>
             {/* Patient Age */}
-            <p className="text-sm font-bold">{patient?.age} años</p>
+            <p className="text-sm">{patient?.age} años</p>
             {/* Patient Gender */}
-            <p className="mb-4 text-sm font-bold">{patient?.gender}</p>
+            <p className="mb-4 text-sm">{patient?.gender}</p>
           </div>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">

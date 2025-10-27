@@ -32,6 +32,7 @@ import WeightChart from './components/WeightChart';
 import ClinicalHistory from './components/clinicalHistory/ClinicalHistory';
 import HistoryModal from './components/historyModal/HistoryModal';
 import BackButton from './components/BackButton';
+import TabsNav from './components/TabsNav';
 
 /* Mock patient */
 const mockPatient = {
@@ -187,6 +188,9 @@ export default function DoctorPatientDetail() {
         stats={{ totalConsultas, currentWeight: ultimoPeso, ultimoIMC }}
         icons={{ FileText, Scale, Heart, Activity, TrendingUp }}
       />
+
+      {/* Tabs Nav */}
+      <TabsNav />
 
       {/* Clinical history */}
       <ClinicalHistory
