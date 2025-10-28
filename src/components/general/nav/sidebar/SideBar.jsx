@@ -13,6 +13,13 @@ export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
 
+  const type = pathname.split('/')[1] || '';
+
+  const handleNavigation = (path) => {
+    document.cookie = `user_type=${type}; path=/`;
+    router.push(path);
+  };
+
   const sidebarOptions = pathname.startsWith('/doctor')
     ? doctorSidebarItems
     : pathname.startsWith('/patient')
@@ -31,7 +38,7 @@ export default function Sidebar() {
             return (
               <button
                 key={item.path}
-                onClick={() => router.push(item.path)}
+                onClick={() => handleNavigation(item.path)}
                 style={{ animationDelay: `${index * 50}ms` }}
                 className={`group animate-fadeInLeft relative flex w-full items-center justify-between gap-3 overflow-hidden rounded-xl px-4 py-3.5 transition-all duration-200 ${
                   isActive

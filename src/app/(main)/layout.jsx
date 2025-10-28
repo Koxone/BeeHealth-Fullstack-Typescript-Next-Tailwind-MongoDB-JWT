@@ -21,7 +21,7 @@ export default async function RootLayout({ children }) {
       <div className="grid grid-rows-[auto_1fr]">
         <Header type={type} />
         <main className="grid grid-cols-[auto_1fr]">
-          <Sidebar type={type} />
+          <Sidebar />
           <div className="mx-auto h-[calc(100vh-64px)] w-full max-w-7xl overflow-y-auto p-6 pb-10">
             {children}
           </div>

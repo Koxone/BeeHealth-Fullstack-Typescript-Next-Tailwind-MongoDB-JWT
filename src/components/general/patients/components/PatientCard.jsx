@@ -39,7 +39,7 @@ export default function PatientCard({ patient, type }) {
                 <span>Última Cita: {patient.ultimaVisita}</span>
               </div>
 
-              {type === 'doctor' ? (
+              {type.value === 'doctor' ? (
                 <Link
                   href={`/doctor/patients/${patient._id}`}
                   className="flex items-center gap-2 font-medium text-blue-600 hover:text-blue-700"
