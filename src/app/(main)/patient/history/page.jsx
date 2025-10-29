@@ -1,4 +1,4 @@
-import PatientHistory from '@/components/sections/patient/PatientHistory';
+import PatientHistory from '@/components/sections/patient/history/PatientHistory';
 import React from 'react';
 
 function PatientHistoryPage() {

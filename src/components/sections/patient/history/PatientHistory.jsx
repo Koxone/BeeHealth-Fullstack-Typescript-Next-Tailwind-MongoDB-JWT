@@ -4,12 +4,12 @@
 import { useState } from 'react';
 
 /* UI */
-import Header from './components/Header';
-import Stats from './components/Stats';
-import RecordsTable from './components/RecordsTable';
-import RecordsMobileList from './components/RecordsMobileList';
-import EmptyState from './components/EmptyState';
-import AddRecordModal from './components/AddRecordModal';
+import Header from '../history/components/Header';
+import Stats from '../history/components/Stats';
+import RecordsTable from '../history/components/RecordsTable';
+import RecordsMobileList from '../history/components/RecordsMobileList';
+import EmptyState from '../history/components/EmptyState';
+import AddRecordModal from '../history/components/AddRecordModal';
 
 /* Mock data */
 const mockUser = { id: 'user_12345' };
