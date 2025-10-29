@@ -1,15 +1,10 @@
 import { Plus } from 'lucide-react';
 import GeneralDietCard from './components/dietCard/GeneralDietCard';
 import Link from 'next/link';
-import { getCurrentUser } from '@/lib/auth/getCurrentUser';
 export const runtime = 'nodejs';
 import { diets } from './components/dietCard/components/mockData';
 
-export default async function GeneralDiets() {
-  // Get current User info
-  const currentUser = await getCurrentUser();
-  const role = currentUser?.role;
-
+export default async function GeneralDiets({ role }) {
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
       <div className="flex items-center justify-between">

@@ -4,38 +4,55 @@ import SectionCard from './components/SectionCard';
 import MealPlan from './components/MealPlan';
 import NotesCallout from './components/NotesCallout';
 import PatientsList from './components/PatientsList';
+import { getCurrentUser } from '@/lib/auth/getCurrentUser';
+export const runtime = 'nodejs';
 
 // Mock Data for Diets
 import { diet } from './components/DoctorDietsMockData';
+import { Apple } from 'lucide-react';
 
-export default function DoctorDietDetail() {
+export default async function DoctorDietDetail() {
+  // Get current User info
+  const currentUser = await getCurrentUser();
+  const role = currentUser?.role;
+
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
       <TopBar />
 
-      <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm md:p-6">
-        <DietHeader
-          title={diet.nombre}
-          duration={diet.duracion}
-          assignedCount={diet.pacientesAsignados}
-        />
+      <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
+        {/* Diet Image */}
+        <div className="flex h-64 items-center justify-center rounded-t-xl bg-linear-to-br from-green-100 to-blue-100">
+          <Apple className="h-32 w-32 text-green-600" />
+        </div>
 
-        <div className="space-y-4 md:space-y-6">
-          <SectionCard title="Descripción">
-            <p className="text-gray-600">{diet.descripcion}</p>
-          </SectionCard>
+        <div className="p-4 md:p-6">
+          <DietHeader
+            title={diet.nombre}
+            duration={diet.duracion}
+            assignedCount={diet.pacientesAsignados}
+            role={role}
+          />
 
-          <SectionCard title="Plan Diario de Comidas">
-            <MealPlan blocks={diet.plan} />
-          </SectionCard>
+          <div className="space-y-4 md:space-y-6">
+            <SectionCard title="Descripción">
+              <p className="text-gray-600">{diet.descripcion}</p>
+            </SectionCard>
 
-          <SectionCard title="Notas e Instrucciones">
-            <NotesCallout text={diet.notas} />
-          </SectionCard>
+            <SectionCard title="Plan Diario de Comidas">
+              <MealPlan blocks={diet.plan} />
+            </SectionCard>
 
-          <SectionCard title="Pacientes Asignados">
-            <PatientsList patients={diet.pacientes} />
-          </SectionCard>
+            <SectionCard title="Notas e Instrucciones">
+              <NotesCallout text={diet.notas} />
+            </SectionCard>
+
+            {role === 'doctor' && (
+              <SectionCard title="Pacientes Asignados">
+                <PatientsList patients={diet.pacientes} />
+              </SectionCard>
+            )}
+          </div>
         </div>
       </div>
     </div>
