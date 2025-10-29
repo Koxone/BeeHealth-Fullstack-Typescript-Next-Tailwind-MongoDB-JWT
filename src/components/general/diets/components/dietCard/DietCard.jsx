@@ -1,5 +1,6 @@
 import { Apple, Clock } from 'lucide-react';
 import DietCardActions from './components/DietCardActions';
+import Link from 'next/link';
 
 export default function DietCard({ diet, role }) {
   return (
@@ -46,9 +47,12 @@ export default function DietCard({ diet, role }) {
 
       {/* Patient Actions */}
       {role === 'patient' && (
-        <div className="mt-4 text-sm font-medium text-blue-600 opacity-90 transition-opacity group-hover:opacity-100">
+        <Link
+          href={`/patient/diets/${diet.id}`}
+          className="mt-4 text-sm font-medium text-blue-600 opacity-90 transition-opacity group-hover:opacity-100"
+        >
           Ver detalles →
-        </div>
+        </Link>
       )}
     </div>
   );
