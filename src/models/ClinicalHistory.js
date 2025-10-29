@@ -1,153 +1,273 @@
+// models/ClinicalHistory.js
+
 import mongoose from 'mongoose';
 
-const ClinicHistorySchema = new mongoose.Schema(
+const ClinicalHistorySchema = new mongoose.Schema(
   {
-    // Referencia al paciente
-    pacienteId: {
+    /* --- Relaciones --- */
+    paciente: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Paciente',
-      required: true,
+      ref: 'PatientProfile',
       index: true,
+      required: false,
     },
-
-    // Referencia al médico (opcional)
-    medicoId: {
+    doctor: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'DoctorProfile',
+      index: true,
+      required: false,
     },
 
-    // ==========================================
-    // TAB 1: INFORMACIÓN BÁSICA
-    // ==========================================
-    fecha: { type: Date, required: true },
-    peso: { type: Number, required: true, min: 0 },
-    imc: { type: Number, required: true, min: 0 },
-
-    // Signos Vitales
-    presionArterial: { type: String, trim: true },
-    glucosa: { type: String, trim: true },
-    colesterol: { type: String, trim: true },
-
-    // Diagnóstico y Tratamiento
-    diagnostico: { type: String, trim: true },
-    tratamiento: { type: String, trim: true },
-    notas: { type: String, trim: true },
-
-    // ==========================================
-    // TAB 2: HISTORIAL COMPLETO
-    // ==========================================
-
-    // Pregunta 1: Tratamiento médico
-    p1_tratamientoMedico: { type: Boolean, default: null },
-    p1_cual: { type: String, trim: true },
-
-    // Pregunta 2: Medicamentos
-    p2_medicamento: { type: Boolean, default: null },
-    p2_cual: { type: String, trim: true },
-
-    // Pregunta 3: Alergias
-    p3_alergiaMedicamento: { type: Boolean, default: null },
-    p3_cual: { type: String, trim: true },
-
-    // Pregunta 4: Hospitalización
-    p4_hospitalizadoQuirurgicamente: { type: Boolean, default: null },
-    p4_motivo: { type: String, trim: true },
-
-    // Pregunta 5: Hemorragias
-    p5_hemorragias: { type: Boolean, default: null },
-
-    // Pregunta 6: Cicatrización
-    p6_problemasCicatrizacion: { type: Boolean, default: null },
-
-    // Pregunta 7: Padecimientos
-    p7_padecimientos: {
-      hipertension: { type: Boolean, default: false },
-      diabetes: { type: Boolean, default: false },
-      cardiacos: { type: Boolean, default: false },
-      hepatitis: { type: Boolean, default: false },
-      vih: { type: Boolean, default: false },
-      gastritis: { type: Boolean, default: false },
-      epilepsia: { type: Boolean, default: false },
-      asma: { type: Boolean, default: false },
-      cancer: { type: Boolean, default: false },
-      otro: { type: String, trim: true },
+    /* --- Información básica (común a todas las especialidades) --- */
+    informacionBasica: {
+      fecha: { type: Date, default: Date.now },
+      nombreCompleto: { type: String, trim: true },
+      fechaNacimiento: { type: String },
+      lugarNacimiento: { type: String },
+      edad: { type: Number },
+      genero: { type: String },
+      alturaCm: { type: Number },
+      pesoActualKg: { type: Number },
+      tallaCm: { type: Number },
+      ocupacion: { type: String },
+      estadoCivil: { type: String },
+      rfc: { type: String },
+      correo: { type: String, lowercase: true, trim: true },
+      domicilio: { type: String },
+      telefonoCelular: { type: String },
+      telefonoFijo: { type: String },
+      contactoEmergencia: { type: String },
+      telefonoEmergencia: { type: String },
     },
 
-    // Pregunta 8: Embarazo
-    p8_embarazada: { type: Boolean, default: null },
-    p8_mesesGestacion: { type: Number, min: 0, max: 9 },
-
-    // Pregunta 9: Tabaco
-    p9_fuma: { type: Boolean, default: null },
-    p9_cigarrillosDia: { type: Number, min: 0 },
-
-    // Pregunta 10: Alcohol
-    p10_bebidasAlcoholicas: { type: Boolean, default: null },
-    p10_frecuencia: { type: String, trim: true },
-
-    // Pregunta 11: Drogas
-    p11_drogas: { type: Boolean, default: null },
-    p11_cual: { type: String, trim: true },
-
-    // Pregunta 12: Cepillado
-    p12_cepilladoDiario: {
-      type: String,
-      enum: ['1', '2', '3', 'ninguna'],
-      default: null,
+    /* --- Información general --- */
+    informacionGeneral: {
+      motivoConsulta: { type: String },
+      alergiasConocidas: { type: String },
+      medicamentosActuales: { type: String },
+      buenEstadoSalud: { type: String },
+      bajoTratamiento: { type: String },
+      tomandoMedicamentos: { type: String },
+      alergicoMedicamentos: { type: String },
+      operadoHospitalizado: { type: String },
+      hemorragias: { type: String },
+      problemasCicatrizacion: { type: String },
+      otrasEnfermedades: { type: String },
+      enfermedades: {
+        diabetes: { type: Boolean, default: false },
+        hipertension: { type: Boolean, default: false },
+        hepatitis: { type: Boolean, default: false },
+        vih: { type: Boolean, default: false },
+        cancer: { type: Boolean, default: false },
+        asma: { type: Boolean, default: false },
+        epilepsia: { type: Boolean, default: false },
+        gastritis: { type: Boolean, default: false },
+        ansiedadDepresion: { type: Boolean, default: false },
+        otras: { type: String },
+      },
+      consumoAlcohol: { type: String },
+      consumoTabaco: { type: String },
+      consumoDrogas: { type: String },
+      embarazo: { type: String },
+      lactancia: { type: String },
+      anticonceptivos: { type: String },
+      medicamentosPotencia: { type: String },
+      hijos: { type: String },
     },
 
-    // Pregunta 13: Hilo dental
-    p13_hiloDental: { type: Boolean, default: null },
+    /* --- Información clínica específica --- */
+    informacionClinica: {
+      /* Control de peso */
+      controlPeso: {
+        pesoObjetivo: { type: Number },
+        actividadFisica: { type: String },
+        horasSueno: { type: Number },
+        consumoAgua: { type: Number },
+        enfermedadesCronicas: { type: String },
+        medicamentosActuales: { type: String },
+        alergiasAlimentarias: { type: String },
+        tipoAlimentacion: { type: String },
+        cirugiasPrevias: { type: String },
+        motivoConsultaPeso: { type: String },
+      },
 
-    // Pregunta 14: Sangrado encías
-    p14_sangradoEncias: { type: Boolean, default: null },
+      /* Odontología */
+      odontologia: {
+        motivoConsultaOdonto: { type: String },
+        primeraVisita: { type: String },
+        visitaAnteriorAgradable: { type: String },
+        fluor: { type: String },
+        extraccionDientes: { type: String },
+        sangradoPostExtraccion: { type: String },
+        tratamientosPrevios: { type: String },
+        perdidaDientes: { type: String },
+        sangradoEncias: { type: String },
+        cepilladoDiario: { type: String },
+        enjuagueBucal: { type: String },
+        hiloDental: { type: String },
+        usaCepillo: { type: String },
+        dolorDental: { type: String },
+        tipoDolor: { type: String },
+      },
 
-    // Pregunta 15: Pérdida dientes
-    p15_perdidaDientes: { type: Boolean, default: null },
-    p15_cuantos: { type: Number, min: 0 },
-
-    // Pregunta 16: Tratamiento dental anterior
-    p16_tratamientoDentalAnterior: { type: Boolean, default: null },
-    p16_tipoTratamiento: { type: String, trim: true },
-
-    // Pregunta 17: Prótesis/Lentes
-    p17_protesisLentes: { type: Boolean, default: null },
-
-    // Pregunta 18: Reacción anestesia
-    p18_reaccionAnestesia: { type: Boolean, default: null },
-    p18_cual: { type: String, trim: true },
-
-    // Pregunta 19: Dolor dental
-    p19_dolorDental: { type: Boolean, default: null },
-    p19_ubicacion: {
-      arriba: { type: Boolean, default: false },
-      abajo: { type: Boolean, default: false },
-      izquierda: { type: Boolean, default: false },
-      derecha: { type: Boolean, default: false },
-      varios: { type: Boolean, default: false },
+      /* Estética */
+      estetica: {
+        motivoTratamiento: { type: String },
+        cirugiasPrevias: { type: String },
+        reaccionesAnestesia: { type: String },
+        enfermedadesInterfieren: { type: String },
+        condicionPiel: { type: String },
+        zonaInteres: { type: String },
+        tratamientosPrevios: { type: String },
+        expectativas: { type: String },
+        alergiasQuimicos: { type: String },
+      },
     },
 
-    // Pregunta 20: Causante del dolor
-    p20_causanteDolor: {
-      frio: { type: Boolean, default: false },
-      calor: { type: Boolean, default: false },
-      presion: { type: Boolean, default: false },
-      morder: { type: Boolean, default: false },
+    /* --- Antecedentes --- */
+    antecedentes: {
+      heredofamiliares: {
+        diabetes: { type: Boolean, default: false },
+        epilepsia: { type: Boolean, default: false },
+        hepatitis: { type: Boolean, default: false },
+        hipertension: { type: Boolean, default: false },
+        malformaciones: { type: Boolean, default: false },
+        artritis: { type: Boolean, default: false },
+      },
+      personalesPatologicos: {
+        cardiopatias: { type: Boolean, default: false },
+        enfermedadesMentales: { type: Boolean, default: false },
+        neoplasias: { type: Boolean, default: false },
+        enfermedadesRenales: { type: Boolean, default: false },
+        varicela: { type: Boolean, default: false },
+        sarampion: { type: Boolean, default: false },
+        neuralgia: { type: Boolean, default: false },
+        viasBiliares: { type: Boolean, default: false },
+        asma: { type: Boolean, default: false },
+        enfermedadesRespiratorias: { type: Boolean, default: false },
+        hepatitis: { type: Boolean, default: false },
+        digestivo: { type: Boolean, default: false },
+        hipotiroidismo: { type: Boolean, default: false },
+        migraña: { type: Boolean, default: false },
+        epilepsia: { type: Boolean, default: false },
+        ansiedadDepresion: { type: Boolean, default: false },
+        hipertension: { type: Boolean, default: false },
+        diabetes: { type: Boolean, default: false },
+        cancer: { type: Boolean, default: false },
+        vih: { type: Boolean, default: false },
+        ets: { type: Boolean, default: false },
+        piel: { type: Boolean, default: false },
+        fracturas: { type: Boolean, default: false },
+        hospitalizaciones: { type: String },
+        cirugias: { type: String },
+        alteracionesHormonales: { type: String },
+        hijos: { type: String },
+        anticonceptivos: { type: String },
+        embarazo: { type: String },
+        lactancia: { type: String },
+      },
+      noPatologicos: {
+        tipoAlimentacion: { type: String },
+        comidasDia: { type: String },
+        intolerancias: { type: String },
+        alimentosNoConsume: { type: String },
+        lavadoManos: { type: String },
+        usoCepillo: { type: String },
+        usoEnjuague: { type: String },
+        usoHilo: { type: String },
+      },
+      inmunizaciones: {
+        poliomielitis: { type: Boolean, default: false },
+        tuberculosis: { type: Boolean, default: false },
+        dtp: { type: Boolean, default: false },
+        tripleViral: { type: Boolean, default: false },
+        sarampion: { type: Boolean, default: false },
+        hepatitisB: { type: Boolean, default: false },
+        otras: { type: String },
+      },
+      habitos: {
+        alcohol: { type: String },
+        tabaco: { type: String },
+        drogas: { type: String },
+        deportes: { type: String },
+      },
     },
 
-    // Pregunta 21: Información adicional
-    p21_informacionAdicional: { type: String, trim: true },
+    /* --- Exploración física --- */
+    exploracionFisica: {
+      cabeza: { type: String },
+      cuello: { type: String },
+      torax: { type: String },
+      abdomen: { type: String },
+      extremidades: { type: String },
+    },
 
-    // Metadata
-    activo: { type: Boolean, default: true },
+    /* --- Signos vitales --- */
+    signosVitales: {
+      tensionArterial: { type: String },
+      frecuenciaCardiaca: { type: String },
+      frecuenciaRespiratoria: { type: String },
+      temperatura: { type: String },
+      saturacionOxigeno: { type: String },
+      imc: { type: String },
+      peso: { type: Number },
+      talla: { type: Number },
+    },
+
+    /* --- Campos clínicos del médico --- */
+    camposMedico: {
+      datosClinicos: {
+        fechaRegistro: { type: Date },
+        medicoResponsable: { type: String },
+        diagnosticoPreliminar: { type: String },
+        tratamientoSugerido: { type: String },
+        notas: { type: String },
+      },
+      odontologia: {
+        cavidadBucal: { type: String },
+        cuelloEstructuras: { type: String },
+        diagnosticoDental: { type: String },
+        planTratamientoDental: { type: String },
+        materialesUsados: { type: String },
+        recomendacionesPaciente: { type: String },
+      },
+      estetica: {
+        diagnosticoFacial: { type: String },
+        condicionPiel: { type: String },
+        zonasTratadas: { type: String },
+        productoTecnica: { type: String },
+        fechaTratamiento: { type: Date },
+        evolucion: { type: String },
+        complicaciones: { type: String },
+        recomendacionesPost: { type: String },
+      },
+      seguimiento: {
+        diagnosticoDefinitivo: { type: String },
+        tratamientoPrescrito: { type: String },
+        medicamentosIndicados: { type: String },
+        observacionesEvolucion: { type: String },
+        recomendacionesFinales: { type: String },
+        fechaRevisionSiguiente: { type: Date },
+        firmaMedico: { type: String },
+      },
+    },
+
+    /* --- Observaciones y complementos --- */
+    complementos: {
+      pasatiempos: { type: String },
+      comoSeEntero: { type: String },
+      adultoResponsable: { type: String },
+      recomendadoPor: { type: String },
+      observacionesPersonales: { type: String },
+      comentarioLibre: { type: String },
+    },
   },
   { timestamps: true }
 );
 
-// Índices
-ClinicHistorySchema.index({ pacienteId: 1, fecha: -1 });
-ClinicHistorySchema.index({ createdAt: -1 });
-ClinicHistorySchema.index({ medicoId: 1, pacienteId: 1 });
+/* --- Índices adicionales --- */
+ClinicalHistorySchema.index({ 'informacionBasica.nombreCompleto': 1 });
+ClinicalHistorySchema.index({ 'informacionGeneral.motivoConsulta': 1 });
 
-export default mongoose.models.HistorialClinico ||
-  mongoose.model('HistorialClinico', ClinicHistorySchema);
+export default mongoose.models.ClinicalHistory ||
+  mongoose.model('ClinicalHistory', ClinicalHistorySchema);
