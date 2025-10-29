@@ -17,7 +17,7 @@ export const patientSidebarItems = [
   { icon: Activity, label: 'Historial', path: '/patient/history', badge: null },
   { icon: Calendar, label: 'Agendar Cita', path: '/patient/new-appointment', badge: null },
   { icon: Apple, label: 'Dietas', path: '/patient/diets', badge: null },
-  { icon: Dumbbell, label: 'Ejercicios', path: '/patient/exercises', badge: null },
+  { icon: Dumbbell, label: 'Ejercicios', path: '/patient/workouts', badge: null },
   { icon: User, label: 'Perfil', path: '/patient/profile', badge: null },
   { icon: HelpCircle, label: 'Soporte', path: '/patient/support', badge: null },
 ];
