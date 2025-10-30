@@ -1,5 +1,6 @@
 import { Bell, User, LogOut, Menu } from 'lucide-react';
 import { getCurrentUser } from '@/lib/auth/getCurrentUser';
+import LogoutButton from './components/LogoutButton';
 
 export const runtime = 'nodejs';
 
@@ -51,9 +52,7 @@ export default async function Header() {
             </button>
           </div>
 
-          <button className="group rounded-xl border-2 border-transparent p-3 transition-all duration-200 hover:border-red-200 hover:bg-red-50 active:scale-95">
-            <LogOut className="h-5 w-5 text-gray-600 transition-colors duration-200 group-hover:text-red-600" />
-          </button>
+          <LogoutButton />
         </div>
       </div>
 

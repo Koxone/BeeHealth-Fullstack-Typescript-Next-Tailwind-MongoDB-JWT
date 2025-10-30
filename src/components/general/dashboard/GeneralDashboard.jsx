@@ -9,12 +9,13 @@ import CancelAppointmentModal from './components/general/CancelAppointmentModal'
 import PatientEvolutionChart from './components/patient/PatientEvolutionChart';
 import PatientMotivationalBanner from './components/patient/PatientMotivationalBanner';
 
-export default function GeneralDashboard({ role }) {
-  console.log(role)
+export default function GeneralDashboard({ role, currentUser }) {
+  console.log('Usuario:', currentUser);
+  console.log(role);
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
       {/* Header */}
-      <HeaderWelcome fullName="Example" role={role} />
+      <HeaderWelcome fullName={currentUser?.fullName} role={role} />
 
       {/* Stats */}
       <StatsGrid role={role} />

@@ -1,5 +1,5 @@
 import Sidebar from '@/components/general/nav/sidebar/SideBar';
-import Header from '@/components/general/nav/Header';
+import Header from '@/components/general/nav/header/Header';
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 import { getCurrentUser } from '@/lib/auth/getCurrentUser';

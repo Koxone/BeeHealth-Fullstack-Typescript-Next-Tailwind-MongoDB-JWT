@@ -1,4 +1,4 @@
-import GeneralDashboard from '@/components/general/dashboard/Dashboard';
+import GeneralDashboard from '@/components/general/dashboard/GeneralDashboard';
 import { getCurrentUser } from '@/lib/auth/getCurrentUser';
 
 export const runtime = 'nodejs';
@@ -9,7 +9,7 @@ export default async function DoctorDashboardPage() {
   const role = currentUser?.role;
   return (
     <div className="h-screen overflow-hidden pb-40">
-      <GeneralDashboard role={role} />
+      <GeneralDashboard role={role} currentUser={currentUser} />
     </div>
   );
 }
