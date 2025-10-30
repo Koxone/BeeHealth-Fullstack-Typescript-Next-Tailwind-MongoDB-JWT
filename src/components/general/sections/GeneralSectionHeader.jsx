@@ -11,6 +11,7 @@ import {
   Plus,
   Weight,
   DollarSign,
+  Activity,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -23,6 +24,7 @@ function GeneralSectionHeader({ role, Icon, title = '', subtitle = '' }) {
     diets: Apple,
     workouts: Weight,
     accounting: DollarSign,
+    history: Activity,
   };
 
   const SelectedIcon = iconsMap[Icon] || Package;

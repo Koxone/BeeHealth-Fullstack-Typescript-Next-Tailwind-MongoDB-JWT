@@ -4,12 +4,12 @@
 import { useState } from 'react';
 
 /* UI */
-import Header from '../history/components/Header';
 import Stats from '../history/components/Stats';
 import RecordsTable from '../history/components/RecordsTable';
 import RecordsMobileList from '../history/components/RecordsMobileList';
 import EmptyState from '../history/components/EmptyState';
 import AddRecordModal from '../history/components/AddRecordModal';
+import GeneralSectionHeader from '@/components/general/sections/GeneralSectionHeader';
 
 /* Mock data */
 const mockUser = { id: 'user_12345' };
@@ -37,7 +37,7 @@ const mockHistoryRaw = [
   },
 ];
 
-export default function PatientHistory() {
+export default function PatientHistory({ role }) {
   /* Local state */
   const [showModal, setShowModal] = useState(false);
   const [peso, setPeso] = useState('');
@@ -71,7 +71,12 @@ export default function PatientHistory() {
   /* Render */
   return (
     <div className="h-full overflow-x-hidden overflow-y-auto pb-8">
-      <Header total={historyData.length} />
+      <GeneralSectionHeader
+        role={role}
+        title="Historial Clínico"
+        subtitle="Visualiza tus ultimos registros medicos"
+        Icon="history"
+      />
 
       <div className="mx-auto max-w-7xl space-y-4">
         <Stats historyData={mappedHistory} />

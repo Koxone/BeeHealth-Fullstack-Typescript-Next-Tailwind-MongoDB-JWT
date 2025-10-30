@@ -67,10 +67,10 @@ export default function GeneralWorkouts({ role }) {
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
       <GeneralSectionHeader
-        Icon="workouts"
         role={role}
-        title="Gestion de Ejercicios"
-        subtitle="Crea y personaliza ejercicios"
+        Icon="workouts"
+        title={role === 'doctor' ? 'Gestion de Ejercicios' : 'Mis Ejercicios'}
+        subtitle={role === 'doctor' ? 'Crea y personaliza ejercicios' : 'Ejercicios Personalizados'}
       />
 
       <div className="flex flex-col gap-3 md:flex-row">

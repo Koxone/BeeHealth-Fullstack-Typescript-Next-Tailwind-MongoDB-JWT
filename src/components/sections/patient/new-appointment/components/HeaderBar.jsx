@@ -5,7 +5,7 @@ import { ArrowLeft, Calendar as CalendarIcon } from 'lucide-react';
 /* header */
 export default function HeaderBar({ onBack }) {
   return (
-    <div className="-mx-4 -mt-4 mb-6 bg-linear-to-br from-blue-50 via-indigo-50 to-purple-50 px-4 pt-6 pb-8 md:rounded-2xl">
+    <div className="-mx-4 -mt-4 mb-6 px-4 pt-6 pb-8 md:rounded-2xl">
       <div className="mx-auto max-w-4xl">
         {/* <button
           onClick={onBack}

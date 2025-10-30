@@ -14,7 +14,11 @@ export default async function GeneralDiets({ role }) {
         <GeneralSectionHeader
           role={role}
           Icon="diets"
-          title="Dietas"
+          title={
+            role === 'doctor'
+              ? 'Gestion de Dietas'
+              : 'Mis Dietas'
+          }
           subtitle={
             role === 'doctor'
               ? 'Crea y personaliza planes nutricionales'
