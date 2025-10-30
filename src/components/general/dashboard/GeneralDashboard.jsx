@@ -1,17 +1,22 @@
-import HeaderWelcome from './components/general/HeaderWelcome';
-import StatsGrid from './components/statsGrid/StatsGrid';
+// Client Side Components
 import DoctorIncomeChart from './components/doctor/DoctorIncomeChart';
 import DoctorPatientsChart from './components/doctor/DoctorPatientsChart';
+import PatientEvolutionChart from './components/patient/PatientEvolutionChart';
+
+// Server Side Components
+import HeaderWelcome from './components/general/HeaderWelcome';
+import StatsGrid from './components/statsGrid/StatsGrid';
 import AppointmentsToday from './components/general/AppointmentsToday';
 import DoctorAccountingSummary from './components/doctor/DoctorAccountingSummary';
 import GeneralInventoryAlerts from './components/general/InventoryAlerts/GeneralInventoryAlerts';
 import CancelAppointmentModal from './components/general/CancelAppointmentModal';
-import PatientEvolutionChart from './components/patient/PatientEvolutionChart';
 import PatientMotivationalBanner from './components/patient/PatientMotivationalBanner';
 
 export default function GeneralDashboard({ role, currentUser }) {
+  // Debug Logs
   console.log('Usuario:', currentUser?.fullName);
   console.log(role);
+
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
       {/* Header */}

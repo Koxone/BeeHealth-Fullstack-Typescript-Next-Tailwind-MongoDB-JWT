@@ -11,7 +11,6 @@ import {
   Line,
 } from 'recharts';
 
-/* chart */
 export default function DoctorIncomeChart({ data }) {
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm md:p-6">
