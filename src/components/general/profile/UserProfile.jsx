@@ -20,24 +20,9 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 
-/* Mock user (replace with real data later) */
-const mockUser = {
-  role: 'doctor', 
-  fullName: 'Laura Hernández',
-  email: 'laura.hernandez@example.com',
-  phone: '+52 55 1234 5678',
-};
-
-export default function UserProfile() {
+export default function UserProfile({ role, currentUser }) {
   /* Local editing state */
   const [isEditing, setIsEditing] = useState(false);
-
-  /* Replace Zustand with mock */
-  const currentUser = mockUser;
-
-  if (!currentUser) return null;
-
-  const { role, fullName, email, phone } = currentUser;
 
   if (role === 'doctor')
     return (
@@ -90,7 +75,9 @@ export default function UserProfile() {
               </div>
 
               <div className="mb-2 flex items-center gap-2">
-                <h2 className="text-center text-xl font-bold text-gray-900">Dr(a). {fullName}</h2>
+                <h2 className="text-center text-xl font-bold text-gray-900">
+                  Dr(a). {currentUser.fullName}
+                </h2>
                 <CheckCircle2 className="h-5 w-5 text-green-500" title="Perfil verificado" />
               </div>
 
@@ -122,8 +109,18 @@ export default function UserProfile() {
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
-              <Field label="Correo Electrónico" value={email} isEditing={isEditing} icon={Mail} />
-              <Field label="Teléfono" value={phone} isEditing={isEditing} icon={Phone} />
+              <Field
+                label="Correo Electrónico"
+                value={currentUser.email}
+                isEditing={isEditing}
+                icon={Mail}
+              />
+              <Field
+                label="Teléfono"
+                value={currentUser.phone}
+                isEditing={isEditing}
+                icon={Phone}
+              />
               <Field
                 label="Cédula Profesional"
                 value="1234567"
@@ -192,16 +189,16 @@ export default function UserProfile() {
 
   if (role === 'employee') {
     const empleado = {
-      nombre: fullName,
-      email,
-      telefono: phone,
+      nombre: currentUser.fullName,
+      email: currentUser.email,
+      telefono: currentUser.phone,
       puesto: 'Recepcionista',
       fechaIngreso: '2023-01-15',
       horario: 'Lunes a Viernes, 8:00 AM - 5:00 PM',
     };
 
     return (
-      <div className="space-y-6">
+      <div className="h-full space-y-6 overflow-y-auto">
         {/* Header gradient employee */}
         <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-purple-500 via-pink-500 to-rose-500 p-8 shadow-xl">
           <div className="absolute -top-10 -right-10 h-40 w-40 rounded-full bg-white/10 blur-3xl"></div>
@@ -299,7 +296,9 @@ export default function UserProfile() {
                 <User className="h-16 w-16 text-white" />
               </div>
 
-              <h2 className="mb-2 text-center text-xl font-bold text-gray-900">{fullName}</h2>
+              <h2 className="mb-2 text-center text-xl font-bold text-gray-900">
+                {currentUser.fullName}
+              </h2>
 
               <div className="mb-4 flex items-center gap-2 rounded-full bg-blue-50 px-4 py-1.5">
                 <User className="h-4 w-4 text-blue-600" />
@@ -329,8 +328,18 @@ export default function UserProfile() {
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
-              <Field label="Correo Electrónico" value={email} isEditing={isEditing} icon={Mail} />
-              <Field label="Teléfono" value={phone} isEditing={isEditing} icon={Phone} />
+              <Field
+                label="Correo Electrónico"
+                value={currentUser.email}
+                isEditing={isEditing}
+                icon={Mail}
+              />
+              <Field
+                label="Teléfono"
+                value={currentUser.phone}
+                isEditing={isEditing}
+                icon={Phone}
+              />
               <Field label="Altura (cm)" value="175" isEditing={isEditing} icon={User} />
               <Field label="Peso Actual (kg)" value="75" isEditing={isEditing} icon={User} />
             </div>
