@@ -23,7 +23,7 @@ import AppointmentCard from './components/AppointmentCard';
 import CreateEditAppointmentModal from './components/AddEditModal';
 import CancelModal from './components/CancelModal';
 import EmptyState from './components/EmptyState';
-import GeneralSectionHeader from '@/components/general/sections/GeneralSectionHeader';
+import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
 
 export default function EmployeeAppointments({ role }) {
   /* ui state */

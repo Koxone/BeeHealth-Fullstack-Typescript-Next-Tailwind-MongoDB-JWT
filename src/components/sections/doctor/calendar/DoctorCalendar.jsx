@@ -19,7 +19,7 @@ import StatsGrid from './components/StatsGrid';
 import AppointmentsCard from './components/AppointmentsCard';
 import DoctorCalendarCard from './components/DoctorCalendarCard';
 import { mockAppointmentsData } from './components/MockAppointmentsData';
-import GeneralSectionHeader from '@/components/general/sections/GeneralSectionHeader';
+import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
 
 /* Local Helpers */
 const formatDate = (date) => {

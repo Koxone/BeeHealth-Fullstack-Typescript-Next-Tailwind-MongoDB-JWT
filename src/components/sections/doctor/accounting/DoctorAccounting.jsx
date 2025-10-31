@@ -9,7 +9,7 @@ import ConsultasTable from './components/ConsultasTable';
 import MedicamentosTable from './components/MedicamentosTable';
 import AddEditModal from './components/AddEditModal';
 import DeleteConfirmModal from './components/DeleteConfirmModal';
-import GeneralSectionHeader from '@/components/general/sections/GeneralSectionHeader';
+import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
 
 /* demo data */
 const ingresosSemanales = [

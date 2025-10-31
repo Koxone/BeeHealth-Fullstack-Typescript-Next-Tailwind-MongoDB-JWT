@@ -23,7 +23,7 @@ import RecetasGrid from './components/RecetasGrid';
 import SuministrosTable from './components/SuministrosTable';
 import AddEditModal from './components/AddEditModal';
 import DeleteModal from './components/DeleteModal';
-import GeneralSectionHeader from '@/components/general/sections/GeneralSectionHeader';
+import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
 import GeneralInventoryAlerts from '../dashboard/components/general/InventoryAlerts/GeneralInventoryAlerts';
 
 /* utils */

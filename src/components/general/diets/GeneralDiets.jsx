@@ -3,7 +3,7 @@ import GeneralDietCard from './components/dietCard/GeneralDietCard';
 import Link from 'next/link';
 export const runtime = 'nodejs';
 import { diets } from './components/dietCard/components/mockData';
-import GeneralSectionHeader from '../sections/GeneralSectionHeader';
+import GeneralSectionHeader from '../../shared/sections/GeneralSectionHeader';
 
 export default async function GeneralDiets({ role }) {
   console.log(role);
@@ -14,11 +14,7 @@ export default async function GeneralDiets({ role }) {
         <GeneralSectionHeader
           role={role}
           Icon="diets"
-          title={
-            role === 'doctor'
-              ? 'Gestion de Dietas'
-              : 'Mis Dietas'
-          }
+          title={role === 'doctor' ? 'Gestion de Dietas' : 'Mis Dietas'}
           subtitle={
             role === 'doctor'
               ? 'Crea y personaliza planes nutricionales'

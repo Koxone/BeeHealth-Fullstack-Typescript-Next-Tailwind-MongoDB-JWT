@@ -1,6 +1,6 @@
 'use client';
 
-import { Plus, Edit2, Trash2 } from 'lucide-react';
+import { Plus, Edit2, Trash2 } from 'lucide-react'; 
 
 /* table */
 export default function ConsultasTable({ items, total, pagadasBadge, onAdd, onEdit, onDelete }) {

@@ -8,7 +8,7 @@ import ModalAddEdit from './components/ModalAddEdit';
 import { workoutsMockData } from './components/workoutsMockData';
 import WorkoutCard from './components/workoutCard/WorkoutCard';
 import WorkoutModal from './components/WorkoutModal';
-import GeneralSectionHeader from '../sections/GeneralSectionHeader';
+import GeneralSectionHeader from '../../shared/sections/GeneralSectionHeader';
 
 export default function GeneralWorkouts({ role }) {
   // Local States

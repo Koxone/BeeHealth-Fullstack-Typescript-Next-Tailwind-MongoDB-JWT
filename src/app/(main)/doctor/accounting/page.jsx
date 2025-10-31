@@ -3,7 +3,7 @@ import React from 'react';
 import { getCurrentUser } from '@/lib/auth/getCurrentUser';
 export const runtime = 'nodejs';
 
-export default async function DoctorAccountingPage() {
+export default async function DoctorAccountingPage() { 
   // Get current User info
   const currentUser = await getCurrentUser();
   const role = currentUser?.role;
