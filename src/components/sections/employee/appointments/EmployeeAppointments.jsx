@@ -20,7 +20,7 @@ import {
 import StatsGrid from './components/StatsGrid';
 import ControlsBar from './components/ControlsBar';
 import AppointmentCard from './components/AppointmentCard';
-import CreateEditAppointmentModal from './components/AddEditModal';
+import CreateEditAppointmentModal from './components/CreateEditAppointmentModal';
 import CancelModal from './components/CancelModal';
 import EmptyState from './components/EmptyState';
 import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';

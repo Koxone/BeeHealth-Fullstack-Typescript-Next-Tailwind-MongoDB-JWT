@@ -1,7 +1,7 @@
 'use client';
 
 import { Plus, Edit2, X, Calendar, Clock, User, Phone, Mail, Sparkles, Info } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function CreateEditAppointmentModal({
   editingCita,
@@ -17,6 +17,23 @@ export default function CreateEditAppointmentModal({
     document.body.style.overflow = 'hidden';
     return () => (document.body.style.overflow = '');
   }, []);
+
+  const [patients, setPatients] = useState([
+    { id: 1, name: 'Laura Hernández', email: 'laura@example.com', phone: '555-111-2222' },
+    { id: 2, name: 'Carlos Ruiz', email: 'carlos@example.com', phone: '555-333-4444' },
+    { id: 3, name: 'Ana Martínez', email: 'ana@example.com', phone: '555-555-6666' },
+  ]);
+
+  const handleSelectPatient = (e) => {
+    const selected = patients.find((p) => p.id.toString() === e.target.value);
+    setCitaForm({
+      ...citaForm,
+      pacienteId: selected?.id || '',
+      paciente: selected?.name || '',
+      telefono: selected?.phone || '',
+      email: selected?.email || '',
+    });
+  };
 
   return (
     <>
@@ -130,51 +147,24 @@ export default function CreateEditAppointmentModal({
                   <h3 className="text-xl font-bold text-gray-900">Datos del Paciente</h3>
                 </div>
 
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                  <div className="space-y-2">
-                    <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-                      <User className="h-4 w-4 text-green-500" />
-                      Nombre completo
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={citaForm.paciente}
-                      onChange={(e) => setCitaForm({ ...citaForm, paciente: e.target.value })}
-                      placeholder="Ej: Ana López"
-                      className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 focus:border-green-500 focus:shadow-md focus:shadow-green-500/20 focus:outline-none"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-                      <Phone className="h-4 w-4 text-blue-500" />
-                      Teléfono
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      value={citaForm.telefono}
-                      onChange={(e) => setCitaForm({ ...citaForm, telefono: e.target.value })}
-                      placeholder="555-000-0000"
-                      className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 focus:border-blue-500 focus:shadow-md focus:shadow-blue-500/20 focus:outline-none"
-                    />
-                  </div>
-
-                  <div className="space-y-2 sm:col-span-2">
-                    <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-                      <Mail className="h-4 w-4 text-purple-500" />
-                      Correo electrónico
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={citaForm.email}
-                      onChange={(e) => setCitaForm({ ...citaForm, email: e.target.value })}
-                      placeholder="correo@ejemplo.com"
-                      className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 focus:border-purple-500 focus:shadow-md focus:shadow-purple-500/20 focus:outline-none"
-                    />
-                  </div>
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                    <User className="h-4 w-4 text-green-500" />
+                    Selecciona un paciente
+                  </label>
+                  <select
+                    required
+                    value={citaForm.pacienteId || ''}
+                    onChange={handleSelectPatient}
+                    className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 focus:border-green-500 focus:shadow-md focus:shadow-green-500/20 focus:outline-none"
+                  >
+                    <option value="">-- Selecciona un paciente --</option>
+                    {patients.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
 

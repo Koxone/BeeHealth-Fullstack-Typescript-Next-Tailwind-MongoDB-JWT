@@ -35,7 +35,7 @@ import ClinicalHistory from './components/clinicalHistory/ClinicalHistory';
 import HistoryModal from './components/historyModal/HistoryModal';
 import BackButton from './components/BackButton';
 import TabsNav from './components/TabsNav';
-import CreateEditAppointmentModal from '@/components/sections/employee/appointments/components/AddEditModal';
+import CreateEditAppointmentModal from '@/components/sections/employee/appointments/components/CreateEditAppointmentModal';
 
 /* Mock patient */
 const mockPatient = {
