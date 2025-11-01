@@ -34,6 +34,7 @@ export default function SignupForm() {
     // Ir al paso 2: historial clínico
     router.push('/signup/medical-history');
   };
+  
   return (
     <div className="flex h-full items-center justify-center overflow-y-auto">
       <div className="h-fit w-full max-w-md">

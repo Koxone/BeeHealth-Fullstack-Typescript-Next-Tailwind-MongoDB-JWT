@@ -1,0 +1,1399 @@
+{
+  "_id": "6906986522c5922500daed9b",
+  "name": "clinicalRecordTemplate",
+  "__v": 0,
+  "createdAt": "2025-11-01T23:31:48.451Z",
+  "description": "",
+
+  "sections": [
+    {
+      "key": "relaciones",
+      "title": "Relaciones",
+      "order": 0,
+      "fields": [
+        {
+          "path": "patient",
+          "label": "Paciente",
+          "type": "ref",
+          "required": true,
+          "order": 1,
+          "helpText": "ObjectId de User con role patient"
+        },
+        {
+          "path": "doctor",
+          "label": "Doctor",
+          "type": "ref",
+          "required": true,
+          "order": 2,
+          "helpText": "ObjectId de User con role doctor"
+        }
+      ]
+    },
+    {
+      "key": "informacionBasica",
+      "title": "Información básica",
+      "order": 1,
+      "fields": [
+        {
+          "path": "informacionBasica.fecha",
+          "label": "Fecha de registro",
+          "type": "date",
+          "order": 1
+        },
+        {
+          "path": "informacionBasica.nombreCompleto",
+          "label": "Nombre completo",
+          "type": "text",
+          "required": true,
+          "order": 2
+        },
+        {
+          "path": "informacionBasica.fechaNacimiento",
+          "label": "Fecha de nacimiento",
+          "type": "date",
+          "required": true,
+          "order": 3
+        },
+        {
+          "path": "informacionBasica.lugarNacimiento",
+          "label": "Lugar de nacimiento",
+          "type": "text",
+          "order": 4
+        },
+        {
+          "path": "informacionBasica.edad",
+          "label": "Edad",
+          "type": "number",
+          "order": 5,
+          "min": 0,
+          "max": 130
+        },
+        {
+          "path": "informacionBasica.genero",
+          "label": "Género",
+          "type": "select",
+          "order": 6,
+          "options": [
+            {
+              "value": "Masculino",
+              "label": "Masculino"
+            },
+            {
+              "value": "Femenino",
+              "label": "Femenino"
+            },
+            {
+              "value": "Otro",
+              "label": "Otro"
+            }
+          ]
+        },
+        {
+          "path": "informacionBasica.alturaCm",
+          "label": "Altura cm",
+          "type": "number",
+          "order": 7,
+          "min": 30,
+          "max": 260
+        },
+        {
+          "path": "informacionBasica.pesoActualKg",
+          "label": "Peso kg",
+          "type": "number",
+          "order": 8,
+          "min": 1,
+          "max": 400
+        },
+        {
+          "path": "informacionBasica.tallaCm",
+          "label": "Talla cm",
+          "type": "number",
+          "order": 9,
+          "min": 30,
+          "max": 260
+        },
+        {
+          "path": "informacionBasica.ocupacion",
+          "label": "Ocupación",
+          "type": "text",
+          "order": 10
+        },
+        {
+          "path": "informacionBasica.estadoCivil",
+          "label": "Estado civil",
+          "type": "select",
+          "order": 11,
+          "options": [
+            {
+              "value": "Soltero",
+              "label": "Soltero"
+            },
+            {
+              "value": "Casado",
+              "label": "Casado"
+            },
+            {
+              "value": "Unión libre",
+              "label": "Unión libre"
+            },
+            {
+              "value": "Divorciado",
+              "label": "Divorciado"
+            },
+            {
+              "value": "Viudo",
+              "label": "Viudo"
+            }
+          ]
+        },
+        {
+          "path": "informacionBasica.rfc",
+          "label": "RFC",
+          "type": "text",
+          "order": 12
+        },
+        {
+          "path": "informacionBasica.correo",
+          "label": "Correo",
+          "type": "text",
+          "order": 13
+        },
+        {
+          "path": "informacionBasica.domicilio",
+          "label": "Domicilio",
+          "type": "text",
+          "order": 14
+        },
+        {
+          "path": "informacionBasica.telefonoCelular",
+          "label": "Teléfono celular",
+          "type": "text",
+          "order": 15
+        },
+        {
+          "path": "informacionBasica.telefonoFijo",
+          "label": "Teléfono fijo",
+          "type": "text",
+          "order": 16
+        },
+        {
+          "path": "informacionBasica.contactoEmergencia",
+          "label": "Contacto de emergencia",
+          "type": "text",
+          "order": 17
+        },
+        {
+          "path": "informacionBasica.telefonoEmergencia",
+          "label": "Teléfono de emergencia",
+          "type": "text",
+          "order": 18
+        }
+      ]
+    },
+    {
+      "key": "informacionGeneral",
+      "title": "Información general",
+      "order": 2,
+      "fields": [
+        {
+          "path": "informacionGeneral.motivoConsulta",
+          "label": "Motivo de consulta",
+          "type": "textarea",
+          "required": true,
+          "order": 1
+        },
+        {
+          "path": "informacionGeneral.alergiasConocidas",
+          "label": "Alergias conocidas",
+          "type": "textarea",
+          "order": 2
+        },
+        {
+          "path": "informacionGeneral.medicamentosActuales",
+          "label": "Medicamentos actuales",
+          "type": "textarea",
+          "order": 3
+        },
+        {
+          "path": "informacionGeneral.buenEstadoSalud",
+          "label": "Buen estado de salud",
+          "type": "text",
+          "order": 4
+        },
+        {
+          "path": "informacionGeneral.bajoTratamiento",
+          "label": "Bajo tratamiento",
+          "type": "text",
+          "order": 5
+        },
+        {
+          "path": "informacionGeneral.tomandoMedicamentos",
+          "label": "Tomando medicamentos",
+          "type": "text",
+          "order": 6
+        },
+        {
+          "path": "informacionGeneral.alergicoMedicamentos",
+          "label": "Alérgico a medicamentos",
+          "type": "text",
+          "order": 7
+        },
+        {
+          "path": "informacionGeneral.operadoHospitalizado",
+          "label": "Operado u hospitalizado",
+          "type": "text",
+          "order": 8
+        },
+        {
+          "path": "informacionGeneral.hemorragias",
+          "label": "Hemorragias",
+          "type": "text",
+          "order": 9
+        },
+        {
+          "path": "informacionGeneral.problemasCicatrizacion",
+          "label": "Problemas de cicatrización",
+          "type": "text",
+          "order": 10
+        },
+        {
+          "path": "informacionGeneral.otrasEnfermedades",
+          "label": "Otras enfermedades",
+          "type": "textarea",
+          "order": 11
+        },
+        {
+          "path": "informacionGeneral.enfermedades.diabetes",
+          "label": "Diabetes",
+          "type": "checkbox",
+          "order": 12
+        },
+        {
+          "path": "informacionGeneral.enfermedades.hipertension",
+          "label": "Hipertensión",
+          "type": "checkbox",
+          "order": 13
+        },
+        {
+          "path": "informacionGeneral.enfermedades.hepatitis",
+          "label": "Hepatitis",
+          "type": "checkbox",
+          "order": 14
+        },
+        {
+          "path": "informacionGeneral.enfermedades.vih",
+          "label": "VIH",
+          "type": "checkbox",
+          "order": 15
+        },
+        {
+          "path": "informacionGeneral.enfermedades.cancer",
+          "label": "Cáncer",
+          "type": "checkbox",
+          "order": 16
+        },
+        {
+          "path": "informacionGeneral.enfermedades.asma",
+          "label": "Asma",
+          "type": "checkbox",
+          "order": 17
+        },
+        {
+          "path": "informacionGeneral.enfermedades.epilepsia",
+          "label": "Epilepsia",
+          "type": "checkbox",
+          "order": 18
+        },
+        {
+          "path": "informacionGeneral.enfermedades.gastritis",
+          "label": "Gastritis",
+          "type": "checkbox",
+          "order": 19
+        },
+        {
+          "path": "informacionGeneral.enfermedades.ansiedadDepresion",
+          "label": "Ansiedad o depresión",
+          "type": "checkbox",
+          "order": 20
+        },
+        {
+          "path": "informacionGeneral.enfermedades.otras",
+          "label": "Otras",
+          "type": "text",
+          "order": 21
+        },
+        {
+          "path": "informacionGeneral.consumoAlcohol",
+          "label": "Consumo de alcohol",
+          "type": "text",
+          "order": 22
+        },
+        {
+          "path": "informacionGeneral.consumoTabaco",
+          "label": "Consumo de tabaco",
+          "type": "text",
+          "order": 23
+        },
+        {
+          "path": "informacionGeneral.consumoDrogas",
+          "label": "Consumo de drogas",
+          "type": "text",
+          "order": 24
+        },
+        {
+          "path": "informacionGeneral.embarazo",
+          "label": "Embarazo",
+          "type": "select",
+          "order": 25,
+          "options": [
+            {
+              "value": "Sí",
+              "label": "Sí"
+            },
+            {
+              "value": "No",
+              "label": "No"
+            },
+            {
+              "value": "No aplica",
+              "label": "No aplica"
+            }
+          ]
+        },
+        {
+          "path": "informacionGeneral.lactancia",
+          "label": "Lactancia",
+          "type": "select",
+          "order": 26,
+          "options": [
+            {
+              "value": "Sí",
+              "label": "Sí"
+            },
+            {
+              "value": "No",
+              "label": "No"
+            },
+            {
+              "value": "No aplica",
+              "label": "No aplica"
+            }
+          ]
+        },
+        {
+          "path": "informacionGeneral.anticonceptivos",
+          "label": "Anticonceptivos",
+          "type": "text",
+          "order": 27
+        },
+        {
+          "path": "informacionGeneral.medicamentosPotencia",
+          "label": "Medicamentos de potencia",
+          "type": "text",
+          "order": 28
+        },
+        {
+          "path": "informacionGeneral.hijos",
+          "label": "Hijos",
+          "type": "text",
+          "order": 29
+        }
+      ]
+    },
+    {
+      "key": "informacionClinica_controlPeso",
+      "title": "Información clínica: control de peso",
+      "order": 3,
+      "fields": [
+        {
+          "path": "informacionClinica.controlPeso.pesoObjetivo",
+          "label": "Peso objetivo",
+          "type": "number",
+          "order": 1,
+          "specialties": ["weight", "all"]
+        },
+        {
+          "path": "informacionClinica.controlPeso.actividadFisica",
+          "label": "Actividad física",
+          "type": "text",
+          "order": 2,
+          "specialties": ["weight", "all"]
+        },
+        {
+          "path": "informacionClinica.controlPeso.horasSueno",
+          "label": "Horas de sueño",
+          "type": "number",
+          "order": 3,
+          "min": 0,
+          "max": 24,
+          "specialties": ["weight", "all"]
+        },
+        {
+          "path": "informacionClinica.controlPeso.consumoAgua",
+          "label": "Consumo de agua litros",
+          "type": "number",
+          "order": 4,
+          "min": 0,
+          "max": 20,
+          "specialties": ["weight", "all"]
+        },
+        {
+          "path": "informacionClinica.controlPeso.enfermedadesCronicas",
+          "label": "Enfermedades crónicas",
+          "type": "textarea",
+          "order": 5,
+          "specialties": ["weight", "all"]
+        },
+        {
+          "path": "informacionClinica.controlPeso.medicamentosActuales",
+          "label": "Medicamentos actuales",
+          "type": "textarea",
+          "order": 6,
+          "specialties": ["weight", "all"]
+        },
+        {
+          "path": "informacionClinica.controlPeso.alergiasAlimentarias",
+          "label": "Alergias alimentarias",
+          "type": "textarea",
+          "order": 7,
+          "specialties": ["weight", "all"]
+        },
+        {
+          "path": "informacionClinica.controlPeso.tipoAlimentacion",
+          "label": "Tipo de alimentación",
+          "type": "text",
+          "order": 8,
+          "specialties": ["weight", "all"]
+        },
+        {
+          "path": "informacionClinica.controlPeso.cirugiasPrevias",
+          "label": "Cirugías previas",
+          "type": "textarea",
+          "order": 9,
+          "specialties": ["weight", "all"]
+        },
+        {
+          "path": "informacionClinica.controlPeso.motivoConsultaPeso",
+          "label": "Motivo de consulta de peso",
+          "type": "textarea",
+          "order": 10,
+          "specialties": ["weight", "all"]
+        }
+      ]
+    },
+    {
+      "key": "informacionClinica_odontologia",
+      "title": "Información clínica: odontología",
+      "order": 4,
+      "fields": [
+        {
+          "path": "informacionClinica.odontologia.motivoConsultaOdonto",
+          "label": "Motivo odontológico",
+          "type": "textarea",
+          "order": 1,
+          "specialties": ["dental", "all"]
+        },
+        {
+          "path": "informacionClinica.odontologia.primeraVisita",
+          "label": "Primera visita",
+          "type": "text",
+          "order": 2,
+          "specialties": ["dental", "all"]
+        },
+        {
+          "path": "informacionClinica.odontologia.visitaAnteriorAgradable",
+          "label": "Visita anterior agradable",
+          "type": "text",
+          "order": 3,
+          "specialties": ["dental", "all"]
+        },
+        {
+          "path": "informacionClinica.odontologia.fluor",
+          "label": "Flúor",
+          "type": "text",
+          "order": 4,
+          "specialties": ["dental", "all"]
+        },
+        {
+          "path": "informacionClinica.odontologia.extraccionDientes",
+          "label": "Extracción de dientes",
+          "type": "text",
+          "order": 5,
+          "specialties": ["dental", "all"]
+        },
+        {
+          "path": "informacionClinica.odontologia.sangradoPostExtraccion",
+          "label": "Sangrado post extracción",
+          "type": "text",
+          "order": 6,
+          "specialties": ["dental", "all"]
+        },
+        {
+          "path": "informacionClinica.odontologia.tratamientosPrevios",
+          "label": "Tratamientos previos",
+          "type": "textarea",
+          "order": 7,
+          "specialties": ["dental", "all"]
+        },
+        {
+          "path": "informacionClinica.odontologia.perdidaDientes",
+          "label": "Pérdida de dientes",
+          "type": "text",
+          "order": 8,
+          "specialties": ["dental", "all"]
+        },
+        {
+          "path": "informacionClinica.odontologia.sangradoEncias",
+          "label": "Sangrado de encías",
+          "type": "text",
+          "order": 9,
+          "specialties": ["dental", "all"]
+        },
+        {
+          "path": "informacionClinica.odontologia.cepilladoDiario",
+          "label": "Cepillado diario",
+          "type": "text",
+          "order": 10,
+          "specialties": ["dental", "all"]
+        },
+        {
+          "path": "informacionClinica.odontologia.enjuagueBucal",
+          "label": "Enjuague bucal",
+          "type": "text",
+          "order": 11,
+          "specialties": ["dental", "all"]
+        },
+        {
+          "path": "informacionClinica.odontologia.hiloDental",
+          "label": "Hilo dental",
+          "type": "text",
+          "order": 12,
+          "specialties": ["dental", "all"]
+        },
+        {
+          "path": "informacionClinica.odontologia.usaCepillo",
+          "label": "Uso de cepillo",
+          "type": "text",
+          "order": 13,
+          "specialties": ["dental", "all"]
+        },
+        {
+          "path": "informacionClinica.odontologia.dolorDental",
+          "label": "Dolor dental",
+          "type": "text",
+          "order": 14,
+          "specialties": ["dental", "all"]
+        },
+        {
+          "path": "informacionClinica.odontologia.tipoDolor",
+          "label": "Tipo de dolor",
+          "type": "text",
+          "order": 15,
+          "specialties": ["dental", "all"]
+        }
+      ]
+    },
+    {
+      "key": "informacionClinica_estetica",
+      "title": "Información clínica: estética",
+      "order": 5,
+      "fields": [
+        {
+          "path": "informacionClinica.estetica.motivoTratamiento",
+          "label": "Motivo de tratamiento",
+          "type": "textarea",
+          "order": 1,
+          "specialties": ["stetic", "all"]
+        },
+        {
+          "path": "informacionClinica.estetica.cirugiasPrevias",
+          "label": "Cirugías previas",
+          "type": "textarea",
+          "order": 2,
+          "specialties": ["stetic", "all"]
+        },
+        {
+          "path": "informacionClinica.estetica.reaccionesAnestesia",
+          "label": "Reacciones a anestesia",
+          "type": "text",
+          "order": 3,
+          "specialties": ["stetic", "all"]
+        },
+        {
+          "path": "informacionClinica.estetica.enfermedadesInterfieren",
+          "label": "Enfermedades que interfieren",
+          "type": "textarea",
+          "order": 4,
+          "specialties": ["stetic", "all"]
+        },
+        {
+          "path": "informacionClinica.estetica.condicionPiel",
+          "label": "Condición de la piel",
+          "type": "select",
+          "order": 5,
+          "specialties": ["stetic", "all"],
+          "options": [
+            {
+              "value": "Grasa",
+              "label": "Grasa"
+            },
+            {
+              "value": "Seca",
+              "label": "Seca"
+            },
+            {
+              "value": "Mixta",
+              "label": "Mixta"
+            },
+            {
+              "value": "Normal",
+              "label": "Normal"
+            }
+          ]
+        },
+        {
+          "path": "informacionClinica.estetica.zonaInteres",
+          "label": "Zona de interés",
+          "type": "text",
+          "order": 6,
+          "specialties": ["stetic", "all"]
+        },
+        {
+          "path": "informacionClinica.estetica.tratamientosPrevios",
+          "label": "Tratamientos previos",
+          "type": "textarea",
+          "order": 7,
+          "specialties": ["stetic", "all"]
+        },
+        {
+          "path": "informacionClinica.estetica.expectativas",
+          "label": "Expectativas",
+          "type": "textarea",
+          "order": 8,
+          "specialties": ["stetic", "all"]
+        },
+        {
+          "path": "informacionClinica.estetica.alergiasQuimicos",
+          "label": "Alergias a químicos",
+          "type": "text",
+          "order": 9,
+          "specialties": ["stetic", "all"]
+        }
+      ]
+    },
+    {
+      "key": "antecedentes_heredofamiliares",
+      "title": "Antecedentes heredofamiliares",
+      "order": 6,
+      "fields": [
+        {
+          "path": "antecedentes.heredofamiliares.diabetes",
+          "label": "Diabetes",
+          "type": "checkbox",
+          "order": 1
+        },
+        {
+          "path": "antecedentes.heredofamiliares.epilepsia",
+          "label": "Epilepsia",
+          "type": "checkbox",
+          "order": 2
+        },
+        {
+          "path": "antecedentes.heredofamiliares.hepatitis",
+          "label": "Hepatitis",
+          "type": "checkbox",
+          "order": 3
+        },
+        {
+          "path": "antecedentes.heredofamiliares.hipertension",
+          "label": "Hipertensión",
+          "type": "checkbox",
+          "order": 4
+        },
+        {
+          "path": "antecedentes.heredofamiliares.malformaciones",
+          "label": "Malformaciones",
+          "type": "checkbox",
+          "order": 5
+        },
+        {
+          "path": "antecedentes.heredofamiliares.artritis",
+          "label": "Artritis",
+          "type": "checkbox",
+          "order": 6
+        }
+      ]
+    },
+    {
+      "key": "antecedentes_personalesPatologicos",
+      "title": "Antecedentes personales patológicos",
+      "order": 7,
+      "fields": [
+        {
+          "path": "antecedentes.personalesPatologicos.cardiopatias",
+          "label": "Cardiopatías",
+          "type": "checkbox",
+          "order": 1
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.enfermedadesMentales",
+          "label": "Enfermedades mentales",
+          "type": "checkbox",
+          "order": 2
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.neoplasias",
+          "label": "Neoplasias",
+          "type": "checkbox",
+          "order": 3
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.enfermedadesRenales",
+          "label": "Enfermedades renales",
+          "type": "checkbox",
+          "order": 4
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.varicela",
+          "label": "Varicela",
+          "type": "checkbox",
+          "order": 5
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.sarampion",
+          "label": "Sarampión",
+          "type": "checkbox",
+          "order": 6
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.neuralgia",
+          "label": "Neuralgia",
+          "type": "checkbox",
+          "order": 7
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.viasBiliares",
+          "label": "Vías biliares",
+          "type": "checkbox",
+          "order": 8
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.asma",
+          "label": "Asma",
+          "type": "checkbox",
+          "order": 9
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.enfermedadesRespiratorias",
+          "label": "Enfermedades respiratorias",
+          "type": "checkbox",
+          "order": 10
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.hepatitis",
+          "label": "Hepatitis",
+          "type": "checkbox",
+          "order": 11
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.digestivo",
+          "label": "Trastornos digestivos",
+          "type": "checkbox",
+          "order": 12
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.hipotiroidismo",
+          "label": "Hipotiroidismo",
+          "type": "checkbox",
+          "order": 13
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.migraña",
+          "label": "Migraña",
+          "type": "checkbox",
+          "order": 14
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.epilepsia",
+          "label": "Epilepsia",
+          "type": "checkbox",
+          "order": 15
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.ansiedadDepresion",
+          "label": "Ansiedad o depresión",
+          "type": "checkbox",
+          "order": 16
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.hipertension",
+          "label": "Hipertensión",
+          "type": "checkbox",
+          "order": 17
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.diabetes",
+          "label": "Diabetes",
+          "type": "checkbox",
+          "order": 18
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.cancer",
+          "label": "Cáncer",
+          "type": "checkbox",
+          "order": 19
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.vih",
+          "label": "VIH",
+          "type": "checkbox",
+          "order": 20
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.ets",
+          "label": "ETS",
+          "type": "checkbox",
+          "order": 21
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.piel",
+          "label": "Piel",
+          "type": "checkbox",
+          "order": 22
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.fracturas",
+          "label": "Fracturas",
+          "type": "checkbox",
+          "order": 23
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.hospitalizaciones",
+          "label": "Hospitalizaciones",
+          "type": "textarea",
+          "order": 24
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.cirugias",
+          "label": "Cirugías",
+          "type": "textarea",
+          "order": 25
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.alteracionesHormonales",
+          "label": "Alteraciones hormonales",
+          "type": "textarea",
+          "order": 26
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.hijos",
+          "label": "Hijos",
+          "type": "text",
+          "order": 27
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.anticonceptivos",
+          "label": "Anticonceptivos",
+          "type": "text",
+          "order": 28
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.embarazo",
+          "label": "Embarazo",
+          "type": "text",
+          "order": 29
+        },
+        {
+          "path": "antecedentes.personalesPatologicos.lactancia",
+          "label": "Lactancia",
+          "type": "text",
+          "order": 30
+        }
+      ]
+    },
+    {
+      "key": "antecedentes_noPatologicos",
+      "title": "Antecedentes no patológicos",
+      "order": 8,
+      "fields": [
+        {
+          "path": "antecedentes.noPatologicos.tipoAlimentacion",
+          "label": "Tipo de alimentación",
+          "type": "text",
+          "order": 1
+        },
+        {
+          "path": "antecedentes.noPatologicos.comidasDia",
+          "label": "Comidas por día",
+          "type": "text",
+          "order": 2
+        },
+        {
+          "path": "antecedentes.noPatologicos.intolerancias",
+          "label": "Intolerancias",
+          "type": "text",
+          "order": 3
+        },
+        {
+          "path": "antecedentes.noPatologicos.alimentosNoConsume",
+          "label": "Alimentos que no consume",
+          "type": "text",
+          "order": 4
+        },
+        {
+          "path": "antecedentes.noPatologicos.lavadoManos",
+          "label": "Lavado de manos",
+          "type": "text",
+          "order": 5
+        },
+        {
+          "path": "antecedentes.noPatologicos.usoCepillo",
+          "label": "Uso de cepillo",
+          "type": "text",
+          "order": 6
+        },
+        {
+          "path": "antecedentes.noPatologicos.usoEnjuague",
+          "label": "Uso de enjuague",
+          "type": "text",
+          "order": 7
+        },
+        {
+          "path": "antecedentes.noPatologicos.usoHilo",
+          "label": "Uso de hilo dental",
+          "type": "text",
+          "order": 8
+        }
+      ]
+    },
+    {
+      "key": "inmunizaciones",
+      "title": "Inmunizaciones",
+      "order": 9,
+      "fields": [
+        {
+          "path": "antecedentes.inmunizaciones.poliomielitis",
+          "label": "Poliomielitis",
+          "type": "checkbox",
+          "order": 1
+        },
+        {
+          "path": "antecedentes.inmunizaciones.tuberculosis",
+          "label": "Tuberculosis",
+          "type": "checkbox",
+          "order": 2
+        },
+        {
+          "path": "antecedentes.inmunizaciones.dtp",
+          "label": "DTP",
+          "type": "checkbox",
+          "order": 3
+        },
+        {
+          "path": "antecedentes.inmunizaciones.tripleViral",
+          "label": "Triple viral",
+          "type": "checkbox",
+          "order": 4
+        },
+        {
+          "path": "antecedentes.inmunizaciones.sarampion",
+          "label": "Sarampión",
+          "type": "checkbox",
+          "order": 5
+        },
+        {
+          "path": "antecedentes.inmunizaciones.hepatitisB",
+          "label": "Hepatitis B",
+          "type": "checkbox",
+          "order": 6
+        },
+        {
+          "path": "antecedentes.inmunizaciones.otras",
+          "label": "Otras",
+          "type": "text",
+          "order": 7
+        }
+      ]
+    },
+    {
+      "key": "habitos",
+      "title": "Hábitos",
+      "order": 10,
+      "fields": [
+        {
+          "path": "antecedentes.habitos.alcohol",
+          "label": "Alcohol",
+          "type": "text",
+          "order": 1
+        },
+        {
+          "path": "antecedentes.habitos.tabaco",
+          "label": "Tabaco",
+          "type": "text",
+          "order": 2
+        },
+        {
+          "path": "antecedentes.habitos.drogas",
+          "label": "Drogas",
+          "type": "text",
+          "order": 3
+        },
+        {
+          "path": "antecedentes.habitos.deportes",
+          "label": "Deportes",
+          "type": "text",
+          "order": 4
+        }
+      ]
+    },
+    {
+      "key": "exploracionFisica",
+      "title": "Exploración física",
+      "order": 11,
+      "fields": [
+        {
+          "path": "exploracionFisica.cabeza",
+          "label": "Cabeza",
+          "type": "text",
+          "order": 1
+        },
+        {
+          "path": "exploracionFisica.cuello",
+          "label": "Cuello",
+          "type": "text",
+          "order": 2
+        },
+        {
+          "path": "exploracionFisica.torax",
+          "label": "Tórax",
+          "type": "text",
+          "order": 3
+        },
+        {
+          "path": "exploracionFisica.abdomen",
+          "label": "Abdomen",
+          "type": "text",
+          "order": 4
+        },
+        {
+          "path": "exploracionFisica.extremidades",
+          "label": "Extremidades",
+          "type": "text",
+          "order": 5
+        }
+      ]
+    },
+    {
+      "key": "signosVitales",
+      "title": "Signos vitales",
+      "order": 12,
+      "fields": [
+        {
+          "path": "signosVitales.tensionArterial",
+          "label": "Tensión arterial",
+          "type": "text",
+          "order": 1
+        },
+        {
+          "path": "signosVitales.frecuenciaCardiaca",
+          "label": "Frecuencia cardiaca",
+          "type": "number",
+          "order": 2
+        },
+        {
+          "path": "signosVitales.frecuenciaRespiratoria",
+          "label": "Frecuencia respiratoria",
+          "type": "number",
+          "order": 3
+        },
+        {
+          "path": "signosVitales.temperatura",
+          "label": "Temperatura",
+          "type": "text",
+          "order": 4
+        },
+        {
+          "path": "signosVitales.saturacionOxigeno",
+          "label": "Saturación de oxígeno",
+          "type": "text",
+          "order": 5
+        },
+        {
+          "path": "signosVitales.imc",
+          "label": "IMC",
+          "type": "text",
+          "order": 6,
+          "helpText": "Puedes calcularlo desde altura y peso"
+        },
+        {
+          "path": "signosVitales.peso",
+          "label": "Peso",
+          "type": "number",
+          "order": 7
+        },
+        {
+          "path": "signosVitales.talla",
+          "label": "Talla",
+          "type": "number",
+          "order": 8
+        }
+      ]
+    },
+    {
+      "key": "camposMedico_datosClinicos",
+      "title": "Campos del médico: datos clínicos",
+      "order": 13,
+      "fields": [
+        {
+          "path": "camposMedico.datosClinicos.fechaRegistro",
+          "label": "Fecha registro",
+          "type": "date",
+          "order": 1,
+          "roles": ["doctor", "employee", "all"]
+        },
+        {
+          "path": "camposMedico.datosClinicos.medicoResponsable",
+          "label": "Médico responsable",
+          "type": "text",
+          "order": 2,
+          "roles": ["doctor", "employee", "all"]
+        },
+        {
+          "path": "camposMedico.datosClinicos.diagnosticoPreliminar",
+          "label": "Diagnóstico preliminar",
+          "type": "textarea",
+          "order": 3,
+          "roles": ["doctor", "employee", "all"]
+        },
+        {
+          "path": "camposMedico.datosClinicos.tratamientoSugerido",
+          "label": "Tratamiento sugerido",
+          "type": "textarea",
+          "order": 4,
+          "roles": ["doctor", "employee", "all"]
+        },
+        {
+          "path": "camposMedico.datosClinicos.notas",
+          "label": "Notas",
+          "type": "textarea",
+          "order": 5,
+          "roles": ["doctor", "employee", "all"]
+        }
+      ]
+    },
+    {
+      "key": "camposMedico_odontologia",
+      "title": "Campos del médico: odontología",
+      "order": 14,
+      "fields": [
+        {
+          "path": "camposMedico.odontologia.cavidadBucal",
+          "label": "Cavidad bucal",
+          "type": "text",
+          "order": 1,
+          "roles": ["doctor", "employee", "all"]
+        },
+        {
+          "path": "camposMedico.odontologia.cuelloEstructuras",
+          "label": "Cuello y estructuras",
+          "type": "text",
+          "order": 2,
+          "roles": ["doctor", "employee", "all"]
+        },
+        {
+          "path": "camposMedico.odontologia.diagnosticoDental",
+          "label": "Diagnóstico dental",
+          "type": "text",
+          "order": 3,
+          "roles": ["doctor", "employee", "all"]
+        },
+        {
+          "path": "camposMedico.odontologia.planTratamientoDental",
+          "label": "Plan de tratamiento dental",
+          "type": "textarea",
+          "order": 4,
+          "roles": ["doctor", "employee", "all"]
+        },
+        {
+          "path": "camposMedico.odontologia.materialesUsados",
+          "label": "Materiales usados",
+          "type": "text",
+          "order": 5,
+          "roles": ["doctor", "employee", "all"]
+        },
+        {
+          "path": "camposMedico.odontologia.recomendacionesPaciente",
+          "label": "Recomendaciones al paciente",
+          "type": "textarea",
+          "order": 6,
+          "roles": ["doctor", "employee", "all"]
+        }
+      ]
+    },
+    {
+      "key": "camposMedico_estetica",
+      "title": "Campos del médico: estética",
+      "order": 15,
+      "fields": [
+        {
+          "path": "camposMedico.estetica.diagnosticoFacial",
+          "label": "Diagnóstico facial",
+          "type": "text",
+          "order": 1,
+          "roles": ["doctor", "employee", "all"]
+        },
+        {
+          "path": "camposMedico.estetica.condicionPiel",
+          "label": "Condición de la piel",
+          "type": "text",
+          "order": 2,
+          "roles": ["doctor", "employee", "all"]
+        },
+        {
+          "path": "camposMedico.estetica.zonasTratadas",
+          "label": "Zonas tratadas",
+          "type": "text",
+          "order": 3,
+          "roles": ["doctor", "employee", "all"]
+        },
+        {
+          "path": "camposMedico.estetica.productoTecnica",
+          "label": "Producto o técnica",
+          "type": "text",
+          "order": 4,
+          "roles": ["doctor", "employee", "all"]
+        },
+        {
+          "path": "camposMedico.estetica.fechaTratamiento",
+          "label": "Fecha de tratamiento",
+          "type": "date",
+          "order": 5,
+          "roles": ["doctor", "employee", "all"]
+        },
+        {
+          "path": "camposMedico.estetica.evolucion",
+          "label": "Evolución",
+          "type": "text",
+          "order": 6,
+          "roles": ["doctor", "employee", "all"]
+        },
+        {
+          "path": "camposMedico.estetica.complicaciones",
+          "label": "Complicaciones",
+          "type": "text",
+          "order": 7,
+          "roles": ["doctor", "employee", "all"]
+        },
+        {
+          "path": "camposMedico.estetica.recomendacionesPost",
+          "label": "Recomendaciones post",
+          "type": "textarea",
+          "order": 8,
+          "roles": ["doctor", "employee", "all"]
+        }
+      ]
+    },
+    {
+      "key": "camposMedico_seguimiento",
+      "title": "Campos del médico: seguimiento",
+      "order": 16,
+      "fields": [
+        {
+          "path": "camposMedico.seguimiento.diagnosticoDefinitivo",
+          "label": "Diagnóstico definitivo",
+          "type": "text",
+          "order": 1,
+          "roles": ["doctor", "employee", "all"]
+        },
+        {
+          "path": "camposMedico.seguimiento.tratamientoPrescrito",
+          "label": "Tratamiento prescrito",
+          "type": "text",
+          "order": 2,
+          "roles": ["doctor", "employee", "all"]
+        },
+        {
+          "path": "camposMedico.seguimiento.medicamentosIndicados",
+          "label": "Medicamentos indicados",
+          "type": "text",
+          "order": 3,
+          "roles": ["doctor", "employee", "all"]
+        },
+        {
+          "path": "camposMedico.seguimiento.observacionesEvolucion",
+          "label": "Observaciones de evolución",
+          "type": "textarea",
+          "order": 4,
+          "roles": ["doctor", "employee", "all"]
+        },
+        {
+          "path": "camposMedico.seguimiento.recomendacionesFinales",
+          "label": "Recomendaciones finales",
+          "type": "textarea",
+          "order": 5,
+          "roles": ["doctor", "employee", "all"]
+        },
+        {
+          "path": "camposMedico.seguimiento.fechaRevisionSiguiente",
+          "label": "Fecha revisión siguiente",
+          "type": "date",
+          "order": 6,
+          "roles": ["doctor", "employee", "all"]
+        },
+        {
+          "path": "camposMedico.seguimiento.firmaMedico",
+          "label": "Firma del médico",
+          "type": "text",
+          "order": 7,
+          "roles": ["doctor", "employee", "all"]
+        }
+      ]
+    },
+    {
+      "key": "complementos",
+      "title": "Complementos",
+      "order": 17,
+      "fields": [
+        {
+          "path": "complementos.pasatiempos",
+          "label": "Pasatiempos",
+          "type": "text",
+          "order": 1
+        },
+        {
+          "path": "complementos.comoSeEntero",
+          "label": "Cómo se enteró",
+          "type": "text",
+          "order": 2
+        },
+        {
+          "path": "complementos.adultoResponsable",
+          "label": "Adulto responsable",
+          "type": "text",
+          "order": 3
+        },
+        {
+          "path": "complementos.recomendadoPor",
+          "label": "Recomendado por",
+          "type": "text",
+          "order": 4
+        },
+        {
+          "path": "complementos.observacionesPersonales",
+          "label": "Observaciones personales",
+          "type": "textarea",
+          "order": 5
+        },
+        {
+          "path": "complementos.comentarioLibre",
+          "label": "Comentario libre",
+          "type": "textarea",
+          "order": 6
+        }
+      ]
+    }
+  ],
+  "shape": null,
+  "updatedAt": "2025-11-01T23:31:48.451Z",
+  "version": 1
+}
