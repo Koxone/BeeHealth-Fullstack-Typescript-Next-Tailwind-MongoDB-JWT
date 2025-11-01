@@ -1,7 +1,7 @@
 'use client';
 
-import { Plus, Edit2, X, Calendar, Clock, User, Phone, Mail, Sparkles, Info } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { Plus, Edit2, X, Calendar, Clock, User, Sparkles, Info } from 'lucide-react';
+import { useEffect } from 'react';
 
 export default function CreateEditAppointmentModal({
   editingCita,
@@ -9,27 +9,25 @@ export default function CreateEditAppointmentModal({
   setCitaForm,
   onClose,
   onSubmit,
+  patients, 
 }) {
-  const getColor = (type) =>
+  // Color
+  const getColor = () =>
     editingCita ? 'from-blue-600 to-purple-600' : 'from-emerald-500 to-teal-500';
 
+  // Disable scroll
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     return () => (document.body.style.overflow = '');
   }, []);
 
-  const [patients, setPatients] = useState([
-    { id: 1, name: 'Laura Hernández', email: 'laura@example.com', phone: '555-111-2222' },
-    { id: 2, name: 'Carlos Ruiz', email: 'carlos@example.com', phone: '555-333-4444' },
-    { id: 3, name: 'Ana Martínez', email: 'ana@example.com', phone: '555-555-6666' },
-  ]);
-
+  // Handle select
   const handleSelectPatient = (e) => {
-    const selected = patients.find((p) => p.id.toString() === e.target.value);
+    const selected = patients.find((p) => p._id === e.target.value);
     setCitaForm({
       ...citaForm,
-      pacienteId: selected?.id || '',
-      paciente: selected?.name || '',
+      pacienteId: selected?._id || '',
+      paciente: selected?.fullName || '',
       telefono: selected?.phone || '',
       email: selected?.email || '',
     });
@@ -49,10 +47,6 @@ export default function CreateEditAppointmentModal({
           className="animate-in fade-in zoom-in-95 relative max-h-[95vh] w-full max-w-3xl overflow-hidden rounded-3xl bg-linear-to-br from-white via-emerald-50/30 to-teal-50/30 shadow-2xl backdrop-blur-md duration-300"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Background decorations */}
-          <div className="pointer-events-none absolute top-0 right-0 h-64 w-64 rounded-full bg-linear-to-br from-emerald-400/20 to-teal-400/20 blur-3xl" />
-          <div className="pointer-events-none absolute bottom-0 left-0 h-64 w-64 rounded-full bg-linear-to-tr from-green-400/20 to-emerald-400/20 blur-3xl" />
-
           {/* Header */}
           <div className="relative overflow-hidden border-b border-white/50 bg-white/80 backdrop-blur-xl">
             <div className={`absolute inset-0 bg-linear-to-r ${getColor()} opacity-10`} />
@@ -160,8 +154,8 @@ export default function CreateEditAppointmentModal({
                   >
                     <option value="">-- Selecciona un paciente --</option>
                     {patients.map((p) => (
-                      <option key={p.id} value={p.id}>
-                        {p.name}
+                      <option key={p._id} value={p._id}>
+                        {p.fullName}
                       </option>
                     ))}
                   </select>

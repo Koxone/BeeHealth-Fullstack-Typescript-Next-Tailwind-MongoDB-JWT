@@ -25,8 +25,7 @@ import CancelModal from './components/CancelModal';
 import EmptyState from './components/EmptyState';
 import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
 
-export default function EmployeeAppointments({ role }) {
-  /* ui state */
+export default function EmployeeAppointments({ role, patients }) {
   const [showModal, setShowModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [editingCita, setEditingCita] = useState(null);
@@ -240,6 +239,7 @@ export default function EmployeeAppointments({ role }) {
       {/* modals */}
       {showModal && (
         <CreateEditAppointmentModal
+          patients={patients}
           editingCita={editingCita}
           citaForm={citaForm}
           setCitaForm={setCitaForm}
