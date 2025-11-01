@@ -8,9 +8,9 @@ import ModalAddEdit from './components/ModalAddEdit';
 import { workoutsMockData } from './components/workoutsMockData';
 import WorkoutCard from './components/workoutCard/WorkoutCard';
 import WorkoutModal from './components/WorkoutModal';
-import GeneralSectionHeader from '../../shared/sections/GeneralSectionHeader';
+import GeneralSectionHeader from '../sections/GeneralSectionHeader';
 
-export default function GeneralWorkouts({ role }) {
+export default function SharedWorkouts({ role }) {
   // Local States
   const [workouts, setWorkouts] = useState(workoutsMockData);
   const [filterCategorie, setFilterCategorie] = useState('Todos');
