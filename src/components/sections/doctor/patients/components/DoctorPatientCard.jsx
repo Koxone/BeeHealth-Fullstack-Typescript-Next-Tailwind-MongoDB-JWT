@@ -39,15 +39,13 @@ export default async function DoctorPatientCard({ patient, type, currentUser, ro
                 <span>Última Cita: {patient?.lastVisit || 'Sin Registro'}</span>
               </div>
 
-              {currentUser?.role === 'doctor' ? (
-                <Link
-                  href={`/doctor/patients/${patient._id}`}
-                  className="flex items-center gap-2 font-medium text-blue-600 hover:text-blue-700"
-                >
-                  <Eye className="h-4 w-4" />
-                  Ver Detalles
-                </Link>
-              ) : null}
+              <Link
+                href={`/doctor/patients/${patient._id}`}
+                className="flex items-center gap-2 font-medium text-blue-600 hover:text-blue-700"
+              >
+                <Eye className="h-4 w-4" />
+                Ver Detalles
+              </Link>
             </div>
           </div>
         </div>
