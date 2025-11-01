@@ -6,7 +6,7 @@ import { DollarSign, Users, Pill, TrendingUp } from 'lucide-react';
 import MetricsGrid from './components/MetricsGrid';
 import WeeklyIncomeChart from './components/WeeklyIncomeChart';
 import DistributionCard from './components/DistributionCard';
-import MedicamentosTable from '../../../shared/accounting/MedicamentosTable';
+import MedicamentosTable from '../../../shared/medsSale/MedicamentosTable';
 import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
 import TodayConsultsTable from '@/components/shared/todayConsults/TodayConsultsTable';
 

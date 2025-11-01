@@ -5,7 +5,7 @@ import { Users, AlertCircle, TrendingUp, CheckCircle } from 'lucide-react';
 import MetricsGrid from './components/MetricsGrid';
 import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
 import TodayConsultsTable from '@/components/shared/todayConsults/TodayConsultsTable';
-import MedicamentosTable from '../../../shared/accounting/MedicamentosTable';
+import MedicamentosTable from '../../../shared/medsSale/MedicamentosTable';
 
 export default function EmployeeConsultations({ role }) {
   const metrics = {
