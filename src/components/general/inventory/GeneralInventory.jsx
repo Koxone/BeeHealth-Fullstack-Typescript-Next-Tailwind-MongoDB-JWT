@@ -24,7 +24,7 @@ import SuministrosTable from './components/SuministrosTable';
 import AddEditModal from './components/AddEditModal';
 import DeleteModal from './components/DeleteModal';
 import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
-import GeneralInventoryAlerts from '../dashboard/components/general/InventoryAlerts/GeneralInventoryAlerts';
+import GeneralInventoryAlerts from '@/components/shared/dashboard/InventoryAlerts/GeneralInventoryAlerts';
 
 /* utils */
 const getStockStatus = (stock, minimo) => {
