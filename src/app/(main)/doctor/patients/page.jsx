@@ -1,4 +1,4 @@
-import DoctorPatients from '@/components/sections/doctor/DoctorPatients';
+import DoctorPatients from '@/components/sections/doctor/patients/DoctorPatients';
 import { getCurrentUser } from '@/lib/auth/getCurrentUser';
 export const runtime = 'nodejs';
 

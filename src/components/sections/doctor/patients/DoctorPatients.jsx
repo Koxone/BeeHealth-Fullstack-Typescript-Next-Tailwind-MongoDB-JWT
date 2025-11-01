@@ -1,6 +1,6 @@
 import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
 import PatientsSearchBar from '@/components/shared/patients/PatientsSearchBar';
-import DoctorPatientsList from './patients/components/DoctorPatientsList';
+import DoctorPatientsList from './components/DoctorPatientsList';
 
 export default function DoctorPatients({ currentUser, role }) {
   return (
