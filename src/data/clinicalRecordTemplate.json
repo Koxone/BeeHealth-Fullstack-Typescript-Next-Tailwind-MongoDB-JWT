@@ -45,10 +45,6 @@
             {
               "value": "Femenino",
               "label": "Femenino"
-            },
-            {
-              "value": "Otro",
-              "label": "Otro"
             }
           ],
           "qId": 6,
@@ -324,7 +320,7 @@
     },
     {
       "sectionKey": "informacionClinica_controlPeso",
-      "title": "Información clínica: Control de Peso",
+      "title": "Información clínica",
       "fields": [
         {
           "label": "Peso objetivo",
@@ -380,7 +376,7 @@
     },
     {
       "sectionKey": "informacionClinica_odontologia",
-      "title": "Información clínica: Odontología",
+      "title": "Información clínica",
       "fields": [
         {
           "label": "Motivo odontológico",
@@ -461,7 +457,7 @@
     },
     {
       "sectionKey": "informacionClinica_estetica",
-      "title": "Información clínica: Estética",
+      "title": "Información clínica",
       "fields": [
         {
           "label": "Motivo de tratamiento",
