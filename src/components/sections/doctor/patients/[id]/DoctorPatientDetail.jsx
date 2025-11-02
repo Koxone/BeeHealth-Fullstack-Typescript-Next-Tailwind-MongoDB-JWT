@@ -23,8 +23,8 @@ import {
   Loader2,
 } from 'lucide-react';
 
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import moment from 'moment';
 import 'moment/locale/es';
 
@@ -95,6 +95,28 @@ const mockWeightData = mockRecords
 export default function DoctorPatientDetail({ role, currentUser, specialty, patient }) {
   /* Router */
   const router = useRouter();
+
+  // Backend Get Clinical Record
+  const { id } = useParams();
+  const [patientRecord, setPatientRecord] = useState();
+
+  useEffect(() => {
+    if (!id) return;
+
+    async function fetchRecords() {
+      try {
+        const res = await fetch(`/api/clinical-records/patient/${id}`);
+        const data = await res.json();
+        setPatientRecord(data);
+        console.log('Datos recibidos:', data);
+      } catch (error) {
+        console.error('Error al obtener clinical records:', error);
+      }
+    }
+
+    fetchRecords();
+  }, [id]);
+  console.log(patientRecord);
 
   // Local States
   const [isReadOnly, setIsReadOnly] = useState(false);
