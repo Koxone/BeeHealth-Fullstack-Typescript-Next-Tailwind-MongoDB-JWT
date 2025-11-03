@@ -58,7 +58,7 @@ function FieldRenderer({ field, value, onChange }) {
         <InputField
           type={inputType}
           {...shared}
-          value={field.value || ''}
+          value={value || ''}
           onChange={(e) => onChange(f.qId, e.target.value)}
         />
       </div>
