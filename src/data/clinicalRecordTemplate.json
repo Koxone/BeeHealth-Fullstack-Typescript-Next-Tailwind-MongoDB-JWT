@@ -123,11 +123,6 @@
           "required": true
         },
         {
-          "label": "Teléfono fijo",
-          "type": "text",
-          "qId": 16
-        },
-        {
           "label": "Contacto de emergencia",
           "type": "text",
           "qId": 17
@@ -159,37 +154,22 @@
           "qId": 21
         },
         {
-          "label": "Buen estado de salud",
-          "type": "text",
-          "qId": 22
-        },
-        {
-          "label": "Bajo tratamiento",
-          "type": "text",
-          "qId": 23
-        },
-        {
-          "label": "Tomando medicamentos",
-          "type": "text",
-          "qId": 24
-        },
-        {
-          "label": "Alérgico a medicamentos",
+          "label": "Es alergico a algun medicamento? Cuales?",
           "type": "text",
           "qId": 25
         },
         {
-          "label": "Operado u hospitalizado",
+          "label": "Ah sido perado u hospitalizado?",
           "type": "text",
           "qId": 26
         },
         {
-          "label": "Hemorragias",
+          "label": "Ha tenido alguna hemorragia?",
           "type": "text",
           "qId": 27
         },
         {
-          "label": "Problemas de cicatrización",
+          "label": "Ah tenido problemas de cicatrización?",
           "type": "text",
           "qId": 28
         },
@@ -197,6 +177,21 @@
           "label": "Otras enfermedades",
           "type": "textarea",
           "qId": 29
+        },
+        {
+          "label": "Se encuentra en buen estado de salud?",
+          "type": "radio",
+          "qId": 22
+        },
+        {
+          "label": "Se encuentra bajo tratamiento?",
+          "type": "radio",
+          "qId": 23
+        },
+        {
+          "label": "Actualmente toma algun medicamento?",
+          "type": "radio",
+          "qId": 24
         },
         {
           "label": "Diabetes",
@@ -244,23 +239,18 @@
           "qId": 38
         },
         {
-          "label": "Otras",
-          "type": "text",
-          "qId": 39
-        },
-        {
-          "label": "Consumo de alcohol",
-          "type": "text",
+          "label": "Consume de alcohol?",
+          "type": "radio",
           "qId": 40
         },
         {
-          "label": "Consumo de tabaco",
-          "type": "text",
+          "label": "Consume de tabaco?",
+          "type": "radio",
           "qId": 41
         },
         {
-          "label": "Consumo de drogas",
-          "type": "text",
+          "label": "Consume de drogas?",
+          "type": "radio",
           "qId": 42
         },
         {
@@ -303,17 +293,12 @@
         },
         {
           "label": "Anticonceptivos",
-          "type": "text",
+          "type": "radio",
           "qId": 45
         },
         {
-          "label": "Medicamentos de potencia",
-          "type": "text",
-          "qId": 46
-        },
-        {
-          "label": "Hijos",
-          "type": "text",
+          "label": "Tiene Hijos?",
+          "type": "radio",
           "qId": 47
         }
       ]
@@ -379,33 +364,23 @@
       "title": "Información clínica",
       "fields": [
         {
-          "label": "Motivo odontológico",
-          "type": "textarea",
-          "qId": 58
-        },
-        {
           "label": "Primera visita",
-          "type": "text",
+          "type": "radio",
           "qId": 59
         },
         {
-          "label": "Visita anterior agradable",
-          "type": "text",
-          "qId": 60
-        },
-        {
           "label": "Flúor",
-          "type": "text",
+          "type": "radio",
           "qId": 61
         },
         {
           "label": "Extracción de dientes",
-          "type": "text",
+          "type": "radio",
           "qId": 62
         },
         {
           "label": "Sangrado post extracción",
-          "type": "text",
+          "type": "radio",
           "qId": 63
         },
         {
@@ -415,37 +390,37 @@
         },
         {
           "label": "Pérdida de dientes",
-          "type": "text",
+          "type": "radio",
           "qId": 65
         },
         {
           "label": "Sangrado de encías",
-          "type": "text",
+          "type": "radio",
           "qId": 66
         },
         {
           "label": "Cepillado diario",
-          "type": "text",
+          "type": "radio",
           "qId": 67
         },
         {
           "label": "Enjuague bucal",
-          "type": "text",
+          "type": "radio",
           "qId": 68
         },
         {
           "label": "Hilo dental",
-          "type": "text",
+          "type": "radio",
           "qId": 69
         },
         {
           "label": "Uso de cepillo",
-          "type": "text",
+          "type": "radio",
           "qId": 70
         },
         {
           "label": "Dolor dental",
-          "type": "text",
+          "type": "radio",
           "qId": 71
         },
         {
