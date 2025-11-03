@@ -11,7 +11,7 @@ export default function ActionButtons({ activeTab }) {
         Volver
       </button>
       <button
-        type="button"
+        type="submit"
         className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-6 py-3 font-medium text-white shadow-md transition active:scale-95 ${
           activeTab === 'peso'
             ? 'bg-blue-500 hover:bg-blue-600'

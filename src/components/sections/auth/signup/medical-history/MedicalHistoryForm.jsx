@@ -39,7 +39,7 @@ function groupBySection(index, ids) {
 }
 
 /* Field renderer */
-function FieldRenderer({ field }) {
+function FieldRenderer({ field, value, onChange }) {
   const f = normalizeField(field);
   const wrapperClass = 'col-span-1';
 
@@ -55,7 +55,12 @@ function FieldRenderer({ field }) {
     const inputType = field.type === 'number' ? 'number' : 'text';
     return (
       <div className={wrapperClass}>
-        <InputField type={inputType} {...shared} />
+        <InputField
+          type={inputType}
+          {...shared}
+          value={field.value || ''}
+          onChange={(e) => onChange(f.qId, e.target.value)}
+        />
       </div>
     );
   }
@@ -64,7 +69,12 @@ function FieldRenderer({ field }) {
     const opts = Array.isArray(f.options) ? f.options : [];
     return (
       <div className={wrapperClass}>
-        <SelectField options={opts} {...shared} />
+        <SelectField
+          options={opts}
+          {...shared}
+          value={value || ''}
+          onChange={(e) => onChange(f.qId, e.target.value)}
+        />
       </div>
     );
   }
@@ -72,7 +82,12 @@ function FieldRenderer({ field }) {
   if (f.kind === 'textarea') {
     return (
       <div className={wrapperClass}>
-        <TextareaField rows={2} {...shared} />
+        <TextareaField
+          value={value || ''}
+          onChange={(e) => onChange(f.qId, e.target.value)}
+          rows={2}
+          {...shared}
+        />
       </div>
     );
   }
@@ -80,7 +95,11 @@ function FieldRenderer({ field }) {
   if (f.kind === 'date') {
     return (
       <div className={wrapperClass}>
-        <DateField {...shared} />
+        <DateField
+          value={value || ''}
+          onChange={(e) => onChange(f.qId, e.target.value)}
+          {...shared}
+        />
       </div>
     );
   }
@@ -88,7 +107,13 @@ function FieldRenderer({ field }) {
   if (f.kind === 'radio') {
     return (
       <div className={wrapperClass}>
-        <RadioGroupField name={`q_${f.qId}`} options={YES_NO} label={f.label} />
+        <RadioGroupField
+          value={value || ''}
+          onChange={(val) => onChange(f.qId, val)}
+          name={`q_${f.qId}`}
+          options={YES_NO}
+          label={f.label}
+        />
       </div>
     );
   }
@@ -98,8 +123,16 @@ function FieldRenderer({ field }) {
 
 /* Main */
 export default function MedicalHistoryForm() {
-  /* Tabs */
+  // Tabs State
   const [activeTab, setActiveTab] = useState('peso');
+
+  // Form States
+  const [formData, setFormData] = useState({});
+
+  // Fields Handler
+  const handleChange = (qId, value) => {
+    setFormData((prev) => ({ ...prev, [qId]: value }));
+  };
 
   /* Index */
   const byId = useMemo(() => indexByQId(), []);
@@ -128,7 +161,13 @@ export default function MedicalHistoryForm() {
         <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl">
           <TabsHeader activeTab={activeTab} setActiveTab={setActiveTab} />
 
-          <form className="p-4 md:p-8">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              console.log(formData);
+            }}
+            className="p-4 md:p-8"
+          >
             {sections.length === 0 ? (
               <div className="text-sm text-red-600">No hay preguntas para este formulario.</div>
             ) : (
@@ -136,7 +175,12 @@ export default function MedicalHistoryForm() {
                 <SectionContainer key={section.title} title={section.title}>
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     {section.fields.map((f) => (
-                      <FieldRenderer key={f.qId} field={f} />
+                      <FieldRenderer
+                        key={f.qId}
+                        field={f}
+                        value={formData[f.qId]}
+                        onChange={handleChange}
+                      />
                     ))}
                   </div>
                 </SectionContainer>
