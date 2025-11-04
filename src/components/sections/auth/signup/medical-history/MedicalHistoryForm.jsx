@@ -39,85 +39,64 @@ export default function MedicalHistoryForm() {
       // Text input
       case 'text':
         return (
-          <div className="mb-6">
-            <label className="mb-2 block text-sm font-medium text-gray-700">{question}</label>
-            <input
-              type="text"
-              required={required}
-              value={value || ''}
-              onChange={(e) => onChange(id, e.target.value)}
-              placeholder={placeholder || ''}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2 md:py-3"
-            />
-          </div>
+          <InputField
+            label={question}
+            type="text"
+            placeholder={placeholder}
+            value={value}
+            required={required}
+            onChange={(e) => onChange(id, e.target.value)}
+          />
         );
 
       // Number input
       case 'number':
         return (
-          <div className="mb-6">
-            <label className="mb-2 block text-sm font-medium text-gray-700">{question}</label>
-            <input
-              type="number"
-              required={required}
-              value={value || ''}
-              onChange={(e) => onChange(id, e.target.value)}
-              placeholder={placeholder || ''}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2 md:py-3"
-            />
-          </div>
+          <InputField
+            label={question}
+            type="number"
+            placeholder={placeholder}
+            value={value}
+            required={required}
+            onChange={(e) => onChange(id, e.target.value)}
+          />
         );
 
       // Date input
       case 'date':
         return (
-          <div className="mb-6">
-            <label className="mb-2 block text-sm font-medium text-gray-700">{question}</label>
-            <input
-              type="date"
-              required={required}
-              value={value || ''}
-              onChange={(e) => onChange(id, e.target.value)}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2 md:py-3"
-            />
-          </div>
+          <DateField
+            label={question}
+            onChange={(e) => onChange(id, e.target.value)}
+            value={value}
+            required={required}
+            color="blue"
+          />
         );
 
       // Textarea
       case 'textarea':
         return (
-          <div className="mb-6">
-            <label className="mb-2 block text-sm font-medium text-gray-700">{question}</label>
-            <textarea
-              required={required}
-              value={value || ''}
-              onChange={(e) => onChange(id, e.target.value)}
-              placeholder={placeholder || ''}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2 md:py-3"
-              rows={3}
-            />
-          </div>
+          <TextareaField
+            label={question}
+            placeholder={placeholder}
+            color="blue"
+            rows={3}
+            value={value}
+            onChange={(e) => onChange(id, e.target.value)}
+            required={required}
+          />
         );
 
       // Select
       case 'select':
         return (
-          <div className="mb-6">
-            <label className="mb-2 block text-sm font-medium text-gray-700">{question}</label>
-            <select
-              required={required}
-              value={value || ''}
-              onChange={(e) => onChange(id, e.target.value)}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2 md:py-3"
-            >
-              <option value="">Seleccione</option>
-              {options?.map((opt) => (
-                <option key={opt} value={opt}>
-                  {opt}
-                </option>
-              ))}
-            </select>
-          </div>
+          <SelectField
+            label={question}
+            value={value || ''}
+            options={options}
+            onChange={(e) => onChange(id, e.target.value)}
+          />
         );
 
       // Radio

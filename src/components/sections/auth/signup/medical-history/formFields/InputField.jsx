@@ -7,7 +7,7 @@ export default function InputField({
   onChange,
 }) {
   return (
-    <div>
+    <div className="mb-6">
       <label className="mb-2 block text-sm font-medium text-gray-700">{label}</label>
       <input
         type={type}
