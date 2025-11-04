@@ -1,359 +1,194 @@
-/* Core */
+// models/ClinicalRecord.js
+
 import mongoose from 'mongoose';
-const { Schema, model, models } = mongoose;
 
-/* Subschemas: Información básica */
-const InformacionBasicaSchema = new Schema(
+const { Schema } = mongoose;
+
+/* Enums */
+const SPECIALTIES = ['weight', 'dental', 'stetic'];
+const RECORD_STATUS = ['draft', 'submitted', 'signed', 'closed'];
+
+/* QIDs unified from your JSON */
+// Vital signs and anthropometrics
+const QIDS = {
+  height: 9, // Altura (cm)
+  weight: 10, // Peso actual (kg)
+  bp: 42, // Tensión arterial
+  hr: 43, // Frecuencia cardiaca
+  rr: 44, // Frecuencia respiratoria
+  temp: 45, // Temperatura
+  spo2: 46, // Saturación de oxígeno
+  bmi: 47, // IMC
+  weightMeasured: 48, // Peso medido en consulta (kg) - solo en full en weight
+  heightMeasured: 49, // Talla medida en consulta (cm) - solo en full en weight
+};
+
+/* Subdocument: Answer */
+// Minimal structure, front is driven by qId + key
+const AnswerSchema = new Schema(
   {
-    fecha: Date,
-    nombreCompleto: String,
-    fechaNacimiento: Date,
-    lugarNacimiento: String,
-    edad: Number,
-    genero: String,
-    alturaCm: Number,
-    pesoActualKg: Number,
-    tallaCm: Number,
-    ocupacion: String,
-    estadoCivil: String,
-    rfc: String,
-    correo: String,
-    domicilio: String,
-    telefonoCelular: String,
-    telefonoFijo: String,
-    contactoEmergencia: String,
-    telefonoEmergencia: String,
+    qId: { type: Number, required: true },
+    key: { type: String, required: true, trim: true },
+    label: { type: String, required: true, trim: true },
+    type: {
+      type: String,
+      required: true,
+      enum: ['text', 'number', 'date', 'textarea', 'select', 'radio', 'checkbox'],
+    },
+    value: { type: Schema.Types.Mixed, default: null },
+    options: { type: [Schema.Types.Mixed], default: undefined },
+    notes: { type: String, default: '' },
   },
   { _id: false }
 );
 
-/* Subschemas: Información general */
-const EnfermedadesSchema = new Schema(
-  {
-    diabetes: Boolean,
-    hipertension: Boolean,
-    hepatitis: Boolean,
-    vih: Boolean,
-    cancer: Boolean,
-    asma: Boolean,
-    epilepsia: Boolean,
-    gastritis: Boolean,
-    ansiedadDepresion: Boolean,
-    otras: String,
-  },
-  { _id: false }
-);
-
-const InformacionGeneralSchema = new Schema(
-  {
-    motivoConsulta: String,
-    alergiasConocidas: String,
-    medicamentosActuales: String,
-    buenEstadoSalud: String,
-    bajoTratamiento: String,
-    tomandoMedicamentos: String,
-    alergicoMedicamentos: String,
-    operadoHospitalizado: String,
-    hemorragias: String,
-    problemasCicatrizacion: String,
-    otrasEnfermedades: String,
-    enfermedades: { type: EnfermedadesSchema, default: {} },
-    consumoAlcohol: String,
-    consumoTabaco: String,
-    consumoDrogas: String,
-    embarazo: String,
-    lactancia: String,
-    anticonceptivos: String,
-    medicamentosPotencia: String,
-    hijos: Number,
-  },
-  { _id: false }
-);
-
-/* Subschemas: Información clínica por especialidad */
-const ControlPesoSchema = new Schema(
-  {
-    pesoObjetivo: Number,
-    actividadFisica: String,
-    horasSueno: Number,
-    consumoAgua: Number,
-    enfermedadesCronicas: String,
-    medicamentosActuales: String,
-    alergiasAlimentarias: String,
-    tipoAlimentacion: String,
-    cirugiasPrevias: String,
-    motivoConsultaPeso: String,
-  },
-  { _id: false }
-);
-
-const OdontologiaSchema = new Schema(
-  {
-    motivoConsultaOdonto: String,
-    primeraVisita: String,
-    visitaAnteriorAgradable: String,
-    fluor: String,
-    extraccionDientes: String,
-    sangradoPostExtraccion: String,
-    tratamientosPrevios: String,
-    perdidaDientes: String,
-    sangradoEncias: String,
-    cepilladoDiario: String,
-    enjuagueBucal: String,
-    hiloDental: String,
-    usaCepillo: String,
-    dolorDental: String,
-    tipoDolor: String,
-  },
-  { _id: false }
-);
-
-const EsteticaSchema = new Schema(
-  {
-    motivoTratamiento: String,
-    cirugiasPrevias: String,
-    reaccionesAnestesia: String,
-    enfermedadesInterfieren: String,
-    condicionPiel: String,
-    zonaInteres: String,
-    tratamientosPrevios: String,
-    expectativas: String,
-    alergiasQuimicos: String,
-  },
-  { _id: false }
-);
-
-const InformacionClinicaSchema = new Schema(
-  {
-    controlPeso: { type: ControlPesoSchema, default: {} },
-    odontologia: { type: OdontologiaSchema, default: {} },
-    estetica: { type: EsteticaSchema, default: {} },
-  },
-  { _id: false }
-);
-
-/* Subschemas: Antecedentes */
-const HeredoSchema = new Schema(
-  {
-    diabetes: Boolean,
-    epilepsia: Boolean,
-    hepatitis: Boolean,
-    hipertension: Boolean,
-    malformaciones: Boolean,
-    artritis: Boolean,
-  },
-  { _id: false }
-);
-
-const PersonalesPatologicosSchema = new Schema(
-  {
-    cardiopatias: Boolean,
-    enfermedadesMentales: Boolean,
-    neoplasias: Boolean,
-    enfermedadesRenales: Boolean,
-    varicela: Boolean,
-    sarampion: Boolean,
-    neuralgia: Boolean,
-    viasBiliares: Boolean,
-    asma: Boolean,
-    enfermedadesRespiratorias: Boolean,
-    hepatitis: Boolean,
-    digestivo: Boolean,
-    hipotiroidismo: Boolean,
-    migraña: Boolean,
-    epilepsia: Boolean,
-    ansiedadDepresion: Boolean,
-    hipertension: Boolean,
-    diabetes: Boolean,
-    cancer: Boolean,
-    vih: Boolean,
-    ets: Boolean,
-    piel: Boolean,
-    fracturas: Boolean,
-    hospitalizaciones: String,
-    cirugias: String,
-    alteracionesHormonales: String,
-    hijos: Number,
-    anticonceptivos: String,
-    embarazo: String,
-    lactancia: String,
-  },
-  { _id: false }
-);
-
-const NoPatologicosSchema = new Schema(
-  {
-    tipoAlimentacion: String,
-    comidasDia: String,
-    intolerancias: String,
-    alimentosNoConsume: String,
-    lavadoManos: String,
-    usoCepillo: String,
-    usoEnjuague: String,
-    usoHilo: String,
-  },
-  { _id: false }
-);
-
-const InmunizacionesSchema = new Schema(
-  {
-    poliomielitis: Boolean,
-    tuberculosis: Boolean,
-    dtp: Boolean,
-    tripleViral: Boolean,
-    sarampion: Boolean,
-    hepatitisB: Boolean,
-    otras: String,
-  },
-  { _id: false }
-);
-
-const HabitosSchema = new Schema(
-  {
-    alcohol: String,
-    tabaco: String,
-    drogas: String,
-    deportes: String,
-  },
-  { _id: false }
-);
-
-const AntecedentesSchema = new Schema(
-  {
-    heredofamiliares: { type: HeredoSchema, default: {} },
-    personalesPatologicos: { type: PersonalesPatologicosSchema, default: {} },
-    noPatologicos: { type: NoPatologicosSchema, default: {} },
-    inmunizaciones: { type: InmunizacionesSchema, default: {} },
-    habitos: { type: HabitosSchema, default: {} },
-  },
-  { _id: false }
-);
-
-/* Subschemas: Exploración y signos vitales */
-const ExploracionFisicaSchema = new Schema(
-  {
-    cabeza: String,
-    cuello: String,
-    torax: String,
-    abdomen: String,
-    extremidades: String,
-  },
-  { _id: false }
-);
-
-const SignosVitalesSchema = new Schema(
-  {
-    tensionArterial: String,
-    frecuenciaCardiaca: { type: Number, min: 0 },
-    frecuenciaRespiratoria: { type: Number, min: 0 },
-    temperatura: String,
-    saturacionOxigeno: String,
-    imc: String,
-    peso: Number,
-    talla: Number,
-  },
-  { _id: false }
-);
-
-/* Subschemas: Campos del médico */
-const CamposMedicoDatosClinicosSchema = new Schema(
-  {
-    fechaRegistro: Date,
-    medicoResponsable: String,
-    diagnosticoPreliminar: String,
-    tratamientoSugerido: String,
-    notas: String,
-  },
-  { _id: false }
-);
-
-const CamposMedicoOdontologiaSchema = new Schema(
-  {
-    cavidadBucal: String,
-    cuelloEstructuras: String,
-    diagnosticoDental: String,
-    planTratamientoDental: String,
-    materialesUsados: String,
-    recomendacionesPaciente: String,
-  },
-  { _id: false }
-);
-
-const CamposMedicoEsteticaSchema = new Schema(
-  {
-    diagnosticoFacial: String,
-    condicionPiel: String,
-    zonasTratadas: String,
-    productoTecnica: String,
-    fechaTratamiento: Date,
-    evolucion: String,
-    complicaciones: String,
-    recomendacionesPost: String,
-  },
-  { _id: false }
-);
-
-const CamposMedicoSeguimientoSchema = new Schema(
-  {
-    diagnosticoDefinitivo: String,
-    tratamientoPrescrito: String,
-    medicamentosIndicados: String,
-    observacionesEvolucion: String,
-    recomendacionesFinales: String,
-    fechaRevisionSiguiente: Date,
-    firmaMedico: String,
-  },
-  { _id: false }
-);
-
-const CamposMedicoSchema = new Schema(
-  {
-    datosClinicos: { type: CamposMedicoDatosClinicosSchema, default: {} },
-    odontologia: { type: CamposMedicoOdontologiaSchema, default: {} },
-    estetica: { type: CamposMedicoEsteticaSchema, default: {} },
-    seguimiento: { type: CamposMedicoSeguimientoSchema, default: {} },
-  },
-  { _id: false }
-);
-
-/* Subschemas: Complementos */
-const ComplementosSchema = new Schema(
-  {
-    pasatiempos: String,
-    comoSeEntero: String,
-    adultoResponsable: String,
-    recomendadoPor: String,
-    observacionesPersonales: String,
-    comentarioLibre: String,
-  },
-  { _id: false }
-);
-
-/* Root schema */
+/* Schema: ClinicalRecord */
 const ClinicalRecordSchema = new Schema(
   {
-    patient: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    doctor: { type: Schema.Types.ObjectId, ref: 'User' },
-
-    informacionBasica: { type: InformacionBasicaSchema, default: {} },
-    informacionGeneral: { type: InformacionGeneralSchema, default: {} },
-    informacionClinica: { type: InformacionClinicaSchema, default: {} },
-    antecedentes: { type: AntecedentesSchema, default: {} },
-    exploracionFisica: { type: ExploracionFisicaSchema, default: {} },
-    signosVitales: { type: SignosVitalesSchema, default: {} },
-    camposMedico: { type: CamposMedicoSchema, default: {} },
-    complementos: { type: ComplementosSchema, default: {} },
-
-    /* Mirror por qId */
-    answersByQId: { type: Map, of: Schema.Types.Mixed, default: {} },
-    /* Versión de template */
+    templateName: { type: String, default: 'clinicalRecordTemplate' },
     templateVersion: { type: Number, default: 1 },
-    /* Conjunto de qIds usados */
-    selectedQIds: { type: [Number], default: [] },
+
+    patient: { type: Schema.Types.ObjectId, ref: 'User', required: true, index: true },
+    doctor: { type: Schema.Types.ObjectId, ref: 'User', required: true, index: true },
+
+    specialty: { type: String, required: true, enum: SPECIALTIES, index: true },
+
+    status: { type: String, enum: RECORD_STATUS, default: 'draft', index: true },
+
+    visitDate: { type: Date, default: Date.now },
+    location: { type: String, default: '' },
+
+    answers: {
+      type: [AnswerSchema],
+      default: [],
+      validate: {
+        validator: function uniqueQids(arr) {
+          const seen = new Set();
+          for (const a of arr) {
+            if (seen.has(a.qId)) return false;
+            seen.add(a.qId);
+          }
+          return true;
+        },
+        message: 'Duplicated qId inside answers',
+      },
+    },
+
+    /* Denormalized vitals */
+    vitals: {
+      bp: { type: String, default: '' }, // qId 42
+      hr: { type: Number, default: null }, // qId 43
+      rr: { type: Number, default: null }, // qId 44
+      temp: { type: String, default: '' }, // qId 45
+      spo2: { type: String, default: '' }, // qId 46
+      bmi: { type: String, default: '' }, // qId 47
+      weightKg: { type: Number, default: null }, // qId 48 fallback 10
+      heightCm: { type: Number, default: null }, // qId 49 fallback 9
+    },
+
+    createdBy: { type: Schema.Types.ObjectId, ref: 'User', index: true },
+    updatedBy: { type: Schema.Types.ObjectId, ref: 'User', index: true },
+    signedAt: { type: Date, default: null },
+    closedAt: { type: Date, default: null },
+
+    attachments: [
+      {
+        url: { type: String, required: true },
+        title: { type: String, default: '' },
+        mime: { type: String, default: '' },
+        uploadedAt: { type: Date, default: Date.now },
+      },
+    ],
   },
   { timestamps: true }
 );
 
-/* Export */
-const ClinicalRecord = models.ClinicalRecord || model('ClinicalRecord', ClinicalRecordSchema);
-export default ClinicalRecord;
+/* Indexes */
+ClinicalRecordSchema.index({ patient: 1, specialty: 1, createdAt: -1 });
+ClinicalRecordSchema.index({ doctor: 1, specialty: 1, createdAt: -1 });
+
+/* Virtuals */
+ClinicalRecordSchema.virtual('bmiComputed').get(function () {
+  const kg = this.vitals?.weightKg;
+  const cm = this.vitals?.heightCm;
+  if (!kg || !cm) return null;
+  const m = cm / 100;
+  const bmi = kg / (m * m);
+  return Number.isFinite(bmi) ? Number(bmi.toFixed(2)) : null;
+});
+
+/* Methods */
+// Upsert single answer
+ClinicalRecordSchema.methods.setAnswer = function setAnswer(ans) {
+  if (!ans || typeof ans.qId !== 'number') return this;
+  const idx = this.answers.findIndex((a) => a.qId === ans.qId);
+  if (idx >= 0) {
+    this.answers[idx] = { ...(this.answers[idx].toObject?.() ?? this.answers[idx]), ...ans };
+  } else {
+    this.answers.push(ans);
+  }
+  return this;
+};
+
+// Get answer by qId
+ClinicalRecordSchema.methods.getAnswer = function getAnswer(qId) {
+  return this.answers.find((a) => a.qId === qId) || null;
+};
+
+// Bulk upsert
+ClinicalRecordSchema.methods.upsertAnswers = function upsertAnswers(list = []) {
+  for (const ans of list) this.setAnswer(ans);
+  return this;
+};
+
+/* Statics */
+// Factory from front payload
+ClinicalRecordSchema.statics.createFromPayload = async function createFromPayload({
+  patientId,
+  doctorId,
+  specialty,
+  answers = [],
+  visitDate,
+  location,
+  createdBy,
+}) {
+  const doc = new this({
+    patient: patientId,
+    doctor: doctorId,
+    specialty,
+    visitDate: visitDate || new Date(),
+    location: location || '',
+    createdBy: createdBy || doctorId || patientId,
+  });
+
+  doc.upsertAnswers(answers);
+
+  // Helpers
+  const getNum = (q) => {
+    const a = doc.getAnswer(q);
+    const v = a?.value;
+    const n = typeof v === 'string' ? Number(v) : v;
+    return Number.isFinite(n) ? n : null;
+  };
+  const getStr = (q) => {
+    const a = doc.getAnswer(q);
+    return a?.value != null ? String(a.value) : '';
+  };
+
+  // Map vitals using unified qIds
+  doc.vitals.bp = getStr(QIDS.bp);
+  doc.vitals.hr = getNum(QIDS.hr);
+  doc.vitals.rr = getNum(QIDS.rr);
+  doc.vitals.temp = getStr(QIDS.temp);
+  doc.vitals.spo2 = getStr(QIDS.spo2);
+  doc.vitals.bmi = getStr(QIDS.bmi);
+
+  // Measured in clinic first, fallback to self-reported
+  doc.vitals.weightKg = getNum(QIDS.weightMeasured) ?? getNum(QIDS.weight) ?? null;
+  doc.vitals.heightCm = getNum(QIDS.heightMeasured) ?? getNum(QIDS.height) ?? null;
+
+  return doc.save();
+};
+
+export default mongoose.models.ClinicalRecord ||
+  mongoose.model('ClinicalRecord', ClinicalRecordSchema);

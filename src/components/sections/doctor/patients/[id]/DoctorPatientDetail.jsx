@@ -105,7 +105,7 @@ export default function DoctorPatientDetail({ role, currentUser, specialty, pati
 
     async function fetchRecords() {
       try {
-        const res = await fetch(`/api/clinical-records/patient/${id}`);
+        const res = await fetch(`/api/clinical-records?patientId=${id}`);
         const data = await res.json();
         setPatientRecord(data);
         console.log('Datos recibidos:', data);
@@ -170,10 +170,11 @@ export default function DoctorPatientDetail({ role, currentUser, specialty, pati
   });
 
   /* Stats mock */
-  const records = mockRecords;
-  const totalConsultas = records.length;
-  const ultimoPeso = records.length > 0 ? records[0].currentWeight : 'N/A';
-  const ultimoIMC = records.length > 0 ? records[0].IMC?.toFixed(1) : 'N/A';
+  const records = patientRecord || [];
+  const totalConsultas = records.total;
+  const ultimoPeso = patientRecord?.items?.[0]?.vitals?.weightKg;
+  const imcCalculado = patientRecord?.items?.[0]?.bmiComputed;
+  const ultimoIMC = imcCalculado;
   const weightData = mockWeightData;
 
   /* Modal Handlers */
