@@ -1,118 +1,114 @@
-// src/app/api/clinical-records/[id]/route.js
 import { NextResponse } from 'next/server';
-import ClinicalRecord from '@/models/ClinicalRecord';
 import { connectDB } from '@/lib/mongodb';
+import ClinicalRecord from '@/models/ClinicalRecord';
+import mongoose from 'mongoose';
 
-export async function GET(_req, { params }) {
+function isValidId(id) {
+  return mongoose.Types.ObjectId.isValid(id);
+}
+
+// @route    GET /api/clinical-records/:id
+// @desc     Get a patient Clinical Record by his ID
+// @access   Private
+export async function GET(req, { params }) {
   try {
+    // Conexión
     await connectDB();
-    const { id } = params;
 
-    // Find one
-    const doc = await ClinicalRecord.findById(id)
-      .populate('patient', '_id fullName email role')
-      .populate('doctor', '_id fullName email role');
+    // Params
+    const { id } = await params;
 
-    if (!doc) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    // Query string
+    const { searchParams } = new URL(req.url);
+    const latest = searchParams.get('latest') === 'true';
+    const version = searchParams.get('version') || undefined;
+    const specialty = searchParams.get('specialty') || undefined;
 
-    return NextResponse.json({ ok: true, item: doc }, { status: 200 });
+    // Paginación simple
+    const page = Math.max(parseInt(searchParams.get('page') || '1', 10), 1);
+    const limit = Math.min(Math.max(parseInt(searchParams.get('limit') || '20', 10), 1), 100);
+    const skip = (page - 1) * limit;
+
+    // Filtro base
+    const filter = { patient: id };
+    if (version) filter.version = version;
+    if (specialty) filter.specialty = specialty;
+
+    // Latest corto
+    if (latest) {
+      const doc = await ClinicalRecord.findOne(filter)
+        .sort({ createdAt: -1 })
+        .populate('patient', 'fullName email')
+        .populate('doctor', 'fullName email')
+        .lean();
+
+      return NextResponse.json({ data: doc, meta: { latest: true, filter } });
+    }
+
+    // Listado con paginación
+    const [items, total] = await Promise.all([
+      ClinicalRecord.find(filter)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .populate('patient', 'fullName email')
+        .populate('doctor', 'fullName email')
+        .lean(),
+      ClinicalRecord.countDocuments(filter),
+    ]);
+
+    return NextResponse.json({
+      data: items,
+      meta: {
+        patient: id,
+        page,
+        limit,
+        total,
+        pages: Math.ceil(total / limit),
+        filter,
+      },
+    });
   } catch (err) {
-    console.error(err);
-    return NextResponse.json({ error: 'Server error' }, { status: 500 });
+    console.error('Error GET clinical-records/[id]:', err);
+    return NextResponse.json({ error: 'Error al obtener clinical records' }, { status: 500 });
   }
 }
 
-export async function PUT(req, { params }) {
+// @route    POST /api/clinical-records/:id
+// @desc     Create Clinical Record for a patient
+// @access   Private
+export async function POST(req, { params }) {
   try {
+    // Conexión
     await connectDB();
+
+    // Params
     const { id } = params;
-    const body = await req.json();
+    if (!isValidId(id)) {
+      return NextResponse.json({ error: 'Paciente id inválido' }, { status: 400 });
+    }
 
-    // Load
-    const doc = await ClinicalRecord.findById(id);
-    if (!doc) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    // Body
+    const { doctor = null, specialty, version, answers } = await req.json();
 
-    // Allowed simple fields
-    const {
-      status,
-      visitDate,
-      location,
-      updatedBy,
+    // Validación mínima
+    if (!specialty || !version || !Array.isArray(answers)) {
+      return NextResponse.json({ error: 'Campos requeridos faltantes' }, { status: 400 });
+    }
+
+    // Crear
+    const record = await ClinicalRecord.create({
+      patient: id,
+      doctor,
+      specialty,
+      version,
       answers,
-      attachmentsAdd,
-      attachmentsRemoveUrls,
-    } = body || {};
+    });
 
-    // Update meta
-    if (typeof status === 'string') doc.status = status;
-    if (visitDate) doc.visitDate = new Date(visitDate);
-    if (typeof location === 'string') doc.location = location;
-    if (updatedBy) doc.updatedBy = updatedBy;
-
-    // Upsert answers
-    if (Array.isArray(answers) && answers.length) {
-      const normalized = answers.map((a) => ({
-        qId: a.qId,
-        key: a.key,
-        label: a.label,
-        type: a.type,
-        value: a.value ?? null,
-        options: Array.isArray(a.options) ? a.options : undefined,
-        notes: typeof a.notes === 'string' ? a.notes : '',
-      }));
-      doc.upsertAnswers(normalized);
-
-      // Recompute vitals
-      const getNum = (q) => {
-        const a = doc.getAnswer(q);
-        const v = a?.value;
-        const n = typeof v === 'string' ? Number(v) : v;
-        return Number.isFinite(n) ? n : null;
-      };
-      const getStr = (q) => {
-        const a = doc.getAnswer(q);
-        return a?.value != null ? String(a.value) : '';
-      };
-
-      doc.vitals.bp = getStr(42);
-      doc.vitals.hr = getNum(43);
-      doc.vitals.rr = getNum(44);
-      doc.vitals.temp = getStr(45);
-      doc.vitals.spo2 = getStr(46);
-      doc.vitals.bmi = getStr(47);
-      doc.vitals.weightKg = getNum(48) ?? getNum(10) ?? doc.vitals.weightKg ?? null;
-      doc.vitals.heightCm = getNum(49) ?? getNum(9) ?? doc.vitals.heightCm ?? null;
-    }
-
-    // Attachments add
-    if (Array.isArray(attachmentsAdd) && attachmentsAdd.length) {
-      for (const a of attachmentsAdd) {
-        if (a?.url) {
-          doc.attachments.push({
-            url: a.url,
-            title: a.title || '',
-            mime: a.mime || '',
-          });
-        }
-      }
-    }
-
-    // Attachments remove by URL
-    if (Array.isArray(attachmentsRemoveUrls) && attachmentsRemoveUrls.length) {
-      doc.attachments = doc.attachments.filter((a) => !attachmentsRemoveUrls.includes(a.url));
-    }
-
-    // Save
-    await doc.save();
-
-    // Return populated
-    const saved = await ClinicalRecord.findById(doc._id)
-      .populate('patient', '_id fullName email role')
-      .populate('doctor', '_id fullName email role');
-
-    return NextResponse.json({ ok: true, item: saved }, { status: 200 });
+    // Respuesta
+    return NextResponse.json(record, { status: 201 });
   } catch (err) {
-    console.error(err);
-    return NextResponse.json({ error: 'Server error' }, { status: 500 });
+    console.error('Error POST clinical-records/[id]:', err);
+    return NextResponse.json({ error: 'Error al crear clinical record' }, { status: 500 });
   }
 }

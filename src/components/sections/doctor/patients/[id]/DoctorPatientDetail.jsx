@@ -37,61 +37,6 @@ import BackButton from './components/BackButton';
 import TabsNav from './components/TabsNav';
 import CreateEditAppointmentModal from '@/components/sections/employee/appointments/components/CreateEditAppointmentModal';
 
-/* Mock patient */
-const mockPatient = {
-  fullName: 'Laura Hernández',
-  email: 'laura.hernandez@example.com',
-  phone: '555-1234',
-  age: 32,
-  gender: 'Femenino',
-  recordDateRegistro: '2025-03-15',
-};
-
-/* Mock records */
-const mockRecords = [
-  {
-    _id: '1',
-    recordDate: '2025-10-15',
-    currentWeight: 68,
-    IMC: 23.4,
-    diseases: 'Hypertension',
-    bloodPressure: '120/80',
-    glucose: '90',
-    medication: 'Methylphenidate',
-    size: '120',
-    cholesterol: '180',
-    notes: 'Patient stable',
-    diagnosis: 'General checkup',
-    treatment: 'Maintain diet and exercise',
-  },
-  {
-    _id: '2',
-    recordDate: '2025-09-10',
-    currentWeight: 70,
-    IMC: 24.0,
-    diseases: 'Hypertension',
-    bloodPressure: '125/85',
-    glucose: '95',
-    medication: 'Methylphenidate',
-    size: '120',
-    cholesterol: '190',
-    notes: 'Slight weight increase',
-    diagnosis: 'Weight control',
-    treatment: 'Reduce carbohydrates',
-  },
-];
-
-/* Mock weight chart */
-const mockWeightData = mockRecords
-  .map((r) => ({
-    fecha: new Date(r.recordDate).toLocaleDateString('es-MX', {
-      day: '2-digit',
-      month: 'short',
-    }),
-    peso: Number(r.currentWeight),
-  }))
-  .reverse();
-
 export default function DoctorPatientDetail({ role, currentUser, specialty, patient }) {
   /* Router */
   const router = useRouter();
@@ -105,9 +50,11 @@ export default function DoctorPatientDetail({ role, currentUser, specialty, pati
 
     async function fetchRecords() {
       try {
-        const res = await fetch(`/api/clinical-records?patientId=${id}`);
+        const res = await fetch(`/api/clinical-records/${id}`);
+        if (!res.ok) throw new Error('Error en la solicitud');
+
         const data = await res.json();
-        setPatientRecord(data);
+        setPatientRecord(data.data);
         console.log('Datos recibidos:', data);
       } catch (error) {
         console.error('Error al obtener clinical records:', error);
@@ -116,7 +63,6 @@ export default function DoctorPatientDetail({ role, currentUser, specialty, pati
 
     fetchRecords();
   }, [id]);
-  console.log(patientRecord);
 
   // Local States
   const [isReadOnly, setIsReadOnly] = useState(false);
@@ -175,7 +121,6 @@ export default function DoctorPatientDetail({ role, currentUser, specialty, pati
   const ultimoPeso = patientRecord?.items?.[0]?.vitals?.weightKg;
   const imcCalculado = patientRecord?.items?.[0]?.bmiComputed;
   const ultimoIMC = imcCalculado;
-  const weightData = mockWeightData;
 
   /* Modal Handlers */
   const openHistoryModal = (record = null, readOnly = false) => {
@@ -240,7 +185,8 @@ export default function DoctorPatientDetail({ role, currentUser, specialty, pati
       <div className="grid grid-rows-[auto_1fr]">
         <BackButton onClick={() => router.back()} icon={{ ArrowLeft }} />
         <PatientHeader
-          mockPatient={mockPatient}
+          // mockPatient={mockPatient}
+          patientRecord={patientRecord}
           patient={patient}
           icons={{ User, Mail, Phone, CalendarIcon, Activity, Stethoscope }}
           moment={moment}
@@ -266,7 +212,7 @@ export default function DoctorPatientDetail({ role, currentUser, specialty, pati
       />
 
       {/* Weight chart */}
-      <WeightChart data={weightData} icons={{ TrendingUp }} />
+      <WeightChart data={patientRecord} icons={{ TrendingUp }} />
 
       {/* History Modal */}
       {showHistoryModal && (

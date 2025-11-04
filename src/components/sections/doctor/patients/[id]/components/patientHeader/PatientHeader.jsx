@@ -1,7 +1,15 @@
 import CreateAppointmentButton from './components/CreateAppointmentButton';
 import RegisterVisitButton from './components/RegisterVisitButton';
+import questionsMap from '@/data/questions.json';
 
-export default function PatientHeader({ patient, icons, moment, onClickNew, mockPatient }) {
+export default function PatientHeader({
+  patient,
+  icons,
+  moment,
+  onClickNew,
+  mockPatient,
+  patientRecord,
+}) {
   const { User, Mail, Phone, CalendarIcon, Activity, Stethoscope } = icons;
 
   // Specialty map
@@ -12,6 +20,16 @@ export default function PatientHeader({ patient, icons, moment, onClickNew, mock
   };
 
   const specialtyName = specialtyLabels[patient?.specialty] || 'Sin especialidad';
+
+  const readableAnswers = patientRecord?.[0]?.answers.map((a) => {
+    const q = questionsMap.find((q) => q.id === a.qId);
+    return {
+      question: q?.question || `Pregunta ${a.qId}`,
+      answer: a.value,
+    };
+  });
+
+  console.log(patientRecord);
 
   return (
     <div className="bg-asana-green relative overflow-hidden rounded-2xl p-8 shadow-xl">
@@ -47,7 +65,7 @@ export default function PatientHeader({ patient, icons, moment, onClickNew, mock
 
           <div>
             {/* Patient Name */}
-            <h1 className="text-4xl font-bold">{patient?.fullName}</h1>
+            <h1 className="text-4xl font-bold">{patientRecord?.[0]?.patient?.fullName}</h1>
             {/* Patient Age */}
             <p className="text-sm">{mockPatient?.age} años</p>
             {/* Patient Gender */}

@@ -14,6 +14,7 @@ import { TrendingUp } from 'lucide-react';
 
 export default function WeightChart({ data, icons }) {
   const { TrendingUp: TrendIcon = TrendingUp } = icons;
+
   return (
     <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-lg">
       <div className="mb-6 flex items-center justify-between">
@@ -27,11 +28,11 @@ export default function WeightChart({ data, icons }) {
           </div>
         </div>
         <div className="rounded-full bg-blue-50 px-4 py-2">
-          <span className="text-sm font-semibold text-blue-700">{data.length} registros</span>
+          <span className="text-sm font-semibold text-blue-700">{data?.meta?.total} registros</span>
         </div>
       </div>
 
-      {data.length > 0 ? (
+      {data?.meta?.total > 0 ? (
         <ResponsiveContainer width="100%" height={300}>
           <AreaChart data={data}>
             <defs>
