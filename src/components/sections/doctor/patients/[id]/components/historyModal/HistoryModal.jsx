@@ -1,6 +1,7 @@
+// src/components/sections/doctor/patients/[id]/components/historyModal/HistoryModal.jsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import ModalOverlay from './components/ModalOverlay';
 import ModalContainer from './components/ModalContainer';
 import ModalHeader from './components/ModalHeader';
@@ -10,58 +11,112 @@ import VitalsSection from './components/VitalsSection';
 import DiagnosisSection from './components/DiagnosisSection';
 import QuestionnaireSection from './components/QuestionnaireSection';
 import FooterActions from './components/FooterActions';
-import {
-  X,
-  FileText,
-  CalendarIcon,
-  Scale,
-  Heart,
-  Activity,
-  Stethoscope,
-  ClipboardList,
-} from 'lucide-react';
+import { X, FileText, Stethoscope, ClipboardList } from 'lucide-react';
+import useAuthStore from '@/zustand/useAuthStore';
 
-export default function HistoryModal({ onClose, record, readOnly }) {
-  const [form, setForm] = useState({
-    recordDate: new Date().toISOString().split('T')[0],
-    currentWeight: '',
-    iMC: '',
-    bloodPressure: '',
-    glucose: '',
-    colesterol: '',
-    notes: '',
-    diagnosis: '',
-    treatment: '',
-  });
+// Ids mapping
+const ID = {
+  fullName: 1,
+  height: 6,
+  weight: 7,
+  size: 8,
+  bloodPressure: 122,
+  heartRate: 123,
+  temperature: 125,
+  imc: 127,
+  diagnosis: 131,
+  treatment: 132,
+  notes: 133,
+};
 
-  const [isReadOnly, setIsReadOnly] = useState(readOnly || false);
+export default function HistoryModal({ onClose, onSaved, record, readOnly, patientId }) {
+  const { user } = useAuthStore();
 
+  // Single source of truth
+  const [answersDraft, setAnswersDraft] = useState({});
+  const [isReadOnly, setIsReadOnly] = useState(!!readOnly);
+  const [activeTab, setActiveTab] = useState('basico');
+
+  // Init from last record for "Agregar" or from current record for "Editar"
   useEffect(() => {
-    if (record) {
-      setForm({
-        recordDate: record.recordDateRegistro?.split('T')[0] || '',
-        currentWeight: record.currentWeight || '',
-        iMC: record.IMC || '',
-        bloodPressure: record.bloodPressure || '',
-        glucose: record.glucose || '',
-        colesterol: record.colesterol || '',
-        notes: record.notes || '',
-        diagnosis: record.diagnosis || '',
-        treatment: record.treatment || '',
-      });
-      setIsReadOnly(readOnly);
-    }
+    // Initialize from record.answers or empty
+    const base = record?.answers ? { ...record.answers } : {};
+    setAnswersDraft(base);
+    setIsReadOnly(!!readOnly);
   }, [record, readOnly]);
 
-  // Submit handler (temporal)
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form data:', form);
-    onClose();
-  };
+  // Helpers
+  const getAnswer = useCallback(
+    (id) => {
+      const v = answersDraft?.[id];
+      return v ?? '';
+    },
+    [answersDraft]
+  );
 
-  // Tabs
-  const [activeTab, setActiveTab] = useState('basico');
+  const setAnswer = useCallback((id, value) => {
+    // Update single id
+    setAnswersDraft((prev) => {
+      if (prev?.[id] === value) return prev;
+      return { ...(prev || {}), [id]: value };
+    });
+  }, []);
+
+  const recalcIMC = useCallback((h, w) => {
+    // h in cm, w in kg
+    const height = Number(h);
+    const weight = Number(w);
+    if (!height || !weight) return '';
+    const m = height / 100;
+    const bmi = weight / (m * m);
+    return bmi ? bmi.toFixed(2) : '';
+  }, []);
+
+  // Recalculate IMC when height or weight change
+  useEffect(() => {
+    const h = answersDraft?.[ID.height] || answersDraft?.[ID.size];
+    const w = answersDraft?.[ID.weight];
+    const bmi = recalcIMC(h, w);
+    if (bmi) {
+      setAnswersDraft((prev) => ({ ...(prev || {}), [ID.imc]: bmi }));
+    }
+  }, [answersDraft?.[ID.height], answersDraft?.[ID.size], answersDraft?.[ID.weight], recalcIMC]);
+
+  // Submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Build payload
+      const body = {
+        doctor: user?.id || null,
+        specialty: user?.specialty || record?.specialty || 'weight',
+        version: 'full',
+        answers: answersDraft,
+      };
+
+      const res = await fetch(`/api/clinical-records/${patientId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || 'Error al guardar el historial clínico');
+      }
+
+      // Optional read response
+      await res.json();
+
+      // Notify and close
+      if (onSaved) onSaved();
+      onClose();
+    } catch (error) {
+      console.error('Error al guardar:', error);
+      alert(error.message);
+    }
+  };
 
   return (
     <>
@@ -73,7 +128,7 @@ export default function HistoryModal({ onClose, record, readOnly }) {
             record
               ? isReadOnly
                 ? 'Ver Historial Clínico'
-                : 'Editar Historial Clínico'
+                : 'Nuevo Historial Clínico'
               : 'Nuevo Historial Clínico'
           }
           subtitle="Registro médico del paciente"
@@ -87,24 +142,15 @@ export default function HistoryModal({ onClose, record, readOnly }) {
           {activeTab === 'basico' && (
             <div className="space-y-6">
               <BasicInfoSection
-                form={form}
-                record={record}
-                setForm={setForm}
                 isReadOnly={isReadOnly}
+                getAnswer={getAnswer}
+                setAnswer={setAnswer}
               />
-
-              <VitalsSection
-                form={form}
-                setForm={setForm}
-                record={record}
-                isReadOnly={isReadOnly}
-              />
-
+              <VitalsSection isReadOnly={isReadOnly} getAnswer={getAnswer} setAnswer={setAnswer} />
               <DiagnosisSection
-                form={form}
-                record={record}
-                setForm={setForm}
                 isReadOnly={isReadOnly}
+                getAnswer={getAnswer}
+                setAnswer={setAnswer}
                 icons={{ Stethoscope }}
               />
             </div>
@@ -113,16 +159,14 @@ export default function HistoryModal({ onClose, record, readOnly }) {
           {activeTab === 'completo' && (
             <QuestionnaireSection
               isReadOnly={isReadOnly}
-              initialData={record?.answers || {}}
+              getAnswer={getAnswer}
+              setAnswer={setAnswer}
               icons={{ ClipboardList }}
             />
           )}
 
           {!isReadOnly && (
-            <FooterActions
-              onCancel={onClose}
-              submitLabel={record ? 'Actualizar Registro' : 'Guardar Registro'}
-            />
+            <FooterActions onCancel={onClose} submitLabel={'Guardar nuevo registro'} />
           )}
         </form>
       </ModalContainer>

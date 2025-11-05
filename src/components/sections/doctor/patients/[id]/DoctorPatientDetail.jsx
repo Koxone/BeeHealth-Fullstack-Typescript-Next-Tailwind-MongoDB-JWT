@@ -17,17 +17,14 @@ export default function DoctorPatientDetail({ patient }) {
   const router = useRouter();
   const { id } = useParams();
 
-  // Patient Records Data
   const { data: patientRecord, isLoading, error } = useClinicalRecord(id);
   const currentPatientInfo = patientRecord?.[0];
 
-  // History Modal states
   const [showHistoryModal, setShowHistoryModal] = useState(false);
   const [showCreateAppointmentModal, setShowCreateAppointmentModal] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [isReadOnly, setIsReadOnly] = useState(false);
 
-  // Loading/Error states
   if (error || isLoading) {
     return (
       <div className="flex min-h-[400px] items-center justify-center">
@@ -45,7 +42,6 @@ export default function DoctorPatientDetail({ patient }) {
 
   return (
     <div className="h-full space-y-6 overflow-y-auto">
-      {/* Top */}
       <div className="grid grid-rows-[auto_1fr]">
         <BackButton onClick={() => router.back()} icon={{ ArrowLeft }} />
         <PatientHeader
@@ -55,13 +51,9 @@ export default function DoctorPatientDetail({ patient }) {
         />
       </div>
 
-      {/* Quick stats */}
       <QuickStats patientRecord={patientRecord} />
-
-      {/* Tabs Nav */}
       <TabsNav />
 
-      {/* Clinical history */}
       <ClinicalHistory
         patientRecord={patientRecord}
         onAdd={() => {
@@ -77,19 +69,20 @@ export default function DoctorPatientDetail({ patient }) {
         }}
       />
 
-      {/* Weight chart */}
       <WeightChart patientRecord={patientRecord} icons={{ TrendingUp }} />
 
-      {/* History Modal */}
       {showHistoryModal && (
         <HistoryModal
           onClose={() => setShowHistoryModal(false)}
+          onSaved={() => {
+            router.refresh();
+          }}
           record={selectedRecord}
           readOnly={isReadOnly}
+          patientId={id}
         />
       )}
 
-      {/* Create Appointment Modal */}
       {showCreateAppointmentModal && (
         <DoctorCreateAppointmentModal
           currentPatientInfo={currentPatientInfo}

@@ -1139,7 +1139,7 @@
     "question": "Temperatura",
     "type": "text",
     "placeholder": "Ej. 36.7 °C",
-    "specialties": ["dental"],
+    "specialties": ["dental", "weight"],
     "versions": ["full"],
     "order": "ORDER"
   },
