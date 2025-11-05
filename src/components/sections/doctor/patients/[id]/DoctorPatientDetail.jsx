@@ -33,8 +33,6 @@ export default function DoctorPatientDetail({ patient }) {
   const { data: patientRecord, isLoading, error } = useClinicalRecord(id);
   const currentPatientInfo = patientRecord?.[0];
 
-  console.log('Current Patient Info:', currentPatientInfo);
-
   // Modal states
   const [showHistoryModal, setShowHistoryModal] = useState(false);
   const [showCreateAppointmentModal, setShowCreateAppointmentModal] = useState(false);

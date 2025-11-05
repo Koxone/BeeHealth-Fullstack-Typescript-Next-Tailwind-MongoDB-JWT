@@ -1109,7 +1109,7 @@
 
   {
     "id": 122,
-    "question": "Tensión arterial",
+    "question": "Presion arterial",
     "type": "text",
     "placeholder": "Ej. 120/80 mmHg",
     "specialties": ["dental"],
@@ -1340,7 +1340,7 @@
 
   {
     "id": 148,
-    "question": "Diagnóstico definitivo",
+    "question": "Diagnóstico",
     "type": "text",
     "placeholder": "Ej. Hipertensión esencial",
     "specialties": ["dental"],
@@ -1349,7 +1349,7 @@
   },
   {
     "id": 149,
-    "question": "Tratamiento prescrito",
+    "question": "Tratamiento",
     "type": "text",
     "placeholder": "Ej. Losartán 50 mg cada 24 h",
     "specialties": ["dental"],

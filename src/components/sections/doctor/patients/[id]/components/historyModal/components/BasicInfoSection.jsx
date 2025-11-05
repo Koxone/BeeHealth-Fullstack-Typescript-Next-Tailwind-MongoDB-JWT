@@ -1,9 +1,16 @@
 'use client';
+import useGetAnswer from '@/components/shared/hooks/useGetAnswer';
+import { CalendarIcon, Scale, Heart } from 'lucide-react';
 
 /* basic info */
-export default function BasicInfoSection({ form, setForm, isReadOnly, icons }) {
-  const { CalendarIcon, Scale, Heart } = icons;
+export default function BasicInfoSection({ form, setForm, isReadOnly, record }) {
+  const getAnswer = useGetAnswer(record);
 
+  // BMI calculation
+  const height = Number(record?.answers?.['6']);
+  const weight = Number(record?.answers?.['7']);
+
+  const imc = height && weight ? (weight / (height / 100) ** 2).toFixed(2) : null;
   return (
     <div>
       <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900">
@@ -12,22 +19,21 @@ export default function BasicInfoSection({ form, setForm, isReadOnly, icons }) {
       </h3>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        {/* date */}
+        {/* Full Name */}
         <div>
-          <label className="mb-2 block text-sm font-semibold text-gray-700">
-            Fecha <span className="text-red-500">*</span>
-          </label>
+          <label className="mb-2 block text-sm font-semibold text-gray-700">Nombre completo</label>
           <input
-            type="date"
+            id="q-1"
+            name="q-1"
+            type="text"
             disabled={isReadOnly}
-            required
-            value={form.fecha}
-            onChange={(e) => setForm({ ...form, fecha: e.target.value })}
+            value={getAnswer(1)}
+            placeholder="Ingrese el nombre completo"
             className="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-3 transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-100"
           />
         </div>
 
-        {/* weight */}
+        {/* Weight */}
         <div>
           <label className="mb-2 block text-sm font-semibold text-gray-700">
             Peso (kg) <span className="text-red-500">*</span>
@@ -39,7 +45,7 @@ export default function BasicInfoSection({ form, setForm, isReadOnly, icons }) {
               disabled={isReadOnly}
               step="0.1"
               required
-              value={form.peso}
+              value={getAnswer(7)}
               onChange={(e) => setForm({ ...form, peso: e.target.value })}
               className="w-full rounded-xl border-2 border-gray-200 bg-gray-50 py-3 pr-4 pl-11 transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-100"
               placeholder="75.5"
@@ -58,7 +64,7 @@ export default function BasicInfoSection({ form, setForm, isReadOnly, icons }) {
               type="number"
               disabled={isReadOnly}
               step="0.1"
-              value={form.imc}
+              value={imc}
               onChange={(e) => setForm({ ...form, imc: e.target.value })}
               className="w-full rounded-xl border-2 border-gray-200 bg-gray-50 py-3 pr-4 pl-11 transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-100"
               placeholder="25.8"

@@ -1,10 +1,9 @@
 import React from 'react';
 import { Scale, Activity, Stethoscope, Pill, Ruler, Edit2, Eye } from 'lucide-react';
+import useGetAnswer from '@/components/shared/hooks/useGetAnswer';
 
 function HistoryCard({ r, onEdit }) {
-  function getAnswer(id) {
-    return r?.answers?.[id] || 'Sin respuesta';
-  }
+  const getAnswer = useGetAnswer(r);
 
   // BMI calculation
   const height = Number(r?.answers?.['6']);
@@ -74,17 +73,27 @@ function HistoryCard({ r, onEdit }) {
           </div>
         </div>
 
-        <div className="grid grid-cols-2">
-          {/* Dr Notes */}
-          <div className="mt-2 rounded-lg bg-(--med-gray) p-2 sm:mt-3 sm:p-3">
-            <p className="text-xs font-medium text-(--med-text-muted)">Notas del Medico</p>
-            <p className="mt-1 text-sm text-(--med-text-dark)">{getAnswer(133)}</p>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {/* Doctor Notes */}
+          <div className="rounded-xl bg-(--med-gray) p-3 shadow-sm transition hover:shadow-md sm:p-4">
+            <p className="flex items-center gap-2 text-sm font-semibold text-(--med-text-muted)">
+              <Stethoscope className="h-4 w-4 text-(--med-purple)" />
+              Notas del médico
+            </p>
+            <p className="mt-2 line-clamp-4 text-sm leading-relaxed text-(--med-text-dark)">
+              {getAnswer(133)}
+            </p>
           </div>
 
-          {/* Motivo */}
-          <div className="mt-2 rounded-lg bg-(--med-gray) p-2 sm:mt-3 sm:p-3">
-            <p className="text-xs font-medium text-(--med-text-muted)">Motivo de consulta:</p>
-            <p className="mt-1 text-sm text-(--med-text-dark)">{getAnswer(17)}</p>
+          {/* Consultation Reason */}
+          <div className="rounded-xl bg-(--med-gray) p-3 shadow-sm transition hover:shadow-md sm:p-4">
+            <p className="flex items-center gap-2 text-sm font-semibold text-(--med-text-muted)">
+              <Activity className="h-4 w-4 text-(--med-blue)" />
+              Motivo de consulta
+            </p>
+            <p className="mt-2 line-clamp-4 text-sm leading-relaxed text-(--med-text-dark)">
+              {getAnswer(17)}
+            </p>
           </div>
         </div>
       </div>

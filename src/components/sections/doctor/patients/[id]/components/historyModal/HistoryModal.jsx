@@ -79,20 +79,21 @@ export default function HistoryModal({ onClose, record, readOnly, icons }) {
             <div className="space-y-6">
               <BasicInfoSection
                 form={form}
+                record={record}
                 setForm={setForm}
                 isReadOnly={isReadOnly}
-                icons={{ CalendarIcon, Scale, Heart }}
               />
 
               <VitalsSection
                 form={form}
                 setForm={setForm}
+                record={record}
                 isReadOnly={isReadOnly}
-                icons={{ Activity }}
               />
 
               <DiagnosisSection
                 form={form}
+                record={record}
                 setForm={setForm}
                 isReadOnly={isReadOnly}
                 icons={{ Stethoscope }}

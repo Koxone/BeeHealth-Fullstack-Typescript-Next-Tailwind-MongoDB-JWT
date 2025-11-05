@@ -1,9 +1,10 @@
 'use client';
+import useGetAnswer from '@/components/shared/hooks/useGetAnswer';
+import { Activity } from 'lucide-react';
 
 /* vitals */
-export default function VitalsSection({ form, setForm, isReadOnly, icons }) {
-  const { Activity } = icons;
-
+export default function VitalsSection({ form, setForm, isReadOnly, record }) {
+  const getAnswer = useGetAnswer(record);
   return (
     <div>
       <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900">
@@ -18,7 +19,7 @@ export default function VitalsSection({ form, setForm, isReadOnly, icons }) {
           <input
             type="text"
             disabled={isReadOnly}
-            value={form.presionArterial}
+            value={getAnswer(122)}
             onChange={(e) => setForm({ ...form, presionArterial: e.target.value })}
             className="w-full rounded-xl border-2 border-gray-200 bg-gray-50 px-4 py-3 transition focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-100"
             placeholder="120/80"
