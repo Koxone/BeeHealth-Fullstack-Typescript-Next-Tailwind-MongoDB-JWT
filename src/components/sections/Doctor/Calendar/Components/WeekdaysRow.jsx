@@ -1,6 +1,3 @@
-'use client';
-
-/* weekdays */
 export default function WeekdaysRow() {
   const days = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
   return (

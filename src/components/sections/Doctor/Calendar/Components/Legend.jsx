@@ -1,5 +1,3 @@
-'use client';
-
 /* legend */
 export default function Legend() {
   return (

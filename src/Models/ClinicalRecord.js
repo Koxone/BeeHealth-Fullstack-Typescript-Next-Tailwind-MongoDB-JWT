@@ -1,44 +1,29 @@
 import mongoose from 'mongoose';
 
-const ClinicalRecordSchema = new mongoose.Schema(
-  {
-    patientId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    assignedMedic: { type: mongoose.Schema.Types.ObjectId, ref: 'Medic' },
+const AnswerSchema = new mongoose.Schema({
+  qId: { type: Number, required: true },
+  value: { type: mongoose.Schema.Types.Mixed },
+});
 
-    edad: { type: Number, required: true },
-    genero: { type: String, enum: ['masculino', 'femenino'], required: true },
-    altura: { type: Number, required: true },
-    talla: { type: Number },
-    pesoActual: { type: Number, required: true },
+const ClinicalRecordSchema = new mongoose.Schema({
+  patient: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  doctor: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 
-    pesoObjetivo: { type: Number, required: true },
-    actividadFisica: {
-      type: String,
-      enum: ['sedentario', 'ligero', 'moderado', 'intenso'],
-      required: true,
-    },
-    horasSueno: { type: Number, required: true },
-    consumoAgua: { type: Number, required: true },
-    enfermedadesCronicas: { type: String },
-    medicamentosActuales: { type: String },
-    alergias: { type: String },
-    habitosAlimenticios: { type: String, required: true },
-    cirugiasPrevias: { type: String },
-    motivoConsulta: { type: String, required: true },
-
-    indiceMasaCorporal: { type: Number },
-    fechaRegistro: { type: Date, default: Date.now },
+  specialty: {
+    type: String,
+    enum: ['weight', 'dental', 'stetic'],
+    required: true,
   },
-  { timestamps: true }
-);
+  version: {
+    type: String,
+    enum: ['short', 'full'],
+    required: true,
+  },
 
-/* Calculate IMC */
-ClinicalRecordSchema.pre('save', function (next) {
-  if (this.pesoActual && this.altura) {
-    const alturaMetros = this.altura > 10 ? this.altura / 100 : this.altura;
-    this.indiceMasaCorporal = parseFloat((this.pesoActual / alturaMetros ** 2).toFixed(2));
-  }
-  next();
+  answers: { type: mongoose.Schema.Types.Mixed, default: {} },
+
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
 });
 
 export default mongoose.models.ClinicalRecord ||

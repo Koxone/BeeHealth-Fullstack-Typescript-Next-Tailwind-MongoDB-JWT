@@ -1,6 +1,3 @@
-'use client';
-
-/* stats */
 export default function StatsGrid({ stats, icons }) {
   const { CalendarIcon, CheckCircle, Clock, TrendingUp } = icons;
   const items = [

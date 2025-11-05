@@ -37,8 +37,17 @@ const UserSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['patient', 'medic', 'admin', 'employee'],
+      enum: ['patient', 'doctor', 'admin', 'employee'],
       default: 'patient',
+    },
+    specialty: {
+      type: String,
+      enum: ['weight', 'dental', 'stetic', 'none'],
+      default: 'none',
+    },
+    lastVisit: {
+      type: Date,
+      default: null,
     },
   },
   { timestamps: true }

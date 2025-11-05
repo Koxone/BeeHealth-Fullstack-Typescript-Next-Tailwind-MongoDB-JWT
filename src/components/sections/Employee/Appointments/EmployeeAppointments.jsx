@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react'; /* state */
+import { useState } from 'react';
 import {
   Calendar,
   Clock,
@@ -15,19 +15,17 @@ import {
   AlertCircle,
   CheckCircle,
   Filter,
-} from 'lucide-react'; /* icons */
+} from 'lucide-react';
 
-import HeaderBar from './Components/HeaderBar';
-import StatsGrid from './Components/StatsGrid';
-import ControlsBar from './Components/ControlsBar';
-import AppointmentCard from './Components/AppointmentCard';
-import AddEditModal from './Components/AddEditModal';
-import CancelModal from './Components/CancelModal';
-import EmptyState from './Components/EmptyState';
+import StatsGrid from './components/StatsGrid';
+import ControlsBar from './components/ControlsBar';
+import AppointmentCard from './components/AppointmentCard';
+import CreateEditAppointmentModal from './components/CreateEditAppointmentModal';
+import CancelModal from './components/CancelModal';
+import EmptyState from './components/EmptyState';
+import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
 
-/* container */
-export default function EmployeeAppointments() {
-  /* ui state */
+export default function EmployeeAppointments({ role, patients }) {
   const [showModal, setShowModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [editingCita, setEditingCita] = useState(null);
@@ -195,7 +193,12 @@ export default function EmployeeAppointments() {
   return (
     <div className="h-full overflow-x-hidden overflow-y-auto pb-8">
       {/* header */}
-      <HeaderBar />
+      <GeneralSectionHeader
+        role={role}
+        Icon="pacientes"
+        title="Gestión de Citas"
+        subtitle="Agendar y administrar citas de pacientes"
+      />
 
       {/* stats */}
       <div className="mx-auto mb-4 max-w-7xl">
@@ -235,7 +238,8 @@ export default function EmployeeAppointments() {
 
       {/* modals */}
       {showModal && (
-        <AddEditModal
+        <CreateEditAppointmentModal
+          patients={patients}
           editingCita={editingCita}
           citaForm={citaForm}
           setCitaForm={setCitaForm}
@@ -253,47 +257,6 @@ export default function EmployeeAppointments() {
           icons={{ AlertCircle }}
         />
       )}
-
-      {/* animations */}
-      <style jsx global>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-        @keyframes slideUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px) scale(0.95);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.2s ease-out;
-        }
-        .animate-slideUp {
-          animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .animate-fadeInUp {
-          animation: fadeInUp 0.4s ease-out forwards;
-        }
-      `}</style>
     </div>
   );
 }

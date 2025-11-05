@@ -1,20 +1,16 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
 import { ArrowLeft, Apple, Clock, User, Calendar } from 'lucide-react';
+import Link from 'next/link';
 
 export default function PatientDietDetail({ params }) {
-  const router = useRouter();
-
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
-      <button
-        onClick={() => router.back()}
+      <Link
+        href="/patient/diets"
         className="flex items-center gap-2 text-gray-600 transition hover:text-gray-900"
       >
         <ArrowLeft className="h-5 w-5" />
         Volver a Dietas
-      </button>
+      </Link>
 
       <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
         <div className="flex h-64 items-center justify-center bg-linear-to-br from-green-100 to-blue-100">

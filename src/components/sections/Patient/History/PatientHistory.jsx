@@ -1,40 +1,82 @@
 'use client';
 
+/* State */
 import { useState } from 'react';
-import { useAuthStore } from '@/Zustand/useAuthStore';
-import Header from './Components/Header';
-import Stats from './Components/Stats';
-import RecordsTable from './Components/RecordsTable';
-import RecordsMobileList from './Components/RecordsMobileList';
-import EmptyState from './Components/EmptyState';
-import AddRecordModal from './Components/AddRecordModal';
-import { useClinicalRecords } from '@/Hooks/useClinicalRecords';
 
-export default function PatientHistory() {
-  const { currentUser } = useAuthStore();
-  const currentUserId = currentUser?.id;
+/* UI */
+import Stats from '../history/components/Stats';
+import RecordsTable from '../history/components/RecordsTable';
+import RecordsMobileList from '../history/components/RecordsMobileList';
+import EmptyState from '../history/components/EmptyState';
+import AddRecordModal from '../history/components/AddRecordModal';
+import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
 
-  const { data: historyData = [], isLoading, isError, error } = useClinicalRecords(currentUserId);
+/* Mock data */
+const mockUser = { id: 'user_12345' };
+const mockHistoryRaw = [
+  {
+    _id: 'rec_1',
+    fechaRegistro: '2025-10-01T12:00:00Z',
+    pesoActual: 74.2,
+    indiceMasaCorporal: 24.6,
+    motivoConsulta: 'Seguimiento mensual',
+  },
+  {
+    _id: 'rec_2',
+    fechaRegistro: '2025-09-01T12:00:00Z',
+    pesoActual: 75.1,
+    indiceMasaCorporal: 24.9,
+    motivoConsulta: 'Ajuste de dieta',
+  },
+  {
+    _id: 'rec_3',
+    fechaRegistro: '2025-08-01T12:00:00Z',
+    pesoActual: 76.3,
+    indiceMasaCorporal: 25.3,
+    motivoConsulta: '',
+  },
+];
 
+export default function PatientHistory({ role }) {
+  /* Local state */
   const [showModal, setShowModal] = useState(false);
   const [peso, setPeso] = useState('');
   const [notas, setNotas] = useState('');
 
-  if (isLoading) return <p className="p-6 text-center text-gray-500">Cargando historial...</p>;
-  if (isError) return <p className="p-6 text-center text-red-600">Error: {error.message}</p>;
-  if (!historyData.length) return <EmptyState onAdd={() => setShowModal(true)} />;
+  /* Replacements */
+  const currentUser = mockUser;
+  const currentUserId = currentUser?.id;
 
+  /* Loading and error flags */
+  const isLoading = false;
+  const isError = false;
+  const error = null;
+
+  /* Data mapping */
+  const historyData = mockHistoryRaw;
   const mappedHistory = historyData.map((r) => ({
     id: r._id,
     fecha: new Date(r.fechaRegistro).toISOString().split('T')[0],
     peso: r.pesoActual,
-    imc: r.indiceMasaCorporal.toFixed(1),
+    imc: Number(r.indiceMasaCorporal).toFixed(1),
     notas: r.motivoConsulta || 'Sin notas',
   }));
 
+  /* Early returns */
+  if (isLoading) return <p className="p-6 text-center text-gray-500">Cargando historial...</p>;
+  if (isError)
+    return <p className="p-6 text-center text-red-600">Error: {error?.message || 'Desconocido'}</p>;
+  if (!historyData.length) return <EmptyState onAdd={() => setShowModal(true)} />;
+
+  /* Render */
   return (
     <div className="h-full overflow-x-hidden overflow-y-auto pb-8">
-      <Header total={historyData.length} />
+      <GeneralSectionHeader
+        role={role}
+        title="Historial Clínico"
+        subtitle="Visualiza tus ultimos registros medicos"
+        Icon="history"
+      />
 
       <div className="mx-auto max-w-7xl space-y-4">
         <Stats historyData={mappedHistory} />
@@ -53,7 +95,7 @@ export default function PatientHistory() {
           setNotas={setNotas}
           onClose={() => setShowModal(false)}
           onSave={() => {
-            // Lógica real de guardado
+            /* Mock save */
             setShowModal(false);
             setPeso('');
             setNotas('');

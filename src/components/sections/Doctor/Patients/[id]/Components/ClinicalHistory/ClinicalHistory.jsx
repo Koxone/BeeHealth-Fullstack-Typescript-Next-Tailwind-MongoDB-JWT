@@ -1,9 +1,9 @@
-'use client';
-import HistoryCard from './Components/HistoryCard';
+import { Plus, ClipboardList } from 'lucide-react';
+import AddHistoryButton from './components/AddHistoryButton';
+import HistoryCard from './components/HistoryCard';
 
 /* Clinical history */
-export default function ClinicalHistory({ records, onAdd, onEdit, icons }) {
-  const { ClipboardList, Plus } = icons;
+export default function ClinicalHistory({ onAdd, onEdit, patientRecord }) {
   return (
     <div className="rounded-2xl border border-(--med-gray-border) bg-(--med-gray) p-4 shadow-sm sm:p-6">
       {/* Header */}
@@ -22,19 +22,14 @@ export default function ClinicalHistory({ records, onAdd, onEdit, icons }) {
           </div>
         </div>
 
-        <button
-          onClick={onAdd}
-          className="flex w-full items-center justify-center gap-2 rounded-lg bg-(--med-blue) px-5 py-2.5 text-sm font-medium text-white shadow-md transition hover:bg-blue-700 active:scale-95 sm:w-auto"
-        >
-          <Plus className="h-4 w-4" />
-          Agregar
-        </button>
+        {/* Add History Button */}
+        <AddHistoryButton onAdd={onAdd} />
       </div>
 
       {/* Records */}
-      {records.length > 0 ? (
+      {patientRecord?.length > 0 ? (
         <div className="space-y-3 sm:space-y-4">
-          {records.map((r, index) => (
+          {patientRecord.map((r, index) => (
             <div
               key={r._id}
               className="rounded-xl border border-(--med-gray-border) bg-white p-3 shadow-sm transition hover:shadow-md sm:p-4"
@@ -44,7 +39,7 @@ export default function ClinicalHistory({ records, onAdd, onEdit, icons }) {
               }}
             >
               {/* History Card */}
-              <HistoryCard r={r} onEdit={onEdit} />
+              <HistoryCard r={r} onEdit={(record, readOnly) => onEdit(record, readOnly)} />
             </div>
           ))}
         </div>

@@ -3,18 +3,17 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Heart, Mail, Lock } from 'lucide-react';
-import { useAuthStore } from '@/Zustand/useAuthStore';
 
 export default function LoginForm() {
+  // Hooks
   const router = useRouter();
+
+  // Local states
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Zustand
-  const { login } = useAuthStore();
-
-  // handle login
+  // Handle submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -24,6 +23,7 @@ export default function LoginForm() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
+        credentials: 'include',
       });
 
       const data = await res.json();
@@ -34,20 +34,17 @@ export default function LoginForm() {
         return;
       }
 
-      // Guarda el token y usuario en localStorage
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data.user));
+      console.log('Login successful:', data);
+      console.log('Session cookie set!');
 
-      // Redirige según el rol del usuario
+      // Redirect based on role (backend already set cookie)
       const role = data.user.role;
       if (role === 'patient') router.push('/patient/dashboard');
-      else if (role === 'medic') router.push('/doctor/dashboard');
+      else if (role === 'doctor') router.push('/doctor/dashboard');
       else if (role === 'employee') router.push('/employee/dashboard');
-      else router.push('/admin/dashboard');
-      console.log(data);
-      login(data.user, data.token);
+      else router.push('/auth/login');
     } catch (error) {
-      console.error(error);
+      console.error('Login error:', error);
       alert('Error al conectar con el servidor');
     } finally {
       setLoading(false);
@@ -55,24 +52,21 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-blue-50 via-white to-green-50 p-4">
-      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl">
-        <div className="mb-8 flex items-center justify-center gap-2">
-          <Heart className="h-10 w-10 text-blue-500" />
-          <span className="text-2xl font-bold text-gray-900 md:text-3xl">MedTrack</span>
-        </div>
-
+    <div className="flex h-full items-center justify-center overflow-hidden p-4">
+      <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-8 shadow-xl">
+        {/* Title */}
         <h2 className="mb-2 text-center text-2xl font-bold text-gray-900">Iniciar Sesión</h2>
         <p className="mb-8 text-center text-gray-600">Accede a tu cuenta médica</p>
 
-        {/* Formulario */}
+        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+          {/* Email */}
           <div>
             <label className="mb-2 block text-sm font-medium text-gray-700">
               Correo Electrónico
             </label>
             <div className="relative">
-              <Mail className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
+              <Mail className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
               <input
                 type="email"
                 required
@@ -84,10 +78,11 @@ export default function LoginForm() {
             </div>
           </div>
 
+          {/* Password */}
           <div>
             <label className="mb-2 block text-sm font-medium text-gray-700">Contraseña</label>
             <div className="relative">
-              <Lock className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
+              <Lock className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
               <input
                 type="password"
                 required
@@ -99,6 +94,7 @@ export default function LoginForm() {
             </div>
           </div>
 
+          {/* Options */}
           <div className="flex items-center justify-between text-sm">
             <label className="flex items-center">
               <input type="checkbox" className="mr-2" />
@@ -109,7 +105,7 @@ export default function LoginForm() {
             </button>
           </div>
 
-          {/* Botón principal */}
+          {/* Submit */}
           <button
             type="submit"
             disabled={loading}
@@ -121,11 +117,11 @@ export default function LoginForm() {
           </button>
         </form>
 
-        {/* Enlace a registro */}
+        {/* Sign up link */}
         <p className="mt-6 text-center text-gray-600">
           ¿No tienes cuenta?{' '}
           <button
-            onClick={() => router.push('/signup')}
+            onClick={() => router.push('/auth/signup')}
             className="font-medium text-blue-600 hover:text-blue-700"
           >
             Regístrate aquí

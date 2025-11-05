@@ -1,6 +1,5 @@
 'use client';
 
-/* days grid */
 export default function DaysGrid({ days, selectedDate, onSelectDate, helpers }) {
   const { hasAppointments, getAppointmentsForDate, formatDate } = helpers;
   return (

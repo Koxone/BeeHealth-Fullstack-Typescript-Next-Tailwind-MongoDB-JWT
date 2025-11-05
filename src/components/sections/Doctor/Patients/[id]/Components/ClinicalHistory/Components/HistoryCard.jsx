@@ -1,28 +1,29 @@
 import React from 'react';
-import {
-  Scale,
-  Activity,
-  Stethoscope,
-  Pill,
-  Ruler,
-  HeartPulse,
-  Droplet,
-  Edit2,
-} from 'lucide-react';
+import { Scale, Activity, Stethoscope, Pill, Ruler, Edit2, Eye } from 'lucide-react';
 
 function HistoryCard({ r, onEdit }) {
+  function getAnswer(id) {
+    return r?.answers?.[id] || 'Sin respuesta';
+  }
+
+  // BMI calculation
+  const height = Number(r?.answers?.['6']);
+  const weight = Number(r?.answers?.['7']);
+
+  const imc = height && weight ? (weight / (height / 100) ** 2).toFixed(2) : null;
+  console.log(r);
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:gap-4">
       {/* Date */}
       <div className="flex h-12 w-12 flex-col items-center justify-center rounded-lg bg-(--med-blue-light) text-(--med-blue) sm:h-14 sm:w-14">
         {/* Month */}
         <span className="text-xs font-medium uppercase">
-          {new Date(r.fechaRegistro).toLocaleDateString('es-MX', { month: 'short' })}
+          {new Date(r.updatedAt).toLocaleDateString('es-MX', { month: 'short' })}
         </span>
 
         {/* Day */}
         <span className="text-base font-bold sm:text-lg">
-          {new Date(r.fechaRegistro).toLocaleDateString('es-MX', { day: '2-digit' })}
+          {new Date(r.updatedAt).toLocaleDateString('es-MX', { day: '2-digit' })}
         </span>
       </div>
 
@@ -34,7 +35,7 @@ function HistoryCard({ r, onEdit }) {
             <div className="flex items-center gap-1.5 text-xs font-medium text-(--med-blue) sm:gap-2">
               <Scale className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> <span className="truncate">Peso</span>
             </div>
-            <p className="text-sm font-bold text-(--med-text-dark)">{r.pesoActual} kg</p>
+            <p className="text-sm font-bold text-(--med-text-dark)">{getAnswer(7)} kg</p>
           </div>
 
           {/* IMC */}
@@ -43,9 +44,7 @@ function HistoryCard({ r, onEdit }) {
               <Activity className="h-3.5 w-3.5 sm:h-4 sm:w-4" />{' '}
               <span className="truncate">IMC</span>
             </div>
-            <p className="text-sm font-bold text-(--med-text-dark)">
-              {r.indiceMasaCorporal?.toFixed(1)}
-            </p>
+            <p className="text-sm font-bold text-(--med-text-dark)">{imc}</p>
           </div>
 
           {/* Enfermedades */}
@@ -54,9 +53,7 @@ function HistoryCard({ r, onEdit }) {
               <Stethoscope className="h-3.5 w-3.5 sm:h-4 sm:w-4" />{' '}
               <span className="truncate">Enfermedades</span>
             </div>
-            <p className="truncate text-sm font-bold text-(--med-text-dark)">
-              {r.enfermedadesCronicas || '—'}
-            </p>
+            <p className="truncate text-sm font-bold text-(--med-text-dark)">{getAnswer(26)}</p>
           </div>
 
           {/* Medicamentos */}
@@ -65,9 +62,7 @@ function HistoryCard({ r, onEdit }) {
               <Pill className="h-3.5 w-3.5 sm:h-4 sm:w-4" />{' '}
               <span className="truncate">Medicamentos</span>
             </div>
-            <p className="truncate text-sm font-bold text-(--med-text-dark)">
-              {r.medicamentosActuales || '—'}
-            </p>
+            <p className="truncate text-sm font-bold text-(--med-text-dark)">{getAnswer(19)}</p>
           </div>
 
           {/* Talla */}
@@ -76,39 +71,42 @@ function HistoryCard({ r, onEdit }) {
               <Ruler className="h-3.5 w-3.5 sm:h-4 sm:w-4" />{' '}
               <span className="truncate">Talla</span>
             </div>
-            <p className="text-sm font-bold text-(--med-text-dark)">
-              {r.talla ? `${r.talla} cm` : '—'}
-            </p>
+            <p className="text-sm font-bold text-(--med-text-dark)">{getAnswer(8)} cm</p>
           </div>
-
-          {/* Glucosa */}
-          {r.glucosa && (
-            <div className="rounded-lg bg-(--med-green)/10 p-2">
-              <div className="flex items-center gap-1.5 text-xs font-medium text-(--med-green) sm:gap-2">
-                <Droplet className="h-3.5 w-3.5 sm:h-4 sm:w-4" />{' '}
-                <span className="truncate">Glucosa</span>
-              </div>
-              <p className="text-sm font-bold text-(--med-text-dark)">{r.glucosa}</p>
-            </div>
-          )}
         </div>
 
-        {/* Motivo */}
-        {r.motivoConsulta && (
+        <div className="grid grid-cols-2">
+          {/* Dr Notes */}
+          <div className="mt-2 rounded-lg bg-(--med-gray) p-2 sm:mt-3 sm:p-3">
+            <p className="text-xs font-medium text-(--med-text-muted)">Notas del Medico</p>
+            <p className="mt-1 text-sm text-(--med-text-dark)">{getAnswer(133)}</p>
+          </div>
+
+          {/* Motivo */}
           <div className="mt-2 rounded-lg bg-(--med-gray) p-2 sm:mt-3 sm:p-3">
             <p className="text-xs font-medium text-(--med-text-muted)">Motivo de consulta:</p>
-            <p className="mt-1 text-sm text-(--med-text-dark)">{r.motivoConsulta}</p>
+            <p className="mt-1 text-sm text-(--med-text-dark)">{getAnswer(17)}</p>
           </div>
-        )}
+        </div>
       </div>
 
-      {/* Edit */}
-      <button
-        onClick={() => onEdit(r)}
-        className="self-start rounded-lg bg-(--med-blue-light) p-2 transition hover:bg-(--med-blue) hover:text-white active:scale-95 sm:self-auto sm:p-2.5"
-      >
-        <Edit2 className="h-4 w-4 sm:h-5 sm:w-5" />
-      </button>
+      <div className="flex gap-2">
+        {/* View Patient History */}
+        <button
+          onClick={() => onEdit(r, true)} // ← true indica modo lectura
+          className="self-start rounded-lg bg-(--med-blue-light) p-2 hover:bg-(--med-blue) hover:text-white active:scale-95 sm:self-auto sm:p-2.5"
+        >
+          <Eye className="h-4 w-4 sm:h-5 sm:w-5" />
+        </button>
+
+        {/* Edit */}
+        <button
+          onClick={() => onEdit(r, false)} // ← false indica modo edición
+          className="self-start rounded-lg bg-(--med-blue-light) p-2 hover:bg-(--med-blue) hover:text-white active:scale-95 sm:self-auto sm:p-2.5"
+        >
+          <Edit2 className="h-4 w-4 sm:h-5 sm:w-5" />
+        </button>
+      </div>
     </div>
   );
 }
