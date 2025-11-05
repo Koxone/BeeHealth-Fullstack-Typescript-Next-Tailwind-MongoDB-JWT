@@ -3,10 +3,14 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Heart, Mail, Lock } from 'lucide-react';
+import useAuthStore from '@/zustand/useAuthStore';
 
 export default function LoginForm() {
   // Hooks
   const router = useRouter();
+
+  // Zustand
+  const { setUser, setToken } = useAuthStore.getState();
 
   // Local states
   const [email, setEmail] = useState('');
@@ -36,6 +40,9 @@ export default function LoginForm() {
 
       console.log('Login successful:', data);
       console.log('Session cookie set!');
+
+      setUser(data.user);
+      setToken(data.token);
 
       // Redirect based on role (backend already set cookie)
       const role = data.user.role;
