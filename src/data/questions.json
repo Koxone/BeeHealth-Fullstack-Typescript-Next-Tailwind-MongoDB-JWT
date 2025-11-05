@@ -244,7 +244,7 @@
     "question": "Diabetes",
     "type": "radio",
     "options": ["Sí", "No"],
-    "specialties": ["dental"],
+    "specialties": ["dental", "weight"],
     "versions": ["full"],
     "order": "ORDER"
   },
@@ -253,7 +253,7 @@
     "question": "Hipertensión",
     "type": "radio",
     "options": ["Sí", "No"],
-    "specialties": ["dental"],
+    "specialties": ["dental", "weight"],
     "versions": ["full"],
     "order": "ORDER"
   },
@@ -262,7 +262,7 @@
     "question": "Hepatitis",
     "type": "radio",
     "options": ["Sí", "No"],
-    "specialties": ["dental"],
+    "specialties": ["dental", "weight"],
     "versions": ["full"],
     "order": "ORDER"
   },
@@ -271,7 +271,7 @@
     "question": "VIH",
     "type": "radio",
     "options": ["Sí", "No"],
-    "specialties": ["dental"],
+    "specialties": ["dental", "weight"],
     "versions": ["full"],
     "order": "ORDER"
   },
@@ -280,7 +280,7 @@
     "question": "Cáncer",
     "type": "radio",
     "options": ["Sí", "No"],
-    "specialties": ["dental"],
+    "specialties": ["dental", "weight"],
     "versions": ["full"],
     "order": "ORDER"
   },
@@ -289,7 +289,7 @@
     "question": "Asma",
     "type": "radio",
     "options": ["Sí", "No"],
-    "specialties": ["dental"],
+    "specialties": ["dental", "weight"],
     "versions": ["full"],
     "order": "ORDER"
   },
@@ -316,7 +316,7 @@
     "question": "Ansiedad o depresión",
     "type": "radio",
     "options": ["Sí", "No"],
-    "specialties": ["dental"],
+    "specialties": ["dental", "weight"],
     "versions": ["full"],
     "order": "ORDER"
   },
@@ -354,7 +354,7 @@
     "question": "Embarazo",
     "type": "select",
     "options": ["Sí", "No", "No aplica"],
-    "specialties": ["dental"],
+    "specialties": ["dental", "weight"],
     "versions": ["full"],
     "order": "ORDER"
   },
@@ -363,7 +363,7 @@
     "question": "Lactancia",
     "type": "select",
     "options": ["Sí", "No", "No aplica"],
-    "specialties": ["dental"],
+    "specialties": ["dental", "weight"],
     "versions": ["full"],
     "order": "ORDER"
   },
@@ -373,7 +373,7 @@
     "question": "Anticonceptivos",
     "type": "radio",
     "options": ["Sí", "No"],
-    "specialties": ["dental"],
+    "specialties": ["dental", "weight"],
     "versions": ["full"],
     "order": "ORDER"
   },
@@ -714,7 +714,7 @@
     "question": "Cardiopatías",
     "type": "radio",
     "options": ["Sí", "No"],
-    "specialties": ["dental", "stetic"],
+    "specialties": ["dental", "stetic", "weight"],
     "versions": ["full", "short"],
     "order": "ORDER"
   },
@@ -723,7 +723,7 @@
     "question": "Enfermedades mentales",
     "type": "radio",
     "options": ["Sí", "No"],
-    "specialties": ["dental", "stetic"],
+    "specialties": ["dental", "stetic", "weight"],
     "versions": ["full", "short"],
     "order": "ORDER"
   },
@@ -732,7 +732,7 @@
     "question": "Neoplasias",
     "type": "radio",
     "options": ["Sí", "No"],
-    "specialties": ["dental", "stetic"],
+    "specialties": ["dental", "stetic", "weight"],
     "versions": ["full", "short"],
     "order": "ORDER"
   },
@@ -741,7 +741,7 @@
     "question": "Enfermedades renales",
     "type": "radio",
     "options": ["Sí", "No"],
-    "specialties": ["dental", "stetic"],
+    "specialties": ["dental", "stetic", "weight"],
     "versions": ["full", "short"],
     "order": "ORDER"
   },
@@ -788,7 +788,7 @@
     "question": "Enfermedades respiratorias",
     "type": "radio",
     "options": ["Sí", "No"],
-    "specialties": ["dental", "stetic"],
+    "specialties": ["dental", "stetic", "weight"],
     "versions": ["full", "short"],
     "order": "ORDER"
   },
@@ -827,7 +827,7 @@
     "question": "Enfermedades de transmisión sexual (ETS)",
     "type": "radio",
     "options": ["Sí", "No"],
-    "specialties": ["dental", "stetic"],
+    "specialties": ["dental", "stetic", "weight"],
     "versions": ["full", "short"],
     "order": "ORDER"
   },
@@ -1207,7 +1207,7 @@
   },
   {
     "id": 133,
-    "question": "Notas del profesional",
+    "question": "Notas del Medico",
     "type": "textarea",
     "specialties": ["weight", "dental", "stetic"],
     "versions": ["full"],

@@ -1,12 +1,12 @@
 'use client';
 
-import { useMemo, useState, useCallback } from 'react';
+import { useMemo, useState, useCallback, useEffect } from 'react';
 import QuestionCard from './QuestionCard';
 import questions from '@/data/questions.json';
 import { Search, ClipboardList } from 'lucide-react';
 import useAuthStore from '@/zustand/useAuthStore';
 
-export default function QuestionnaireSection({ isReadOnly = false }) {
+export default function QuestionnaireSection({ isReadOnly = false, initialData = {} }) {
   // Zustand
   const { user } = useAuthStore();
   const specialty = user?.specialty;
@@ -14,6 +14,10 @@ export default function QuestionnaireSection({ isReadOnly = false }) {
   // State
   const [formData, setFormData] = useState({});
   const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    setFormData(initialData || {});
+  }, [initialData]);
 
   // Config
   const version = 'full';

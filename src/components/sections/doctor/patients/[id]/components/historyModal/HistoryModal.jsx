@@ -101,7 +101,11 @@ export default function HistoryModal({ onClose, record, readOnly, icons }) {
           )}
 
           {activeTab === 'completo' && (
-            <QuestionnaireSection isReadOnly={isReadOnly} icons={{ ClipboardList }} />
+            <QuestionnaireSection
+              isReadOnly={isReadOnly}
+              initialData={record?.answers || {}}
+              icons={{ ClipboardList }}
+            />
           )}
 
           {!isReadOnly && (
