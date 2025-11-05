@@ -2,7 +2,7 @@
 
 import Sidebar from '../../components/General/Nav/Sidebar';
 import Header from '../../components/General/Nav/Header';
-import { useAuthStore } from '@/Zustand/useAuthStore';
+import useAuthStore from '@/Zustand/useAuthStore';
 import RoleGuard from '@/components/General/Auth/RoleGuard';
 
 export default function DoctorLayout({ children }) {

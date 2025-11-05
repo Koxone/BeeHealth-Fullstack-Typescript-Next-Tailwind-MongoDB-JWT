@@ -11,8 +11,8 @@ import TimeSlots from './Components/TimeSlots';
 import ReasonField from './Components/ReasonField';
 import SummaryCard from './Components/SummaryCard';
 import { formatDate, isPastDate, getDaysInMonth } from './Components/NewAppointmentUtils';
-import { useAuthStore } from '@/Zustand/useAuthStore';
 import SuccessModal from './Components/SuccessModal';
+import useAuthStore from '@/Zustand/useAuthStore';
 
 function getAvailableSlots(date, tipo) {
   if (!date) return [];

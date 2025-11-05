@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuthStore } from '@/Zustand/useAuthStore';
+import useAuthStore from '@/Zustand/useAuthStore';
 
 export default function RoleGuard({ allowedRoles = [], children }) {
   const router = useRouter();

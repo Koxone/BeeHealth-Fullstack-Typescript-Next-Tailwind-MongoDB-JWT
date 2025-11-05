@@ -3,7 +3,7 @@
 import RoleGuard from '@/components/General/Auth/RoleGuard';
 import Header from '../../components/General/Nav/Header';
 import Sidebar from '../../components/General/Nav/Sidebar';
-import { useAuthStore } from '@/Zustand/useAuthStore';
+import useAuthStore from '@/Zustand/useAuthStore';
 
 export default function EmployeeLayout({ children }) {
   const { currentUser, logout } = useAuthStore();

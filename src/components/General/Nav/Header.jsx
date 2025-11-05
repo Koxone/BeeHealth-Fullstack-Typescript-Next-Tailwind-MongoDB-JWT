@@ -1,6 +1,6 @@
 'use client';
 
-import { useAuthStore } from '@/Zustand/useAuthStore';
+import useAuthStore from '@/Zustand/useAuthStore';
 import { Bell, User, LogOut, Menu, Settings, HelpCircle, Shield, Sparkles, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
