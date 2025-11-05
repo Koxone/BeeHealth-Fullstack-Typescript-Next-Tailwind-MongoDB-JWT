@@ -37,7 +37,7 @@
 
   {
     "id": 5,
-    "question": "Género",
+    "question": "Genero",
     "type": "select",
     "options": ["Masculino", "Femenino"],
     "specialties": ["weight", "dental", "stetic"],

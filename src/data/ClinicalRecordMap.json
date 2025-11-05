@@ -6,7 +6,7 @@
     {
       "id": 4,
       "key": "gender",
-      "label": "Género",
+      "label": "Genero",
       "type": "select",
       "options": ["Masculino", "Femenino"]
     },
@@ -127,7 +127,7 @@
     {
       "id": 4,
       "key": "gender",
-      "label": "Género",
+      "label": "Genero",
       "type": "select",
       "options": ["Masculino", "Femenino"]
     },
@@ -342,7 +342,7 @@
     {
       "id": 4,
       "key": "gender",
-      "label": "Género",
+      "label": "Genero",
       "type": "select",
       "options": ["Masculino", "Femenino"]
     },
@@ -492,7 +492,7 @@
     {
       "id": 4,
       "key": "gender",
-      "label": "Género",
+      "label": "Genero",
       "type": "select",
       "options": ["Masculino", "Femenino"]
     },
@@ -739,7 +739,7 @@
     {
       "id": 4,
       "key": "gender",
-      "label": "Género",
+      "label": "Genero",
       "type": "select",
       "options": ["Masculino", "Femenino"]
     },
@@ -845,7 +845,7 @@
     {
       "id": 4,
       "key": "gender",
-      "label": "Género",
+      "label": "Genero",
       "type": "select",
       "options": ["Masculino", "Femenino"]
     },
