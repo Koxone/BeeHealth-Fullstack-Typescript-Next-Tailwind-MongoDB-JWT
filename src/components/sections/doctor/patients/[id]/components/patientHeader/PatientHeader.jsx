@@ -82,7 +82,7 @@ export default function PatientHeader({ patient, onClickNew, patientRecord }) {
                 <Phone className="h-5 w-5 text-white" />
               </div>
               <div>
-                <p className="text-xs text-blue-100">Teléfono</p>
+                <p className="text-xs text-blue-100">Telefono</p>
                 <p className="text-sm font-semibold">{getAnswer(16)}</p>
               </div>
             </div>

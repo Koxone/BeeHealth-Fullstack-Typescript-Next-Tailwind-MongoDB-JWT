@@ -118,7 +118,7 @@ export default function SignupForm() {
 
             {/* Phone */}
             <div>
-              <label className="mb-2 block text-sm font-medium text-gray-700">Teléfono</label>
+              <label className="mb-2 block text-sm font-medium text-gray-700">Telefono</label>
               <div className="relative">
                 <Phone className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
                 <input

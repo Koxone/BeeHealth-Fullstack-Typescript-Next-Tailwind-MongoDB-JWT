@@ -70,7 +70,7 @@ export default function PatientSupport() {
               <div className="flex items-start gap-3">
                 <Phone className="mt-1 h-5 w-5 text-green-500" />
                 <div>
-                  <p className="font-medium text-gray-900">Teléfono</p>
+                  <p className="font-medium text-gray-900">Telefono</p>
                   <p className="text-gray-600">+52 55 1234 5678</p>
                 </div>
               </div>

@@ -117,7 +117,7 @@
           "qId": 14
         },
         {
-          "label": "Teléfono celular",
+          "label": "Telefono celular",
           "type": "text",
           "qId": 15,
           "required": true
@@ -128,7 +128,7 @@
           "qId": 17
         },
         {
-          "label": "Teléfono de emergencia",
+          "label": "Telefono de emergencia",
           "type": "text",
           "qId": 18
         }

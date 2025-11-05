@@ -122,7 +122,7 @@
   },
   {
     "id": 14,
-    "question": "Teléfono celular",
+    "question": "Telefono celular",
     "type": "number",
     "placeholder": "KOXONE",
     "specialties": ["weight", "dental", "stetic"],
@@ -141,7 +141,7 @@
   },
   {
     "id": 16,
-    "question": "Teléfono de emergencia",
+    "question": "Telefono de emergencia",
     "type": "number",
     "placeholder": "Ej. 5512345678",
     "specialties": ["weight", "dental", "stetic"],

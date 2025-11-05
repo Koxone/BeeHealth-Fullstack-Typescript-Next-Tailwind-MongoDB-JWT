@@ -68,7 +68,7 @@ export default function Contact() {
             <div className="flex items-start gap-4 rounded-xl bg-white p-6 shadow-md">
               <Phone className="mt-1 h-6 w-6 text-green-500" />
               <div>
-                <h3 className="mb-1 font-semibold text-gray-900">Teléfono</h3>
+                <h3 className="mb-1 font-semibold text-gray-900">Telefono</h3>
                 <p className="text-gray-600">+52 55 1234 5678</p>
               </div>
             </div>

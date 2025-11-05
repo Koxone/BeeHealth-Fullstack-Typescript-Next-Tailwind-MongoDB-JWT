@@ -116,7 +116,7 @@ export default function SharedUserProfile({ role, currentUser }) {
                 icon={Mail}
               />
               <Field
-                label="Teléfono"
+                label="Telefono"
                 value={currentUser.phone}
                 isEditing={isEditing}
                 icon={Phone}
@@ -232,7 +232,7 @@ export default function SharedUserProfile({ role, currentUser }) {
 
           <div className="space-y-3">
             <InfoCard icon={Mail} label="Email" value={empleado.email} color="blue" />
-            <InfoCard icon={Phone} label="Teléfono" value={empleado.telefono} color="green" />
+            <InfoCard icon={Phone} label="Telefono" value={empleado.telefono} color="green" />
             <InfoCard
               icon={Calendar}
               label="Fecha de Ingreso"
@@ -335,7 +335,7 @@ export default function SharedUserProfile({ role, currentUser }) {
                 icon={Mail}
               />
               <Field
-                label="Teléfono"
+                label="Telefono"
                 value={currentUser.phone}
                 isEditing={isEditing}
                 icon={Phone}
