@@ -18,14 +18,12 @@ import {
   Sparkles,
   Heart,
   Scale,
-  Droplet,
   ClipboardList,
   Loader2,
 } from 'lucide-react';
 
 import { useParams, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import moment from 'moment';
 import 'moment/locale/es';
 
 import PatientHeader from './components/patientHeader/PatientHeader';
@@ -37,13 +35,14 @@ import BackButton from './components/BackButton';
 import TabsNav from './components/TabsNav';
 import CreateEditAppointmentModal from '@/components/sections/employee/appointments/components/CreateEditAppointmentModal';
 
-export default function DoctorPatientDetail({ role, currentUser, specialty, patient }) {
+export default function DoctorPatientDetail({ patient }) {
   /* Router */
   const router = useRouter();
 
   // Backend Get Clinical Record
   const { id } = useParams();
   const [patientRecord, setPatientRecord] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -115,13 +114,6 @@ export default function DoctorPatientDetail({ role, currentUser, specialty, pati
     treatment: '',
   });
 
-  /* Stats mock */
-  const records = patientRecord || [];
-  const totalConsultas = records.total;
-  const ultimoPeso = patientRecord?.items?.[0]?.vitals?.weightKg;
-  const imcCalculado = patientRecord?.items?.[0]?.bmiComputed;
-  const ultimoIMC = imcCalculado;
-
   /* Modal Handlers */
   const openHistoryModal = (record = null, readOnly = false) => {
     setIsReadOnly(readOnly);
@@ -159,9 +151,6 @@ export default function DoctorPatientDetail({ role, currentUser, specialty, pati
     setShowHistoryModal(false);
     setEditingHistory(null);
   };
-
-  /* Mock loading state (false = listo) */
-  const isLoading = false;
 
   if (isLoading)
     return (
