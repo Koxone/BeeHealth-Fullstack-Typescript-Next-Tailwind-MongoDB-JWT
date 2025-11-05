@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 
 import { useParams, useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import 'moment/locale/es';
 
 import PatientHeader from './components/patientHeader/PatientHeader';

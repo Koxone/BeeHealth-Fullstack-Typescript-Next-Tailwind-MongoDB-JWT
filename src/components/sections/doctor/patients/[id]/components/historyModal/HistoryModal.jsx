@@ -1,9 +1,6 @@
 'use client';
 
-/* state */
 import { useState } from 'react';
-
-/* parts */
 import ModalOverlay from './components/ModalOverlay';
 import ModalContainer from './components/ModalContainer';
 import ModalHeader from './components/ModalHeader';
@@ -60,10 +57,20 @@ export default function HistoryModal({
               />
 
               {/* vitals */}
-              <VitalsSection form={form} setForm={setForm} isReadOnly={isReadOnly} icons={{ Activity }} />
+              <VitalsSection
+                form={form}
+                setForm={setForm}
+                isReadOnly={isReadOnly}
+                icons={{ Activity }}
+              />
 
               {/* diagnosis */}
-              <DiagnosisSection form={form} setForm={setForm} isReadOnly={isReadOnly} icons={{ Stethoscope }} />
+              <DiagnosisSection
+                form={form}
+                setForm={setForm}
+                isReadOnly={isReadOnly}
+                icons={{ Stethoscope }}
+              />
             </div>
           )}
 
