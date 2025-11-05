@@ -12,11 +12,22 @@ import {
 } from 'recharts';
 import { TrendingUp } from 'lucide-react';
 
-export default function WeightChart({ data, icons }) {
+export default function WeightChart({ patientRecord, icons }) {
   const { TrendingUp: TrendIcon = TrendingUp } = icons;
+
+  // Transform patientRecord to chart data
+  const formattedData = (patientRecord || [])
+    .filter((rec) => rec?.answers?.['7']) // Ensure there's a weight
+    .map((rec) => ({
+      fecha: new Date(rec.createdAt).toLocaleDateString('es-MX'),
+      peso: Number(rec.answers['7']),
+    }));
+
+  const total = formattedData.length;
 
   return (
     <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-lg">
+      {/* Header */}
       <div className="mb-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br from-blue-500 to-cyan-500">
@@ -27,20 +38,23 @@ export default function WeightChart({ data, icons }) {
             <p className="text-sm text-gray-500">Seguimiento del progreso del paciente</p>
           </div>
         </div>
+
         <div className="rounded-full bg-blue-50 px-4 py-2">
-          <span className="text-sm font-semibold text-blue-700">{data?.meta?.total} registros</span>
+          <span className="text-sm font-semibold text-blue-700">{total} registros</span>
         </div>
       </div>
 
-      {data?.meta?.total > 0 ? (
+      {/* Chart or empty state */}
+      {total > 0 ? (
         <ResponsiveContainer width="100%" height={300}>
-          <AreaChart data={data}>
+          <AreaChart data={formattedData}>
             <defs>
               <linearGradient id="colorPeso" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
                 <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
               </linearGradient>
             </defs>
+
             <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
             <XAxis
               dataKey="fecha"

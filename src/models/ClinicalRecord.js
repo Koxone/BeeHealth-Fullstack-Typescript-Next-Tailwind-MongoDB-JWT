@@ -20,7 +20,7 @@ const ClinicalRecordSchema = new mongoose.Schema({
     required: true,
   },
 
-  answers: { type: [AnswerSchema], default: [] },
+  answers: { type: mongoose.Schema.Types.Mixed, default: {} },
 
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },

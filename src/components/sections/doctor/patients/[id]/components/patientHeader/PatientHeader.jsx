@@ -1,35 +1,27 @@
+import { User, Mail, Phone, CalendarIcon, Activity, Stethoscope } from 'lucide-react';
 import CreateAppointmentButton from './components/CreateAppointmentButton';
 import RegisterVisitButton from './components/RegisterVisitButton';
 import questionsMap from '@/data/questions.json';
+import moment from 'moment';
 
-export default function PatientHeader({
-  patient,
-  icons,
-  moment,
-  onClickNew,
-  mockPatient,
-  patientRecord,
-}) {
-  const { User, Mail, Phone, CalendarIcon, Activity, Stethoscope } = icons;
-
+export default function PatientHeader({ patient, onClickNew, patientRecord }) {
   // Specialty map
   const specialtyLabels = {
     weight: 'Control de Peso',
     dental: 'Odontología',
     stetic: 'Tratamiento Estético',
   };
+  const specialtyName = specialtyLabels[patientRecord?.[0]?.specialty] || 'Sin especialidad';
 
-  const specialtyName = specialtyLabels[patient?.specialty] || 'Sin especialidad';
+  // Get label helper
+  function getQuestionLabel(id) {
+    const q = questionsMap.find((q) => q.id === Number(id));
+    return q ? q.question : `Campo ${id}`;
+  }
 
-  const readableAnswers = patientRecord?.[0]?.answers.map((a) => {
-    const q = questionsMap.find((q) => q.id === a.qId);
-    return {
-      question: q?.question || `Pregunta ${a.qId}`,
-      answer: a.value,
-    };
-  });
-
-  console.log(patientRecord);
+  function getAnswer(id) {
+    return patientRecord?.[0]?.answers?.[id] || 'Sin respuesta';
+  }
 
   return (
     <div className="bg-asana-green relative overflow-hidden rounded-2xl p-8 shadow-xl">
@@ -65,11 +57,11 @@ export default function PatientHeader({
 
           <div>
             {/* Patient Name */}
-            <h1 className="text-4xl font-bold">{patientRecord?.[0]?.patient?.fullName}</h1>
+            <h1 className="text-4xl font-bold">{getAnswer(1)}</h1>
             {/* Patient Age */}
-            <p className="text-sm">{mockPatient?.age} años</p>
+            <p className="text-sm">{getAnswer(4)} años</p>
             {/* Patient Gender */}
-            <p className="mb-4 text-sm">{mockPatient?.gender}</p>
+            <p className="mb-4 text-sm">{getAnswer(5)}</p>
           </div>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -80,7 +72,7 @@ export default function PatientHeader({
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-xs text-blue-100">Correo</p>
-                <p className="truncate text-sm font-semibold">{patient?.email}</p>
+                <p className="truncate text-sm font-semibold">{getAnswer(12)}</p>
               </div>
             </div>
 
@@ -91,7 +83,7 @@ export default function PatientHeader({
               </div>
               <div>
                 <p className="text-xs text-blue-100">Teléfono</p>
-                <p className="text-sm font-semibold">{patient?.phone}</p>
+                <p className="text-sm font-semibold">{getAnswer(16)}</p>
               </div>
             </div>
 

@@ -185,34 +185,27 @@ export default function DoctorPatientDetail({ role, currentUser, specialty, pati
       <div className="grid grid-rows-[auto_1fr]">
         <BackButton onClick={() => router.back()} icon={{ ArrowLeft }} />
         <PatientHeader
-          // mockPatient={mockPatient}
           patientRecord={patientRecord}
           patient={patient}
-          icons={{ User, Mail, Phone, CalendarIcon, Activity, Stethoscope }}
-          moment={moment}
           onClickNew={handleCreateAppointmentModal}
         />
       </div>
 
       {/* Quick stats */}
-      <QuickStats
-        stats={{ totalConsultas, currentWeight: ultimoPeso, ultimoIMC }}
-        icons={{ FileText, Scale, Heart, Activity, TrendingUp }}
-      />
+      <QuickStats patientRecord={patientRecord} />
 
       {/* Tabs Nav */}
       <TabsNav />
 
       {/* Clinical history */}
       <ClinicalHistory
-        records={records}
+        patientRecord={patientRecord}
         onAdd={() => openHistoryModal()}
         onEdit={(r, readOnly) => openHistoryModal(r, readOnly)}
-        icons={{ ClipboardList, Plus, Edit2, Scale, Heart, Activity, Droplet }}
       />
 
       {/* Weight chart */}
-      <WeightChart data={patientRecord} icons={{ TrendingUp }} />
+      <WeightChart patientRecord={patientRecord} icons={{ TrendingUp }} />
 
       {/* History Modal */}
       {showHistoryModal && (

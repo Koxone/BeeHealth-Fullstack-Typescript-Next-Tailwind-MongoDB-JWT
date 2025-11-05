@@ -1209,7 +1209,7 @@
     "id": 133,
     "question": "Notas del profesional",
     "type": "textarea",
-    "specialties": ["dental"],
+    "specialties": ["weight", "dental", "stetic"],
     "versions": ["full"],
     "order": "ORDER"
   },

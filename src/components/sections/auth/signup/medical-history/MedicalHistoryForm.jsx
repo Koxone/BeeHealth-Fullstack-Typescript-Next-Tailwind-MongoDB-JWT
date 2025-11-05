@@ -167,17 +167,13 @@ export default function MedicalHistoryForm() {
               }
               const user = JSON.parse(storedUser);
 
-              const answers = Object.entries(formData).map(([qId, value]) => ({
-                qId: Number(qId),
-                value,
-              }));
 
               const payload = {
                 patient: user.id,
                 doctor: null,
                 specialty: activeTab,
                 version: 'short',
-                answers,
+                answers: formData,
               };
 
               try {

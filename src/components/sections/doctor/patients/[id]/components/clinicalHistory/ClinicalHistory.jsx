@@ -1,17 +1,9 @@
+import { Plus, ClipboardList } from 'lucide-react';
 import AddHistoryButton from './components/AddHistoryButton';
 import HistoryCard from './components/HistoryCard';
 
 /* Clinical history */
-export default function ClinicalHistory({
-  records,
-  onAdd,
-  onEdit,
-  icons,
-  role,
-  currentUser,
-  specialty,
-}) {
-  const { ClipboardList, Plus } = icons;
+export default function ClinicalHistory({ onAdd, onEdit, patientRecord }) {
   return (
     <div className="rounded-2xl border border-(--med-gray-border) bg-(--med-gray) p-4 shadow-sm sm:p-6">
       {/* Header */}
@@ -35,9 +27,9 @@ export default function ClinicalHistory({
       </div>
 
       {/* Records */}
-      {records.length > 0 ? (
+      {patientRecord?.length > 0 ? (
         <div className="space-y-3 sm:space-y-4">
-          {records.map((r, index) => (
+          {patientRecord.map((r, index) => (
             <div
               key={r._id}
               className="rounded-xl border border-(--med-gray-border) bg-white p-3 shadow-sm transition hover:shadow-md sm:p-4"
