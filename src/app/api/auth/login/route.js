@@ -1,8 +1,8 @@
 import { connectDB } from '@/lib/mongodb';
-import User from '@/Models/User';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
+import User from '@/models/User';
 
 // @route    POST api/auth/login
 // @desc     Authenticate user
@@ -33,7 +33,13 @@ export async function POST(req) {
     }
 
     //  Build JWT Payload
-    const payload = { id: user._id, email: user.email, role: user.role };
+    const payload = {
+      id: user._id,
+      email: user.email,
+      role: user.role,
+      fullName: user.fullName,
+      specialty: user.specialty,
+    };
 
     //  Generate Tokens
     const accessToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '15m' });
@@ -46,6 +52,7 @@ export async function POST(req) {
       email: user.email,
       phone: user.phone,
       role: user.role,
+      specialty: user.specialty,
       createdAt: user.createdAt,
     };
 
@@ -64,7 +71,7 @@ export async function POST(req) {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      path: '/api/auth/refresh',
+      path: '/',
       maxAge: 60 * 60 * 24 * 7,
     });
 

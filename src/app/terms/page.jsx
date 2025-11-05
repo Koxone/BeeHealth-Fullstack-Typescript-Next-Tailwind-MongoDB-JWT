@@ -11,7 +11,7 @@ export default function Terms() {
       <header className="border-b bg-white/80 backdrop-blur-sm">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <button onClick={() => router.push('/')} className="flex items-center gap-2">
-            <Heart className="h-8 w-8 text-blue-500" />
+            <img src="/images/logo.webp" alt="" className="max-w-10" />
             <span className="text-2xl font-bold text-gray-900">MedTrack</span>
           </button>
         </div>

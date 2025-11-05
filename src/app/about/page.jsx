@@ -11,11 +11,11 @@ export default function About() {
       <header className="border-b bg-white/80 backdrop-blur-sm">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <button onClick={() => router.push('/')} className="flex items-center gap-2">
-            <Heart className="h-8 w-8 text-blue-500" />
+            <img src="/images/logo.webp" alt="" className="max-w-10" />
             <span className="text-2xl font-bold text-gray-900">MedTrack</span>
           </button>
           <button
-            onClick={() => router.push('/login')}
+            onClick={() => router.push('/auth/login')}
             className="rounded-lg bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600"
           >
             Ingresar

@@ -1,17 +1,14 @@
 import './globals.css';
-import ClientLayout from './ClientLayout';
 
 export const metadata = {
   title: 'MedTrack',
-  description: 'Plataforma médica moderna',
+  description: 'Aplicación médica moderna',
 };
 
-export default function RootLayout({ children }) {
+export default function AuthRootLayout({ children }) {
   return (
     <html lang="es">
-      <body className="antialiased  overflow-hidden max-h-screen border">
-        <ClientLayout>{children}</ClientLayout>
-      </body>
+      <body className="min-h-screen overflow-hidden">{children}</body>
     </html>
   );
 }

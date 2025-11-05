@@ -17,11 +17,11 @@ export const connectDB = async () => {
         serverSelectionTimeoutMS: 30000,
       })
       .then((m) => {
-        console.log('✅ MongoDB Connected');
+        console.log('MongoDB Connected');
         return m;
       })
       .catch((err) => {
-        console.error('❌ MongoDB Connection Error:', err);
+        console.error('MongoDB Connection Error:', err);
         throw err;
       });
   }

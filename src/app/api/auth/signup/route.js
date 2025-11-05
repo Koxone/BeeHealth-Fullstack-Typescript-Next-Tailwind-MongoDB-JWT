@@ -1,8 +1,8 @@
 import { connectDB } from '@/lib/mongodb';
-import User from '@/Models/User';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
+import User from '@/models/User';
 
 // @route    POST api/auth/signup
 // @desc     Create New User
@@ -13,7 +13,7 @@ export async function POST(req) {
     await connectDB();
 
     // Get Body from Request
-    const { fullName, email, phone, password, isActive, role } = await req.json();
+    const { fullName, email, phone, password, isActive, role, specialty } = await req.json();
     if (!fullName || !email || !phone || !password) {
       return NextResponse.json({ error: 'All Fields are required' }, { status: 400 });
     }
@@ -35,6 +35,7 @@ export async function POST(req) {
       password: hashed,
       isActive: true,
       role: role || 'patient',
+      specialty: specialty || 'none',
     });
 
     // Build JWT payload
@@ -55,6 +56,7 @@ export async function POST(req) {
       email: user.email,
       phone: user.phone,
       role: user.role,
+      specialty: user.specialty,
       createdAt: user.createdAt,
     };
 

@@ -28,12 +28,12 @@ export async function POST(req) {
     }
 
     const accessToken = jwt.sign(
-      { id: payload.id, email: payload.email, role: payload.role },
+      { id: payload.id, email: payload.email, role: payload.role, fullName: payload.fullName },
       process.env.JWT_SECRET,
       { expiresIn: '15m' }
     );
     const newRefresh = jwt.sign(
-      { id: payload.id, email: payload.email, role: payload.role },
+      { id: payload.id, email: payload.email, role: payload.role, fullName: payload.fullName },
       process.env.JWT_SECRET,
       { expiresIn: '7d' }
     );
@@ -44,7 +44,7 @@ export async function POST(req) {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      path: '/api/auth/refresh',
+      path: '/',
       maxAge: 60 * 60 * 24 * 7,
     });
 

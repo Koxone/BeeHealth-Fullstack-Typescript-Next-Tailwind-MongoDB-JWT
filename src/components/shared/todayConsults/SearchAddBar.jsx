@@ -1,0 +1,29 @@
+'use client';
+
+/* search-add */
+export default function SearchAddBar({ value, onChange, onAdd, icons }) {
+  const { Search, Plus } = icons;
+  return (
+    <div className="rounded-2xl border-2 border-gray-200 bg-white p-4 shadow-lg">
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <div className="relative flex-1">
+          <Search className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Buscar paciente..."
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            className="w-full rounded-xl border-2 border-gray-200 py-3 pr-4 pl-12 font-medium transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20"
+          />
+        </div>
+        <button
+          onClick={onAdd}
+          className="group flex items-center justify-center gap-2 rounded-xl bg-linear-to-r from-indigo-600 to-purple-600 px-6 py-3 font-semibold text-white shadow-lg shadow-indigo-500/30 transition hover:from-indigo-700 hover:to-purple-700 active:scale-95"
+        >
+          <Plus className="h-5 w-5 transition-transform group-hover:rotate-90" />
+          <span>Registrar Consulta</span>
+        </button>
+      </div>
+    </div>
+  );
+}
