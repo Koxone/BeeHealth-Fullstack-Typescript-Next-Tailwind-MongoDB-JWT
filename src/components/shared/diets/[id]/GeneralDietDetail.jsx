@@ -8,7 +8,7 @@ import { getCurrentUser } from '@/lib/auth/getCurrentUser';
 export const runtime = 'nodejs';
 
 // Mock Data for Diets
-import { diet } from './components/GeneralDietsMockData';
+import { diet } from './components/sharedDietsMockData';
 import { Apple } from 'lucide-react';
 
 export default async function GeneralDietDetail() {

@@ -1,38 +1,42 @@
 export const diet = {
-  id: 'mediterraneo',
-  nombre: 'Plan Mediterráneo',
-  duracion: '30 días',
-  pacientesAsignados: 12,
-  descripcion:
-    'Dieta balanceada rica en vegetales, frutas, pescado y aceite de oliva. Este plan está diseñado para ayudar a los pacientes a alcanzar sus objetivos de peso de manera saludable y sostenible.',
+  id: 'mediterranean',
+  name: 'Plan Mediterráneo Premium',
+  duration: '30 días',
+  assignedPatients: 12,
+  description:
+    'Un programa nutricional clínicamente estructurado inspirado en la dieta mediterránea tradicional. Este plan combina una selección precisa de alimentos ricos en antioxidantes, grasas saludables y proteínas de alta calidad, orientado a optimizar tu composición corporal, mejorar la salud metabólica y promover una pérdida de peso sostenible bajo supervisión médica.',
   plan: [
     {
-      titulo: 'Desayuno',
-      hora: '8:00 AM',
-      items: ['1 taza de avena con frutas', '1 yogurt natural', 'Té verde o café sin azúcar'],
-    },
-    {
-      titulo: 'Almuerzo',
-      hora: '1:00 PM',
+      title: 'Desayuno',
+      time: '8:00 AM',
       items: [
-        'Ensalada verde con aceite de oliva',
-        '150g de pescado a la plancha',
-        '1 porción de arroz integral',
-        'Agua natural',
+        'Avena integral cocida con frutas frescas de temporada',
+        'Yogurt natural sin azúcar con semillas de chía',
+        'Infusión antioxidante (té verde o café orgánico sin endulzantes)',
       ],
     },
     {
-      titulo: 'Cena',
-      hora: '7:00 PM',
+      title: 'Almuerzo',
+      time: '1:00 PM',
       items: [
-        'Sopa de verduras',
-        'Pechuga de pollo a la plancha',
-        'Ensalada mixta',
-        'Infusión de hierbas',
+        'Ensalada mediterránea con aceite de oliva extra virgen',
+        '150g de pescado blanco o salmón a la plancha',
+        'Porción medida de arroz integral o quinoa',
+        'Agua mineral o con infusión de pepino y menta',
+      ],
+    },
+    {
+      title: 'Cena',
+      time: '7:00 PM',
+      items: [
+        'Sopa ligera de verduras con especias naturales',
+        'Pechuga de pollo orgánico o tofu marinado a la plancha',
+        'Ensalada mixta con aderezo de aceite de oliva y limón',
+        'Infusión relajante de hierbas (manzanilla o lavanda)',
       ],
     },
   ],
-  notas:
-    'Recuerda mantener una hidratación adecuada (2 litros de agua al día). Evita alimentos procesados y azúcares refinados. Complementa con 30 minutos de ejercicio moderado diario.',
-  pacientes: ['Juan Pérez', 'María López', 'Carlos Ruiz', 'Ana Martínez'],
+  notes:
+    'Este plan fue diseñado por la Dra. Martínez para pacientes que buscan resultados clínicamente controlados sin comprometer el bienestar general. Se recomienda mantener una hidratación óptima (mínimo 2 litros diarios), evitar alimentos ultraprocesados y azúcares añadidos, y acompañar la dieta con 30 minutos diarios de actividad física moderada. Las pautas pueden ajustarse según evolución y requerimientos metabólicos individuales.',
+  patients: ['Juan Pérez', 'María López', 'Carlos Ruiz', 'Ana Martínez'],
 };
