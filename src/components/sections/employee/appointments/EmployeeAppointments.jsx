@@ -14,10 +14,10 @@ export default function EmployeeAppointments({ role, patients }) {
   const [editingCita, setEditingCita] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Hook para crear cita
+  // Hook to create appointment
   const { createAppointment, loading: creating, error: createError } = useCreateAppointment();
 
-  // Hook para obtener citas
+  // Hook to get all appointments
   const { data, loading, refetch } = useAllAppointments();
   const [citas, setCitas] = useState([]);
 
@@ -31,6 +31,7 @@ export default function EmployeeAppointments({ role, patients }) {
         telefono: item.telefono,
         email: item.email,
         motivo: item.motivo,
+        specialty: item.specialty,
         estado: 'Confirmada',
         avatar: item.paciente
           .split(' ')
@@ -50,6 +51,7 @@ export default function EmployeeAppointments({ role, patients }) {
     telefono: '',
     email: '',
     motivo: '',
+    specialty: '',
   });
 
   /* Helpers */
@@ -66,22 +68,28 @@ export default function EmployeeAppointments({ role, patients }) {
     }
   };
 
-  /* Filtrado */
-  const filteredCitas = citas.filter((c) => {
+  // Current Date
+  const today = new Date().toISOString().split('T')[0];
+
+  // Filter
+  const citasDeHoy = citas.filter((c) => c.fecha === today);
+
+  /* Filtro por búsqueda */
+  const filteredCitas = citasDeHoy.filter((c) => {
     const matchSearch =
       c.paciente.toLowerCase().includes(searchTerm.toLowerCase()) ||
       c.telefono.includes(searchTerm);
     return matchSearch;
   });
 
-  /* Abrir modal */
+  // Open Modal
   const openCreate = () => {
     setEditingCita(null);
     setCitaForm({ fecha: '', hora: '', paciente: '', telefono: '', email: '', motivo: '' });
     setShowModal(true);
   };
 
-  /* Crear cita */
+  // Create Appointment
   const handleSave = async (e) => {
     e.preventDefault();
 
@@ -93,14 +101,14 @@ export default function EmployeeAppointments({ role, patients }) {
         phone: citaForm.telefono,
         email: citaForm.email,
         reason: citaForm.motivo,
-        specialty: 'weight', // o 'dental' dependiendo del contexto
+        specialty: citaForm.specialty,
       });
 
       setShowModal(false);
       setEditingCita(null);
       setCitaForm({ fecha: '', hora: '', paciente: '', telefono: '', email: '', motivo: '' });
 
-      // Refrescar citas después de crear
+      // Refresh List
       refetch?.();
     } catch (err) {
       console.error('Error al crear cita:', err.message);
@@ -128,15 +136,15 @@ export default function EmployeeAppointments({ role, patients }) {
       <GeneralSectionHeader
         role={role}
         Icon="pacientes"
-        title="Citas para el día de hoy"
-        subtitle="Administración de Citas"
+        title="Citas del día de hoy"
+        subtitle={`Mostrando todas las especialidades — ${today}`}
       />
 
       <div className="mx-auto max-w-7xl space-y-6">
         {/* Controls */}
         <ControlsBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} onCreate={openCreate} />
 
-        {/* Listado */}
+        {/* List */}
         {filteredCitas.length > 0 ? (
           <div className="grid grid-cols-1 gap-4 px-4">
             {filteredCitas.map((cita, index) => (

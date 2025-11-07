@@ -129,6 +129,25 @@ export default function EmployeeCreateAppointmentModal({
                       className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 focus:border-teal-500 focus:shadow-md focus:shadow-teal-500/20 focus:outline-none"
                     />
                   </div>
+
+                  {/* Especialidad */}
+                  <div className="space-y-2">
+                    <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                      <Sparkles className="h-4 w-4 text-teal-500" />
+                      Especialidad
+                    </label>
+                    <select
+                      required
+                      value={citaForm.specialty || ''}
+                      onChange={(e) => setCitaForm({ ...citaForm, specialty: e.target.value })}
+                      className="w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 focus:border-teal-500 focus:shadow-md focus:shadow-teal-500/20 focus:outline-none"
+                    >
+                      <option value="">-- Selecciona especialidad --</option>
+                      <option value="weight">Control de peso</option>
+                      <option value="dental">Dental</option>
+                      <option value="stetic">Estética</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
