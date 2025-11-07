@@ -12,6 +12,8 @@ import TabsNav from './components/TabsNav';
 import DoctorCreateAppointmentModal from './components/createAppointmentModal/DoctorCreateAppointmentModal';
 import DoctorClinicalRecordModal from './components/historyModal/DoctorClinicalRecordModal';
 import { useClinicalRecord } from './hooks/useClinicalRecord';
+import DoctorBudgets from './components/budgets/DoctorBudgets';
+import DoctorProducts from './components/products/DoctorProducts';
 
 export default function DoctorPatientDetail({ patient, specialty }) {
   const router = useRouter();
@@ -61,7 +63,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
       {/* Tabs */}
       {specialty === 'dental' && <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />}
 
-      {/* Dental */}
+      {/* Dental Clinical Records */}
       {activeTab === 'Historial' && specialty === 'dental' && (
         <ClinicalHistory
           specialty={specialty}
@@ -82,7 +84,13 @@ export default function DoctorPatientDetail({ patient, specialty }) {
         />
       )}
 
-      {/* Weight Control */}
+      {/* Dental Patient Budgets */}
+      {activeTab === 'Presupuestos' && specialty === 'dental' && <DoctorBudgets />}
+
+      {/* Dental Patient Budgets */}
+      {activeTab === 'Productos' && specialty === 'dental' && <DoctorProducts />}
+
+      {/* Weight Control Clinical Records */}
       {specialty === 'weight' && (
         <ClinicalHistory
           specialty={specialty}
