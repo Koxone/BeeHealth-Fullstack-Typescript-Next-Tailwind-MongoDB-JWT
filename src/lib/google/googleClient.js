@@ -6,7 +6,7 @@ export function getGoogleAuthClient() {
 
   if (isProd) {
     // Service Account (Vercel)
-    const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY);
+    const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY.replace(/\\n/g, '\n'));
 
     return new google.auth.GoogleAuth({
       credentials,

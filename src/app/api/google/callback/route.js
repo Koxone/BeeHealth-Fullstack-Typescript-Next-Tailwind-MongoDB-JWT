@@ -6,7 +6,7 @@ import { google } from 'googleapis';
 export async function GET() {
   try {
     // Parse credentials from environment
-    const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY);
+    const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY.replace(/\\n/g, '\n'));
 
     // Create GoogleAuth with service account credentials
     const auth = new google.auth.GoogleAuth({

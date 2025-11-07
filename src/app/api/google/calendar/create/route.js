@@ -9,7 +9,7 @@ export async function POST(req) {
     const { patientId, patientName, specialty, date, time, phone, email, reason } = body;
 
     // Load service account credentials
-    const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY);
+    const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY.replace(/\\n/g, '\n'));
 
     // Authenticate with service account
     const auth = new google.auth.GoogleAuth({
