@@ -1,6 +1,6 @@
 'use client';
 
-import { Plus, Check } from 'lucide-react';
+import { Check, BadgeCheck } from 'lucide-react';
 import { useState } from 'react';
 import useSound from 'use-sound';
 
@@ -11,7 +11,7 @@ export default function RegisterVisitButton({ onClick }) {
   const [play] = useSound('/ping.mp3', { volume: 0.6 });
 
   const handleClick = async () => {
-    play(); 
+    play();
     setIsChecked(true);
     if (onClick) onClick();
 
@@ -29,8 +29,8 @@ export default function RegisterVisitButton({ onClick }) {
           isChecked ? 'scale-75 opacity-0' : 'scale-100 opacity-100'
         }`}
       >
-        <Plus className="h-4 w-4" />
-        Registrar Visita
+        <BadgeCheck className="h-4 w-4" />
+        Check In
       </span>
 
       {/* Check animation */}

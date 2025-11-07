@@ -1,15 +1,8 @@
 'use client';
 
-/* card */
-export default function AppointmentCard({
-  index,
-  cita,
-  getEstadoBadge,
-  icons,
-  onEdit,
-  onAskCancel,
-}) {
-  const { Calendar, Clock, Phone, Mail, Sparkles, Edit2, X } = icons;
+import { Calendar, Clock, Phone, Mail, Sparkles, Edit2, X } from 'lucide-react';
+
+export default function AppointmentCard({ index, cita, getEstadoBadge }) {
   return (
     <div
       style={{ animationDelay: `${index * 50}ms` }}
@@ -82,33 +75,6 @@ export default function AppointmentCard({
             </div>
           </div>
         </div>
-
-        {/* actions */}
-        {cita.estado !== 'Cancelada' ? (
-          <div className="flex shrink-0 gap-2 sm:flex-col lg:flex-row">
-            <button
-              onClick={onEdit}
-              className="group/btn flex items-center justify-center gap-2 rounded-xl border-2 border-blue-200 p-3 text-blue-600 transition-all duration-200 hover:border-blue-400 hover:bg-blue-50 active:scale-95"
-              title="Editar"
-            >
-              <Edit2 className="h-5 w-5 transition-transform duration-200 group-hover/btn:rotate-12" />
-            </button>
-            <button
-              onClick={onAskCancel}
-              className="group/btn flex items-center justify-center gap-2 rounded-xl border-2 border-rose-200 p-3 text-rose-600 transition-all duration-200 hover:border-rose-400 hover:bg-rose-50 active:scale-95"
-              title="Cancelar"
-            >
-              <X className="h-5 w-5 transition-transform duration-200 group-hover/btn:rotate-90" />
-            </button>
-          </div>
-        ) : (
-          <div className="flex shrink-0 items-center gap-2 rounded-xl border border-rose-200 bg-rose-50 px-4 py-2">
-            <div className="h-2 w-2 animate-pulse rounded-full bg-rose-500" />
-            <span className="text-sm font-semibold whitespace-nowrap text-rose-600">
-              Cita cancelada
-            </span>
-          </div>
-        )}
       </div>
 
       {cita.estado !== 'Cancelada' && (

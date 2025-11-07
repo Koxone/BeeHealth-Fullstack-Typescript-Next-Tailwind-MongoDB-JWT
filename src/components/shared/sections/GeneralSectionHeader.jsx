@@ -7,7 +7,6 @@ import {
   Download,
   Apple,
   Plus,
-  Weight,
   DollarSign,
   Activity,
   Dumbbell,
@@ -32,7 +31,7 @@ function GeneralSectionHeader({ role, Icon, title = '', subtitle = '' }) {
     <div className="-mx-4 -mt-4 mb-6 flex w-full items-center justify-between px-4 pt-6 md:rounded-2xl">
       <div>
         <div className="flex items-start gap-4">
-          <div className="rounded-2xl bg-blue-600 p-3 shadow-lg">
+          <div className="bg-medtrack-green-dark rounded-2xl p-3 shadow-lg">
             <SelectedIcon className="h-8 w-8 text-white" />
           </div>
           <div>
@@ -50,7 +49,7 @@ function GeneralSectionHeader({ role, Icon, title = '', subtitle = '' }) {
           {/* Doctor New Diet Button */}
           <Link
             href="/doctor/diets/new"
-            className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600 active:scale-95"
+            className="bg-medtrack-green-solid hover:bg-medtrack-green-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white transition active:scale-95"
           >
             <Plus className="h-5 w-5" />
             Nueva Dieta

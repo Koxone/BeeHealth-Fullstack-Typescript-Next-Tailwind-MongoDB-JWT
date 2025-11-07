@@ -1,12 +1,11 @@
-import GeneralDietDetail from '@/components/shared/diets/[id]/GeneralDietDetail';
+import DoctorDietDetail from '@/components/sections/doctor/diets/[id]/DoctorDietDetail';
 import React from 'react';
 
-function DoctorDietsIDPage() {
+export default async function DoctorDietsIDPage({ params }) {
+  const newParams = await params;
   return (
     <div className="h-screen overflow-hidden pb-40">
-      <GeneralDietDetail />
+      <DoctorDietDetail params={newParams} />
     </div>
   );
 }
-
-export default DoctorDietsIDPage;

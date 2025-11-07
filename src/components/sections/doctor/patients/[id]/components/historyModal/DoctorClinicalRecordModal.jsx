@@ -27,7 +27,7 @@ const ID = {
   notes: 133,
 };
 
-export default function HistoryModal({
+export default function DoctorClinicalRecordModal({
   onClose,
   onSaved,
   record,

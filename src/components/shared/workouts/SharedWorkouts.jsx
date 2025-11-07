@@ -82,7 +82,7 @@ export default function SharedWorkouts({ role }) {
               onClick={() => setFilterCategorie(cat)}
               className={`rounded-lg px-4 py-2 font-medium ${
                 filterCategorie === cat
-                  ? 'bg-blue-500 text-white'
+                  ? 'bg-medtrack-green-solid hover:bg-medtrack-green-hover text-white'
                   : 'border border-gray-300 bg-white hover:bg-gray-50'
               }`}
             >
@@ -100,7 +100,7 @@ export default function SharedWorkouts({ role }) {
               placeholder="Buscar..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 py-2 pr-3 pl-10 focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-lg border border-gray-300 py-2 pr-3 pl-10 outline-none"
             />
           </div>
 
@@ -111,7 +111,7 @@ export default function SharedWorkouts({ role }) {
                 setEditingWorkout(null);
                 setShowEditModal(true);
               }}
-              className="flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-white"
+              className="bg-medtrack-green-solid hover:bg-medtrack-green-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white"
             >
               <Plus className="h-5 w-5" /> Nuevo
             </button>

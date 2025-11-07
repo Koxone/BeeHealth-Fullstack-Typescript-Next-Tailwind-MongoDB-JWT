@@ -64,7 +64,7 @@ export default function BasicInfoSection({ isReadOnly, getAnswer, setAnswer }) {
         {/* Height or Size */}
         <div>
           <label className="mb-2 block text-sm font-semibold text-gray-700">
-            Talla o Altura (cm) <span className="text-red-500">*</span>
+            Talla (cm) <span className="text-red-500">*</span>
           </label>
           <div className="relative">
             <Ruler className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />

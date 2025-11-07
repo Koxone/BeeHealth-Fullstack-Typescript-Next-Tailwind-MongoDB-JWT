@@ -6,7 +6,7 @@ import User from '@/models/User';
 export const runtime = 'nodejs';
 
 export default async function DoctorPatientDetailPage(props) {
-  const params = await props.params; 
+  const params = await props.params;
 
   await connectDB();
 

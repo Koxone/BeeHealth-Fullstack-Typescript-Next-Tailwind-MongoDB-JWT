@@ -11,7 +11,7 @@ export default function PatientsSearchBar({ value, onChange }) {
         placeholder="Buscar por nombre, teléfono o email..."
         value={value}
         onChange={onChange}
-        className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 text-lg focus:ring-2 focus:ring-blue-500"
+        className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 text-lg outline-none"
       />
     </div>
   );

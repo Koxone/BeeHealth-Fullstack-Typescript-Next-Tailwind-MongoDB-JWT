@@ -1450,5 +1450,13 @@
     "specialties": ["dental"],
     "versions": ["full"],
     "order": "ORDER"
+  },
+  {
+    "id": 161,
+    "question": "Adeudos",
+    "type": "number",
+    "specialties": ["dental"],
+    "versions": ["full"],
+    "order": "ORDER"
   }
 ]

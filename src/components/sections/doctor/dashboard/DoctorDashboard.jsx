@@ -1,3 +1,5 @@
+'use client';
+
 import DashboardLayout from '@/components/shared/layouts/DashboardLayout';
 import HeaderWelcome from '@/components/shared/dashboard/header/HeaderWelcome';
 import AppointmentsToday from '@/components/shared/dashboard/appointmentsToday/AppointmentsToday';
@@ -6,8 +8,12 @@ import DoctorIncomeChart from '@/components/sections/doctor/dashboard/components
 import DoctorPatientsChart from '@/components/sections/doctor/dashboard/components/DoctorPatientsChart';
 import StatsGrid from '@/components/shared/dashboard/statsGrid/StatsGrid';
 import GeneralInventoryAlerts from '@/components/shared/dashboard/InventoryAlerts/GeneralInventoryAlerts';
+import { useTodayAppointmentsBySpecialty } from '@/hooks/useTodayAppointmentsBySpecialty';
 
 export default function DoctorDashboard({ currentUser }) {
+  // Google Calendar Custom Hooks
+  const { appointments, loading, error } = useTodayAppointmentsBySpecialty();
+
   return (
     <DashboardLayout>
       {/* Header */}
@@ -23,7 +29,7 @@ export default function DoctorDashboard({ currentUser }) {
       </div>
 
       {/* Appointments */}
-      <AppointmentsToday />
+      <AppointmentsToday role={currentUser?.role} appointments={appointments} />
 
       {/* Summaries */}
       <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-2">

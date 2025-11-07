@@ -10,10 +10,12 @@ import ClinicalHistory from './components/clinicalHistory/ClinicalHistory';
 import BackButton from './components/BackButton';
 import TabsNav from './components/TabsNav';
 import DoctorCreateAppointmentModal from './components/createAppointmentModal/DoctorCreateAppointmentModal';
-import HistoryModal from './components/historyModal/HistoryModal';
+import DoctorClinicalRecordModal from './components/historyModal/DoctorClinicalRecordModal';
 import { useClinicalRecord } from './hooks/useClinicalRecord';
+import DoctorBudgets from './components/budgets/DoctorBudgets';
+import DoctorProducts from './components/products/DoctorProducts';
 
-export default function DoctorPatientDetail({ patient }) {
+export default function DoctorPatientDetail({ patient, specialty }) {
   const router = useRouter();
   const { id } = useParams();
 
@@ -25,6 +27,8 @@ export default function DoctorPatientDetail({ patient }) {
   const [showCreateAppointmentModal, setShowCreateAppointmentModal] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [isReadOnly, setIsReadOnly] = useState(false);
+
+  const [activeTab, setActiveTab] = useState('Historial');
 
   if (error || isLoading) {
     return (
@@ -43,6 +47,7 @@ export default function DoctorPatientDetail({ patient }) {
 
   return (
     <div className="h-full space-y-6 overflow-y-auto">
+      {/* Header */}
       <div className="grid grid-rows-[auto_1fr]">
         <BackButton onClick={() => router.back()} icon={{ ArrowLeft }} />
         <PatientHeader
@@ -52,30 +57,66 @@ export default function DoctorPatientDetail({ patient }) {
         />
       </div>
 
-      <QuickStats patientRecord={patientRecord} />
-      <TabsNav />
+      {/* Quick Stats */}
+      <QuickStats patientRecord={patientRecord} specialty={specialty} />
 
-      <ClinicalHistory
-        patientRecord={patientRecord}
-        onAdd={() => {
-          const lastRecord = patientRecord?.[patientRecord.length - 1] || null;
-          setSelectedRecord(lastRecord);
-          setIsReadOnly(false);
-          setHistoryMode('create');
-          setShowHistoryModal(true);
-        }}
-        onEdit={(record, readOnly) => {
-          setSelectedRecord(record);
-          setIsReadOnly(readOnly);
-          setHistoryMode(readOnly ? 'view' : 'edit');
-          setShowHistoryModal(true);
-        }}
-      />
+      {/* Tabs */}
+      {specialty === 'dental' && <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />}
 
-      <WeightChart patientRecord={patientRecord} icons={{ TrendingUp }} />
+      {/* Dental Clinical Records */}
+      {activeTab === 'Historial' && specialty === 'dental' && (
+        <ClinicalHistory
+          specialty={specialty}
+          patientRecord={patientRecord}
+          onAdd={() => {
+            const lastRecord = patientRecord?.[patientRecord.length - 1] || null;
+            setSelectedRecord(lastRecord);
+            setIsReadOnly(false);
+            setHistoryMode('create');
+            setShowHistoryModal(true);
+          }}
+          onEdit={(record, readOnly) => {
+            setSelectedRecord(record);
+            setIsReadOnly(readOnly);
+            setHistoryMode(readOnly ? 'view' : 'edit');
+            setShowHistoryModal(true);
+          }}
+        />
+      )}
+
+      {/* Dental Patient Budgets */}
+      {activeTab === 'Presupuestos' && specialty === 'dental' && <DoctorBudgets />}
+
+      {/* Dental Patient Budgets */}
+      {activeTab === 'Productos' && specialty === 'dental' && <DoctorProducts />}
+
+      {/* Weight Control Clinical Records */}
+      {specialty === 'weight' && (
+        <ClinicalHistory
+          specialty={specialty}
+          patientRecord={patientRecord}
+          onAdd={() => {
+            const lastRecord = patientRecord?.[patientRecord.length - 1] || null;
+            setSelectedRecord(lastRecord);
+            setIsReadOnly(false);
+            setHistoryMode('create');
+            setShowHistoryModal(true);
+          }}
+          onEdit={(record, readOnly) => {
+            setSelectedRecord(record);
+            setIsReadOnly(readOnly);
+            setHistoryMode(readOnly ? 'view' : 'edit');
+            setShowHistoryModal(true);
+          }}
+        />
+      )}
+
+      {specialty === 'weight' && (
+        <WeightChart patientRecord={patientRecord} icons={{ TrendingUp }} />
+      )}
 
       {showHistoryModal && (
-        <HistoryModal
+        <DoctorClinicalRecordModal
           onClose={() => setShowHistoryModal(false)}
           onSaved={() => {
             router.refresh();

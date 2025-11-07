@@ -18,6 +18,7 @@ export default async function DoctorPatientsList({ currentUser, role }) {
   const serializedPatients = patients.map((p) => ({
     ...p,
     _id: p._id.toString(),
+    lastVisit: p.lastVisit ?? null,
   }));
 
   return (

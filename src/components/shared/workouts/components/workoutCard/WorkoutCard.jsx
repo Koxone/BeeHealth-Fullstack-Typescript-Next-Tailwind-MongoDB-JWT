@@ -23,7 +23,7 @@ export default function WorkoutCard({
   return (
     <div
       onClick={onOpen}
-      className="group cursor-pointer overflow-hidden rounded-xl border-2 border-gray-200 bg-white shadow-sm transition-all duration-200 hover:border-blue-400 hover:shadow-lg active:scale-95"
+      className="group cursor-pointer overflow-hidden rounded-xl border-2 border-gray-200 bg-white shadow-sm transition-all duration-200 hover:border-medtrack-green-solid hover:shadow-lg active:scale-95"
     >
       {/* Main Image */}
       <div className="relative h-48 overflow-hidden bg-gray-100">

@@ -1,9 +1,9 @@
 import { Plus } from 'lucide-react';
-import GeneralDietCard from './components/dietCard/GeneralDietCard';
+import SharedDietCard from './components/dietCard/SharedDietCard';
 import Link from 'next/link';
 export const runtime = 'nodejs';
-import { diets } from './components/dietCard/components/mockData';
 import GeneralSectionHeader from '../sections/GeneralSectionHeader';
+import { diets } from './[id]/components/sharedDietsMockData';
 
 export default async function SharedDiets({ role }) {
   return (
@@ -24,7 +24,7 @@ export default async function SharedDiets({ role }) {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {diets.map((diet) => (
-          <GeneralDietCard role={role} diet={diet} key={diet.id} />
+          <SharedDietCard role={role} diet={diet} key={diet.id} />
         ))}
       </div>
     </div>

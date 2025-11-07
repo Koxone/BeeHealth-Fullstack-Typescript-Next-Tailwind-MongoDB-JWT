@@ -167,6 +167,14 @@ export default function MedicalHistoryForm() {
               }
               const user = JSON.parse(storedUser);
 
+              await fetch('/api/users/specialty', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  userId: user.id,
+                  specialty: activeTab,
+                }),
+              });
 
               const payload = {
                 patient: user.id,

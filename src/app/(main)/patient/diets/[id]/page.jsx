@@ -1,12 +1,11 @@
 import PatientDietDetail from '@/components/sections/patient/diets/[id]/PatientDietDetail';
-import React from 'react';
 
-function PatientDietDetailPage() {
+export default async function PatientDietDetailPage({ params }) {
+  const resolvedParams = await params;
+
   return (
     <div className="h-screen overflow-hidden pb-40">
-      <PatientDietDetail />
+      <PatientDietDetail params={resolvedParams} />
     </div>
   );
 }
-
-export default PatientDietDetailPage;

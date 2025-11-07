@@ -1,8 +1,7 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-
 import HeaderBar from './components/HeaderBar';
 import ProgressSteps from './components/ProgressSteps';
 import DoctorsGrid from './components/DoctorsGrid';
@@ -12,16 +11,8 @@ import ReasonField from './components/ReasonField';
 import SummaryCard from './components/SummaryCard';
 import SuccessModal from './components/SuccessModal';
 import useSound from 'use-sound';
-
-import { formatDate, isPastDate, getDaysInMonth } from './components/NewAppointmentUtils';
-
-/* Mock current user (replaces Zustand) */
-const mockCurrentUser = {
-  id: 'user_abc123',
-  fullName: 'Laura Hernández',
-  phone: '+52 55 1234 5678',
-  email: 'laura.hernandez@example.com',
-};
+import { isPastDate, getDaysInMonth } from './components/NewAppointmentUtils';
+import useAuthStore from '@/zustand/useAuthStore';
 
 /* Slots helper */
 function getAvailableSlots(date, tipo) {
@@ -71,82 +62,27 @@ const doctors = [
   { id: 3, nombre: 'Tratamientos Estéticos', especialidad: 'Medicina Estética' },
 ];
 
-/* Fetch existing appointments */
-async function fetchAppointments() {
-  const res = await fetch('/api/appointments');
-  if (!res.ok) throw new Error('Error al obtener citas');
-  const data = await res.json();
-  return data;
-}
-
 /* Main component */
 export default function NewAppointment() {
-  /* Router */
+  // Zustand
+  const { user } = useAuthStore();
+
+  // Hooks
   const router = useRouter();
 
-  /* Modal state */
+  // Local States
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [successData, setSuccessData] = useState(null);
-
-  // Confirm Sound
   const [play] = useSound('/ping.mp3', { volume: 0.6 });
 
-  /* Form state */
-  const [appointments, setAppointments] = useState([]);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [reason, setReason] = useState('');
 
-  /* Derived */
   const days = getDaysInMonth(currentMonth);
   const monthName = currentMonth.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
-
-  /* Load existing appointments */
-  useEffect(() => {
-    const load = async () => {
-      try {
-        const data = await fetchAppointments();
-        setAppointments(data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    load();
-  }, []);
-
-  /* Booked map */
-  const bookedTimes = useMemo(() => {
-    const map = {};
-    appointments.forEach((a) => {
-      const date = a.start?.dateTime?.slice(0, 10);
-      const time = new Date(a.start.dateTime).toLocaleTimeString('es-MX', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-      });
-      if (!map[date]) map[date] = [];
-      map[date].push(time);
-    });
-    return map;
-  }, [appointments]);
-
-  /* Available slots for selected date */
-  const availableTimesForDate = useMemo(() => {
-    if (!selectedDate || !selectedDoctor) return [];
-    const dateStr = formatDate(selectedDate);
-    const doctor = doctors.find((d) => d.id === selectedDoctor);
-    const allSlots = getAvailableSlots(selectedDate, doctor.nombre);
-    const booked = bookedTimes[dateStr] || [];
-    return allSlots.filter((slot) => !booked.includes(slot));
-  }, [selectedDate, selectedDoctor, bookedTimes]);
-
-  /* Helpers */
-  const isDateAvailable = (date) => {
-    if (!date) return false;
-    return !isPastDate(date);
-  };
 
   const handlePrevMonth = () => {
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
@@ -161,7 +97,7 @@ export default function NewAppointment() {
   };
 
   const handleDateSelect = (date) => {
-    if (!isPastDate(date) && isDateAvailable(date)) {
+    if (!isPastDate(date)) {
       setSelectedDate(date);
       setSelectedTime(null);
     }
@@ -174,7 +110,6 @@ export default function NewAppointment() {
     return 'pending';
   };
 
-  /* Reset form */
   const resetForm = () => {
     setSelectedDoctor(null);
     setSelectedDate(null);
@@ -183,41 +118,36 @@ export default function NewAppointment() {
     setCurrentMonth(new Date());
   };
 
-  /* Close modal */
-  const closeSuccessModal = () => {
-    setShowSuccessModal(false);
-    setSuccessData(null);
-  };
-
-  /* Submit */
   const handleSubmit = async (e) => {
-    play();
     e.preventDefault();
+    play();
+
     if (!selectedDoctor || !selectedDate || !selectedTime || !reason) {
       alert('Por favor completa todos los campos');
       return;
     }
+
     try {
       const doctor = doctors.find((d) => d.id === selectedDoctor);
-      const fechaISO = new Date(selectedDate);
-      const [hour, minute] = selectedTime.split(':');
-      fechaISO.setHours(parseInt(hour), parseInt(minute), 0, 0);
+      const formattedDate = selectedDate.toISOString().split('T')[0];
+      const specialty = doctor.nombre === 'Odontología' ? 'dental' : 'weight';
 
-      const res = await fetch('/api/appointments', {
+      const res = await fetch('/api/google/calendar/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          nombre: mockCurrentUser.fullName,
-          telefono: mockCurrentUser.phone,
-          email: mockCurrentUser.email,
-          motivo: reason,
-          tipo: doctor.nombre,
-          fecha: fechaISO.toISOString(),
+          patientId: user?.id,
+          patientName: user?.fullName,
+          specialty,
+          date: formattedDate,
+          time: selectedTime,
+          phone: user?.phone,
+          email: user?.email,
+          reason,
         }),
       });
 
       if (!res.ok) throw new Error('Error al crear la cita');
-      const data = await res.json();
 
       setSuccessData({ doctor, date: selectedDate, time: selectedTime, reason });
       setShowSuccessModal(true);
@@ -228,11 +158,9 @@ export default function NewAppointment() {
     }
   };
 
-  /* Render */
   return (
     <div className="h-full overflow-x-hidden overflow-y-auto pb-8">
       <HeaderBar onBack={() => router.back()} />
-
       <div className="mx-auto max-w-4xl">
         <ProgressSteps
           getStepStatus={getStepStatus}
@@ -259,7 +187,7 @@ export default function NewAppointment() {
               onNext={handleNextMonth}
               selectedDate={selectedDate}
               onSelectDate={handleDateSelect}
-              isDateAvailable={isDateAvailable}
+              isDateAvailable={(date) => !isPastDate(date)}
               isPastDate={isPastDate}
             />
           )}
@@ -270,7 +198,10 @@ export default function NewAppointment() {
                 day: 'numeric',
                 month: 'long',
               })}
-              times={availableTimesForDate}
+              times={getAvailableSlots(
+                selectedDate,
+                doctors.find((d) => d.id === selectedDoctor).nombre
+              )}
               selectedTime={selectedTime}
               onSelectTime={setSelectedTime}
             />
@@ -308,7 +239,9 @@ export default function NewAppointment() {
           </div>
         </form>
 
-        {showSuccessModal && <SuccessModal data={successData} onClose={closeSuccessModal} />}
+        {showSuccessModal && (
+          <SuccessModal data={successData} onClose={() => setShowSuccessModal(false)} />
+        )}
       </div>
     </div>
   );
