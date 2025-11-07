@@ -23,6 +23,7 @@ export async function GET(req) {
 
     // Get events for the next 30 days
     const now = new Date();
+    now.setHours(0, 0, 0, 0);
     const monthFromNow = new Date();
     monthFromNow.setDate(now.getDate() + 30);
 
@@ -32,6 +33,7 @@ export async function GET(req) {
       timeMax: monthFromNow.toISOString(),
       singleEvents: true,
       orderBy: 'startTime',
+      timeZone: 'America/Mexico_City',
     });
 
     return Response.json({

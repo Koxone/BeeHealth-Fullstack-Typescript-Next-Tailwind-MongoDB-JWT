@@ -19,6 +19,7 @@ export default function EmployeeAppointments({ role, patients }) {
 
   // Hook to get all appointments
   const { data, loading, refetch } = useAllAppointments();
+  console.log(data)
   const [citas, setCitas] = useState([]);
 
   useEffect(() => {

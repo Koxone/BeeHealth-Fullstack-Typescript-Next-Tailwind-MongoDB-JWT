@@ -7,7 +7,6 @@ import Legend from './Legend';
 export default function DoctorCalendarCard({
   monthName,
   days,
-  currentMonth,
   selectedDate,
   onPrev,
   onNext,

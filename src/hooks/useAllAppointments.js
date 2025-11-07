@@ -40,7 +40,7 @@ function toTime(dateISO) {
 function dateKey(dateISO) {
   if (!dateISO) return '';
   const d = new Date(dateISO);
-  return d.toISOString().slice(0, 10);
+  return d.toLocaleDateString('en-CA', { timeZone: 'America/Mexico_City' });
 }
 
 /* Normalizer */

@@ -1,7 +1,8 @@
-import { Clock, Users, ChevronRight } from 'lucide-react';
+import { Clock, Users, ChevronRight, Phone } from 'lucide-react';
 import Link from 'next/link';
 
-export default function AppointmentsToday({ onConfirm, onViewAll }) {
+export default function AppointmentsToday({ appointments }) {
+  console.log(appointments);
   const citasHoyData = [
     { id: 1, hora: '09:00', paciente: 'Juan Pérez', estado: 'Confirmada', telefono: '555-0101' },
     { id: 2, hora: '10:30', paciente: 'María López', estado: 'Pendiente', telefono: '555-0102' },
@@ -24,7 +25,7 @@ export default function AppointmentsToday({ onConfirm, onViewAll }) {
       </div>
 
       <div className="max-h-[400px] space-y-3 overflow-y-auto">
-        {citasHoyData.map((cita) => (
+        {appointments.map((cita) => (
           <div
             key={cita.id}
             className="border-medtrack-green-solid/30 hover:border-medtrack-green-hover rounded-xl border-2 p-4 transition"
@@ -34,13 +35,9 @@ export default function AppointmentsToday({ onConfirm, onViewAll }) {
                 <div className="mb-2 flex items-center gap-2">
                   <h3 className="font-semibold text-gray-900">{cita.paciente}</h3>
                   <span
-                    className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                      cita.estado === 'Confirmada'
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-yellow-100 text-yellow-800'
-                    }`}
+                    className={`rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800`}
                   >
-                    {cita.estado}
+                    Confirmada
                   </span>
                 </div>
                 <div className="flex items-center gap-4 text-sm text-gray-600">
@@ -49,7 +46,7 @@ export default function AppointmentsToday({ onConfirm, onViewAll }) {
                     <span>{cita.hora}</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <Users className="h-4 w-4" />
+                    <Phone className="h-4 w-4" />
                     <span>{cita.telefono}</span>
                   </div>
                 </div>

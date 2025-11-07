@@ -19,8 +19,6 @@ import StatsGrid from './components/StatsGrid';
 import AppointmentsCard from './components/AppointmentsCard';
 import DoctorCalendarCard from './components/DoctorCalendarCard';
 import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
-import CalendarHeader from './components/CalendarHeader';
-import WeekdaysRow from './components/WeekdaysRow';
 
 const getDaysInMonth = (date) => {
   const year = date.getFullYear();
@@ -63,8 +61,8 @@ function parseDescriptionToFields(desc) {
 
 /* Format */
 function formatDateKey(date) {
-  // Date key
-  return date.toISOString().slice(0, 10);
+  if (!date) return '';
+  return date.toLocaleDateString('en-CA', { timeZone: 'America/Mexico_City' });
 }
 
 export default function DoctorCalendar({ role, currentUser }) {
@@ -210,7 +208,7 @@ export default function DoctorCalendar({ role, currentUser }) {
     // Month window
     const year = currentMonth.getFullYear();
     const month = currentMonth.getMonth();
-    const monthPrefix = `${year}-${String(month + 1).padStart(2, '0')}`; // yyyy-mm
+    const monthPrefix = `${year}-${String(month + 1).padStart(2, '0')}`;
 
     // Filter events in current month using _dateKey yyyy-mm-dd
     const monthEvents = events.filter((e) => e._dateKey?.startsWith(monthPrefix));
@@ -273,7 +271,6 @@ export default function DoctorCalendar({ role, currentUser }) {
           <AppointmentsCard
             selectedDate={selectedDate}
             appointments={selectedDate ? helpers.getAppointmentsForDate(selectedDate) : []}
-            icons={icons}
           />
         </div>
       </div>
