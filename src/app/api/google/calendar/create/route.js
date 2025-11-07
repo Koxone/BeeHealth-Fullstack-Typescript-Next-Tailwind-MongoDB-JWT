@@ -4,10 +4,9 @@ import { getGoogleOAuthClient } from '@/lib/google/googleClient';
 export async function POST(req) {
   try {
     const body = await req.json();
-    const { summary, description, start, end, specialty } = body;
+    const { patientName, specialty, date, time, phone, email, reason } = body;
 
     const oauth2Client = getGoogleOAuthClient();
-
     oauth2Client.setCredentials({
       access_token: process.env.GOOGLE_ACCESS_TOKEN,
       refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
@@ -20,11 +19,26 @@ export async function POST(req) {
         ? process.env.GOOGLE_CALENDAR_ID_WEIGHT
         : process.env.GOOGLE_CALENDAR_ID_DENTAL;
 
+    const startDateTime = new Date(`${date}T${time}:00-06:00`);
+    const endDateTime = new Date(startDateTime.getTime() + 30 * 60 * 1000);
+
+    const summary = `${specialty === 'weight' ? 'Control de peso' : 'Odontologia'}`;
+    const description = `
+      Paciente: ${patientName}
+      Motivo de consulta: ${reason}
+      Teléfono: ${phone}
+      Correo: ${email}
+      Fecha: ${date}
+      Hora: ${time}
+      Especialidad: ${specialty}
+    `.trim();
+
     const event = {
       summary,
       description,
-      start: { dateTime: start, timeZone: 'America/Mexico_City' },
-      end: { dateTime: end, timeZone: 'America/Mexico_City' },
+      start: { dateTime: startDateTime.toISOString(), timeZone: 'America/Mexico_City' },
+      end: { dateTime: endDateTime.toISOString(), timeZone: 'America/Mexico_City' },
+      attendees: email ? [{ email }] : [],
     };
 
     const response = await calendar.events.insert({
@@ -34,7 +48,7 @@ export async function POST(req) {
 
     return Response.json({ success: true, data: response.data });
   } catch (error) {
-    console.error(error);
+    console.error('Error creating event:', error);
     return Response.json({ success: false, error: error.message }, { status: 500 });
   }
 }
