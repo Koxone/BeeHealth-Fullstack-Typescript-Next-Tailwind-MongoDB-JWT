@@ -10,7 +10,6 @@ import { useAllTodayAppointments } from '@/hooks/useAllTodayAppointments';
 export default function EmployeeDashboard({ currentUser }) {
   // Hook to get all appointments
   const { appointments, error } = useAllTodayAppointments();
-  console.log(appointments);
 
   return (
     <DashboardLayout>

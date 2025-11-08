@@ -39,7 +39,6 @@ export default function LoginForm() {
       }
 
       console.log('Login successful:', data);
-      console.log('Session cookie set!');
 
       setUser(data.user);
       setToken(data.token);
