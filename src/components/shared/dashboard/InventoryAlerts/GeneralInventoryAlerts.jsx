@@ -15,7 +15,7 @@ export default function GeneralInventoryAlerts({ role }) {
   return (
     <div className="overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
       {/* Header */}
-      <div className="relative overflow-hidden bg-red-400 px-6 py-5">
+      <div className="from-medtrack-green-dark to-medtrack-green-solid relative overflow-hidden bg-linear-to-r px-6 py-5">
         <div className="absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 animate-pulse rounded-full bg-white/10" />
         <div className="absolute bottom-0 left-0 -mb-12 -ml-12 h-24 w-24 rounded-full bg-white/10" />
 
@@ -39,7 +39,7 @@ export default function GeneralInventoryAlerts({ role }) {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4 border-b-2 border-gray-200 bg-linear-to-r from-gray-50 to-rose-50 px-6 py-4">
+      <div className="bg-medtrack-green-light grid grid-cols-3 gap-4 border-b-2 border-gray-200 px-6 py-4">
         <div className="text-center">
           <div className="mb-1 flex items-center justify-center gap-1">
             <AlertCircle className="h-4 w-4 text-rose-600" />

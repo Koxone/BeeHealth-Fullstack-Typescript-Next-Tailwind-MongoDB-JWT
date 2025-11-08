@@ -5,7 +5,7 @@ export default function DoctorAccountingSummary({ role }) {
   return (
     <div className="overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
       {/* Header */}
-      <div className="relative overflow-hidden bg-blue-400 px-6 py-5">
+      <div className="from-medtrack-green-dark to-medtrack-green-solid relative overflow-hidden bg-linear-to-r px-6 py-5">
         <div className="absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full bg-white/10" />
         <div className="absolute bottom-0 left-0 -mb-12 -ml-12 h-24 w-24 rounded-full bg-white/10" />
 
@@ -26,10 +26,10 @@ export default function DoctorAccountingSummary({ role }) {
       </div>
 
       {/* Total */}
-      <div className="border-b-2 border-gray-200 bg-linear-to-br from-gray-50 to-blue-50 px-6 py-4">
+      <div className="border-b-2 border-gray-200 bg-medtrack-green-light px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="rounded-lg bg-linear-to-br from-blue-500 to-indigo-600 p-2 shadow-lg">
+            <div className="from-medtrack-green-dark to-medtrack-green-solid rounded-lg bg-linear-to-r p-2 shadow-lg">
               <TrendingUp className="h-5 w-5 text-white" />
             </div>
             <div>

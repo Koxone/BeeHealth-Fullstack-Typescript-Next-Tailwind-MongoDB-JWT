@@ -108,7 +108,8 @@ export const employeeStats = [
 
 /* Shared styles */
 export const styles = {
-  primary: 'bg-linear-to-br from-blue-500 to-blue-600 text-white',
+  primary:
+    'bg-linear-to-r from-medtrack-green-dark to-medtrack-green-solid text-white border-transparent',
   success:
     'border border-gray-200 bg-white text-gray-900 hover:border-green-300 transition active:scale-95',
   purple:
@@ -118,7 +119,7 @@ export const styles = {
 };
 
 export const textColors = {
-  primary: 'text-blue-100',
+  primary: 'text-white',
   success: 'text-gray-600',
   purple: 'text-gray-600',
   danger: 'text-gray-600',

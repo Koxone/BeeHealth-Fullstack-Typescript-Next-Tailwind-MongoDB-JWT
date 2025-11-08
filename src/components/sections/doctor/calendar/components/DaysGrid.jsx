@@ -16,11 +16,11 @@ export default function DaysGrid({ days, selectedDate, onSelectDate, helpers }) 
             onClick={() => onSelectDate(date)}
             className={`group relative flex aspect-square flex-col items-center justify-center rounded-xl text-sm font-semibold transition ${
               isSelected
-                ? 'z-10 scale-110 bg-linear-to-br from-blue-600 to-indigo-600 text-white shadow-lg'
+                ? 'from-medtrack-green-dark to-medtrack-green-solid z-10 scale-110 bg-linear-to-r text-white shadow-lg'
                 : hasApts
-                  ? 'border-2 border-blue-300 bg-linear-to-br from-blue-50 to-indigo-50 text-gray-900 hover:scale-105 hover:from-blue-100 hover:to-indigo-100 hover:shadow-md'
+                  ? 'border-medtrack-green-solid/50 border-2 bg-linear-to-br from-blue-50 to-indigo-50 text-gray-900 hover:scale-105 hover:from-blue-100 hover:to-indigo-100 hover:shadow-md'
                   : 'bg-gray-50 text-gray-600 hover:scale-105 hover:bg-gray-100'
-            } ${isToday && !isSelected ? 'ring-2 ring-blue-500 ring-offset-2' : ''} active:scale-95`}
+            } ${isToday && !isSelected ? 'ring-medtrack-green-solid ring-2 ring-offset-1' : ''} active:scale-95`}
           >
             <span className="mb-1">{date.getDate()}</span>
             {hasApts && (
@@ -34,7 +34,7 @@ export default function DaysGrid({ days, selectedDate, onSelectDate, helpers }) 
               </div>
             )}
             {isToday && !isSelected && (
-              <div className="absolute -top-1 -right-1 h-2 w-2 animate-pulse rounded-full bg-blue-600" />
+              <div className="absolute -top-1 -right-1 h-2 w-2 animate-pulse rounded-full bg-red-600" />
             )}
           </button>
         );

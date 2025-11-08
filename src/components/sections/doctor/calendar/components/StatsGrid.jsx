@@ -6,21 +6,21 @@ export default function StatsGrid({ stats, icons }) {
       value: stats.totalAppointmentsThisMonth,
       Icon: CalendarIcon,
       gradient: 'from-blue-500 to-indigo-600',
-      bg: 'from-blue-50 to-indigo-50',
+      bg: 'from-medtrack-green-light to-medtrack-green-solid',
     },
     {
       label: 'Días con citas',
       value: stats.daysWithAppointments,
       Icon: CheckCircle,
       gradient: 'from-emerald-500 to-green-600',
-      bg: 'from-emerald-50 to-green-50',
+      bg: 'from-medtrack-green-light to-medtrack-green-solid',
     },
     {
       label: 'Citas hoy',
       value: stats.todayAppointments,
       Icon: Clock,
       gradient: 'from-amber-500 to-orange-600',
-      bg: 'from-amber-50 to-orange-50',
+      bg: 'from-medtrack-green-light to-medtrack-green-solid',
     },
   ];
   return (
