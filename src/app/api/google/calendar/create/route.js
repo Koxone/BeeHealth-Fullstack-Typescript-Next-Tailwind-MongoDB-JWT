@@ -1,63 +1,43 @@
+// Create event (service account)
 import { google } from 'googleapis';
+import { NextResponse } from 'next/server';
+import { getGoogleOAuthClient } from '@/lib/google/googleClient';
 
-// @route    POST /api/google/calendar/create
-// @desc     Create Appointment
-// @access   Private
 export async function POST(req) {
   try {
+    // Body
     const body = await req.json();
-    const { patientId, patientName, specialty, date, time, phone, email, reason } = body;
+    const { patientName, specialty, date, time, phone, email, reason } = body;
 
-    // Load service account credentials
-    const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY.replace(/\\n/g, '\n'));
-
-    // Authenticate with service account
-    const auth = new google.auth.GoogleAuth({
-      credentials,
-      scopes: ['https://www.googleapis.com/auth/calendar'],
-    });
-
+    // Auth
+    const auth = getGoogleOAuthClient(); // JWT from GOOGLE_SERVICE_ACCOUNT_KEY
     const calendar = google.calendar({ version: 'v3', auth });
 
-    // Select calendar based on specialty
+    // Calendar id
     const calendarId =
       specialty === 'weight'
         ? process.env.GOOGLE_CALENDAR_ID_WEIGHT
         : process.env.GOOGLE_CALENDAR_ID_DENTAL;
 
-    // Build event details
-    const startDateTime = new Date(`${date}T${time}:00-06:00`);
-    const endDateTime = new Date(startDateTime.getTime() + 30 * 60 * 1000);
+    // Dates
+    const start = new Date(`${date}T${time}:00-06:00`);
+    const end = new Date(start.getTime() + 30 * 60 * 1000);
 
-    const summary = specialty === 'weight' ? 'Control de peso' : 'Odontología';
-    const description = `
-      Paciente: ${patientName}
-      Paciente ID: ${patientId}
-      Motivo de consulta: ${reason}
-      Teléfono: ${phone}
-      Correo: ${email}
-      Fecha: ${date}
-      Hora: ${time}
-      Especialidad: ${specialty}
-    `.trim();
-
+    // Payload
     const event = {
-      summary,
-      description,
-      start: { dateTime: startDateTime.toISOString(), timeZone: 'America/Mexico_City' },
-      end: { dateTime: endDateTime.toISOString(), timeZone: 'America/Mexico_City' },
-      attendees: email ? [{ email }] : [],
+      summary: `${specialty === 'weight' ? 'Control de peso' : 'Dental'} · ${patientName}`,
+      description: `Motivo: ${reason || ''}\nTel: ${phone || ''}\nEmail: ${email || ''}`,
+      start: { dateTime: start.toISOString() },
+      end: { dateTime: end.toISOString() },
     };
 
-    // Create event
-    const response = await calendar.events.insert({
-      calendarId,
-      resource: event,
-    });
+    // Insert
+    const { data } = await calendar.events.insert({ calendarId, requestBody: event });
 
-    return Response.json({ success: true, data: response.data });
+    // Ok
+    return NextResponse.json({ success: true, id: data.id });
   } catch (error) {
-    console.error('Error creating event:', error);
-    return Response.json({ success: false, error: error.message }, { status: 500 });
+    // Fail
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }

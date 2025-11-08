@@ -1,47 +1,41 @@
+// List events (service account)
 import { google } from 'googleapis';
 import { getGoogleOAuthClient } from '@/lib/google/googleClient';
 
-// @route    GET /api/google/calendar/appointments
-// @desc     Get Appointments
-// @access   Private 
 export async function GET(req) {
   try {
+    // Params
     const { searchParams } = new URL(req.url);
     const specialty = searchParams.get('specialty') || 'weight';
 
-    const oauth2Client = getGoogleOAuthClient();
-    oauth2Client.setCredentials({
-      access_token: process.env.GOOGLE_ACCESS_TOKEN,
-      refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
-    });
+    // Auth
+    const auth = getGoogleOAuthClient(); // JWT from GOOGLE_SERVICE_ACCOUNT_KEY
+    const calendar = google.calendar({ version: 'v3', auth });
 
-    const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
+    // Calendar id
     const calendarId =
       specialty === 'weight'
         ? process.env.GOOGLE_CALENDAR_ID_WEIGHT
         : process.env.GOOGLE_CALENDAR_ID_DENTAL;
 
-    // Get events for the next 30 days
+    // Time window
     const now = new Date();
-    now.setHours(0, 0, 0, 0);
-    const monthFromNow = new Date();
-    monthFromNow.setDate(now.getDate() + 30);
+    const in30d = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
 
-    const response = await calendar.events.list({
+    // Fetch
+    const { data } = await calendar.events.list({
       calendarId,
       timeMin: now.toISOString(),
-      timeMax: monthFromNow.toISOString(),
+      timeMax: in30d.toISOString(),
       singleEvents: true,
       orderBy: 'startTime',
-      timeZone: 'America/Mexico_City',
+      maxResults: 50,
     });
 
-    return Response.json({
-      success: true,
-      events: response.data.items || [],
-    });
+    // Ok
+    return Response.json({ success: true, events: data.items || [] });
   } catch (error) {
-    console.error('Error listing events:', error);
+    // Fail
     return Response.json({ success: false, error: error.message }, { status: 500 });
   }
 }
