@@ -1,5 +1,4 @@
 import { google } from 'googleapis';
-import { getGoogleOAuthClient } from '@/lib/google/googleClient';
 
 // @route    POST /api/google/calendar/create
 // @desc     Create Appointment
@@ -9,23 +8,28 @@ export async function POST(req) {
     const body = await req.json();
     const { patientId, patientName, specialty, date, time, phone, email, reason } = body;
 
-    const oauth2Client = getGoogleOAuthClient();
-    oauth2Client.setCredentials({
-      access_token: process.env.GOOGLE_ACCESS_TOKEN,
-      refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
+    // Load service account credentials
+    const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY.replace(/\\n/g, '\n'));
+
+    // Authenticate with service account
+    const auth = new google.auth.GoogleAuth({
+      credentials,
+      scopes: ['https://www.googleapis.com/auth/calendar'],
     });
 
-    const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
+    const calendar = google.calendar({ version: 'v3', auth });
 
+    // Select calendar based on specialty
     const calendarId =
       specialty === 'weight'
         ? process.env.GOOGLE_CALENDAR_ID_WEIGHT
         : process.env.GOOGLE_CALENDAR_ID_DENTAL;
 
+    // Build event details
     const startDateTime = new Date(`${date}T${time}:00-06:00`);
     const endDateTime = new Date(startDateTime.getTime() + 30 * 60 * 1000);
 
-    const summary = `${specialty === 'weight' ? 'Control de peso' : 'Odontologia'}`;
+    const summary = specialty === 'weight' ? 'Control de peso' : 'Odontología';
     const description = `
       Paciente: ${patientName}
       Paciente ID: ${patientId}
@@ -45,6 +49,7 @@ export async function POST(req) {
       attendees: email ? [{ email }] : [],
     };
 
+    // Create event
     const response = await calendar.events.insert({
       calendarId,
       resource: event,
