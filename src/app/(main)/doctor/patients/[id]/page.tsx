@@ -1,16 +1,23 @@
 import DoctorPatientDetail from '@/components/sections/doctor/patients/[id]/DoctorPatientDetail';
 import { getCurrentUser } from '@/lib/auth/getCurrentUser';
 import { connectDB } from '@/lib/mongodb';
-import User from '@/models/User';
+import User, { IUser } from '@/models/User';
 
 export const runtime = 'nodejs';
 
-export default async function DoctorPatientDetailPage(props) {
+interface DoctorPatientDetailPageProps {
+  params: {
+    id: string;
+  };
+}
+
+export default async function DoctorPatientDetailPage(props: DoctorPatientDetailPageProps) {
   const params = await props.params;
+  const { id } = params;
 
   await connectDB();
 
-  const patient = await User.findById(params.id, '-password -resetToken').lean();
+  const patient = await User.findById(id, '-password -resetToken').lean<IUser>();
 
   if (!patient) {
     return <p className="p-8 text-center text-gray-600">Paciente no encontrado</p>;
@@ -22,17 +29,11 @@ export default async function DoctorPatientDetailPage(props) {
   };
 
   const currentUser = await getCurrentUser();
-  const role = currentUser?.role;
   const specialty = currentUser?.specialty;
 
   return (
     <div className="h-screen overflow-hidden pb-40">
-      <DoctorPatientDetail
-        patient={serializedPatient}
-        role={role}
-        currentUser={currentUser}
-        specialty={specialty}
-      />
+      <DoctorPatientDetail patient={serializedPatient} specialty={specialty} />
     </div>
   );
 }

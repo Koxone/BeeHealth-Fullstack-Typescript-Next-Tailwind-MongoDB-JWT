@@ -1,7 +1,7 @@
+import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
-export default function BackButton({ icon }) {
-  const { ArrowLeft } = icon;
+export default function BackButton() {
   return (
     <Link
       href="/doctor/patients"

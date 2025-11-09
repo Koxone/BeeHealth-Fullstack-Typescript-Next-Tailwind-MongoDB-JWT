@@ -17,7 +17,10 @@ import DoctorProducts from './components/products/DoctorProducts';
 
 export default function DoctorPatientDetail({ patient, specialty }) {
   const router = useRouter();
-  const { id } = useParams();
+  const params = useParams();
+
+  // If there is more than one id, it's an array. In that case, take the first element from the URL. Otherwise, use the id directly as a string.
+  const id = Array.isArray(params.id) ? params.id[0] : params.id;
 
   const { data: patientRecord, isLoading, error } = useClinicalRecord(id);
   const currentPatientInfo = patientRecord?.[0];
@@ -49,7 +52,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
     <div className="h-full space-y-6 overflow-y-auto">
       {/* Header */}
       <div className="grid grid-rows-[auto_1fr]">
-        <BackButton onClick={() => router.back()} icon={{ ArrowLeft }} />
+        <BackButton />
         <PatientHeader
           patientRecord={patientRecord}
           patient={patient}

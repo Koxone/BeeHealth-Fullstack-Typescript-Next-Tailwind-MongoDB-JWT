@@ -1,9 +1,10 @@
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 import { getCurrentUser } from '@/lib/auth/getCurrentUser';
-import ServerRoleGuard from '@/components/sections/auth/ServerRoleGuard';
+
 import Sidebar from '@/components/shared/nav/sidebar/SideBar';
 import Header from '@/components/shared/nav/header/Header';
+import ServerRoleGuard from '@/components/sections/auth/ServerRoleGuard';
 
 export const runtime = 'nodejs';
 
