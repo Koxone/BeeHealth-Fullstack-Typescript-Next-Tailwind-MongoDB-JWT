@@ -10,7 +10,7 @@ export async function GET(req, { params }) {
   try {
     await connectDB();
 
-    const { id } = await params;
+    const { id } = params;
 
     const { searchParams } = new URL(req.url);
     const latest = searchParams.get('latest') === 'true';
@@ -70,7 +70,7 @@ export async function POST(req, { params }) {
   try {
     await connectDB();
 
-    const { id } = await params;
+    const { id } = params;
 
     const { doctor = null, specialty, version, answers } = await req.json();
 
