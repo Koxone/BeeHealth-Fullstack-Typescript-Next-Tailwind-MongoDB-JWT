@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import ClinicalRecord from '@/models/ClinicalRecord';
 import mongoose from 'mongoose';
+import User from '@/models/User';
 
 // @route    GET /api/clinical-records/:id
 // @desc     Get a patient Clinical Record by his ID
