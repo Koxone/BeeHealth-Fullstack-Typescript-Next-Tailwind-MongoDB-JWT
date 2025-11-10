@@ -3,16 +3,52 @@
 import { useCallback, useEffect, useState } from 'react';
 import useAuthStore from '@/zustand/useAuthStore';
 
+interface ParsedDescription {
+  paciente?: string;
+  motivo?: string;
+  telefono?: string;
+  email?: string;
+  fecha?: string;
+  hora?: string;
+  especialidad?: string;
+  patientId?: string;
+}
+
+interface CalendarEvent {
+  id: string;
+  description?: string;
+  summary?: string;
+  start?: {
+    dateTime?: string;
+    date?: string;
+  };
+  attendees?: { email?: string }[];
+}
+
+interface NormalizedAppointment {
+  id: string;
+  specialty: 'weight' | 'dental';
+  tipo: string;
+  hora: string;
+  paciente: string;
+  telefono: string;
+  email: string;
+  motivo: string;
+  startISO: string | null;
+  _dateKey: string;
+  patientId: string;
+}
+
 /* --- Helpers --- */
-function parseDescription(desc) {
+function parseDescription(desc: string): ParsedDescription {
   if (!desc || typeof desc !== 'string') return {};
-  const lines = desc
+  const lines: string[] = desc
     .split('\n')
     .map((l) => l.trim())
     .filter(Boolean);
 
-  const pick = (label) => {
-    const line = lines.find((l) => l.toLowerCase().startsWith(label.toLowerCase()));
+  const pick = (label: string): string => {
+    const line = lines.find((l: string) => l.toLowerCase().startsWith(label.toLowerCase()));
     if (!line) return '';
     return line.split(':').slice(1).join(':').trim();
   };
@@ -29,7 +65,7 @@ function parseDescription(desc) {
   };
 }
 
-function toTime(dateISO) {
+function toTime(dateISO?: string | null): string {
   if (!dateISO) return '';
   const d = new Date(dateISO);
   return d.toLocaleTimeString('es-MX', {
@@ -40,15 +76,18 @@ function toTime(dateISO) {
   });
 }
 
-function dateKey(dateISO) {
+function dateKey(dateISO?: string | null): string {
   if (!dateISO) return '';
   const d = new Date(dateISO);
   return d.toLocaleDateString('en-CA', { timeZone: 'America/Mexico_City' });
 }
 
 /* --- Normalizador --- */
-function normalizeEvents(items, specialty) {
-  return (items || []).map((ev) => {
+function normalizeEvents(
+  items: CalendarEvent[],
+  specialty: 'weight' | 'dental'
+): NormalizedAppointment[] {
+  return (items || []).map((ev: CalendarEvent) => {
     const fields = parseDescription(ev.description || '');
     const startISO = ev.start?.dateTime || ev.start?.date || null;
     const tipo =
@@ -75,11 +114,17 @@ function normalizeEvents(items, specialty) {
 }
 
 /* --- Hook principal --- */
-export function useTodayAppointmentsBySpecialty() {
+export function useTodayAppointmentsBySpecialty(): {
+  appointments: NormalizedAppointment[];
+  loading: boolean;
+  error: string | null;
+  refetch: () => Promise<void>;
+} {
   const { user } = useAuthStore();
-  const [appointments, setAppointments] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+
+  const [appointments, setAppointments] = useState<NormalizedAppointment[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchTodayAppointments = useCallback(async () => {
     if (!user?.specialty) return;
@@ -92,15 +137,19 @@ export function useTodayAppointmentsBySpecialty() {
 
       if (!res.ok) throw new Error('Error al cargar las citas');
 
-      const json = await res.json();
+      const json: { events: CalendarEvent[] } = await res.json();
       const normalized = normalizeEvents(json.events, user.specialty);
 
       const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Mexico_City' });
       const todayAppointments = normalized.filter((ev) => ev._dateKey === today);
 
       setAppointments(todayAppointments);
-    } catch (e) {
-      setError(e.message || 'Error desconocido');
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        setError(e.message);
+      } else {
+        setError('Error desconocido');
+      }
       setAppointments([]);
     } finally {
       setLoading(false);
