@@ -1,7 +1,21 @@
 import { Phone, Mail, Calendar, Eye } from 'lucide-react';
 import Link from 'next/link';
+import { UserData } from '@/lib/auth/getCurrentUser';
 
-export default async function DoctorPatientCard({ patient }) {
+interface DoctorPatientCardProps {
+  patient: {
+    _id: string;
+    fullName: string;
+    email: string;
+    phone: string;
+    avatar?: string;
+    lastVisit?: string | Date | null;
+  };
+  currentUser: UserData | null;
+  role?: string;
+}
+
+export default function DoctorPatientCard({ patient }: DoctorPatientCardProps) {
   return (
     <div className="rounded-xl border-2 border-gray-200 bg-white p-4 transition hover:border-blue-300">
       <div className="flex items-center gap-4">
@@ -32,7 +46,12 @@ export default async function DoctorPatientCard({ patient }) {
               {/* Last Appointment */}
               <div className="flex items-center gap-1">
                 <Calendar className="h-4 w-4" />
-                <span>Última Cita: {patient?.lastVisit || 'Sin Registro'}</span>
+                <span>
+                  Última Cita:{' '}
+                  {patient?.lastVisit
+                    ? new Date(patient.lastVisit).toLocaleDateString('es-MX')
+                    : 'Sin Registro'}
+                </span>{' '}
               </div>
 
               <Link

@@ -5,7 +5,26 @@ import User from '@/models/User';
 
 export const runtime = 'nodejs';
 
-export async function getCurrentUser() {
+// Types JWT
+interface DecodedToken {
+  id: string;
+  iat?: number;
+  exp?: number;
+}
+
+// Types UserData
+export interface UserData {
+  id: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  role: string;
+  avatar?: string;
+  createdAt?: Date;
+  specialty?: string;
+}
+
+export async function getCurrentUser(): Promise<UserData | null> {
   // Connect to DB
   await connectDB();
 
@@ -17,7 +36,7 @@ export async function getCurrentUser() {
 
   try {
     // Decode JWT
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as DecodedToken;
 
     // Get user from DB
     const user = await User.findById(decoded.id).select('-password');
@@ -34,8 +53,8 @@ export async function getCurrentUser() {
       createdAt: user.createdAt,
       specialty: user.specialty,
     };
-  } catch (err) {
-    console.error('getCurrentUser error:', err);
+  } catch (err: unknown) {
+    if (err instanceof Error) console.error(err.message);
     return null;
   }
 }

@@ -1,18 +1,27 @@
 import mongoose from 'mongoose';
+import '@/models/ClinicalRecord';
+import '@/models/User';
 
-import '@/models/ClinicalRecord'
-import '@/models/User'
+declare global {
+  var mongooseCache:
+    | {
+        conn: typeof mongoose | null;
+        promise: Promise<typeof mongoose> | null;
+      }
+    | undefined;
+}
 
-// Global cache
-let cached = global.mongoose || { conn: null, promise: null };
-global.mongoose = cached;
+const cached = globalThis.mongooseCache || { conn: null, promise: null };
+globalThis.mongooseCache = cached;
 
-export const connectDB = async () => {
+export const connectDB = async (): Promise<typeof mongoose> => {
   if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
+    const uri = process.env.MONGODB_URI as string;
+
     cached.promise = mongoose
-      .connect(process.env.MONGODB_URI, {
+      .connect(uri, {
         dbName: 'MedTrack_DB',
         bufferCommands: false,
         maxPoolSize: 5,

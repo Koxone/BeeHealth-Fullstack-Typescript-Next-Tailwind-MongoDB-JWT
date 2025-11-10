@@ -1,8 +1,15 @@
 import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
-import PatientsSearchBar from '@/components/shared/patients/PatientsSearchBar';
 import DoctorPatientsList from './components/DoctorPatientsList';
+import { UserData } from '@/lib/auth/getCurrentUser';
 
-export default function DoctorPatients({ currentUser, role }) {
+interface DoctorPatientsProps {
+  currentUser: UserData | null;
+  role?: string;
+}
+
+export const runtime = 'nodejs';
+
+export default function DoctorPatients({ currentUser, role }: DoctorPatientsProps) {
   return (
     <div className="h-full space-y-6 overflow-y-auto">
       <GeneralSectionHeader
@@ -10,10 +17,6 @@ export default function DoctorPatients({ currentUser, role }) {
         title="Mis Pacientes"
         subtitle="Gestiona tu lista de pacientes"
       />
-
-      <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-        <PatientsSearchBar />
-      </div>
 
       <DoctorPatientsList currentUser={currentUser} role={role} />
     </div>

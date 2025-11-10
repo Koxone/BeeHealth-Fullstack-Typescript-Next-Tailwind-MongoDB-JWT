@@ -13,8 +13,32 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
-function GeneralSectionHeader({ role, Icon, title = '', subtitle = '' }) {
-  const iconsMap = {
+interface GeneralSectionHeaderProps {
+  role?: 'doctor' | 'patient' | 'employee' | 'admin';
+  Icon:
+    | 'inventory'
+    | 'consultas'
+    | 'calendar'
+    | 'pacientes'
+    | 'diets'
+    | 'workouts'
+    | 'accounting'
+    | 'history';
+  title?: string;
+  subtitle?: string;
+}
+
+export default function GeneralSectionHeader({
+  role,
+  Icon,
+  title = '',
+  subtitle = '',
+}: GeneralSectionHeaderProps) {
+  // Icons Map Helper
+  const iconsMap: Record<
+    GeneralSectionHeaderProps['Icon'],
+    React.ComponentType<{ className?: string }>
+  > = {
     inventory: Package,
     consultas: ClipboardClock,
     calendar: Calendar,
@@ -25,7 +49,7 @@ function GeneralSectionHeader({ role, Icon, title = '', subtitle = '' }) {
     history: Activity,
   };
 
-  const SelectedIcon = iconsMap[Icon] || Package;
+  const SelectedIcon = iconsMap[Icon] ?? Package;
 
   return (
     <div className="-mx-4 -mt-4 mb-6 flex w-full items-center justify-between px-4 pt-6 md:rounded-2xl">
@@ -56,16 +80,12 @@ function GeneralSectionHeader({ role, Icon, title = '', subtitle = '' }) {
           </Link>
 
           {/* Doctor Export Button */}
-          {role === 'doctor' && Icon === 'accounting' && (
-            <button className="flex items-center gap-2 rounded-lg bg-green-700 px-4 py-2 text-white transition hover:bg-green-800 active:scale-95">
-              <Download className="h-5 w-5" />
-              <span className="hidden sm:inline">Exportar</span>
-            </button>
-          )}
+          <button className="bg-medtrack-green-solid hover:bg-medtrack-green-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white transition active:scale-95">
+            <Download className="h-5 w-5" />
+            <span className="hidden sm:inline">Exportar</span>
+          </button>
         </div>
       )}
     </div>
   );
 }
-
-export default GeneralSectionHeader;
