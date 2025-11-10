@@ -2,16 +2,50 @@
 
 import { useCallback, useState } from 'react';
 
-export function useCreateAppointment() {
-  // State
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState(null);
+// Params
+interface CreateAppointmentParams {
+  patientId?: string;
+  patientName: string;
+  date: string;
+  time: string;
+  phone?: string;
+  email?: string;
+  reason: string;
+  specialty: string;
+}
 
-  // Action
+// Response
+interface AppointmentResponse {
+  success: boolean;
+  data?: any;
+  message?: string;
+}
+
+// Hook return
+interface UseCreateAppointmentResult {
+  createAppointment: (params: CreateAppointmentParams) => Promise<AppointmentResponse>;
+  loading: boolean;
+  error: string | null;
+  data: any | null;
+  reset: () => void;
+}
+
+export function useCreateAppointment(): UseCreateAppointmentResult {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<any | null>(null);
+
   const createAppointment = useCallback(
-    async ({ patientId, patientName, date, time, phone = '', email = '', reason, specialty }) => {
-      // Guard
+    async ({
+      patientId,
+      patientName,
+      date,
+      time,
+      phone = '',
+      email = '',
+      reason,
+      specialty,
+    }: CreateAppointmentParams): Promise<AppointmentResponse> => {
       if (!patientName || !date || !time || !reason || !specialty) {
         throw new Error('Faltan campos obligatorios');
       }
@@ -43,9 +77,15 @@ export function useCreateAppointment() {
         }
 
         const json = await res.json();
-        setData(json?.data ?? json);
-        return json?.data ?? json;
-      } catch (e) {
+        const response: AppointmentResponse = {
+          success: true,
+          data: json?.data ?? json,
+          message: 'Cita creada correctamente',
+        };
+
+        setData(response.data);
+        return response;
+      } catch (e: any) {
         setError(e.message || 'Error desconocido');
         throw e;
       } finally {
@@ -55,14 +95,12 @@ export function useCreateAppointment() {
     []
   );
 
-  // Reset
   const reset = useCallback(() => {
     setLoading(false);
     setError(null);
     setData(null);
   }, []);
 
-  // API
   return { createAppointment, loading, error, data, reset };
 }
 
