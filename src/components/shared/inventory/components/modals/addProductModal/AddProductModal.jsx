@@ -1,6 +1,6 @@
 'use client';
 
-import { Pill, FileText, Syringe } from 'lucide-react';
+import { Pill, FileText, Syringe, X } from 'lucide-react';
 import MedicationForm from '../shared/MedicationForm';
 import PrescriptionForm from '../shared/PrescriptionForm';
 import SupplyForm from '../shared/SupplyForm';
@@ -17,11 +17,8 @@ function getIcon(tab) {
   return <Syringe className="h-6 w-6 text-white" />;
 }
 
-/* Modal container only handles layout and renders the proper form */
-export default function AddProductModal({ activeTab, onClose, onSubmit, icons }) {
-  const { X } = icons || {};
-
-  /* Render proper form by tab */
+export default function AddProductModal({ activeTab, onClose, onSubmit }) {
+  // Render form based on active tab
   const renderForm = () => {
     if (activeTab === 'medicamentos') {
       return <MedicationForm mode="add" onCancel={onClose} onSubmit={onSubmit} />;
@@ -94,7 +91,6 @@ export default function AddProductModal({ activeTab, onClose, onSubmit, icons })
             </div>
           </div>
 
-          {/* Body renders a single-responsibility form */}
           <div className="max-h-[calc(90vh-180px)] overflow-y-auto p-6">{renderForm()}</div>
         </div>
       </div>

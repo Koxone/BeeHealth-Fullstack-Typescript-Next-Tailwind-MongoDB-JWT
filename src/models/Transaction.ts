@@ -16,7 +16,7 @@ const TransactionSchema = new Schema<ITransaction>(
     type: { type: String, enum: ['IN', 'OUT'], required: true },
     quantity: { type: Number, required: true },
     reason: { type: String, trim: true },
-    patient: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    patient: { type: Schema.Types.ObjectId, ref: 'User' },
   },
   { timestamps: true }
 );
