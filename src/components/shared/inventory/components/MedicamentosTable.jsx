@@ -47,12 +47,7 @@ export default function MedicamentosTable({
                 <th className="hidden px-4 py-4 text-right text-xs font-semibold tracking-wider text-gray-600 uppercase lg:table-cell">
                   Precio
                 </th>
-                <th className="hidden px-4 py-4 text-center text-xs font-semibold tracking-wider text-gray-600 uppercase md:table-cell">
-                  Caducidad
-                </th>
-                <th className="px-4 py-4 text-center text-xs font-semibold tracking-wider text-gray-600 uppercase">
-                  Ubicación
-                </th>
+
                 <th className="px-4 py-4 text-center text-xs font-semibold tracking-wider text-gray-600 uppercase">
                   Acciones
                 </th>
@@ -87,7 +82,7 @@ export default function MedicamentosTable({
                         </div>
                         <div className="min-w-0">
                           <p className="truncate text-sm font-semibold text-gray-900">
-                            {med.nombre}
+                            {med?.product?.name}
                           </p>
                         </div>
                       </div>
@@ -96,7 +91,7 @@ export default function MedicamentosTable({
                     {/* Categoría */}
                     <td className="px-4 py-4">
                       <span className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">
-                        {med.categoria}
+                        {med?.product?.category}
                       </span>
                     </td>
 
@@ -124,7 +119,7 @@ export default function MedicamentosTable({
                               }`}
                             ></span>
                           </span>
-                          {med.stock} / {med.minimo}
+                          {med?.quantity} / {med?.minStock}
                         </span>
                       </div>
                     </td>
@@ -132,23 +127,7 @@ export default function MedicamentosTable({
                     {/* Precio */}
                     <td className="hidden px-4 py-4 text-right lg:table-cell">
                       <span className="text-sm font-semibold text-gray-900">
-                        ${parseFloat(med.precio).toFixed(2)}
-                      </span>
-                    </td>
-
-                    {/* Caducidad */}
-                    <td className="hidden px-4 py-4 text-center md:table-cell">
-                      <span
-                        className={`inline-flex items-center rounded-full px-3 py-1.5 text-xs font-semibold shadow-sm ${cad.bg} ${cad.color}`}
-                      >
-                        {med.caducidad}
-                      </span>
-                    </td>
-
-                    {/* Ubicación */}
-                    <td className="px-4 py-4 text-center">
-                      <span className="inline-flex items-center rounded-md bg-indigo-50 px-2.5 py-1 text-xs font-medium text-indigo-700">
-                        📍 {med.ubicacion}
+                        ${parseFloat(med?.product?.costPrice).toFixed(2)}
                       </span>
                     </td>
 

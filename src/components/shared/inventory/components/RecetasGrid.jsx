@@ -7,7 +7,7 @@ export default function RecetasGrid({ rows, getStockStatus, icons, onEdit, onDel
           const stockStatus = getStockStatus(receta.stock, receta.minimo);
           return (
             <div
-              key={receta.id}
+              key={receta._id}
               className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition hover:shadow-md"
             >
               <div className="mb-3 flex items-center justify-between">
@@ -29,13 +29,13 @@ export default function RecetasGrid({ rows, getStockStatus, icons, onEdit, onDel
                   </button>
                 </div>
               </div>
-              <h3 className="mb-2 font-semibold text-gray-900">{receta.tipo}</h3>
+              <h3 className="mb-2 font-semibold text-gray-900">{receta?.product?.category}</h3>
               <div className="flex items-center justify-between">
                 <span className="text-sm text-gray-600">Stock</span>
                 <span
                   className={`rounded-full px-2 py-1 text-xs font-medium ${stockStatus.bg} ${stockStatus.color}`}
                 >
-                  {receta.stock} / {receta.minimo}
+                  {receta?.quantity} / {receta?.minStock}
                 </span>
               </div>
             </div>
