@@ -4,16 +4,6 @@ button {
   cursor: pointer;
 }
 
-p::first-letter,
-h1::first-letter,
-h2::first-letter,
-h3::first-letter,
-span::first-letter,
-div::first-letter,
-li::first-letter {
-  text-transform: uppercase;
-}
-
 @theme {
   --color-asana-green: #8b9c94;
   --color-medtrack-green-dark: #5f6b66;

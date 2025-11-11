@@ -21,29 +21,14 @@ import StatsBar from './components/StatsBar';
 import MedicamentosTable from './components/MedicamentosTable';
 import RecetasGrid from './components/RecetasGrid';
 import SuministrosTable from './components/SuministrosTable';
-import AddEditModal from './components/AddEditModal';
-import DeleteModal from './components/DeleteModal';
+import DeleteModal from './components/modals/deleteProductModal/DeleteModal';
 import GeneralSectionHeader from '@/components/shared/sections/GeneralSectionHeader';
 import GeneralInventoryAlerts from '@/components/shared/dashboard/InventoryAlerts/GeneralInventoryAlerts';
+import { getStockStatus, getCaducidadStatus } from './utils/helpers';
 
-/* utils */
-const getStockStatus = (stock, minimo) => {
-  /* stock tag */
-  if (stock < minimo) return { color: 'text-red-600', bg: 'bg-red-50', label: 'Bajo' };
-  if (stock < minimo * 1.5) return { color: 'text-yellow-600', bg: 'bg-yellow-50', label: 'Medio' };
-  return { color: 'text-green-600', bg: 'bg-green-50', label: 'Bueno' };
-};
-
-/* utils */
-const getCaducidadStatus = (caducidad) => {
-  /* expiry tag */
-  const hoy = new Date();
-  const fecha = new Date(caducidad);
-  const dias = Math.floor((fecha - hoy) / (1000 * 60 * 60 * 24));
-  if (dias < 30) return { color: 'text-red-600', bg: 'bg-red-50' };
-  if (dias < 90) return { color: 'text-yellow-600', bg: 'bg-yellow-50' };
-  return { color: 'text-gray-600', bg: 'bg-gray-50' };
-};
+// Modals
+import AddProductModal from './components/modals/addProductModal/AddProductModal';
+import EditProductModal from './components/modals/editProductModal/EditProductModal';
 
 /* container */
 export default function SharedInventory({ role }) {
@@ -360,18 +345,43 @@ export default function SharedInventory({ role }) {
       <GeneralInventoryAlerts role={role} />
 
       {/* modals */}
-      {showModal && (
-        <AddEditModal
+      {showModal && !editingItem && (
+        <AddProductModal
           activeTab={activeTab}
-          editingItem={editingItem}
-          medicamentoForm={medicamentoForm}
-          setMedicamentoForm={setMedicamentoForm}
-          recetaForm={recetaForm}
-          setRecetaForm={setRecetaForm}
-          suministroForm={suministroForm}
-          setSuministroForm={setSuministroForm}
           onClose={() => setShowModal(false)}
-          onSubmit={handleSave}
+          onSubmit={(payload) => {
+            if (activeTab === 'medicamentos') {
+              setMedicamentos((prev) => [...prev, payload]);
+            } else if (activeTab === 'recetas') {
+              setRecetas((prev) => [...prev, payload]);
+            } else {
+              setSuministros((prev) => [...prev, payload]);
+            }
+            setShowModal(false);
+          }}
+          icons={{ X }}
+        />
+      )}
+
+      {showModal && editingItem && (
+        <EditProductModal
+          activeTab={activeTab}
+          item={editingItem}
+          onClose={() => {
+            setShowModal(false);
+            setEditingItem(null);
+          }}
+          onSubmit={(payload) => {
+            if (activeTab === 'medicamentos') {
+              setMedicamentos((prev) => prev.map((m) => (m.id === payload.id ? payload : m)));
+            } else if (activeTab === 'recetas') {
+              setRecetas((prev) => prev.map((r) => (r.id === payload.id ? payload : r)));
+            } else {
+              setSuministros((prev) => prev.map((s) => (s.id === payload.id ? payload : s)));
+            }
+            setShowModal(false);
+            setEditingItem(null);
+          }}
           icons={{ X }}
         />
       )}

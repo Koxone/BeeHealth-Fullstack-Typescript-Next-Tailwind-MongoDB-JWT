@@ -7,7 +7,7 @@ export default function AppointmentsToday({ appointments, role }) {
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-900 md:text-xl">Citas de Hoy</h2>
         <Link
-          href="/doctor/calendar"
+          href={role === 'doctor' ? '/doctor/calendar' : '/employee/appointments'}
           className="bg-medtrack-green-solid hover:bg-medtrack-green-hover flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-white transition active:scale-95"
         >
           Ver todas
@@ -15,6 +15,14 @@ export default function AppointmentsToday({ appointments, role }) {
         </Link>
       </div>
 
+      {/* No appointments */}
+      {appointments.length === 0 && (
+        <div className="flex h-40 items-center justify-center rounded-xl border border-gray-200 bg-gray-50">
+          <p className="text-gray-500">No hay citas programadas para hoy</p>
+        </div>
+      )}
+
+      {/* Doctor  */}
       {role === 'doctor' && (
         <div className="max-h-[400px] space-y-3 overflow-y-auto">
           {appointments.map((cita) => (
@@ -51,6 +59,7 @@ export default function AppointmentsToday({ appointments, role }) {
         </div>
       )}
 
+      {/* Employee */}
       {role === 'employee' && (
         <div className="max-h-[400px] space-y-3 overflow-y-auto">
           {appointments.map((cita) => (
