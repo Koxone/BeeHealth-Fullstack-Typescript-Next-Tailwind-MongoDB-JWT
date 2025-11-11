@@ -4,6 +4,9 @@ import Product from '@/models/Product';
 import Transaction from '@/models/Transaction';
 import Inventory from '@/models/Inventory';
 
+// @route    POST /api/inventory
+// @desc     Create a new inventory item
+// @access   Private
 export async function POST(req) {
   try {
     await connectDB();
