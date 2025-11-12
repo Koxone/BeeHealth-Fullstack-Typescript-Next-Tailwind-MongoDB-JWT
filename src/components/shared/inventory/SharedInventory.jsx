@@ -22,7 +22,7 @@ import DeleteProductModal from './components/modals/deleteProductModal/DeletePro
 
 export default function SharedInventory({ role }) {
   // Fetch Full Inventory Items
-  const { inventory, loading, error, setInventory } = useGetFullInventory();
+  const { inventory, loading, setInventory } = useGetFullInventory();
 
   // States
   const [activeTab, setActiveTab] = useState('medicamentos');
@@ -203,9 +203,6 @@ export default function SharedInventory({ role }) {
           activeTab={activeTab}
           onClose={() => setShowRestockModal(false)}
           filteredItems={filteredItems}
-          onRestock={(updatedItem) =>
-            setInventory((prev) => prev.map((i) => (i._id === updatedItem._id ? updatedItem : i)))
-          }
         />
       )}
     </div>
