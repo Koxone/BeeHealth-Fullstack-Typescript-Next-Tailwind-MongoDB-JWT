@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { Trash2, X } from 'lucide-react';
 
-export default function DeleteModal({ item, onClose, onConfirm }) {
+export default function DeleteProductModal({ item, onClose, onConfirm }) {
   if (!item) return null;
 
   // Close on ESC key

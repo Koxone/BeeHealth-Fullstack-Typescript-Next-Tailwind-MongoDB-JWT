@@ -4,7 +4,7 @@ import { X, PackagePlus } from 'lucide-react';
 import { useState } from 'react';
 import { getGradient } from './utils/helpers';
 
-export default function RestockProductModal({ activeTab, onClose }) {
+export default function RestockProductModal({ activeTab, onClose, filteredItems }) {
   // Local states
   const [selectedProduct, setSelectedProduct] = useState('');
   const [quantity, setQuantity] = useState('');
@@ -87,7 +87,11 @@ export default function RestockProductModal({ activeTab, onClose }) {
                 className="w-full rounded-lg border border-gray-300 p-2 text-gray-800 focus:border-blue-400 focus:ring-blue-400"
               >
                 <option value="">Selecciona un producto</option>
-                {/* Future: load product list here */}
+                {filteredItems.map((item) => (
+                  <option key={item._id} value={item._id}>
+                    {item.product?.name}
+                  </option>
+                ))}
               </select>
             </div>
 

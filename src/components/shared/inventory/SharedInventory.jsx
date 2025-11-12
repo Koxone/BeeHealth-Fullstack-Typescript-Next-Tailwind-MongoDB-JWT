@@ -18,7 +18,7 @@ import { useGetFullInventory } from '@/hooks/useGetFullInventory';
 import RestockProductModal from './components/modals/restockProductModal/RestockProductModal';
 import CreateProductModal from './components/modals/addProductModal/CreateProductModal';
 import EditProductModal from './components/modals/editProductModal/EditProductModal';
-import DeleteModal from './components/modals/deleteProductModal/DeleteModal';
+import DeleteProductModal from './components/modals/deleteProductModal/DeleteModal';
 
 export default function SharedInventory({ role }) {
   // Fetch Full Inventory Items
@@ -190,7 +190,7 @@ export default function SharedInventory({ role }) {
 
       {/* Delete Product Modal */}
       {showDeleteModal && (
-        <DeleteModal
+        <DeleteProductModal
           item={itemToDelete}
           onClose={() => setShowDeleteModal(false)}
           onConfirm={confirmDelete}
@@ -199,7 +199,11 @@ export default function SharedInventory({ role }) {
 
       {/* Restock Product Modal */}
       {showRestockModal && (
-        <RestockProductModal activeTab={activeTab} onClose={() => setShowRestockModal(false)} />
+        <RestockProductModal
+          activeTab={activeTab}
+          onClose={() => setShowRestockModal(false)}
+          filteredItems={filteredItems}
+        />
       )}
     </div>
   );
