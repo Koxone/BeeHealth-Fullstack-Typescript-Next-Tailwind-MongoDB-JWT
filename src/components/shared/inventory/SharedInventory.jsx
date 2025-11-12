@@ -18,7 +18,7 @@ import { useGetFullInventory } from '@/hooks/useGetFullInventory';
 import RestockProductModal from './components/modals/restockProductModal/RestockProductModal';
 import CreateProductModal from './components/modals/addProductModal/CreateProductModal';
 import EditProductModal from './components/modals/editProductModal/EditProductModal';
-import DeleteProductModal from './components/modals/deleteProductModal/DeleteModal';
+import DeleteProductModal from './components/modals/deleteProductModal/DeleteProductModal';
 
 export default function SharedInventory({ role }) {
   // Fetch Full Inventory Items
@@ -203,6 +203,9 @@ export default function SharedInventory({ role }) {
           activeTab={activeTab}
           onClose={() => setShowRestockModal(false)}
           filteredItems={filteredItems}
+          onRestock={(updatedItem) =>
+            setInventory((prev) => prev.map((i) => (i._id === updatedItem._id ? updatedItem : i)))
+          }
         />
       )}
     </div>

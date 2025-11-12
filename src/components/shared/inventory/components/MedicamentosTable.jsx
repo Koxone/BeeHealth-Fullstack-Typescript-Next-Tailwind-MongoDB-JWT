@@ -1,12 +1,6 @@
 import { Edit2, Trash2 } from 'lucide-react';
 
-export default function MedicamentosTable({
-  rows,
-  getStockStatus,
-  getCaducidadStatus,
-  onEdit,
-  onDelete,
-}) {
+export default function MedicamentosTable({ rows, getStockStatus, onEdit, onDelete }) {
   if (!Array.isArray(rows) || rows.length === 0) {
     return (
       <div className="p-4 md:p-6">
@@ -52,7 +46,6 @@ export default function MedicamentosTable({
             <tbody className="divide-y divide-gray-100">
               {rows.map((med, index) => {
                 const stockStatus = getStockStatus(med.stock, med.minimo);
-                const cad = getCaducidadStatus(med.caducidad);
 
                 return (
                   <tr

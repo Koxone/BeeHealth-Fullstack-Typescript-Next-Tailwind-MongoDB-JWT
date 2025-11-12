@@ -3,6 +3,7 @@
 import { X, PackagePlus } from 'lucide-react';
 import { useState } from 'react';
 import { getGradient } from './utils/helpers';
+import { restockProduct } from './services/restockProduct';
 
 export default function RestockProductModal({ activeTab, onClose, filteredItems }) {
   // Local states
@@ -10,10 +11,35 @@ export default function RestockProductModal({ activeTab, onClose, filteredItems 
   const [quantity, setQuantity] = useState('');
   const [reason, setReason] = useState('');
 
-  // Submit handler (empty for now)
-  function handleSubmit(e) {
+  // Create Product Backend Handler
+  async function handleSubmit(e) {
     e.preventDefault();
-    // Future: connect with backend service
+
+    // Validate inputs
+    if (!selectedProduct || !quantity) {
+      alert('Debes seleccionar un producto y especificar una cantidad válida.');
+      return;
+    }
+
+    try {
+      const response = await restockProduct({
+        inventoryId: selectedProduct,
+        quantity,
+        reason,
+      });
+
+      if (response.success) {
+        alert('Producto reabastecido con éxito.');
+        setSelectedProduct('');
+        setQuantity('');
+        setReason('');
+        onClose();
+      } else {
+        alert(`Error: ${response.error}`);
+      }
+    } catch (error) {
+      alert(`Error: ${error.message}`);
+    }
   }
 
   return (
@@ -94,6 +120,15 @@ export default function RestockProductModal({ activeTab, onClose, filteredItems 
                 ))}
               </select>
             </div>
+
+            {/* Current quantity display */}
+            {selectedProduct && (
+              <div className="rounded-lg border border-gray-200 bg-gray-50 p-3 text-sm text-gray-700">
+                <span className="font-medium">Cantidad actual:</span>{' '}
+                {filteredItems.find((item) => item._id === selectedProduct)?.quantity ??
+                  'No disponible'}
+              </div>
+            )}
 
             {/* Quantity */}
             <div>
