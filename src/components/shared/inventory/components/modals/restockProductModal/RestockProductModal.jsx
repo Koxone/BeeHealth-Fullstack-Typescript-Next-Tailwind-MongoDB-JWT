@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { getGradient } from './utils/helpers';
 import { restockProduct } from './services/restockProduct';
 
-export default function RestockProductModal({ activeTab, onClose, filteredItems }) {
+export default function RestockProductModal({ activeTab, onClose, filteredItems, onRestock }) {
   // Local states
   const [selectedProduct, setSelectedProduct] = useState('');
   const [quantity, setQuantity] = useState('');
@@ -30,6 +30,12 @@ export default function RestockProductModal({ activeTab, onClose, filteredItems 
 
       if (response.success) {
         alert('Producto reabastecido con éxito.');
+
+        // Notifica al padre con el nuevo item actualizado
+        if (response.inventory) {
+          onRestock?.(response.inventory);
+        }
+
         setSelectedProduct('');
         setQuantity('');
         setReason('');

@@ -48,10 +48,8 @@ export async function PATCH(req) {
       {
         success: true,
         message: 'Stock actualizado correctamente',
-        data: {
-          inventory: inventoryItem,
-          transaction: newTransaction,
-        },
+        inventory: inventoryItem, 
+        transaction: newTransaction,
       },
       { status: 200 }
     );

@@ -9,13 +9,19 @@ export async function restockProduct({ inventoryId, quantity, reason }) {
       body: JSON.stringify({ inventoryId, quantity, reason }),
     });
 
+    const data = await res.json();
+
     if (!res.ok) {
-      const errorData = await res.json();
-      return { success: false, error: errorData.error || 'Error reabasteciendo el producto' };
+      return {
+        success: false,
+        error: data.error || 'Error reabasteciendo el producto',
+      };
     }
 
-    const data = await res.json();
-    return { success: true, data };
+    return {
+      success: true,
+      inventory: data.inventory || data.updatedItem || data,
+    };
   } catch (error) {
     console.error('Error en restockProduct service:', error);
     return { success: false, error: error.message };

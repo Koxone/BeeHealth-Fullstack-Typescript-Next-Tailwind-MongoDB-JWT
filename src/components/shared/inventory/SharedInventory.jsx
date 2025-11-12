@@ -203,6 +203,13 @@ export default function SharedInventory({ role }) {
           activeTab={activeTab}
           onClose={() => setShowRestockModal(false)}
           filteredItems={filteredItems}
+          onRestock={(updatedItem) => {
+            setInventory((prev) =>
+              prev.map((i) =>
+                i._id === updatedItem._id ? { ...i, quantity: updatedItem.quantity } : i
+              )
+            );
+          }}
         />
       )}
     </div>
