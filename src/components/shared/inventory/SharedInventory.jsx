@@ -11,11 +11,11 @@ import DeleteModal from './components/modals/deleteProductModal/DeleteModal';
 import SharedSectionHeader from '@/components/shared/sections/SharedSectionHeader';
 import SharedInventoryAlerts from '@/components/shared/dashboard/InventoryAlerts/SharedInventoryAlerts';
 import { getStockStatus, getCaducidadStatus } from './utils/helpers';
-import AddProductModal from './components/modals/addProductModal/AddProductModal';
+import CreateProductModal from './components/modals/addProductModal/CreateProductModal';
 import EditProductModal from './components/modals/editProductModal/EditProductModal';
 
 // Hooks
-import { useInventory } from '@/hooks/useInventory';
+import { useGetFullInventory } from '@/hooks/useGetFullInventory';
 
 export default function SharedInventory({ role }) {
   // UI State
@@ -27,7 +27,7 @@ export default function SharedInventory({ role }) {
   const [itemToDelete, setItemToDelete] = useState(null);
 
   // Custom Hooks
-  const { inventory, loading, error, setInventory } = useInventory();
+  const { inventory, loading, error, setInventory } = useGetFullInventory();
 
   // Filtered Meds
   const medicamentos = useMemo(
@@ -157,7 +157,7 @@ export default function SharedInventory({ role }) {
 
       {/* Modals */}
       {showModal && !editingItem && (
-        <AddProductModal
+        <CreateProductModal
           activeTab={activeTab}
           onClose={() => setShowModal(false)}
           onSubmit={(payload) => {

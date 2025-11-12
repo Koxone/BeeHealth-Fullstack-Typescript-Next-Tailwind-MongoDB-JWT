@@ -1,13 +1,13 @@
 'use client';
 
-import { Pill, FileText, Syringe, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import MedicationForm from '../shared/MedicationForm';
 import PrescriptionForm from '../shared/PrescriptionForm';
 import SupplyForm from '../shared/SupplyForm';
 import { createProduct } from './services/createProduct';
 import { getGradient, getIcon } from './utils/helpers';
 
-export default function AddProductModal({ activeTab, onClose }) {
+export default function CreateProductModal({ activeTab, onClose }) {
   // Create Product Backend Handler
   async function handleSubmit(formData) {
     const payload = {

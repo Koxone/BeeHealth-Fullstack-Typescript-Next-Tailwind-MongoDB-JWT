@@ -1,7 +1,7 @@
 'use client';
 
 import { useTodayAppointmentsBySpecialty } from '@/hooks/useTodayAppointmentsBySpecialty';
-import { useInventory } from '@/hooks/useInventory';
+import { useGetFullInventory } from '@/hooks/useGetFullInventory';
 import {
   Users,
   DollarSign,
@@ -21,7 +21,7 @@ export default function PatientStatsGrid({ role }) {
   const { appointments, loading } = useTodayAppointmentsBySpecialty();
   const todaysAppointmentsNumber = appointments?.length || 0;
 
-  const { inventory, loading: loadingInventory, error: errorInventory } = useInventory();
+  const { inventory, loading: loadingInventory, error: errorInventory } = useGetFullInventory();
 
   // Alerts logic
   const criticalItems = inventory.filter((i) => i.quantity < i.minStock);

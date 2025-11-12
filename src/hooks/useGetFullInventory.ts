@@ -27,7 +27,7 @@ interface InventoryItem {
 
 /* --- Hook: useInventory --- */
 /* Fetches and manages inventory data from /api/inventory */
-export function useInventory() {
+export function useGetFullInventory() {
   // Local states
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);

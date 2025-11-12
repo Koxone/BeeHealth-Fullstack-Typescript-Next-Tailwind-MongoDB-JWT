@@ -3,7 +3,7 @@
 
 export async function createProduct(productData) {
   try {
-    const res = await fetch('/api/inventory', {
+    const res = await fetch('/api/inventory/create', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(productData),

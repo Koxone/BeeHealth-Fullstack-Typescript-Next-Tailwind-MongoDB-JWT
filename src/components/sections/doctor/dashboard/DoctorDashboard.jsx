@@ -6,7 +6,7 @@ import AppointmentsToday from '@/components/shared/dashboard/appointmentsToday/A
 import DoctorAccountingSummary from '@/components/sections/doctor/dashboard/components/DoctorAccountingSummary';
 import SharedInventoryAlerts from '@/components/shared/dashboard/InventoryAlerts/SharedInventoryAlerts';
 import { useTodayAppointmentsBySpecialty } from '@/hooks/useTodayAppointmentsBySpecialty';
-import { useInventory } from '@/hooks/useInventory';
+import { useGetFullInventory } from '@/hooks/useGetFullInventory';
 import DoctorStatsGrid from './components/DoctorStatsGrid';
 
 export default function DoctorDashboard({ currentUser }) {
@@ -19,7 +19,7 @@ export default function DoctorDashboard({ currentUser }) {
     loading: loadingInventory,
     error: errorInventory,
     setInventory,
-  } = useInventory();
+  } = useGetFullInventory();
 
   return (
     <DashboardLayout>

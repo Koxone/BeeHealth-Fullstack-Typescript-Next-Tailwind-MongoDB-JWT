@@ -5,7 +5,7 @@ import HeaderWelcome from '@/components/shared/dashboard/header/HeaderWelcome';
 import AppointmentsToday from '@/components/shared/dashboard/appointmentsToday/AppointmentsToday';
 import SharedInventoryAlerts from '@/components/shared/dashboard/InventoryAlerts/SharedInventoryAlerts';
 import { useAllTodayAppointments } from '@/hooks/useAllTodayAppointments';
-import { useInventory } from '@/hooks/useInventory';
+import { useGetFullInventory } from '@/hooks/useGetFullInventory';
 import EmployeeStatsGrid from './components/EmployeeStatsGrid';
 
 export default function EmployeeDashboard({ currentUser }) {
@@ -18,7 +18,7 @@ export default function EmployeeDashboard({ currentUser }) {
     loading: loadingInventory,
     error: errorInventory,
     setInventory,
-  } = useInventory();
+  } = useGetFullInventory();
 
   return (
     <DashboardLayout>
@@ -29,7 +29,7 @@ export default function EmployeeDashboard({ currentUser }) {
       <EmployeeStatsGrid role="employee" />
 
       {/* Content */}
-      <div className="grid h-full max-h-[500px] grid-cols-1 lg:grid-cols-2 md:gap-6">
+      <div className="grid h-full max-h-[500px] grid-cols-1 md:gap-6 lg:grid-cols-2">
         <AppointmentsToday role={currentUser?.role} appointments={appointments} />
         <SharedInventoryAlerts role={currentUser?.role} inventory={inventory} />
       </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useTodayAppointmentsBySpecialty } from '@/hooks/useTodayAppointmentsBySpecialty';
-import { useInventory } from '@/hooks/useInventory';
+import { useGetFullInventory } from '@/hooks/useGetFullInventory';
 import { Users, DollarSign, AlertTriangle, Activity, Pill } from 'lucide-react';
 import DoctorStatsCard from './DoctorStatsCard';
 
@@ -11,7 +11,7 @@ export default function DoctorStatsGrid({ role }) {
   const todaysAppointmentsNumber = appointments?.length || 0;
 
   // Inventory and Alerts logic
-  const { totalAlerts } = useInventory();
+  const { totalAlerts } = useGetFullInventory();
 
   return (
     <div className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
