@@ -70,7 +70,7 @@ import { NextResponse } from 'next/server';
 /* =========================================================
    5. FIND - Return single user with ID equal to 3
    ========================================================= */
-export async function GET(){
+export async function GET() {
   try {
     const res = await fetch('https://jsonplaceholder.typicode.com/users');
     const data = await res.json();
@@ -206,4 +206,10 @@ export async function POST(req) {
   } catch (error) {
     return NextResponse.json({ error: 'Invalid JSON or server error' }, { status: 400 });
   }
+}
+
+export async function PATCH(req) {
+  try {
+    const body = await req.json();
+  } catch (error) {}
 }
