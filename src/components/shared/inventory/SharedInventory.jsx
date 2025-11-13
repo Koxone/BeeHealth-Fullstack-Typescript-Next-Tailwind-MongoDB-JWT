@@ -19,6 +19,7 @@ import RestockProductModal from './components/modals/restockProductModal/Restock
 import CreateProductModal from './components/modals/addProductModal/CreateProductModal';
 import EditProductModal from './components/modals/editProductModal/EditProductModal';
 import DeleteProductModal from './components/modals/deleteProductModal/DeleteProductModal';
+import ToggleProductModal from './components/modals/toggleProductModal/ToggleProductModal';
 
 export default function SharedInventory({ role }) {
   // Fetch Full Inventory Items
@@ -28,11 +29,11 @@ export default function SharedInventory({ role }) {
   const [activeTab, setActiveTab] = useState('medicamentos');
   const [searchTerm, setSearchTerm] = useState('');
   const [editingItem, setEditingItem] = useState(null);
-  const [itemToDelete, setItemToDelete] = useState(null);
+  const [itemToToggle, setItemToToggle] = useState(null);
 
   // Modal Render States
   const [showRestockModal, setShowRestockModal] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showToggleModal, setShowToggleModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   // Create Product Modal Handler
@@ -52,21 +53,43 @@ export default function SharedInventory({ role }) {
     setShowRestockModal(true);
   };
 
-  // Delete Product Modal Handler
-  const requestDelete = (item) => {
-    setItemToDelete(item);
-    setShowDeleteModal(true);
+  // Toggle Product Modal Handler
+  const requestToggle = (item) => {
+    setItemToToggle(item);
+    setShowToggleModal(true);
   };
-  const confirmDelete = async () => {
-    if (!itemToDelete) return;
+
+  const confirmToggle = async () => {
+    if (!itemToToggle) return;
+
     try {
-      await fetch(`/api/inventory/${itemToDelete._id}`, { method: 'DELETE' });
-      setInventory((prev) => prev.filter((i) => i._id !== itemToDelete._id));
+      const res = await fetch('/api/inventory/toggle', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          inventoryId: itemToToggle._id,
+          inStock: !itemToToggle.product.inStock,
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        setInventory((prev) =>
+          prev.map((i) =>
+            i._id === data.inventory._id
+              ? { ...i, product: { ...i.product, inStock: data.inventory.product.inStock } }
+              : i
+          )
+        );
+      } else {
+        console.error('Error toggling item:', data.error);
+      }
     } catch (err) {
-      console.error('Error eliminando item:', err);
+      console.error('Error toggling item:', err);
     } finally {
-      setShowDeleteModal(false);
-      setItemToDelete(null);
+      setShowToggleModal(false);
+      setItemToToggle(null);
     }
   };
 
@@ -133,7 +156,7 @@ export default function SharedInventory({ role }) {
             getStockStatus={getStockStatus}
             getCaducidadStatus={getCaducidadStatus}
             onEdit={openEditModal}
-            onDelete={requestDelete}
+            onDelete={requestToggle}
           />
         )}
 
@@ -142,7 +165,7 @@ export default function SharedInventory({ role }) {
             rows={filteredItems}
             getStockStatus={getStockStatus}
             onEdit={openEditModal}
-            onDelete={requestDelete}
+            onDelete={requestToggle}
           />
         )}
 
@@ -151,7 +174,7 @@ export default function SharedInventory({ role }) {
             rows={filteredItems}
             getStockStatus={getStockStatus}
             onEdit={openEditModal}
-            onDelete={requestDelete}
+            onDelete={requestToggle}
           />
         )}
       </div>
@@ -188,12 +211,12 @@ export default function SharedInventory({ role }) {
         />
       )}
 
-      {/* Delete Product Modal */}
-      {showDeleteModal && (
-        <DeleteProductModal
-          item={itemToDelete}
-          onClose={() => setShowDeleteModal(false)}
-          onConfirm={confirmDelete}
+      {/* Toggle Product Modal */}
+      {showToggleModal && (
+        <ToggleProductModal
+          item={itemToToggle}
+          onClose={() => setShowToggleModal(false)}
+          onConfirm={confirmToggle}
         />
       )}
 
