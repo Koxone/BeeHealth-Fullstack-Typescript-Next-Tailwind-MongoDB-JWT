@@ -36,17 +36,19 @@ export default function PrescriptionForm({ mode, initialData, onCancel, onSubmit
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div className="space-y-4 rounded-2xl border border-gray-100 bg-white/80 p-5 shadow-lg backdrop-blur-sm">
-        {/* Tipo de receta */}
+        {/* Category select */}
         <div className="grid gap-1">
           <label className="text-sm font-semibold text-gray-600">Tipo de receta</label>
-          <input
-            type="text"
+          <select
             required
             value={form.category}
             onChange={(e) => handleChange('category', e.target.value)}
-            placeholder="Ej. Control de Peso, Odontología"
-            className="w-full rounded-xl border-2 border-gray-300 px-4 py-3 focus:border-blue-500"
-          />
+            className="w-full rounded-xl border-2 border-gray-300 bg-white px-4 py-3 focus:border-blue-500"
+          >
+            <option value="">Selecciona una categoría</option>
+            <option value="Control de Peso">Control de Peso</option>
+            <option value="Odontología">Odontología</option>
+          </select>
         </div>
 
         {/* Cantidad y stock mínimo */}

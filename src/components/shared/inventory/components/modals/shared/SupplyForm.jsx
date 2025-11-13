@@ -37,13 +37,15 @@ export default function SupplyForm({ mode, initialData, onCancel, onSubmit }) {
     onSubmit(payload);
   };
 
-  // Categorías predefinidas
+  // Categories for supplies
   const supplyCategories = [
-    'Guantes',
-    'Algodón',
-    'Alcohol y desinfectantes',
     'Material de curación',
-    'Equipo básico de examen',
+    'Material de protección',
+    'Material de limpieza',
+    'Equipo desechable',
+    'Material de laboratorio',
+    'Material dental',
+    'Insumos diversos',
   ];
 
   return (

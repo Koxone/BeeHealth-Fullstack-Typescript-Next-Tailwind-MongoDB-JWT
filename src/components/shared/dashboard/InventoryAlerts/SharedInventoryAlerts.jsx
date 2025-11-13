@@ -39,7 +39,7 @@ export default function SharedInventoryAlerts({ role, inventory = [], showButton
           </div>
 
           {/* "View more" button */}
-          {showButton && <ViewMoreButton role={role} route="inventory/alerts" />}
+          {showButton && <ViewMoreButton role={role} route="/inventory" />}
         </div>
       </div>
 
