@@ -1,7 +1,9 @@
 'use client';
+import useAuthStore from '@/zustand/useAuthStore';
 import { Edit2, Power, History } from 'lucide-react';
 
 export default function ActionButtons({ item, onEdit, onDelete, onHistory }) {
+  const { user } = useAuthStore();
   return (
     <div className="flex items-center justify-center gap-2">
       {/* Edit Button */}
@@ -29,13 +31,15 @@ export default function ActionButtons({ item, onEdit, onDelete, onHistory }) {
       </button>
 
       {/* Transaction History Button */}
-      <button
-        onClick={() => onHistory(item)}
-        className="group/btn relative rounded-lg bg-amber-100 p-2 transition-all duration-200 hover:bg-amber-100 hover:shadow-md active:scale-95"
-        title="Ver historial de transacciones"
-      >
-        <History className="h-4 w-4 text-blue-700 transition-transform duration-200 group-hover/btn:scale-110" />
-      </button>
+      {user?.role === 'doctor' && (
+        <button
+          onClick={() => onHistory(item)}
+          className="group/btn relative rounded-lg bg-amber-50 p-2 transition-all duration-200 hover:bg-amber-100 hover:shadow-md active:scale-95"
+          title="Ver historial de transacciones"
+        >
+          <History className="h-4 w-4 text-amber-600 transition-transform duration-200 group-hover/btn:scale-110" />
+        </button>
+      )}
     </div>
   );
 }

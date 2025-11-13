@@ -1,3 +1,4 @@
+'use client';
 import ActionButtons from './modals/shared/ActionsButtons';
 
 export default function MedicamentosTable({ rows, getStockStatus, onEdit, onDelete, onHistory }) {
@@ -6,7 +7,7 @@ export default function MedicamentosTable({ rows, getStockStatus, onEdit, onDele
       <div className="p-4 md:p-6">
         <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 py-16">
           <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
-            <span className="text-2xl text-gray-400">📦</span>
+            <span className="text-2xl text-gray-400">💊</span>
           </div>
           <p className="mb-1 text-base font-medium text-gray-900">
             No hay medicamentos registrados
@@ -16,6 +17,7 @@ export default function MedicamentosTable({ rows, getStockStatus, onEdit, onDele
       </div>
     );
   }
+
   return (
     <div className="p-4 md:p-6">
       <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
@@ -35,7 +37,6 @@ export default function MedicamentosTable({ rows, getStockStatus, onEdit, onDele
                 <th className="hidden px-4 py-4 text-right text-xs font-semibold tracking-wider text-gray-600 uppercase lg:table-cell">
                   Precio
                 </th>
-
                 <th className="px-4 py-4 text-center text-xs font-semibold tracking-wider text-gray-600 uppercase">
                   Acciones
                 </th>
@@ -44,7 +45,7 @@ export default function MedicamentosTable({ rows, getStockStatus, onEdit, onDele
 
             <tbody className="divide-y divide-gray-100">
               {rows.map((med, index) => {
-                const stockStatus = getStockStatus(med.stock, med.minimo);
+                const stockStatus = getStockStatus(med?.quantity, med?.minStock);
 
                 return (
                   <tr
@@ -57,11 +58,11 @@ export default function MedicamentosTable({ rows, getStockStatus, onEdit, onDele
                       animationFillMode: 'forwards',
                     }}
                   >
-                    {/* Medication */}
+                    {/* Medication name */}
                     <td className="px-4 py-4">
                       <div className="flex items-center gap-3">
                         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-50 transition-transform duration-200 group-hover:scale-110">
-                          <span className="text-lg text-blue-600">📦</span>
+                          <span className="text-lg text-blue-600">💊</span>
                         </div>
                         <div className="min-w-0">
                           <p className="truncate text-sm font-semibold text-gray-900">
