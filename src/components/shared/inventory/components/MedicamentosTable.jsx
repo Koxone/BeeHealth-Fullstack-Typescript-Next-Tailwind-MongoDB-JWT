@@ -1,4 +1,3 @@
-import { Edit2, Eye, History, Power, Trash2 } from 'lucide-react';
 import ActionButtons from './modals/shared/ActionsButtons';
 
 export default function MedicamentosTable({ rows, getStockStatus, onEdit, onDelete, onHistory }) {

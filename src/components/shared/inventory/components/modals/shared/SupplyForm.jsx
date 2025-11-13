@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 
-/* Supply Form (connected to backend, with labels) */
 export default function SupplyForm({ mode, initialData, onCancel, onSubmit }) {
   // Local state
   const [form, setForm] = useState(() => ({

@@ -1,4 +1,3 @@
-import { Edit2, Trash2, Power, History } from 'lucide-react';
 import ActionButtons from './modals/shared/ActionsButtons';
 
 export default function RecetasGrid({ rows, getStockStatus, onEdit, onDelete, onHistory }) {

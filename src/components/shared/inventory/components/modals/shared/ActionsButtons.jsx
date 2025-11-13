@@ -1,7 +1,6 @@
 'use client';
 import { Edit2, Power, History } from 'lucide-react';
 
-/* --- Generic action buttons for products --- */
 export default function ActionButtons({ item, onEdit, onDelete, onHistory }) {
   return (
     <div className="flex items-center justify-center gap-2">
