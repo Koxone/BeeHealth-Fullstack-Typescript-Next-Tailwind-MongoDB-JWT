@@ -87,8 +87,7 @@ export async function PATCH(req) {
       {
         success: true,
         message: 'Product updated successfully',
-        inventory: inventoryItem,
-        product: productItem,
+        inventory: { ...inventoryItem.toObject(), product: productItem },
       },
       { status: 200 }
     );
