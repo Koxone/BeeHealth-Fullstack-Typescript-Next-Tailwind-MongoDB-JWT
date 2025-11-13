@@ -7,7 +7,7 @@ export default function SupplyForm({ mode, initialData, onCancel, onSubmit }) {
   // Local state
   const [form, setForm] = useState(() => ({
     name: initialData?.product?.name || '',
-    category: initialData?.category || '',
+    category: initialData?.product?.category || '',
     quantity: initialData?.quantity != null ? String(initialData.quantity) : '',
     minStock: initialData?.minStock != null ? String(initialData.minStock) : '',
     maxStock: initialData?.maxStock != null ? String(initialData.maxStock) : '',
