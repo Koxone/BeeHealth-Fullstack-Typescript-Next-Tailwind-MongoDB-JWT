@@ -23,7 +23,7 @@ export default function EditProductModal({ activeTab, item, onClose, onSubmit })
         quantity: formData.quantity,
         costPrice: formData.costPrice,
         salePrice: formData.salePrice,
-        reason: 'Corrección de inventario',
+        reason: formData.reason,
       });
 
       if (response.success) {

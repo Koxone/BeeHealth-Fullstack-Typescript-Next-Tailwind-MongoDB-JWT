@@ -13,6 +13,7 @@ export default function MedicationForm({ mode, initialData, onCancel, onSubmit }
     quantity: initialData?.quantity != null ? String(initialData.quantity) : '',
     minStock: initialData?.minStock != null ? String(initialData.minStock) : '',
     maxStock: initialData?.maxStock != null ? String(initialData.maxStock) : '',
+    reason: initialData?.reason || '',
   }));
 
   // Handlers
@@ -31,6 +32,7 @@ export default function MedicationForm({ mode, initialData, onCancel, onSubmit }
       quantity: Number(form.quantity || 0),
       minStock: Number(form.minStock || 0),
       maxStock: Number(form.maxStock || 0),
+      reason: form.reason.trim(),
     };
 
     onSubmit(payload);
@@ -128,6 +130,19 @@ export default function MedicationForm({ mode, initialData, onCancel, onSubmit }
             value={form.salePrice}
             onChange={(e) => handleChange('salePrice', e.target.value)}
             placeholder="Ej. 15"
+            className="w-full rounded-xl border-2 border-gray-300 px-4 py-3 focus:border-green-500"
+          />
+        </div>
+
+        {/* Reason */}
+        <div className="grid gap-1">
+          <label className="text-sm font-semibold text-gray-600">Reason</label>
+          <input
+            type="text"
+            required
+            value={form.reason}
+            onChange={(e) => handleChange('reason', e.target.value)}
+            placeholder="ej. Error al Ingresar"
             className="w-full rounded-xl border-2 border-gray-300 px-4 py-3 focus:border-green-500"
           />
         </div>
