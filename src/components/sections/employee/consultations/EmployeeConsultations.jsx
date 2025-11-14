@@ -39,7 +39,9 @@ export default function EmployeeConsultations({ role }) {
         <TodayConsultsTable />
 
         {/* Medications Sold Table */}
-        <MedicamentosTable />
+        <div className="overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg">
+          <MedicamentosTable />
+        </div>
       </div>
     </div>
   );

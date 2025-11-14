@@ -11,7 +11,7 @@ export default function Actions({ onClose, submitLabel }) {
       </button>
       <button
         type="submit"
-        className="flex-1 rounded-xl bg-blue-600 px-6 py-3.5 font-semibold text-white"
+        className="flex-1 rounded-xl bg-medtrack-blue-solid hover:bg-medtrack-blue-hover px-6 py-3.5 font-semibold text-white"
       >
         {submitLabel}
       </button>

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Header from './components/Header';
-import ConsultaForm from './components/ConsultaForm';
+import ConsultaForm from './components/consultForm/ConsultaForm';
 import Actions from './components/Actions';
 
 /* Container */

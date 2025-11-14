@@ -10,22 +10,7 @@ import EmployeeDeleteConsultModal from '@/components/sections/employee/consultat
 import EmployeeCreateConsultModal from '@/components/sections/employee/consultations/components/modals/employeeCreateConsultModal/EmployeeCreateConsultModal';
 import EmployeeEditConsultModal from '@/components/sections/employee/consultations/components/modals/employeeEditConsultModal/EmployeeEditConsultModal';
 
-import {
-  Search,
-  Plus,
-  Calendar,
-  Users,
-  FileText,
-  DollarSign,
-  CheckCircle,
-  Clock,
-  Edit2,
-  Trash2,
-  Award,
-  CreditCard,
-  X,
-  AlertCircle,
-} from 'lucide-react';
+import { Search, Plus, FileText, Edit2, Trash2, AlertCircle } from 'lucide-react';
 
 /* Helper date */
 function todayISO() {
@@ -45,9 +30,9 @@ export default function TodayConsultsTable() {
       fecha: '2024-10-21',
       hora: '09:00',
       paciente: 'Juan Pérez',
-      tipo: 'Primera Consulta',
+      tipo: 'Primera Vez',
       costo: 1000,
-      pagado: true,
+      paymentMethod: 'Efectivo',
       avatar: 'JP',
     },
     {
@@ -55,9 +40,9 @@ export default function TodayConsultsTable() {
       fecha: '2024-10-21',
       hora: '10:30',
       paciente: 'María López',
-      tipo: 'Seguimiento',
+      tipo: 'Subsecuente',
       costo: 600,
-      pagado: true,
+      paymentMethod: 'Tarjeta',
       avatar: 'ML',
     },
     {
@@ -65,9 +50,9 @@ export default function TodayConsultsTable() {
       fecha: '2024-10-21',
       hora: '11:00',
       paciente: 'Carlos Ruiz',
-      tipo: 'Control de Peso',
+      tipo: 'Primera Vez',
       costo: 800,
-      pagado: false,
+      paymentMethod: 'Transferencia',
       avatar: 'CR',
     },
     {
@@ -75,9 +60,9 @@ export default function TodayConsultsTable() {
       fecha: '2024-10-21',
       hora: '15:00',
       paciente: 'Ana Martínez',
-      tipo: 'Consulta General',
+      tipo: 'Subsecuente',
       costo: 800,
-      pagado: true,
+      paymentMethod: 'Tarjeta',
       avatar: 'AM',
     },
     {
@@ -85,9 +70,9 @@ export default function TodayConsultsTable() {
       fecha: '2024-10-21',
       hora: '16:30',
       paciente: 'Pedro García',
-      tipo: 'Seguimiento',
+      tipo: 'Subsecuente',
       costo: 600,
-      pagado: true,
+      paymentMethod: 'Tarjeta',
       avatar: 'PG',
     },
   ]);
@@ -188,17 +173,6 @@ export default function TodayConsultsTable() {
       <div className="overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg">
         <ConsultationsTable
           rows={filteredConsultas}
-          icons={{
-            Calendar,
-            Users,
-            FileText,
-            DollarSign,
-            CheckCircle,
-            Clock,
-            Edit2,
-            Trash2,
-            Award,
-          }}
           totals={{
             totalIngresos,
             cobradas: consultas.filter((c) => c.pagado).length,

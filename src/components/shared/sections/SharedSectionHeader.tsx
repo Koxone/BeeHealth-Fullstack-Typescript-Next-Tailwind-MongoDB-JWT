@@ -55,7 +55,7 @@ export default function SharedSectionHeader({
     <div className="-mx-4 -mt-4 mb-6 flex w-full items-center justify-between px-4 pt-6 md:rounded-2xl">
       <div>
         <div className="flex items-start gap-4">
-          <div className="bg-medtrack-green-dark rounded-2xl p-3 shadow-lg">
+          <div className="bg-medtrack-blue-solid rounded-2xl p-3 shadow-lg">
             <SelectedIcon className="h-8 w-8 text-white" />
           </div>
           <div>

@@ -18,10 +18,10 @@ export default function MetricsGrid({ totals }) {
         <div className="absolute top-0 right-0 -mt-12 -mr-12 h-24 w-24 rounded-full bg-white/10" />
         <div className="relative z-10">
           <div className="mb-3 flex items-center justify-between">
-            <div className="rounded-xl bg-emerald-100 p-2">
-              <TrendingUp className="h-6 w-6 text-emerald-600" />
+            <div className="bg-medtrack-blue-solid rounded-xl p-2">
+              <TrendingUp className="h-6 w-6 text-white" />
             </div>
-            <span className="rounded-full bg-emerald-100 px-3 py-1.5 text-xs font-bold text-emerald-700">
+            <span className="bg-medtrack-blue-solid rounded-full px-3 py-1.5 text-xs font-bold text-white">
               Total
             </span>
           </div>
@@ -33,10 +33,10 @@ export default function MetricsGrid({ totals }) {
       {/* cobrado */}
       <div className="rounded-2xl border-2 border-gray-200 bg-white p-5 shadow-lg">
         <div className="mb-3 flex items-center justify-between">
-          <div className="rounded-xl bg-emerald-100 p-2">
-            <Users className="h-6 w-6 text-emerald-600" />
+          <div className="bg-medtrack-blue-solid rounded-xl p-2">
+            <Users className="h-6 w-6 text-white" />
           </div>
-          <span className="rounded-full bg-emerald-100 px-3 py-1.5 text-xs font-bold text-emerald-700">
+          <span className="bg-medtrack-blue-solid rounded-full px-3 py-1.5 text-xs font-bold text-white">
             {cobradas}
           </span>
         </div>
@@ -47,10 +47,10 @@ export default function MetricsGrid({ totals }) {
       {/* pendiente */}
       <div className="rounded-2xl border-2 border-gray-200 bg-white p-5 shadow-lg">
         <div className="mb-3 flex items-center justify-between">
-          <div className="rounded-xl bg-amber-100 p-2">
-            <Pill className="h-6 w-6 text-amber-600" />
+          <div className="bg-medtrack-blue-solid rounded-xl p-2">
+            <Pill className="h-6 w-6 text-white" />
           </div>
-          <span className="rounded-full bg-amber-100 px-3 py-1.5 text-xs font-bold text-amber-700">
+          <span className="bg-medtrack-blue-solid rounded-full px-3 py-1.5 text-xs font-bold text-white">
             {total - cobradas}
           </span>
         </div>

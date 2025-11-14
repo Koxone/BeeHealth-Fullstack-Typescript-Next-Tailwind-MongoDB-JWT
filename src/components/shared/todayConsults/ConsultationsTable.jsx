@@ -1,8 +1,22 @@
 'use client';
 
+import {
+  Calendar,
+  Users,
+  FileText,
+  DollarSign,
+  CheckCircle,
+  Clock,
+  Edit2,
+  Trash2,
+  Award,
+  Banknote,
+  CreditCard,
+  ArrowLeftRight,
+} from 'lucide-react';
+
 /* table */
-export default function ConsultationsTable({ rows, icons, totals, onEdit, onDelete }) {
-  const { Calendar, Users, FileText, DollarSign, CheckCircle, Clock, Edit2, Trash2, Award } = icons;
+export default function ConsultationsTable({ rows, totals, onEdit, onDelete }) {
   return (
     <div className="hidden overflow-x-auto md:block">
       <table className="w-full">
@@ -32,14 +46,21 @@ export default function ConsultationsTable({ rows, icons, totals, onEdit, onDele
                 <span className="text-sm font-bold text-gray-900">Costo</span>
               </div>
             </th>
+            <th className="px-6 py-4 text-right">
+              <div className="flex items-center justify-end gap-2">
+                <DollarSign className="h-4 w-4 text-gray-500" />
+                <span className="text-sm font-bold text-gray-900">Extras</span>
+              </div>
+            </th>
             <th className="px-6 py-4 text-center">
-              <span className="text-sm font-bold text-gray-900">Estado</span>
+              <span className="text-sm font-bold text-gray-900">Metodo de Pago</span>
             </th>
             <th className="px-6 py-4 text-center">
               <span className="text-sm font-bold text-gray-900">Acciones</span>
             </th>
           </tr>
         </thead>
+
         <tbody className="divide-y divide-gray-200">
           {rows.map((c, i) => (
             <tr
@@ -47,10 +68,11 @@ export default function ConsultationsTable({ rows, icons, totals, onEdit, onDele
               style={{ animationDelay: `${i * 50}ms` }}
               className="group animate-fadeInUp transition hover:bg-linear-to-r hover:from-indigo-50 hover:to-purple-50"
             >
+              {/* Dates */}
               <td className="px-6 py-4">
                 <div className="flex items-center gap-3">
-                  <div className="rounded-lg bg-blue-100 p-2 transition group-hover:bg-blue-500">
-                    <Calendar className="h-4 w-4 text-blue-600 transition group-hover:text-white" />
+                  <div className="bg-medtrack-blue-solid group-hover:bg-medtrack-blue-hover rounded-lg p-2 transition">
+                    <Calendar className="h-4 w-4 text-white transition group-hover:text-white" />
                   </div>
                   <div>
                     <p className="text-sm font-bold text-gray-900">{c.fecha}</p>
@@ -58,36 +80,56 @@ export default function ConsultationsTable({ rows, icons, totals, onEdit, onDele
                   </div>
                 </div>
               </td>
+
+              {/* Patient Info */}
               <td className="px-6 py-4">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-indigo-500 to-purple-600 text-sm font-bold text-white shadow-md">
+                  <div className="bg-medtrack-blue-solid flex h-10 w-10 items-center justify-center rounded-xl text-sm font-bold text-white shadow-md">
                     {c.avatar}
                   </div>
                   <span className="text-sm font-semibold text-gray-900">{c.paciente}</span>
                 </div>
               </td>
+
+              {/* Type */}
               <td className="px-6 py-4">
                 <span className="text-sm font-medium text-gray-700">{c.tipo}</span>
               </td>
+
+              {/* Cost */}
               <td className="px-6 py-4 text-right">
-                <span className="text-lg font-bold text-indigo-600">${c.costo}</span>
+                <span className="text-lg font-bold text-neutral-700">${c.costo}</span>
               </td>
+
+              {/* Extras */}
+              <td className="px-6 py-4 text-right">
+                <span className="text-lg font-bold text-neutral-700">${c.costo}</span>
+              </td>
+
+              {/* Payment Method */}
               <td className="px-6 py-4 text-center">
                 <span
                   className={`inline-flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-bold ${
-                    c.pagado
-                      ? 'border-emerald-200 bg-emerald-100 text-emerald-700'
-                      : 'border-amber-200 bg-amber-100 text-amber-700'
+                    c.paymentMethod === 'Efectivo'
+                      ? 'border-[#C4E3CC] bg-[#E6F4EA] text-[#2F6E45]'
+                      : c.paymentMethod === 'Tarjeta'
+                        ? 'border-[#C9D8FF] bg-[#E7EEFF] text-[#3C5BBF]'
+                        : 'border-[#FFE2B8] bg-[#FFF6E6] text-[#A86A00]'
                   }`}
                 >
-                  {c.pagado ? (
-                    <CheckCircle className="h-3.5 w-3.5" />
-                  ) : (
-                    <Clock className="h-3.5 w-3.5" />
+                  {c.paymentMethod === 'Efectivo' && <Banknote className="h-3.5 w-3.5" />}
+
+                  {c.paymentMethod === 'Tarjeta' && <CreditCard className="h-3.5 w-3.5" />}
+
+                  {c.paymentMethod === 'Transferencia' && (
+                    <ArrowLeftRight className="h-3.5 w-3.5" />
                   )}
-                  {c.pagado ? 'Pagado' : 'Pendiente'}
+
+                  {c.paymentMethod}
                 </span>
               </td>
+
+              {/* Actions */}
               <td className="px-6 py-4">
                 <div className="flex items-center justify-center gap-2">
                   <button
@@ -107,7 +149,8 @@ export default function ConsultationsTable({ rows, icons, totals, onEdit, onDele
             </tr>
           ))}
         </tbody>
-        <tfoot className="border-t-2 border-gray-200 bg-linear-to-r from-gray-50 to-indigo-50">
+
+        <tfoot className="w-full border-t-2 border-gray-200">
           <tr className="font-bold">
             <td colSpan="3" className="px-6 py-4 text-sm text-gray-900">
               <div className="flex items-center gap-2">
@@ -115,15 +158,10 @@ export default function ConsultationsTable({ rows, icons, totals, onEdit, onDele
                 <span>Total General</span>
               </div>
             </td>
-            <td className="px-6 py-4 text-right text-lg text-indigo-600">
+
+            <td className="px-6 py-4 text-right text-lg font-bold text-indigo-600">
               ${totals.totalIngresos.toLocaleString()}
             </td>
-            <td className="px-6 py-4 text-center">
-              <span className="text-xs font-semibold text-gray-600">
-                {totals.cobradas}/{totals.total} cobradas
-              </span>
-            </td>
-            <td />
           </tr>
         </tfoot>
       </table>

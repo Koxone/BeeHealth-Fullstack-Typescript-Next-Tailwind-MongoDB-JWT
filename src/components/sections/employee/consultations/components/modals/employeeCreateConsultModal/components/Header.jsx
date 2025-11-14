@@ -7,7 +7,7 @@ export default function Header({ title, onClose }) {
       <div className="relative px-6 py-5">
         <div className="flex items-start justify-between">
           <div className="flex items-start gap-3">
-            <div className="rounded-2xl bg-blue-600 p-3 shadow-lg">
+            <div className="bg-medtrack-blue-solid rounded-2xl p-3 shadow-lg">
               <Calendar className="h-6 w-6 text-white" />
             </div>
             <div>

@@ -1,11 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import { Plus, Edit2, Trash2 } from 'lucide-react';
+import {
+  Pill,
+  Users,
+  DollarSign,
+  Edit2,
+  Trash2,
+  Award,
+} from 'lucide-react';
+
 import DeleteMedSaleModal from './DeleteMedSaleModal';
 import AddEditMedicationSellModal from './addEditMedicationSaleModal/AddEditMedicationSellModal';
 
-/* Table */
 export default function MedicamentosTable() {
   /* Data state */
   const [medicamentosVendidos, setMedicamentosVendidos] = useState([
@@ -50,7 +57,7 @@ export default function MedicamentosTable() {
   const [itemToDelete, setItemToDelete] = useState(null);
 
   /* Derived */
-  const totalMedicamentos = medicamentosVendidos.reduce((sum, m) => sum + m.total, 0);
+  const totalMedicamentos = medicamentosVendidos.reduce((acc, m) => acc + m.total, 0);
 
   /* Actions */
   const openAddModal = () => {
@@ -71,6 +78,7 @@ export default function MedicamentosTable() {
   const handleSaveMedicamento = (form) => {
     const cantidad = parseInt(form.cantidad);
     const precioUnitario = parseFloat(form.precioUnitario);
+
     const newItem = {
       id: editingItem ? editingItem.id : Date.now(),
       nombre: form.nombre,
@@ -81,7 +89,9 @@ export default function MedicamentosTable() {
     };
 
     if (editingItem) {
-      setMedicamentosVendidos((prev) => prev.map((m) => (m.id === editingItem.id ? newItem : m)));
+      setMedicamentosVendidos((prev) =>
+        prev.map((m) => (m.id === editingItem.id ? newItem : m))
+      );
     } else {
       setMedicamentosVendidos((prev) => [...prev, newItem]);
     }
@@ -97,79 +107,130 @@ export default function MedicamentosTable() {
   };
 
   return (
-    <div className="overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg">
-      {/* Header */}
-      <div className="flex items-center justify-between border-b border-gray-200 bg-gray-50 px-4 py-3 md:px-6">
-        <h2 className="text-base font-semibold text-gray-900 md:text-lg">Medicamentos Vendidos</h2>
-        <button
-          onClick={openAddModal}
-          className="flex items-center gap-2 rounded-lg bg-emerald-500 px-3 py-2 text-sm font-medium text-white transition hover:bg-emerald-600 active:scale-95"
-        >
-          <Plus className="h-4 w-4" />
-          Agregar
-        </button>
-      </div>
+    <div className="hidden overflow-x-auto md:block">
+      <table className="w-full">
 
-      {/* Table */}
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[600px] text-sm">
-          <thead className="bg-gray-50">
-            <tr className="text-left text-gray-700">
-              <th className="px-4 py-3 font-semibold">Medicamento</th>
-              <th className="px-4 py-3 text-center font-semibold">Cant.</th>
-              <th className="px-4 py-3 text-right font-semibold">P. Unit.</th>
-              <th className="px-4 py-3 text-right font-semibold">Total</th>
-              <th className="hidden px-4 py-3 font-semibold md:table-cell">Paciente</th>
-              <th className="px-4 py-3 text-center font-semibold">Acciones</th>
-            </tr>
-          </thead>
+        {/* HEADER */}
+        <thead className="border-b-2 border-gray-200 bg-linear-to-r from-gray-50 to-indigo-50">
+          <tr>
+            <th className="px-6 py-4 text-left">
+              <div className="flex items-center gap-2">
+                <Pill className="h-4 w-4 text-gray-500" />
+                <span className="text-sm font-bold text-gray-900">Medicamento</span>
+              </div>
+            </th>
 
-          <tbody>
-            {medicamentosVendidos.map((m) => (
-              <tr key={m.id} className="border-t border-gray-100 transition hover:bg-gray-50">
-                <td className="px-4 py-3 text-gray-900">{m.nombre}</td>
-                <td className="px-4 py-3 text-center text-gray-900">{m.cantidad}</td>
-                <td className="px-4 py-3 text-right text-gray-600">
-                  ${m.precioUnitario.toLocaleString()}
-                </td>
-                <td className="px-4 py-3 text-right font-semibold text-gray-900">
-                  ${m.total.toLocaleString()}
-                </td>
-                <td className="hidden px-4 py-3 text-gray-600 md:table-cell">{m.paciente}</td>
-                <td className="px-4 py-3">
-                  <div className="flex items-center justify-center gap-1.5">
-                    <button
-                      onClick={() => openEditModal(m)}
-                      className="rounded-lg p-1.5 transition hover:bg-blue-50 active:scale-95"
-                    >
-                      <Edit2 className="h-4 w-4 text-blue-600" />
-                    </button>
-                    <button
-                      onClick={() => openDeleteModal(m)}
-                      className="rounded-lg p-1.5 transition hover:bg-red-50 active:scale-95"
-                    >
-                      <Trash2 className="h-4 w-4 text-red-600" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+            <th className="px-6 py-4 text-center">
+              <span className="text-sm font-bold text-gray-900">Cant.</span>
+            </th>
 
-          <tfoot>
-            <tr className="border-t border-gray-200 bg-gray-50 font-medium text-gray-900">
-              <td colSpan="3" className="px-4 py-3">
-                Total Medicamentos
+            <th className="px-6 py-4 text-right">
+              <div className="flex items-center justify-end gap-2">
+                <DollarSign className="h-4 w-4 text-gray-500" />
+                <span className="text-sm font-bold text-gray-900">P. Unit.</span>
+              </div>
+            </th>
+
+            <th className="px-6 py-4 text-right">
+              <div className="flex items-center justify-end gap-2">
+                <DollarSign className="h-4 w-4 text-gray-500" />
+                <span className="text-sm font-bold text-gray-900">Total</span>
+              </div>
+            </th>
+
+            <th className="px-6 py-4 text-left">
+              <div className="flex items-center gap-2">
+                <Users className="h-4 w-4 text-gray-500" />
+                <span className="text-sm font-bold text-gray-900">Paciente</span>
+              </div>
+            </th>
+
+            <th className="px-6 py-4 text-center">
+              <span className="text-sm font-bold text-gray-900">Acciones</span>
+            </th>
+          </tr>
+        </thead>
+
+        {/* BODY */}
+        <tbody className="divide-y divide-gray-200">
+          {medicamentosVendidos.map((m, i) => (
+            <tr
+              key={m.id}
+              style={{ animationDelay: `${i * 50}ms` }}
+              className="group animate-fadeInUp transition hover:bg-linear-to-r hover:from-indigo-50 hover:to-purple-50"
+            >
+              {/* Nombre */}
+              <td className="px-6 py-4">
+                <span className="text-sm font-semibold text-gray-900">{m.nombre}</span>
               </td>
-              <td className="px-4 py-3 text-right">${totalMedicamentos.toLocaleString()}</td>
-              <td className="hidden md:table-cell" />
-              <td />
-            </tr>
-          </tfoot>
-        </table>
-      </div>
 
-      {/* Modals */}
+              {/* Cantidad */}
+              <td className="px-6 py-4 text-center">
+                <span className="text-sm font-medium text-gray-700">{m.cantidad}</span>
+              </td>
+
+              {/* Precio Unitario */}
+              <td className="px-6 py-4 text-right">
+                <span className="text-sm font-medium text-gray-700">
+                  ${m.precioUnitario.toLocaleString()}
+                </span>
+              </td>
+
+              {/* Total */}
+              <td className="px-6 py-4 text-right">
+                <span className="text-lg font-bold text-neutral-700">
+                  ${m.total.toLocaleString()}
+                </span>
+              </td>
+
+              {/* Paciente */}
+              <td className="px-6 py-4">
+                <span className="text-sm font-semibold text-gray-800">{m.paciente}</span>
+              </td>
+
+              {/* Acciones */}
+              <td className="px-6 py-4">
+                <div className="flex items-center justify-center gap-2">
+                  <button
+                    onClick={() => openEditModal(m)}
+                    className="group/btn rounded-xl border-2 border-transparent p-2 transition hover:border-blue-200 hover:bg-blue-50 active:scale-95"
+                  >
+                    <Edit2 className="h-4 w-4 text-blue-600 transition-transform group-hover/btn:rotate-12" />
+                  </button>
+
+                  <button
+                    onClick={() => openDeleteModal(m)}
+                    className="group/btn rounded-xl border-2 border-transparent p-2 transition hover:border-red-200 hover:bg-red-50 active:scale-95"
+                  >
+                    <Trash2 className="h-4 w-4 text-red-600 transition-transform group-hover/btn:scale-110" />
+                  </button>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+
+        {/* FOOTER */}
+        <tfoot className="w-full border-t-2 border-gray-200">
+          <tr className="font-bold">
+            <td colSpan="3" className="px-6 py-4 text-sm text-gray-900">
+              <div className="flex items-center gap-2">
+                <Award className="h-5 w-5 text-indigo-600" />
+                <span>Total General</span>
+              </div>
+            </td>
+
+            <td className="px-6 py-4 text-right text-lg font-bold text-indigo-600">
+              ${totalMedicamentos.toLocaleString()}
+            </td>
+
+            <td colSpan="2" />
+          </tr>
+        </tfoot>
+
+      </table>
+
+      {/* MODALS */}
       {showModal && (
         <AddEditMedicationSellModal
           type="medicamento"
