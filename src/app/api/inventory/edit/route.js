@@ -92,19 +92,28 @@ export async function PATCH(req) {
       }
     }
 
-    // Update editable inventory fields
-    if (quantity !== undefined) inventoryItem.quantity = Number(quantity);
-    await inventoryItem.save();
+    if (quantity !== undefined) {
+      inventoryItem.quantity = Number(quantity);
+      await inventoryItem.save();
+    }
 
-    // Log correction transaction ONLY if quantity changed
+    // Detailed quantity change logging
     if (quantity !== undefined && movement !== 'NONE' && movement !== null) {
+      const newQuantity = Number(quantity);
+
       await Transaction.create({
         inventory: inventoryItem._id,
         movement,
         reasonType: 'correction',
         performedBy: new mongoose.Types.ObjectId(userId),
+
+        oldQuantity: previousQuantity,
+        newQuantity: newQuantity,
+        quantityDelta: Math.abs(newQuantity - previousQuantity),
+
         quantity: Math.abs(delta),
-        reason: reason || 'Manual inventory correction',
+
+        reason: reason || 'Quantity update',
       });
     }
 
@@ -127,7 +136,15 @@ export async function PATCH(req) {
       if (newCost > oldCost || newSale > oldSale) priceMovement = 'IN';
       if (newCost < oldCost || newSale < oldSale) priceMovement = 'OUT';
 
-      const priceDelta = Math.abs(newCost - oldCost + (newSale - oldSale));
+      let priceDelta = 0;
+
+      if (newCost !== oldCost) {
+        priceDelta += Math.abs(newCost - oldCost);
+      }
+
+      if (newSale !== oldSale) {
+        priceDelta += Math.abs(newSale - oldSale);
+      }
 
       await Transaction.create({
         inventory: inventoryItem._id,

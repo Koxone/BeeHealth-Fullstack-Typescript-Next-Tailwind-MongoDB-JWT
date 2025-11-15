@@ -9,13 +9,18 @@ interface ITransaction extends Document {
   performedBy: mongoose.Types.ObjectId;
   patient?: mongoose.Types.ObjectId;
 
+  /* Quantity change fields */
+  oldQuantity?: number;
+  newQuantity?: number;
+  quantityDelta?: number;
+
   /* Price change fields */
   oldCostPrice?: number;
   newCostPrice?: number;
   oldSalePrice?: number;
   newSalePrice?: number;
 
-  /* Helpers to identify what changed */
+  /* Helpers to identify what changed for price */
   priceField?: 'costPrice' | 'salePrice' | 'both';
   priceDelta?: number;
 
@@ -42,6 +47,11 @@ const TransactionSchema = new Schema<ITransaction>(
     newCostPrice: { type: Number },
     oldSalePrice: { type: Number },
     newSalePrice: { type: Number },
+
+    /* Quantity change fields */
+    oldQuantity: { type: Number },
+    newQuantity: { type: Number },
+    quantityDelta: { type: Number },
 
     /* Helpers */
     priceField: { type: String, enum: ['costPrice', 'salePrice', 'both'] },

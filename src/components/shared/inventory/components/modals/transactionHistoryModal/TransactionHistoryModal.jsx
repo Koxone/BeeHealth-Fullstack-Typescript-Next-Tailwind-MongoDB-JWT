@@ -8,13 +8,33 @@ export default function TransactionHistoryModal({ onClose, history, item }) {
 
   const itemName = item?.product?.name;
 
-  const reasonLabels = {
-    initial: 'Ingreso Inicial',
-    sale: 'Venta',
-    restock: 'Reposición',
-    correction: 'Corrección de Inventario',
-    status_change: 'Cambio de Estatus',
-  };
+  /* No history */
+  if (!history || history.length === 0) {
+    return (
+      <div
+        id="overlay"
+        onClick={handleOverlayClick}
+        className="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md"
+      >
+        <div
+          className="relative w-full max-w-md overflow-hidden rounded-3xl bg-white p-8 text-center shadow-2xl"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <h2 className="text-xl font-bold text-gray-900">Sin historial</h2>
+          <p className="mt-2 text-sm text-gray-600">
+            Este producto no tiene movimientos registrados.
+          </p>
+
+          <button
+            onClick={onClose}
+            className="mt-6 w-full rounded-xl bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-300"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   console.log(history);
 
@@ -82,23 +102,137 @@ export default function TransactionHistoryModal({ onClose, history, item }) {
                           : 'bg-gray-50'
               }`}
             >
-              {/* Header row */}
-              <div className="mb-2 flex items-center justify-between">
-                {/* Title Regular Initial Stock */}
-                {transaction?.movement && transaction?.reasonType === 'initial' && (
-                  <span className="font-semibold">Stock Inicial</span>
-                )}
+              {/* BLOCK: INITIAL STOCK */}
+              {transaction?.reasonType === 'initial' && (
+                <div>
+                  {/* Header */}
+                  <div className="mb-2 flex items-center justify-between">
+                    <span className="font-semibold">Stock Inicial</span>
 
-                {/* Title Regular Correction */}
-                {transaction?.movement &&
-                  transaction?.reasonType !== 'status_change' &&
-                  transaction?.reasonType === 'correction' && (
-                    <span className="font-semibold">Corrección</span>
-                  )}
+                    <span className="flex items-center gap-1 rounded-full bg-green-200 px-2 py-1 text-xs font-medium text-green-700">
+                      <ArrowDownCircle className="h-4 w-4" />
+                      {transaction?.quantity} unidades
+                    </span>
+                  </div>
 
-                {/* Price and Cost Changes */}
-                {transaction?.reasonType === 'correction' && transaction?.priceField && (
-                  <>
+                  {/* Details */}
+                  <div className="space-y-1 text-sm text-gray-700">
+                    <p>
+                      <span className="font-medium text-gray-800">Motivo:</span>{' '}
+                      {transaction?.reason}
+                    </p>
+                    <p>
+                      <span className="font-medium text-gray-800">Tipo:</span> Ingreso Inicial
+                    </p>
+                  </div>
+
+                  {/* User */}
+                  <div className="mt-3 flex items-center gap-2 text-sm text-gray-600">
+                    <User className="h-4 w-4 text-gray-500" />
+                    <span>{transaction?.performedBy?.fullName}</span>
+                  </div>
+
+                  {/* Time */}
+                  <p className="mt-1 text-xs text-gray-400">
+                    {new Date(transaction?.createdAt).toLocaleString()}
+                  </p>
+                </div>
+              )}
+
+              {/* BLOCK: RESTOCK */}
+              {transaction?.reasonType === 'restock' && (
+                <div>
+                  <div className="mb-2 flex items-center justify-between">
+                    <span className="font-semibold">Reabastecimiento</span>
+
+                    <span className="flex items-center gap-1 rounded-full bg-green-200 px-2 py-1 text-xs font-medium text-green-700">
+                      <ArrowDownCircle className="h-4 w-4" />
+                      {transaction?.quantity} unidades
+                    </span>
+                  </div>
+
+                  <div className="space-y-1 text-sm text-gray-700">
+                    <p>
+                      <span className="font-medium text-gray-800">Motivo:</span>{' '}
+                      {transaction?.reason}
+                    </p>
+                    <p>
+                      <span className="font-medium text-gray-800">Tipo:</span> Reposición
+                    </p>
+                  </div>
+
+                  <div className="mt-3 flex items-center gap-2 text-sm text-gray-600">
+                    <User className="h-4 w-4 text-gray-500" />
+                    <span>{transaction?.performedBy?.fullName}</span>
+                  </div>
+
+                  <p className="mt-1 text-xs text-gray-400">
+                    {new Date(transaction?.createdAt).toLocaleString()}
+                  </p>
+                </div>
+              )}
+
+              {/* BLOCK: QUANTITY CORRECTION */}
+              {transaction?.reasonType === 'correction' && !transaction?.priceField && (
+                <div>
+                  <div className="mb-2 flex items-center justify-between">
+                    <span className="font-semibold">Corrección de Existencias</span>
+
+                    <span
+                      className={`flex items-center gap-1 rounded-full px-2 py-1 text-xs font-medium ${
+                        transaction?.movement === 'IN'
+                          ? 'bg-green-200 text-green-700'
+                          : 'bg-red-200 text-red-500'
+                      }`}
+                    >
+                      {transaction?.movement === 'IN' ? (
+                        <ArrowUpCircle className="h-4 w-4" />
+                      ) : (
+                        <ArrowDownCircle className="h-4 w-4" />
+                      )}
+                      {transaction?.quantity} unidades
+                    </span>
+                  </div>
+
+                  <div className="space-y-1 text-sm text-gray-700">
+                    <p>
+                      <span className="font-medium text-gray-800">Motivo:</span>{' '}
+                      {transaction?.reason}
+                    </p>
+                    <p>
+                      <span className="font-medium text-gray-800">Tipo:</span> Corrección de
+                      Inventario
+                    </p>
+                    <p>
+                      <span className="font-medium text-gray-800">Cantidad Anterior:</span>{' '}
+                      {transaction?.oldQuantity} unidades
+                    </p>
+                    <p>
+                      <span className="font-medium text-gray-800">Cambio:</span>{' '}
+                      {transaction?.movement === 'IN' ? '+' : '-'}
+                      {transaction?.quantityDelta} unidades
+                    </p>
+                    <p>
+                      <span className="font-medium text-gray-800">Cantidad Nueva:</span>{' '}
+                      {transaction?.newQuantity} unidades
+                    </p>
+                  </div>
+
+                  <div className="mt-3 flex items-center gap-2 text-sm text-gray-600">
+                    <User className="h-4 w-4 text-gray-500" />
+                    <span>{transaction?.performedBy?.fullName}</span>
+                  </div>
+
+                  <p className="mt-1 text-xs text-gray-400">
+                    {new Date(transaction?.createdAt).toLocaleString()}
+                  </p>
+                </div>
+              )}
+
+              {/* BLOCK: PRICE CORRECTION */}
+              {transaction?.reasonType === 'correction' && transaction?.priceField && (
+                <div>
+                  <div className="mb-2 flex items-center justify-between">
                     {/* Title */}
                     <span className="font-semibold">
                       {transaction?.priceField === 'costPrice'
@@ -116,6 +250,11 @@ export default function TransactionHistoryModal({ onClose, history, item }) {
                           : 'bg-red-200 text-red-500'
                       }`}
                     >
+                      {transaction?.movement === 'IN' ? (
+                        <ArrowUpCircle className="h-4 w-4" />
+                      ) : (
+                        <ArrowDownCircle className="h-4 w-4" />
+                      )}
                       {transaction?.movement === 'IN' ? 'Aumento de ' : 'Disminución de '}
                       {transaction?.priceField === 'costPrice'
                         ? 'Costo'
@@ -123,80 +262,121 @@ export default function TransactionHistoryModal({ onClose, history, item }) {
                           ? 'Precio'
                           : 'Precio'}
                     </span>
-                  </>
-                )}
+                  </div>
 
-                {/* Title Regular Restock */}
-                {transaction?.movement &&
-                  transaction?.reasonType !== 'status_change' &&
-                  transaction?.reasonType === 'restock' && (
-                    <span className="font-semibold">Reabastecimiento</span>
-                  )}
+                  {/* Info */}
+                  <div className="space-y-1 text-sm text-gray-700">
+                    {/* Reason */}
+                    <p>
+                      <span className="font-medium text-gray-800">Motivo:</span>{' '}
+                      {transaction?.reason}
+                    </p>
+                    <p>
+                      <span className="font-medium text-gray-800">Tipo:</span> Corrección de
+                      Inventario
+                    </p>
 
-                {/* Badge Regular Transaction */}
-                {transaction?.movement && transaction?.reasonType !== 'status_change' && (
-                  <span
-                    className={`flex items-center gap-1 rounded-full px-2 py-1 text-xs font-medium ${
-                      transaction?.movement === 'IN'
-                        ? 'bg-green-200 text-green-700'
-                        : 'bg-red-200 text-red-500'
-                    }`}
-                  >
-                    {transaction?.movement === 'IN' ? (
-                      <ArrowDownCircle className="h-4 w-4" />
-                    ) : (
-                      <ArrowUpCircle className="h-4 w-4" />
-                    )}
-                    {transaction?.quantity} unidades
-                  </span>
-                )}
+                    {/* Change Info */}
+                    <p>
+                      <span className="font-medium text-gray-800">Anterior:</span>{' '}
+                      {transaction?.priceField === 'costPrice'
+                        ? `$${transaction?.oldCostPrice.toFixed(2)}`
+                        : transaction?.priceField === 'salePrice'
+                          ? `$${transaction?.oldSalePrice.toFixed(2)}`
+                          : `$${transaction?.oldPrice.toFixed(2)}`}
+                    </p>
 
-                {/* Title Status Change ON */}
-                {transaction?.reasonType === 'status_change' && transaction?.movement === 'IN' && (
-                  <span className="font-semibold">Disponibilidad</span>
-                )}
+                    <p>
+                      <span className="font-medium text-gray-800">Cambio:</span>{' '}
+                      {transaction?.movement === 'IN' ? '+' : '-'}$
+                      {transaction?.priceDelta.toFixed(2)}
+                    </p>
 
-                {/* Title Status Change OFF */}
-                {transaction?.reasonType === 'status_change' && transaction?.movement === 'OUT' && (
-                  <span className="font-semibold">Disponibilidad</span>
-                )}
+                    <p>
+                      <span className="font-medium text-gray-800">Nuevo:</span>{' '}
+                      {transaction?.priceField === 'costPrice'
+                        ? `$${transaction?.newCostPrice.toFixed(2)}`
+                        : transaction?.priceField === 'salePrice'
+                          ? `$${transaction?.newSalePrice.toFixed(2)}`
+                          : `$${transaction?.newPrice.toFixed(2)}`}
+                    </p>
+                  </div>
 
-                {/* Badge Status Change OFF */}
-                {transaction?.reasonType === 'status_change' && transaction?.movement === 'OUT' && (
-                  <span className="flex items-center gap-1 rounded-full bg-red-200 px-2 py-1 text-xs font-medium text-red-500">
-                    Apagado
-                  </span>
-                )}
+                  {/* Performed By */}
+                  <div className="mt-3 flex items-center gap-2 text-sm text-gray-600">
+                    <User className="h-4 w-4 text-gray-500" />
+                    <span>{transaction?.performedBy?.fullName}</span>
+                  </div>
 
-                {/* Badge Status Change ON */}
-                {transaction?.reasonType === 'status_change' && transaction?.movement === 'IN' && (
-                  <span className="flex items-center gap-1 rounded-full bg-green-200 px-2 py-1 text-xs font-medium text-green-700">
-                    Encendido
-                  </span>
-                )}
-              </div>
+                  <p className="mt-1 text-xs text-gray-400">
+                    {new Date(transaction?.createdAt).toLocaleString()}
+                  </p>
+                </div>
+              )}
 
-              {/* Details */}
-              <div className="space-y-1 text-sm text-gray-700">
-                <p>
-                  <span className="font-medium text-gray-800">Motivo:</span> {transaction?.reason}
-                </p>
-                <p>
-                  <span className="font-medium text-gray-800">Tipo:</span>{' '}
-                  {reasonLabels[transaction?.reasonType] || transaction?.reasonType}
-                </p>
-              </div>
+              {/* BLOCK: STATUS ON */}
+              {transaction?.reasonType === 'status_change' && transaction?.movement === 'IN' && (
+                <div>
+                  <div className="mb-2 flex items-center justify-between">
+                    <span className="font-semibold">Disponibilidad</span>
 
-              {/* Performed by */}
-              <div className="mt-3 flex items-center gap-2 text-sm text-gray-600">
-                <User className="h-4 w-4 text-gray-500" />
-                <span>{transaction?.performedBy?.fullName}</span>
-              </div>
+                    <span className="flex items-center gap-1 rounded-full bg-green-200 px-2 py-1 text-xs font-medium text-green-700">
+                      Encendido
+                    </span>
+                  </div>
 
-              {/* Timestamp */}
-              <p className="mt-1 text-xs text-gray-400">
-                {new Date(transaction?.createdAt).toLocaleString()}
-              </p>
+                  <div className="space-y-1 text-sm text-gray-700">
+                    <p>
+                      <span className="font-medium text-gray-800">Motivo:</span>{' '}
+                      {transaction?.reason}
+                    </p>
+                    <p>
+                      <span className="font-medium text-gray-800">Tipo:</span> Cambio de Estatus
+                    </p>
+                  </div>
+
+                  <div className="mt-3 flex items-center gap-2 text-sm text-gray-600">
+                    <User className="h-4 w-4 text-gray-500" />
+                    <span>{transaction?.performedBy?.fullName}</span>
+                  </div>
+
+                  <p className="mt-1 text-xs text-gray-400">
+                    {new Date(transaction?.createdAt).toLocaleString()}
+                  </p>
+                </div>
+              )}
+
+              {/* BLOCK: STATUS OFF */}
+              {transaction?.reasonType === 'status_change' && transaction?.movement === 'OUT' && (
+                <div>
+                  <div className="mb-2 flex items-center justify-between">
+                    <span className="font-semibold">Disponibilidad</span>
+
+                    <span className="flex items-center gap-1 rounded-full bg-red-200 px-2 py-1 text-xs font-medium text-red-500">
+                      Apagado
+                    </span>
+                  </div>
+
+                  <div className="space-y-1 text-sm text-gray-700">
+                    <p>
+                      <span className="font-medium text-gray-800">Motivo:</span>{' '}
+                      {transaction?.reason}
+                    </p>
+                    <p>
+                      <span className="font-medium text-gray-800">Tipo:</span> Cambio de Estatus
+                    </p>
+                  </div>
+
+                  <div className="mt-3 flex items-center gap-2 text-sm text-gray-600">
+                    <User className="h-4 w-4 text-gray-500" />
+                    <span>{transaction?.performedBy?.fullName}</span>
+                  </div>
+
+                  <p className="mt-1 text-xs text-gray-400">
+                    {new Date(transaction?.createdAt).toLocaleString()}
+                  </p>
+                </div>
+              )}
             </div>
           ))}
         </div>

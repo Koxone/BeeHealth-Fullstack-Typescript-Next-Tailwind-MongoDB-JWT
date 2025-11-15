@@ -52,12 +52,7 @@ export default function ActionButtons({ item, onEdit, onDelete, onHistory }) {
       {user?.role === 'doctor' && (
         <button
           onClick={() => onHistory(item)}
-          className={clsx(
-            'group/btn relative rounded-lg p-2 transition-all duration-200',
-            item?.product?.inStock
-              ? ['cursor-pointer bg-amber-50 hover:bg-amber-100 hover:shadow-md active:scale-95']
-              : ['pointer-events-none cursor-not-allowed bg-gray-300 text-gray-600 opacity-60']
-          )}
+          className="group/btn relative cursor-pointer rounded-lg bg-amber-50 p-2 transition-all duration-200 hover:bg-amber-100 hover:shadow-md active:scale-95"
           title="Ver historial de transacciones"
         >
           <History
