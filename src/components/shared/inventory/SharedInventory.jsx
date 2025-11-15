@@ -39,6 +39,7 @@ export default function SharedInventory({ role, showButton = true }) {
   const [itemToToggle, setItemToToggle] = useState(null);
 
   // Modal Render States
+  const [isLoading, setIsLoading] = useState(false);
   const [showRestockModal, setShowRestockModal] = useState(false);
   const [showToggleModal, setShowToggleModal] = useState(false);
   const [showHistoryModal, setShowHistoryModal] = useState(false);
@@ -75,11 +76,14 @@ export default function SharedInventory({ role, showButton = true }) {
     setShowHistoryModal(true);
 
     try {
+      setIsLoading(true);
       const data = await fetchProductHistory(item?.product?._id);
       setHistoryData(data.history);
+      setIsLoading(false);
     } catch (err) {
       console.error('Error fetching history:', err);
       setHistoryData([]);
+      setIsLoading(false);
     }
   };
 
@@ -259,6 +263,7 @@ export default function SharedInventory({ role, showButton = true }) {
         <TransactionHistoryModal
           item={selectedProductHistory}
           history={historyData}
+          isLoading={isLoading}
           onClose={() => setShowHistoryModal(false)}
         />
       )}

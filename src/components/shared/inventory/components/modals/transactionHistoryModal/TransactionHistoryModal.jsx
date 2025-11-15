@@ -11,7 +11,7 @@ import StatusOnBlock from './components/StatusOnBlock';
 import StatusOffBlock from './components/StatusOffBlock';
 import InitialStockBlock from './components/InitialStockBlock';
 
-export default function TransactionHistoryModal({ onClose, history, item }) {
+export default function TransactionHistoryModal({ onClose, history, item, isLoading }) {
   const { handleOverlayClick } = useModalClose(onClose);
 
   const itemName = item?.product?.name;
@@ -32,6 +32,31 @@ export default function TransactionHistoryModal({ onClose, history, item }) {
       return bgColorMap[`status_change_${movement}`] || 'bg-gray-50';
     }
     return bgColorMap[reasonType] || 'bg-gray-50';
+  }
+
+  /* Loading state */
+  if (isLoading) {
+    return (
+      <div
+        id="overlay"
+        onClick={handleOverlayClick}
+        className="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md"
+      >
+        <div
+          className="relative w-full max-w-md overflow-hidden rounded-3xl bg-white p-8 text-center shadow-2xl"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Spinner container */}
+          <div className="flex flex-col items-center justify-center gap-4">
+            {/* Spinner */}
+            <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-300 border-t-blue-500"></div>
+
+            {/* Loading text */}
+            <h2 className="text-xl font-bold text-gray-900">Cargando</h2>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   /* No history */
