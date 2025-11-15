@@ -2,6 +2,8 @@
 
 import { X, History } from 'lucide-react';
 import { useModalClose } from '@/hooks/useModalClose';
+
+// Main Blocks
 import PriceBlock from './components/PriceBlock';
 import RestockBlock from './components/RestockBlock';
 import QuantityBlock from './components/QuantityBlock';
@@ -13,6 +15,24 @@ export default function TransactionHistoryModal({ onClose, history, item }) {
   const { handleOverlayClick } = useModalClose(onClose);
 
   const itemName = item?.product?.name;
+
+  // Color mapping for transaction backgrounds
+  const bgColorMap = {
+    initial: 'bg-green-400/60',
+    restock: 'bg-yellow-100/60',
+    correction: 'bg-green-100/60',
+    status_change_IN: 'bg-blue-200/60',
+    status_change_OUT: 'bg-blue-200/60',
+  };
+
+  function getTransactionBg(transaction) {
+    if (!transaction) return 'bg-gray-50';
+    const { reasonType, movement } = transaction;
+    if (reasonType === 'status_change') {
+      return bgColorMap[`status_change_${movement}`] || 'bg-gray-50';
+    }
+    return bgColorMap[reasonType] || 'bg-gray-50';
+  }
 
   /* No history */
   if (!history || history.length === 0) {
@@ -90,21 +110,7 @@ export default function TransactionHistoryModal({ onClose, history, item }) {
           {history?.map((transaction) => (
             <div
               key={transaction?._id}
-              className={`rounded-2xl border border-gray-200 p-4 shadow-sm transition-all hover:shadow-md ${
-                transaction?.reasonType === 'restock'
-                  ? 'bg-yellow-100/60'
-                  : transaction?.reasonType === 'correction'
-                    ? 'bg-green-100/60'
-                    : transaction?.reasonType === 'initial'
-                      ? 'bg-green-400/60'
-                      : transaction?.reasonType === 'status_change' &&
-                          transaction?.movement === 'IN'
-                        ? 'bg-blue-200/60'
-                        : transaction?.reasonType === 'status_change' &&
-                            transaction?.movement === 'OUT'
-                          ? 'bg-blue-200/60'
-                          : 'bg-gray-50'
-              }`}
+              className={`rounded-2xl border border-gray-200 p-4 shadow-sm transition-all hover:shadow-md ${getTransactionBg(transaction)}`}
             >
               {/* BLOCK: INITIAL STOCK */}
               {transaction?.reasonType === 'initial' && (
