@@ -18,7 +18,6 @@ import {
 export default function ConsultsList({ rows, totals, onEdit, onDelete }) {
   // Get consults data
   const { consults, isLoading, error } = useGetAllConsults();
-  console.log(consults);
 
   // Table columns
   const columns = [
@@ -111,23 +110,30 @@ export default function ConsultsList({ rows, totals, onEdit, onDelete }) {
               {/* Patient Info */}
               <td className="px-6 py-4">
                 <div className="flex items-center gap-3">
-                  {/* Avatar */}
-                  <img
-                    src={c?.patient?.avatar || ''}
-                    alt={c?.patient?.fullName || 'Avatar'}
-                    className="bg-medtrack-blue-solid flex h-10 w-10 items-center justify-center rounded-xl object-cover text-sm font-bold text-white shadow-md"
-                  />
+                  {/* Avatar or Initials */}
+                  <div className="bg-medtrack-blue-solid flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl text-sm font-bold text-white shadow-md">
+                    {c?.patient?.avatar ? (
+                      /* Image */
+                      <img
+                        src={c.patient.avatar}
+                        alt={c.patient.fullName || 'Avatar'}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      /* Initials */
+                      <span>
+                        {c?.patient?.fullName
+                          ?.split(' ')
+                          .map((n) => n[0])
+                          .join('')
+                          .toUpperCase()}
+                      </span>
+                    )}
+                  </div>
 
                   <span className="text-sm font-semibold text-gray-900">
                     {c?.patient?.fullName}
                   </span>
-
-                  {/* <Link
-                    href={`/doctor/patients/${c?.patient?._id}`}
-                    className="text-sm font-semibold text-gray-900"
-                  >
-                    {c?.patient?.fullName}
-                  </Link> */}
                 </div>
               </td>
 
