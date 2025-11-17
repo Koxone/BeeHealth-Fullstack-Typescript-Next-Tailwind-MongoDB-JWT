@@ -1,5 +1,4 @@
 import { Phone, Mail, Calendar, Eye } from 'lucide-react';
-import Link from 'next/link';
 
 const getInitials = (name = '') =>
   name
@@ -8,14 +7,23 @@ const getInitials = (name = '') =>
     .map((n) => n[0])
     .join('');
 
-export default async function EmployeePatientCard({ patient, currentUser, role }) {
+export default function EmployeePatientCard({ patient, currentUser, role }) {
   return (
     <div className="rounded-xl border-2 border-gray-200 bg-white p-4 transition hover:border-blue-300">
       <div className="flex items-center gap-4">
         {/* Patient Avatar */}
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-blue-500 to-purple-500 font-semibold text-white">
-          {getInitials(patient?.fullName)}
-        </div>
+        {patient?.avatar ? (
+          <img
+            src={patient.avatar}
+            alt={patient.fullName}
+            className="h-12 w-12 rounded-full object-cover"
+          />
+        ) : (
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-blue-500 to-purple-500 font-semibold text-white">
+            {getInitials(patient?.fullName)}
+          </div>
+        )}
+
         <div className="flex-1">
           {/* Patient Name */}
           <h3 className="mb-2 font-semibold text-gray-900">{patient?.fullName}</h3>

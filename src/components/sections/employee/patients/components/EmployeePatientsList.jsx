@@ -1,18 +1,24 @@
+'use client';
+
+import { useGetAllPatients } from '@/hooks/useGetAllPatients';
 import EmployeePatientCard from './EmployeePatientCard';
-import { connectDB } from '@/lib/mongodb';
-import User from '@/models/User';
 
-export default async function EmployeePatientsList({ currentUser, role }) {
-  // Get Patients
-  await connectDB();
+export default function EmployeePatientsList({ currentUser, role, searchTerm }) {
+  const { patients } = useGetAllPatients();
 
-  let query = { role: 'patient', isActive: true };
+  const filteredPatients = patients.filter((patient) => {
+    const searchLower = searchTerm.toLowerCase();
 
-  const patients = await User.find(query, '-password -resetToken').sort({ createdAt: -1 }).lean();
+    return (
+      patient.fullName.toLowerCase().includes(searchLower) ||
+      patient.phone.toLowerCase().includes(searchLower) ||
+      patient.email.toLowerCase().includes(searchLower)
+    );
+  });
 
   return (
     <div className="grid h-full max-h-[600px] grid-cols-1 gap-3 overflow-y-auto">
-      {patients.map((patient) => (
+      {filteredPatients.map((patient) => (
         <EmployeePatientCard
           key={patient._id}
           patient={patient}

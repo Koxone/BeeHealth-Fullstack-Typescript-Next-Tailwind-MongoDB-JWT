@@ -1,16 +1,10 @@
 'use client';
 
-import { useState } from 'react';
 import { Search } from 'lucide-react';
 
-interface PatientsSearchBarProps {
-  onSearch: (value: string) => void;
-}
-
-export default function PatientsSearchBar({ onSearch }: PatientsSearchBarProps) {
-  const [searchValue, setSearchValue] = useState('');
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+export default function PatientsSearchBar({ onSearch, searchValue, setSearchValue }) {
+  // Handle input change
+  const handleSearchChange = (e) => {
     const val = e.target.value;
     setSearchValue(val);
     onSearch(val);
@@ -18,7 +12,10 @@ export default function PatientsSearchBar({ onSearch }: PatientsSearchBarProps) 
 
   return (
     <div className="relative">
+      {/* Icon */}
       <Search className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
+
+      {/* Input */}
       <input
         type="text"
         placeholder="Buscar por nombre, teléfono o email..."

@@ -7,6 +7,7 @@ export default async function EmployeePatientsPage() {
   // Get current User info
   const currentUser = await getCurrentUser();
   const role = currentUser?.role;
+
   return (
     <div className="max-h-screen overflow-hidden">
       <EmployeePatients currentUser={currentUser} role={role} />
