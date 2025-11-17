@@ -1,19 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  Pill,
-  Users,
-  DollarSign,
-  Edit2,
-  Trash2,
-  Award,
-} from 'lucide-react';
+import { Pill, Users, DollarSign, Edit2, Trash2, Award } from 'lucide-react';
 
 import DeleteMedSaleModal from './DeleteMedSaleModal';
 import AddEditMedicationSellModal from './addEditMedicationSaleModal/AddEditMedicationSellModal';
 
-export default function MedicamentosTable() {
+export default function MedsSoldTable() {
   /* Data state */
   const [medicamentosVendidos, setMedicamentosVendidos] = useState([
     {
@@ -89,9 +82,7 @@ export default function MedicamentosTable() {
     };
 
     if (editingItem) {
-      setMedicamentosVendidos((prev) =>
-        prev.map((m) => (m.id === editingItem.id ? newItem : m))
-      );
+      setMedicamentosVendidos((prev) => prev.map((m) => (m.id === editingItem.id ? newItem : m)));
     } else {
       setMedicamentosVendidos((prev) => [...prev, newItem]);
     }
@@ -109,7 +100,6 @@ export default function MedicamentosTable() {
   return (
     <div className="hidden overflow-x-auto md:block">
       <table className="w-full">
-
         {/* HEADER */}
         <thead className="border-b-2 border-gray-200 bg-linear-to-r from-gray-50 to-indigo-50">
           <tr>
@@ -227,7 +217,6 @@ export default function MedicamentosTable() {
             <td colSpan="2" />
           </tr>
         </tfoot>
-
       </table>
 
       {/* MODALS */}

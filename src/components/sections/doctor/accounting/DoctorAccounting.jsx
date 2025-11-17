@@ -6,7 +6,7 @@ import { DollarSign, Users, Pill, TrendingUp } from 'lucide-react';
 import MetricsGrid from './components/MetricsGrid';
 import WeeklyIncomeChart from './components/WeeklyIncomeChart';
 import DistributionCard from './components/DistributionCard';
-import MedicamentosTable from '../../../shared/medsSale/MedicamentosTable';
+import MedsSoldTable from '../../../shared/medsSold/MedsSoldTable';
 import SharedSectionHeader from '@/components/shared/sections/SharedSectionHeader';
 import TodayConsultsTable from '@/components/shared/todayConsults/TodayConsultsTable';
 
@@ -102,7 +102,7 @@ export default function DoctorAccounting({ role }) {
         <TodayConsultsTable />
       </div>
 
-      <MedicamentosTable />
+      <MedsSoldTable />
     </div>
   );
 }
