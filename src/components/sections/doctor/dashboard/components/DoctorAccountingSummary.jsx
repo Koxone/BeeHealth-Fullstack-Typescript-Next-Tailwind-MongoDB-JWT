@@ -1,7 +1,17 @@
 import ViewMoreButton from '@/components/shared/dashboard/accountingSummary/components/ViewMoreButton';
 import { Users, Pill, AlertCircle, ChevronRight, TrendingUp, DollarSign } from 'lucide-react';
 
-export default function DoctorAccountingSummary({ role }) {
+export default function DoctorAccountingSummary({
+  role,
+  consultPrice,
+  totalItemsSold,
+  totalCost,
+  consults,
+}) {
+  const itemsSoldNumber = consults.reduce((sum, consult) => {
+    return sum + (consult.itemsSold?.length || 0);
+  }, 0);
+
   return (
     <div className="overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg transition-all duration-300 hover:shadow-xl">
       {/* Header */}
@@ -29,7 +39,7 @@ export default function DoctorAccountingSummary({ role }) {
       <div className="bg-medtrack-green-light border-b-2 border-gray-200 px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="from-medtrack-green-dark to-medtrack-green-solid rounded-lg bg-linear-to-r p-2 shadow-lg">
+            <div className="bg-medtrack-blue-solid rounded-lg p-2 shadow-lg">
               <TrendingUp className="h-5 w-5 text-white" />
             </div>
             <div>
@@ -39,11 +49,7 @@ export default function DoctorAccountingSummary({ role }) {
           </div>
           <div className="text-right">
             <p className="bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-3xl font-bold text-transparent">
-              $0
-            </p>
-            <p className="flex items-center justify-end gap-1 text-xs font-semibold text-green-600">
-              <TrendingUp className="h-3 w-3" />
-              +0% vs mes anterior
+              ${totalCost}
             </p>
           </div>
         </div>
@@ -55,8 +61,8 @@ export default function DoctorAccountingSummary({ role }) {
           {
             icon: Users,
             label: 'Consultas',
-            value: '0 pacientes',
-            amount: 0,
+            value: `${consults.length} pacientes`,
+            amount: consultPrice,
             gradient: 'from-blue-500 to-indigo-600',
             bgGradient: 'from-blue-50 to-indigo-50',
             iconBg: 'bg-blue-100',
@@ -67,26 +73,14 @@ export default function DoctorAccountingSummary({ role }) {
           {
             icon: Pill,
             label: 'Medicamentos',
-            value: '0 vendidos',
-            amount: 0,
+            value: `${itemsSoldNumber} vendidos`,
+            amount: totalItemsSold,
             gradient: 'from-emerald-500 to-green-600',
             bgGradient: 'from-emerald-50 to-green-50',
             iconBg: 'bg-emerald-100',
             iconColor: 'text-emerald-600',
             textColor: 'text-emerald-600',
             borderColor: 'border-emerald-200',
-          },
-          {
-            icon: AlertCircle,
-            label: 'Pendiente de cobro',
-            value: '0 consultas',
-            amount: 0,
-            gradient: 'from-amber-500 to-orange-600',
-            bgGradient: 'from-amber-50 to-orange-50',
-            iconBg: 'bg-amber-100',
-            iconColor: 'text-amber-600',
-            textColor: 'text-amber-600',
-            borderColor: 'border-amber-200',
           },
         ].map((item, index) => {
           const Icon = item.icon;
