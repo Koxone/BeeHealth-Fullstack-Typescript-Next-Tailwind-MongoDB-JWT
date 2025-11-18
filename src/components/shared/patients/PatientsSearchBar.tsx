@@ -1,10 +1,21 @@
 'use client';
 
 import { Search } from 'lucide-react';
+import { Dispatch, SetStateAction } from 'react';
 
-export default function PatientsSearchBar({ onSearch, searchValue, setSearchValue }) {
+interface PatientsSearchBarProps {
+  onSearch: (value: string) => void;
+  searchValue: string;
+  setSearchValue: Dispatch<SetStateAction<string>>;
+}
+
+export default function PatientsSearchBar({
+  onSearch,
+  searchValue,
+  setSearchValue,
+}: PatientsSearchBarProps) {
   // Handle input change
-  const handleSearchChange = (e) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     setSearchValue(val);
     onSearch(val);

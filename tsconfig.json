@@ -38,7 +38,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
-, "src/lib/auth/getCurrentUser.ts", "src/hooks/useGetAllConsults.js", "src/components/shared/patients/PatientsSearchBar.jsx"  ],
+, "src/lib/auth/getCurrentUser.ts", "src/hooks/useGetAllConsults.js", "src/components/shared/patients/PatientsSearchBar.tsx"  ],
   "exclude": [
     "node_modules"
   ]

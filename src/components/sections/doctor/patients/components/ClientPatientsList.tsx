@@ -38,7 +38,7 @@ export default function ClientPatientsList({
   return (
     <div className="grid h-full max-h-[600px] grid-cols-1 gap-3 overflow-y-auto">
       <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-        <PatientsSearchBar onSearch={setSearch} />
+        <PatientsSearchBar onSearch={setSearch} searchValue={search} setSearchValue={setSearch} />
       </div>
 
       <div className="grid grid-cols-1 gap-3 overflow-y-auto">
