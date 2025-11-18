@@ -22,9 +22,9 @@ const ingresosSemanales = [
   { dia: 'Dom', consultas: 0, medicamentos: 0 },
 ];
 
-export default function DoctorAccounting({ role }) {
+export default function DoctorAccounting({ role, specialty }) {
   // Get consults data
-  const { consults, isLoading, isError } = useGetAllConsults({ speciality: role });
+  const { consults, isLoading, isError } = useGetAllConsults({ speciality: specialty });
 
   // Calculate totals
   const totals = getConsultTotals(consults);
@@ -47,6 +47,12 @@ export default function DoctorAccounting({ role }) {
     { name: 'Medicamentos', value: metrics.medsTotal, color: '#10b981' },
   ];
 
+  const ingresosPorPaciente = consults.map((c) => ({
+    nombre: c.patient.fullName,
+    consultas: c.consultPrice,
+    medicamentos: c.totalItemsSold,
+  }));
+
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
       {/* Header */}
@@ -68,12 +74,12 @@ export default function DoctorAccounting({ role }) {
       />
 
       {/* Charts */}
-      <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-3">
-        <WeeklyIncomeChart data={ingresosSemanales} />
+      <div className="grid grid-cols-2 gap-4 md:gap-6">
+        <WeeklyIncomeChart data={ingresosPorPaciente} />
         <DistributionCard data={incomeDistribution} />
       </div>
 
-      {/* Tables */}
+      {/* Consults */}
       <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm md:p-6">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-gray-900 md:text-xl">Consultas del Día</h2>
@@ -82,7 +88,16 @@ export default function DoctorAccounting({ role }) {
         <TodayConsultsList consultsData={consults} totals={metrics} />
       </div>
 
-      <MedsSoldTable consultsData={consults} />
+      {/* Meds Sold */}
+      <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm md:p-6">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-gray-900 md:text-xl">
+            Medicamentos Vendidos del Día
+          </h2>
+        </div>
+
+        <MedsSoldTable consultsData={consults} />
+      </div>
     </div>
   );
 }
