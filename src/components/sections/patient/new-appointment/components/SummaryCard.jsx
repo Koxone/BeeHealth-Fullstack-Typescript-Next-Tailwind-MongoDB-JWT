@@ -5,7 +5,7 @@ import { Sparkles, User, Calendar as CalendarIcon, Clock } from 'lucide-react';
 /* summary */
 export default function SummaryCard({ doctor, date, time }) {
   return (
-    <div className="animate-slideDown relative overflow-hidden rounded-2xl border-2 border-blue-500 bg-linear-to-br from-blue-600 to-indigo-700 p-6 text-white shadow-2xl">
+    <div className="animate-slideDown bg-medtrack-blue-solid border-medtrack-blue-solid relative overflow-hidden rounded-2xl border-2 p-6 text-white shadow-2xl">
       <div className="absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full bg-white/10" />
       <div className="absolute bottom-0 left-0 -mb-12 -ml-12 h-24 w-24 rounded-full bg-white/10" />
 
@@ -18,7 +18,7 @@ export default function SummaryCard({ doctor, date, time }) {
         </div>
 
         <div className="grid gap-4 md:grid-cols-3">
-          <div className="rounded-xl border border-white/20 bg-white/10 p-4 backdrop-blur-sm">
+          <div className="rounded-xl border border-white/20 bg-black/20 p-4 backdrop-blur-sm">
             <div className="mb-2 flex items-center gap-2">
               <User className="h-4 w-4 text-blue-200" />
               <span className="text-xs font-semibold tracking-wide text-blue-200 uppercase">
@@ -29,7 +29,7 @@ export default function SummaryCard({ doctor, date, time }) {
             <p className="text-sm text-blue-100">{doctor?.especialidad}</p>
           </div>
 
-          <div className="rounded-xl border border-white/20 bg-white/10 p-4 backdrop-blur-sm">
+          <div className="rounded-xl border border-white/20 bg-black/20 p-4 backdrop-blur-sm">
             <div className="mb-2 flex items-center gap-2">
               <CalendarIcon className="h-4 w-4 text-blue-200" />
               <span className="text-xs font-semibold tracking-wide text-blue-200 uppercase">
@@ -44,7 +44,7 @@ export default function SummaryCard({ doctor, date, time }) {
             </p>
           </div>
 
-          <div className="rounded-xl border border-white/20 bg-white/10 p-4 backdrop-blur-sm">
+          <div className="rounded-xl border border-white/20 bg-black/20 p-4 backdrop-blur-sm">
             <div className="mb-2 flex items-center gap-2">
               <Clock className="h-4 w-4 text-blue-200" />
               <span className="text-xs font-semibold tracking-wide text-blue-200 uppercase">

@@ -7,7 +7,7 @@ export default function RecordsTable({ historyData = [] }) {
   return (
     <>
       {/* Header de la tabla */}
-      <div className="from-medtrack-green-dark via-medtrack-green-solid to-medtrack-green-solid relative overflow-hidden bg-linear-to-r px-6 py-4">
+      <div className="bg-medtrack-blue-solid relative overflow-hidden px-6 py-4">
         <div className="absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full bg-white/10" />
         <div className="relative z-10 flex items-center gap-3">
           <div className="rounded-xl bg-white/20 p-2 backdrop-blur-sm">
@@ -62,7 +62,7 @@ export default function RecordsTable({ historyData = [] }) {
                 >
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">
-                      <div className="bg-medtrack-green-dark group-hover:bg-medtrack-green-dark-hover rounded-lg p-2 transition-all duration-200">
+                      <div className="bg-medtrack-blue-solid group-hover:bg-medtrack-blue-solid-hover rounded-lg p-2 transition-all duration-200">
                         <Calendar className="h-4 w-4 text-white transition-colors duration-200 group-hover:text-white" />
                       </div>
                       <span className="text-sm font-semibold text-gray-900">{record.fecha}</span>

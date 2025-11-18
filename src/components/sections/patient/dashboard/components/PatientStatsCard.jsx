@@ -12,8 +12,7 @@ export default function PatientStatsCard({
 }) {
   const router = useRouter();
   const styles = {
-    primary:
-      'bg-linear-to-r from-medtrack-green-dark to-medtrack-green-solid text-white border-transparent',
+    primary: 'bg-medtrack-blue-solid  text-white border-transparent',
     success: 'border border-gray-200 bg-white text-gray-900 hover:border-green-300 active:scale-95',
     purple: 'border border-gray-200 bg-white text-gray-900 hover:border-purple-300 active:scale-95',
     danger: 'border-2 border-red-200 bg-red-50 text-gray-900 hover:border-red-300 active:scale-95',

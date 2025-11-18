@@ -53,7 +53,7 @@ export default function DoctorsGrid({ selectedDoctor, onSelect }) {
                     className={`flex h-14 w-14 items-center justify-center rounded-full text-lg font-bold transition-all duration-300 ${
                       selectedDoctor === doctor.id
                         ? 'bg-linear-to-br from-blue-600 to-blue-700 text-white shadow-lg'
-                        : 'bg-linear-to-br from-blue-100 to-indigo-100 text-blue-600 group-hover:scale-110'
+                        : 'text-medtrack-blue-solid bg-linear-to-br from-blue-100 to-indigo-100 group-hover:scale-110'
                     }`}
                   >
                     <Icon className="h-7 w-7" />

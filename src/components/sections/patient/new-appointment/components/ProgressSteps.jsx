@@ -15,7 +15,7 @@ export default function ProgressSteps({ getStepStatus }) {
       <div className="relative flex items-center justify-between">
         <div className="absolute top-5 right-0 left-0 -z-10 h-1 bg-gray-200">
           <div
-            className="h-full bg-linear-to-r from-blue-500 to-blue-600 transition-all duration-500 ease-out"
+            className="bg-medtrack-blue-solid h-full transition-all duration-500 ease-out"
             style={{
               width:
                 getStepStatus(3) === 'complete' || getStepStatus(3) === 'current'
@@ -40,7 +40,7 @@ export default function ProgressSteps({ getStepStatus }) {
               <div
                 className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold transition-all duration-300 ${
                   status === 'complete'
-                    ? 'scale-110 bg-linear-to-br from-blue-600 to-blue-700 text-white shadow-lg'
+                    ? 'bg-medtrack-blue-solid scale-110 text-white shadow-lg'
                     : status === 'current'
                       ? 'scale-105 border-2 border-blue-600 bg-white text-blue-600 shadow-md'
                       : 'bg-gray-200 text-gray-400'
