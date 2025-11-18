@@ -31,7 +31,6 @@ export default function DoctorDashboard({ currentUser, role, specialty }) {
   } = useGetAllConsults({ speciality: specialty });
 
   const { consultPrice, totalItemsSold, totalCost } = getConsultTotals(consults);
-  console.log(consults);
   return (
     <DashboardLayout>
       {/* Header */}
