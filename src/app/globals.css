@@ -7,13 +7,19 @@ button {
 @theme {
   --color-asana-green: #8b9c94;
 
-  /* Green */
+  /* Green Primary */
   --color-medtrack-green-dark: #5f6b66;
   --color-medtrack-green-dark-hover: #4f5a55;
   --color-medtrack-green-solid: #8b9c94;
   --color-medtrack-green-hover: #7a8c83;
   --color-medtrack-green-light: #e7ecea;
   --color-medtrack-green-light-hover: #d4ddda;
+
+  /* Green Secondary */
+  --color-medtrack-green-secondary-solid: #73c89f;
+  --color-medtrack-green-secondary-hover: #66b592;
+  --color-medtrack-green-secondary-light: #c6e6d8;
+  --color-medtrack-green-secondary-light-hover: #b2dccb;
 
   /* Blue */
   --color-medtrack-blue-solid: #678bda;

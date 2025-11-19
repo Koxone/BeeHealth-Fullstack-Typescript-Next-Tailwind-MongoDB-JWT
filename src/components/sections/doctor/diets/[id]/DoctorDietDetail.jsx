@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, Tag, AlertCircle } from 'lucide-react';
+import { ArrowLeft, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useGetAllDiets } from '@/hooks/diets/useGetAllDiets';
 import AssignDiet from './components/AssignDiet';
@@ -18,12 +18,23 @@ import Description from './components/sections/Description';
 import AssignedDate from './components/sections/AssignedDate';
 import DoctorName from './components/sections/DoctorName';
 import Category from './components/sections/Category';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 export default function DoctorDietDetail({ params, role, specialty }) {
   const { id } = params;
 
   const { dietsData, isLoading, error } = useGetAllDiets();
   const diet = dietsData.find((d) => d._id === id);
+
+  const searchParams = useSearchParams();
+  const mode = searchParams.get('mode');
+  const [isEditing, setIsEditing] = useState(mode === 'edit');
+
+  // Sync when URL changes
+  useEffect(() => {
+    setIsEditing(mode === 'edit');
+  }, [mode]);
 
   if (isLoading) {
     return (
@@ -99,34 +110,41 @@ export default function DoctorDietDetail({ params, role, specialty }) {
         {/* Content sections */}
         <div className="space-y-6">
           {/* Description section */}
-          {diet?.description && <Description diet={diet} />}
+          {diet?.description && <Description diet={diet} isEditing={isEditing} />}
 
           {/* Benefits section */}
-          {diet?.benefits && <Benefits diet={diet} />}
+          {diet?.benefits && <Benefits diet={diet} isEditing={isEditing} />}
 
           {/* Instructions section */}
-          {diet?.instructions && <Instructions diet={diet} />}
+          {diet?.instructions && <Instructions diet={diet} isEditing={isEditing} />}
 
           {/* Ingredients section */}
-          {diet?.ingredients?.length > 0 && <Ingredients diet={diet} />}
+          {diet?.ingredients?.length > 0 && <Ingredients diet={diet} isEditing={isEditing} />}
 
           {/* Allowed foods section */}
-          {diet?.allowedFoods?.items?.length > 0 && <AllowedFoods diet={diet} />}
+          {diet?.allowedFoods?.items?.length > 0 && (
+            <AllowedFoods diet={diet} isEditing={isEditing} />
+          )}
 
           {/* Allowed liquids section */}
-          {diet?.allowedLiquids?.items?.length > 0 && <AllowedLiquids diet={diet} />}
-
+          {diet?.allowedLiquids?.items?.length > 0 && (
+            <AllowedLiquids diet={diet} isEditing={isEditing} />
+          )}
           {/* Forbidden foods section */}
-          {diet?.forbiddenFoods?.items?.length > 0 && <ForbiddenFoods diet={diet} />}
+          {diet?.forbiddenFoods?.items?.length > 0 && (
+            <ForbiddenFoods diet={diet} isEditing={isEditing} />
+          )}
 
           {/* Forbidden liquids section */}
-          {diet?.forbiddenLiquids?.items?.length > 0 && <ForbiddenLiquids diet={diet} />}
+          {diet?.forbiddenLiquids?.items?.length > 0 && (
+            <ForbiddenLiquids diet={diet} isEditing={isEditing} />
+          )}
 
           {/* Duration section */}
-          {diet?.duration && <Duration diet={diet} />}
+          {diet?.duration && <Duration diet={diet} isEditing={isEditing} />}
 
           {/* Medical notes section */}
-          {diet?.notes && <Notes diet={diet} />}
+          {diet?.notes && <Notes diet={diet} isEditing={isEditing} />}
         </div>
 
         {/* Spacing at bottom */}
