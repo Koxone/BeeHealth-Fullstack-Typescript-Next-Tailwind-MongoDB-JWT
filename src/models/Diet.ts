@@ -10,6 +10,7 @@ export interface IDiet {
   benefits?: string;
   ingredients?: string[];
   instructions?: string;
+  description?: string;
   isActive?: boolean;
   suggestions?: string;
   images?: string[];
@@ -28,6 +29,7 @@ const DietSchema = new Schema<IDiet>(
     benefits: { type: String, trim: true },
     ingredients: [{ type: String, trim: true }],
     instructions: { type: String, trim: true },
+    description: { type: String, trim: true },
     isActive: { type: Boolean, default: true },
     suggestions: { type: String, trim: true },
     images: [{ type: String, trim: true }],

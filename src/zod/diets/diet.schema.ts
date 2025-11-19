@@ -13,6 +13,7 @@ export const dietSchema = z.object({
   benefits: z.string().optional(),
   ingredients: z.array(z.string()).optional(),
   instructions: z.string().optional(),
+  description: z.string().optional(),
   isActive: z.boolean().default(true),
   images: z.array(z.string()).optional(),
   notes: z.string().optional(),

@@ -30,7 +30,7 @@ export default function SharedDietCard({ diet, role }) {
       )}
 
       {/* Doctor Actions */}
-      {role === 'doctor' && <DietCardActions id={diet?.id} />}
+      {role === 'doctor' && <DietCardActions id={diet?._id} />}
 
       {/* Patient Diet Description */}
       {role === 'patient' && (
