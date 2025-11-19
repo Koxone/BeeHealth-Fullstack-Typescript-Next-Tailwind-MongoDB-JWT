@@ -19,7 +19,7 @@ import AssignedDate from './components/sections/AssignedDate';
 import DoctorName from './components/sections/DoctorName';
 import Category from './components/sections/Category';
 
-export default function DoctorDietDetail({ params, role }) {
+export default function DoctorDietDetail({ params, role, specialty }) {
   const { id } = params;
 
   const { dietsData, isLoading, error } = useGetAllDiets();
@@ -90,7 +90,7 @@ export default function DoctorDietDetail({ params, role }) {
           </div>
 
           {/* Select Patient to assign the diet */}
-          <AssignDiet />
+          <AssignDiet specialty={specialty} />
 
           {/* Patients assigned to this diet */}
           <PatientsAssignedViewer patients={diet.patients} />

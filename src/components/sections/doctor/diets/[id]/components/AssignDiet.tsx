@@ -1,40 +1,41 @@
-/* Block comment: Multi Select Patients Dropdown */
-
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { useGetAllPatients } from '@/hooks/patients/useGetAllPatients';
 
-export default function AssignDiet() {
+export default function AssignDiet({ specialty }: { specialty: string }) {
+  // Fetch patients
+  const { patients, isLoading, error, setPatients } = useGetAllPatients();
+  const [patientsData, setPatientsData] = useState(patients || []);
+
+  // Update local state when patients data changes
+  useEffect(() => {
+    if (patients && patients.length > 0) {
+      const filteredPatients = patients.filter((patient) => patient.specialty.includes(specialty));
+      setPatientsData(filteredPatients);
+    }
+  }, [patients, specialty]);
+
   /* State: Dropdown control */
   const [open, setOpen] = useState(false);
 
-  /* Block comment: Mock patients list */
-  const patients = [
-    { id: 'p1', name: 'Carlos de Leon' },
-    { id: 'p2', name: 'Jaime Lannister' },
-    { id: 'p3', name: 'María González' },
-    { id: 'p4', name: 'Luis Hernández' },
-    { id: 'p5', name: 'Ana López' },
-    { id: 'p6', name: 'Roberto Martínez' },
-    { id: 'p7', name: 'Isabel Herrera' },
-    { id: 'p8', name: 'Juan Pérez' },
-    /* Add as many as needed */
-  ];
-
-  /* State: Selected list */
+  // Selected patients
   const [selected, setSelected] = useState<string[]>([]);
 
-  /* Block comment: Toggle selection */
+  // Toggle patient selection
   const togglePatient = (id: string) => {
     setSelected((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
   };
 
   return (
-    <div className="flex flex-col rounded-lg border border-gray-200 bg-white p-4">
+    <div className="flex flex-col rounded-lg border border-gray-400 bg-white p-4">
       {/* Label */}
       <label className="mb-2 text-xs font-semibold tracking-wide text-gray-500 uppercase">
-        Asignar dieta a pacientes
+        Asignar dieta a pacientes{' '}
+        <span className="text-[10px] normal-case">
+          (Esta funcion solo es visible para Doctores)
+        </span>
       </label>
 
       {/* Dropdown button */}
@@ -52,7 +53,7 @@ export default function AssignDiet() {
 
       {/* Dropdown panel */}
       {open && (
-        <div className="mt-2 max-h-56 w-full overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-md">
+        <div className="mt-2 max-h-56 w-full overflow-y-auto rounded-lg border border-gray-400 bg-white shadow-md">
           {/* Block comment: Search input */}
           <div className="sticky top-0 bg-white p-2 shadow-sm">
             <input
@@ -64,19 +65,19 @@ export default function AssignDiet() {
 
           {/* List */}
           <ul className="divide-y divide-gray-100">
-            {patients.map((patient) => (
+            {patientsData.map((patient) => (
               <li
-                key={patient.id}
+                key={patient._id}
                 className="flex cursor-pointer items-center gap-3 px-3 py-2 hover:bg-gray-50"
-                onClick={() => togglePatient(patient.id)}
+                onClick={() => togglePatient(patient._id)}
               >
                 <input
                   type="checkbox"
-                  checked={selected.includes(patient.id)}
-                  onChange={() => togglePatient(patient.id)}
+                  checked={selected.includes(patient._id)}
+                  onChange={() => togglePatient(patient._id)}
                   className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
-                <span className="text-sm text-gray-700">{patient.name}</span>
+                <span className="text-sm text-gray-700">{patient.fullName}</span>
               </li>
             ))}
           </ul>

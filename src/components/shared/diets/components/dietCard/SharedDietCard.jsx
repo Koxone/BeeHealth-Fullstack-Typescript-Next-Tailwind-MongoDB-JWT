@@ -4,9 +4,9 @@ import Link from 'next/link';
 
 export default function SharedDietCard({ diet, role }) {
   return (
-    <div className="group border-medtrack-green-light hover:border-medtrack-green-hover rounded-xl border bg-white p-4 shadow-sm transition-all duration-200 hover:shadow-lg md:p-6">
+    <div className="group border-medtrack-green-light group hover:border-medtrack-green-hover rounded-xl border bg-white p-4 shadow-sm transition-all duration-200 hover:shadow-lg md:p-6">
       {/* Diet Image */}
-      <div className="relative mb-4 flex h-32 w-full items-center justify-center overflow-hidden rounded-lg bg-linear-to-br from-green-100 to-blue-100">
+      <div className="relative mb-4 flex h-32 w-full scale-90 items-center justify-center overflow-hidden rounded-lg bg-linear-to-br from-green-100 to-blue-100 transition-transform duration-250 group-hover:scale-100">
         <img src={diet?.images?.[0]} alt={diet?.name} />
       </div>
 
