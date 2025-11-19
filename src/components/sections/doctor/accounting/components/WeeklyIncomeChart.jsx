@@ -4,8 +4,8 @@ import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } fro
 
 export default function WeeklyIncomeChart({ data }) {
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm md:p-6">
-      <h2 className="mb-4 text-lg font-semibold text-gray-900 md:text-xl">Ingresos por Paciente</h2>
+    <div className="rounded-xl border border-border bg-surface p-4 shadow-sm md:p-6">
+      <h2 className="mb-4 text-lg font-semibold text-main md:text-xl">Ingresos por Paciente</h2>
 
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data}>
@@ -13,8 +13,8 @@ export default function WeeklyIncomeChart({ data }) {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="consultas" fill="#3b82f6" />
-          <Bar dataKey="medicamentos" fill="#10b981" />
+          <Bar dataKey="consultas" fill="var(--color-chart-blue)" />
+          <Bar dataKey="medicamentos" fill="var(--color-chart-green)" />
         </BarChart>
       </ResponsiveContainer>
     </div>

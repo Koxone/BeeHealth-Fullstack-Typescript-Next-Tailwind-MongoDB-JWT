@@ -14,18 +14,18 @@ export default function CalendarPicker({
   isPastDate,
 }) {
   return (
-    <div className="animate-slideDown rounded-2xl border-2 border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-lg">
+    <div className="animate-slideDown rounded-2xl border-2 border-border bg-surface p-6 shadow-sm transition-all duration-300 hover:shadow-lg">
       <div className="mb-4 flex items-center gap-3">
-        <div className="rounded-lg bg-indigo-100 p-2">
-          <CalendarIcon className="h-5 w-5 text-indigo-600" />
+        <div className="rounded-lg bg-medtrack-blue-light/30 p-2">
+          <CalendarIcon className="h-5 w-5 text-medtrack-blue-solid" />
         </div>
         <div>
-          <h2 className="text-xl font-bold text-gray-900">Paso 2: Selecciona una fecha</h2>
-          <p className="text-sm text-gray-600">Elige el día de tu consulta</p>
+          <h2 className="text-xl font-bold text-main">Paso 2: Selecciona una fecha</h2>
+          <p className="text-sm text-muted">Elige el día de tu consulta</p>
         </div>
       </div>
 
-      <div className="rounded-xl border border-gray-200 bg-linear-to-br from-gray-50 to-blue-50 p-5">
+      <div className="rounded-xl border border-border bg-linear-to-br from-surface-highlight to-medtrack-blue-light/10 p-5">
         {/* header */}
         <div className="mb-6 flex items-center justify-between">
           <button
@@ -33,9 +33,9 @@ export default function CalendarPicker({
             onClick={onPrev}
             className="group rounded-xl border border-gray-200 p-2.5 shadow-sm transition-all duration-200 hover:bg-white active:scale-95"
           >
-            <ChevronLeft className="h-5 w-5 text-gray-600 transition-transform duration-200 group-hover:-translate-x-1" />
+            <ChevronLeft className="h-5 w-5 text-muted transition-transform duration-200 group-hover:-translate-x-1" />
           </button>
-          <h3 className="rounded-xl border border-gray-200 bg-white px-4 py-2 text-lg font-bold text-gray-900 capitalize shadow-sm">
+          <h3 className="rounded-xl border border-border bg-surface px-4 py-2 text-lg font-bold text-main capitalize shadow-sm">
             {monthName}
           </h3>
           <button
@@ -43,14 +43,14 @@ export default function CalendarPicker({
             onClick={onNext}
             className="group rounded-xl border border-gray-200 p-2.5 shadow-sm transition-all duration-200 hover:bg-white active:scale-95"
           >
-            <ChevronRight className="h-5 w-5 text-gray-600 transition-transform duration-200 group-hover:translate-x-1" />
+            <ChevronRight className="h-5 w-5 text-muted transition-transform duration-200 group-hover:translate-x-1" />
           </button>
         </div>
 
         {/* days of week */}
         <div className="mb-3 grid grid-cols-7 gap-2">
           {['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'].map((d) => (
-            <div key={d} className="py-2 text-center text-xs font-bold text-gray-500">
+            <div key={d} className="py-2 text-center text-xs font-bold text-muted">
               {d}
             </div>
           ))}
@@ -73,8 +73,8 @@ export default function CalendarPicker({
                   selected
                     ? 'bg-medtrack-blue-solid z-10 scale-110 text-white shadow-lg'
                     : isAvailable && !past
-                      ? 'border-2 border-blue-300 bg-white text-gray-900 hover:scale-105 hover:bg-blue-50 hover:shadow-md active:scale-95'
-                      : 'cursor-not-allowed bg-gray-100 text-gray-400 opacity-50'
+                      ? 'border-2 border-medtrack-blue-light bg-surface text-main hover:scale-105 hover:bg-medtrack-blue-light/10 hover:shadow-md active:scale-95'
+                      : 'cursor-not-allowed bg-surface-highlight text-muted opacity-50'
                 }`}
               >
                 {date.getDate()}
@@ -87,18 +87,18 @@ export default function CalendarPicker({
         </div>
 
         {/* legend */}
-        <div className="mt-6 flex flex-wrap items-center gap-4 border-t border-gray-200 pt-5 text-xs">
+        <div className="mt-6 flex flex-wrap items-center gap-4 border-t border-border pt-5 text-xs">
           <div className="flex items-center gap-2">
-            <div className="h-5 w-5 rounded-lg border-2 border-blue-300 bg-white shadow-sm" />
-            <span className="font-medium text-gray-700">Disponible</span>
+            <div className="h-5 w-5 rounded-lg border-2 border-medtrack-blue-light bg-surface shadow-sm" />
+            <span className="font-medium text-main">Disponible</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="h-5 w-5 rounded-lg bg-gray-100" />
-            <span className="font-medium text-gray-700">No disponible</span>
+            <div className="h-5 w-5 rounded-lg bg-surface-highlight" />
+            <span className="font-medium text-main">No disponible</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="bg-medtrack-blue-solid h-5 w-5 rounded-lg shadow-sm" />
-            <span className="font-medium text-gray-700">Seleccionado</span>
+            <span className="font-medium text-main">Seleccionado</span>
           </div>
         </div>
       </div>

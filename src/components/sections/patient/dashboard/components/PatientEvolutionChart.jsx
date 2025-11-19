@@ -20,24 +20,24 @@ export default function PatientEvolutionChart({
   stroke,
 }) {
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm md:p-6">
+    <div className="rounded-xl border border-border bg-surface p-4 shadow-sm md:p-6">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-gray-900 md:text-xl">{title}</h2>
-        <div className="flex items-center gap-2 rounded-lg bg-gray-100 px-3 py-1">
+        <h2 className="text-lg font-semibold text-main md:text-xl">{title}</h2>
+        <div className="flex items-center gap-2 rounded-lg bg-surface-highlight px-3 py-1">
           <div className="h-3 w-3 rounded-full" style={{ backgroundColor: legendColor }} />
-          <span className="text-sm font-medium text-gray-700">{legendLabel}</span>
+          <span className="text-sm font-medium text-main">{legendLabel}</span>
         </div>
       </div>
 
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-          <XAxis dataKey="mes" stroke="#6b7280" style={{ fontSize: '12px' }} />
-          <YAxis stroke="#6b7280" style={{ fontSize: '12px' }} domain={['auto', 'auto']} />
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
+          <XAxis dataKey="mes" stroke="var(--color-text-muted)" style={{ fontSize: '12px' }} />
+          <YAxis stroke="var(--color-text-muted)" style={{ fontSize: '12px' }} domain={['auto', 'auto']} />
           <Tooltip
             contentStyle={{
-              backgroundColor: 'white',
-              border: '1px solid #e5e7eb',
+              backgroundColor: 'var(--color-surface)',
+              border: '1px solid var(--color-border)',
               borderRadius: '8px',
               padding: '8px 12px',
             }}
