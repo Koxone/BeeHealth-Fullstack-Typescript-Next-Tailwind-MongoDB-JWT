@@ -37,7 +37,7 @@ export async function POST(req) {
       notes,
     } = await req.json();
 
-    // ===== 1. VALIDATE REQUIRED FIELDS =====
+    // Validate required fields
     if (
       !patient ||
       !consultType ||
@@ -53,7 +53,7 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Método de pago inválido' }, { status: 400 });
     }
 
-    // ===== 2. VALIDATE USERS EXIST =====
+    // Validate users exist
     const patientExists = await User.findById(patient);
     if (!patientExists) {
       return NextResponse.json({ error: 'Paciente no encontrado' }, { status: 404 });
@@ -65,7 +65,7 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Empleado no encontrado' }, { status: 404 });
     }
 
-    // ===== 3. VALIDATE & PROCESS ITEMS =====
+    // Validate & process items
     let totalCost = 0;
     const processedItems = [];
 
@@ -107,7 +107,7 @@ export async function POST(req) {
       });
     }
 
-    // ===== 4. CREATE CONSULTATION =====
+    // Create consultation
     const consultation = await Consultation.create({
       patient,
       employee: employeeId,
@@ -122,7 +122,7 @@ export async function POST(req) {
       notes,
     });
 
-    // ===== 5. PROCESS INVENTORY & CREATE TRANSACTIONS =====
+    // Process inventory & create transactions
     const transactionIds = [];
 
     for (const item of processedItems) {
@@ -152,7 +152,7 @@ export async function POST(req) {
       }
     }
 
-    // ===== 6. UPDATE CONSULTATION WITH TRANSACTIONS =====
+    // Update consultation with transactions
     consultation.transaction = transactionIds;
     await consultation.save();
 
