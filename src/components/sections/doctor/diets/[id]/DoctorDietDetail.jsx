@@ -21,11 +21,15 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import GoBackButton from '@/components/shared/diets/[id]/components/GoBackButton';
 import DietImage from './components/sections/DietImage';
+import { useEditDiet } from './hooks/useEditDiet';
 
 export default function DoctorDietDetail({ params, role, specialty }) {
   const { id } = params;
   const { dietsData, isLoading, error, refetch } = useGetAllDiets();
   const diet = dietsData.find((d) => d._id === id);
+
+  // Editing state
+  const { isLoading: isEditingDiet, error: editError, editDiet } = useEditDiet();
 
   const searchParams = useSearchParams();
   const mode = searchParams.get('mode');
@@ -111,41 +115,46 @@ export default function DoctorDietDetail({ params, role, specialty }) {
         {(isEditing || isCollapsed) && (
           <div className="space-y-6">
             {/* Description section */}
-            {diet?.description && <Description diet={diet} isEditing={isEditing} />}
+            {diet?.description && (
+              <Description diet={diet} isEditing={isEditing} editDiet={editDiet} />
+            )}
 
             {/* Benefits section */}
-            {diet?.benefits && <Benefits diet={diet} isEditing={isEditing} />}
+            {diet?.benefits && <Benefits diet={diet} isEditing={isEditing} editDiet={editDiet} />}
 
             {/* Instructions section */}
-            {diet?.instructions && <Instructions diet={diet} isEditing={isEditing} />}
-
+            {diet?.instructions && (
+              <Instructions diet={diet} isEditing={isEditing} editDiet={editDiet} />
+            )}
             {/* Ingredients section */}
-            {diet?.ingredients?.length > 0 && <Ingredients diet={diet} isEditing={isEditing} />}
+            {diet?.ingredients?.length > 0 && (
+              <Ingredients diet={diet} isEditing={isEditing} editDiet={editDiet} />
+            )}
 
             {/* Allowed foods section */}
             {diet?.allowedFoods?.items?.length > 0 && (
-              <AllowedFoods diet={diet} isEditing={isEditing} />
+              <AllowedFoods diet={diet} isEditing={isEditing} editDiet={editDiet} />
             )}
 
             {/* Allowed liquids section */}
             {diet?.allowedLiquids?.items?.length > 0 && (
-              <AllowedLiquids diet={diet} isEditing={isEditing} />
+              <AllowedLiquids diet={diet} isEditing={isEditing} editDiet={editDiet} />
             )}
             {/* Forbidden foods section */}
             {diet?.forbiddenFoods?.items?.length > 0 && (
-              <ForbiddenFoods diet={diet} isEditing={isEditing} />
+              <ForbiddenFoods diet={diet} isEditing={isEditing} editDiet={editDiet} />
             )}
 
             {/* Forbidden liquids section */}
             {diet?.forbiddenLiquids?.items?.length > 0 && (
-              <ForbiddenLiquids diet={diet} isEditing={isEditing} />
+              <ForbiddenLiquids diet={diet} isEditing={isEditing} editDiet={editDiet} />
             )}
 
             {/* Duration section */}
-            {diet?.duration && <Duration diet={diet} isEditing={isEditing} />}
+            {diet?.duration && <Duration diet={diet} isEditing={isEditing} editDiet={editDiet} />}
 
             {/* Medical notes section */}
-            {diet?.notes && <Notes diet={diet} isEditing={isEditing} />}
+            {diet?.notes && <Notes diet={diet} isEditing={isEditing} editDiet={editDiet} />}
           </div>
         )}
 

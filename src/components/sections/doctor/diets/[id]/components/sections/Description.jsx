@@ -1,10 +1,30 @@
 import { FileText } from 'lucide-react';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-export default function Description({ diet, isEditing = false, onChange, onSave, onCancel }) {
+export default function Description({ diet, isEditing = false, editDiet }) {
+  const [descValue, setDescValue] = useState(diet.description || '');
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setDescValue(diet.description || '');
+  }, [diet.description]);
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    setError(null);
+
+    try {
+      await editDiet(diet._id, { description: descValue });
+    } catch (err) {
+      setError(err.message || 'Error al guardar');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
     <section className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md md:p-4">
-      {/* Header */}
       <div className="mb-4 flex items-center gap-3">
         <div className="rounded-lg bg-gray-100 p-2">
           <FileText className="h-5 w-5 text-gray-700" />
@@ -12,27 +32,26 @@ export default function Description({ diet, isEditing = false, onChange, onSave,
         <h2 className="text-xl font-semibold text-gray-900">Descripción</h2>
       </div>
 
-      {/* Read mode */}
       {!isEditing && <p className="leading-relaxed text-gray-700">{diet.description}</p>}
 
-      {/* Edit mode */}
       {isEditing && (
         <div className="mt-4 space-y-4">
           <textarea
             className="focus:border-medtrack-blue w-full rounded-lg border border-gray-300 p-3 text-gray-700 focus:outline-none"
-            value={diet.description}
-            onChange={(e) => onChange(e.target.value)}
+            value={descValue}
+            onChange={(e) => setDescValue(e.target.value)}
             rows={3}
           />
 
-          {/* Actions */}
           <div className="flex items-center gap-3">
             <button
-              onClick={onSave}
-              className="bg-medtrack-green-secondary-solid hover:bg-medtrack-green-secondary-hover rounded-lg px-4 py-2 text-sm font-medium text-white shadow-sm transition-opacity"
+              onClick={handleSave}
+              disabled={isSaving}
+              className="bg-medtrack-green-secondary-solid hover:bg-medtrack-green-secondary-hover rounded-lg px-4 py-2 text-sm font-medium text-white shadow-sm transition-opacity disabled:opacity-50"
             >
-              Guardar
+              {isSaving ? 'Guardando...' : 'Guardar'}
             </button>
+            {error && <p className="text-xs text-red-500">{error}</p>}
           </div>
         </div>
       )}
