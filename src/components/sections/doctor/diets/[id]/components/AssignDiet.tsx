@@ -40,7 +40,7 @@ export default function AssignDiet({
   const [selected, setSelected] = useState<string[]>([]);
 
   // Success notification state
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false); 
 
   // Toggle selection
   const togglePatient = (id: string) => {
@@ -60,7 +60,7 @@ export default function AssignDiet({
     try {
       const updatedDiet = await assignDietToPatients(dietId, patientsPayload);
       console.log('Diet updated:', updatedDiet);
-      setShowSuccess(true);
+      setShowSuccess(true); 
       refetch();
       setTimeout(() => setShowSuccess(false), 3000);
       setOpen(false);

@@ -20,7 +20,7 @@ export default function SuppliesTable({ rows, getStockStatus, onEdit, onDelete, 
 
   return (
     <div className="p-4 md:p-6">
-      <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+      <div className="max-h-[500px] overflow-auto rounded-xl border border-gray-200 bg-white shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
