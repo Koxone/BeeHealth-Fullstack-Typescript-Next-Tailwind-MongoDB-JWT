@@ -16,21 +16,55 @@ export async function getAuthUser(req) {
 
   // Resolve final token
   const token = bearerToken || refreshToken;
-  if (!token) return { error: 'Unauthorized', status: 401 };
+  if (!token) {
+    return {
+      ok: false,
+      error: {
+        code: 'AUTH_REQUIRED',
+        message: 'Authentication required',
+        reason: 'No token was provided through Authorization header or cookies',
+      },
+      status: 401,
+    };
+  }
 
   // Verify token
   let decoded;
   try {
     decoded = jwt.verify(token, process.env.JWT_SECRET);
   } catch {
-    return { error: 'Invalid or expired token', status: 401 };
+    return {
+      ok: false,
+      error: {
+        code: 'AUTH_INVALID_TOKEN',
+        message: 'Invalid or expired token',
+        reason: 'The provided JWT is malformed, expired, or cannot be verified',
+      },
+      status: 401,
+    };
   }
 
   // Fetch user
   const user = await User.findById(decoded.id);
-  if (!user) return { error: 'User not found', status: 404 };
+  if (!user) {
+    return {
+      ok: false,
+      error: {
+        code: 'USER_NOT_FOUND',
+        message: 'User not found',
+        reason: 'The token is valid but the referenced user no longer exists in the database',
+      },
+      status: 404,
+    };
+  }
 
-  return { user, userId: user._id, specialty: user.specialty || 'weight' };
+  return {
+    ok: true,
+    status: 200,
+    user,
+    userId: user._id,
+    specialty: user.specialty || 'weight',
+  };
 }
 
 // Auth
