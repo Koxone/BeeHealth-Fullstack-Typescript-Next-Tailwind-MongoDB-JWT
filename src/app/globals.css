@@ -7,6 +7,9 @@ button {
 @theme {
   --color-asana-green: #8b9c94;
 
+  /* Body Main Color */
+  --color-medtrack-body-main: #FFFBEB;
+
   /* Green Primary */
   --color-medtrack-green-dark: #5f6b66;
   --color-medtrack-green-dark-hover: #4f5a55;

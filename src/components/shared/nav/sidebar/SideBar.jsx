@@ -29,7 +29,7 @@ export default function Sidebar({ role, currentUser, specialty }) {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="hidden min-h-screen w-72 flex-col border-r-2 border-gray-200 bg-linear-to-b from-white to-gray-50 shadow-xl md:flex">
+      <aside className="hidden min-h-screen w-72 flex-col border-r-2 border-gray-200 shadow-xl md:flex">
         <nav className="flex-1 space-y-1 p-4">
           {/* Buttons */}
           {sidebarOptions.map((item, index) => {
@@ -63,7 +63,9 @@ export default function Sidebar({ role, currentUser, specialty }) {
                   >
                     <Icon
                       className={`h-5 w-5 ${
-                        isActive ? 'text-white' : 'text-gray-600 group-hover:text-medtrack-green-dark'
+                        isActive
+                          ? 'text-white'
+                          : 'group-hover:text-medtrack-green-dark text-gray-600'
                       }`}
                     />
                   </div>

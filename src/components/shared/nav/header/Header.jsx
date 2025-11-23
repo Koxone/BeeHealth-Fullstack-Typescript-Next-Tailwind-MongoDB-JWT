@@ -20,7 +20,7 @@ export default async function Header() {
   else if (role === 'employee') roleLabel = 'Empleado';
 
   return (
-    <header className="sticky top-0 z-40 border-b-2 border-gray-200 bg-white/95 shadow-lg backdrop-blur-lg">
+    <header className="sticky top-0 z-40 border-b-2 border-gray-200 shadow-lg backdrop-blur-lg">
       {/* Desktop header */}
       <div className="hidden items-center justify-between px-6 py-4 md:flex">
         <div className="flex items-center gap-4">
