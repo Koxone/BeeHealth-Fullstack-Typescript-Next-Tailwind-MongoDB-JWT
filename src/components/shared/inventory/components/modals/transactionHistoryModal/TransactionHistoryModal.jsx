@@ -2,15 +2,10 @@
 
 import { X, History } from 'lucide-react';
 import { useModalClose } from '@/hooks/useModalClose';
-import PriceBlock from './components/PriceBlock';
 import RestockBlock from './components/RestockBlock';
-import QuantityBlock from './components/QuantityBlock';
 import StatusOnBlock from './components/StatusOnBlock';
 import StatusOffBlock from './components/StatusOffBlock';
 import InitialStockBlock from './components/InitialStockBlock';
-import NameBlock from './components/NameBlock';
-import CategoryBlock from './components/CategoryBlock';
-import StockBlock from './components/StockBlock';
 import TransactionBlock from './components/TransactionBlock';
 
 export default function TransactionHistoryModal({ onClose, history, item, isLoading }) {
@@ -144,6 +139,10 @@ export default function TransactionHistoryModal({ onClose, history, item, isLoad
               {transaction?.changedFields?.length === 0 &&
                 transaction?.reasonType === 'initial' &&
                 transaction?.movement === 'IN' && <InitialStockBlock transaction={transaction} />}
+
+              {/* Restock Block */}
+              {transaction?.changedFields?.length === 0 &&
+                transaction?.reasonType === 'restock' && <RestockBlock transaction={transaction} />}
 
               {/* Status Block ON */}
               {transaction?.changedFields?.length === 0 &&
