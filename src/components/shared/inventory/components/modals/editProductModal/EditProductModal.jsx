@@ -6,8 +6,12 @@ import PrescriptionForm from '../shared/PrescriptionForm';
 import SupplyForm from '../shared/SupplyForm';
 
 import { getGradient, getIcon } from './utils/helpers';
-import { editProduct } from './services/editProduct';
 import { useModalClose } from '@/hooks/useModalClose';
+
+// Edit Product services
+import { editProductInfo } from './services/editProductInfo';
+import { editProductStock } from './services/editStock';
+import { editProductQuantity } from './services/editQuantity';
 
 export default function EditProductModal({ activeTab, item, onClose, onSubmit }) {
   const { handleOverlayClick } = useModalClose(onClose);
@@ -15,21 +19,50 @@ export default function EditProductModal({ activeTab, item, onClose, onSubmit })
   // Submit handler connected to backend
   async function handleEditSubmit(formData) {
     try {
-      const response = await editProduct({
-        inventoryId: item._id,
-        name: formData.name,
-        category: formData.category,
-        quantity: formData.quantity,
-        minStock: formData.minStock,
-        maxStock: formData.maxStock,
-        costPrice: formData.costPrice,
-        salePrice: formData.salePrice,
-        reason: formData.reason,
-      });
+      let response;
+
+      // Check which fields actually changed
+      const quantityChanged = formData.quantity !== item.quantity;
+      const stockChanged =
+        formData.minStock !== item.minStock || formData.maxStock !== item.maxStock;
+      const infoChanged =
+        formData.name !== item.product.name ||
+        formData.type !== item.product.type ||
+        formData.category !== item.product.category ||
+        formData.costPrice !== item.product.costPrice ||
+        formData.salePrice !== item.product.salePrice;
+
+      if (quantityChanged) {
+        response = await editProductQuantity({
+          productId: item.product._id,
+          quantity: formData.quantity,
+          reason: formData.reason,
+        });
+      } else if (stockChanged) {
+        response = await editProductStock({
+          productId: item.product._id,
+          minStock: formData.minStock,
+          maxStock: formData.maxStock,
+          reason: formData.reason,
+        });
+      } else if (infoChanged) {
+        response = await editProductInfo({
+          productId: item.product._id,
+          name: formData.name,
+          type: formData.type,
+          category: formData.category,
+          costPrice: formData.costPrice,
+          salePrice: formData.salePrice,
+          reason: formData.reason,
+        });
+      } else {
+        alert('No se hicieron cambios');
+        return;
+      }
 
       if (response.success) {
         alert('Producto actualizado correctamente.');
-        onSubmit?.(response.inventory);
+        onSubmit?.(response.inventory || item);
         onClose();
       } else {
         alert(`Error: ${response.error}`);

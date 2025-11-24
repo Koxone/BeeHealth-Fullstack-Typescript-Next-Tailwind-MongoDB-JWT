@@ -1,29 +1,25 @@
-/* --- Service: Edit Product --- */
-/* Sends a PATCH request to /api/inventory/edit to edit a product */
+/* --- Service: Edit Product Info --- */
+/* Sends a PATCH request to /api/inventory/edit/product */
 
-export async function editProduct({
-  inventoryId,
+export async function editProductInfo({
+  productId,
   name,
+  type,
   category,
-  quantity,
-  minStock,
-  maxStock,
   costPrice,
   salePrice,
   reason,
 }) {
   try {
-    const res = await fetch('/api/inventory/edit', {
+    const res = await fetch('/api/inventory/edit/product', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
       body: JSON.stringify({
-        inventoryId,
+        productId,
         name,
+        type,
         category,
-        quantity,
-        minStock,
-        maxStock,
         costPrice,
         salePrice,
         reason,
@@ -35,18 +31,18 @@ export async function editProduct({
     if (!res.ok) {
       return {
         success: false,
-        error: data.error || 'Error editing product',
+        error: data.error || 'Error editing product info',
       };
     }
 
     return {
       success: true,
-      inventory: data.inventory,
+      message: data.message || 'Product info updated successfully',
       product: data.product,
-      message: data.message || 'Product updated successfully',
+      inventory: data.inventory,
     };
   } catch (error) {
-    console.error('Error in editProduct service:', error);
+    console.error('Error in editProductInfo service:', error);
     return { success: false, error: error.message };
   }
 }
