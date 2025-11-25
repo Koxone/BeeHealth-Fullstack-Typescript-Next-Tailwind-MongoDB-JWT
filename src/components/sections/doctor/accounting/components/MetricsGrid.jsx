@@ -23,7 +23,7 @@ export default function MetricsGrid({
       </div>
 
       {/* consultas */}
-      <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm md:p-6">
+      <div className="bg-medtrack-body-main rounded-xl border border-gray-200 p-4 shadow-sm md:p-6">
         <div className="mb-2 flex items-center justify-between">
           <Users className="h-8 w-8 text-green-500" />
           <span className="rounded bg-green-50 px-2 py-1 text-xs font-medium text-green-700">
@@ -37,7 +37,7 @@ export default function MetricsGrid({
       </div>
 
       {/* medicamentos */}
-      <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm md:p-6">
+      <div className="bg-medtrack-body-main rounded-xl border border-gray-200 p-4 shadow-sm md:p-6">
         <div className="mb-2 flex items-center justify-between">
           <Pill className="h-8 w-8 text-purple-500" />
           <span className="rounded bg-purple-50 px-2 py-1 text-xs font-medium text-purple-700">
@@ -51,7 +51,7 @@ export default function MetricsGrid({
       </div>
 
       {/* promedio */}
-      <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm md:p-6">
+      <div className="bg-medtrack-body-main rounded-xl border border-gray-200 p-4 shadow-sm md:p-6">
         <div className="mb-2 flex items-center justify-between">
           <TrendingUp className="h-8 w-8 text-orange-500" />
           <span className="rounded bg-orange-50 px-2 py-1 text-xs font-medium text-orange-700">

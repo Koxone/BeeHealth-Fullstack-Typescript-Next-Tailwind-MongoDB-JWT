@@ -195,12 +195,12 @@ export default function ConsultsTable({ rows, totals, onEdit, onDelete }) {
           <tr className="font-bold">
             <td colSpan="3" className="px-6 py-4 text-sm text-gray-900">
               <div className="flex items-center gap-2">
-                <Award className="h-5 w-5 text-indigo-600" />
+                <Award className="h-5 w-5 text-medtrack-blue-solid" />
                 <span>Total General</span>
               </div>
             </td>
 
-            <td className="px-6 py-4 text-right text-lg font-bold text-indigo-600">
+            <td className="px-6 py-4 text-right text-lg font-bold text-medtrack-blue-solid">
               ${totals.grandTotal.toLocaleString()}
             </td>
           </tr>
