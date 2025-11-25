@@ -7,7 +7,7 @@ export default function Terms() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-green-50">
+    <div className="bg-beehealth-body-main min-h-screen">
       <header className="bg-beehealth-body-main/80 border-b backdrop-blur-sm">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           <button onClick={() => router.push('/')} className="flex items-center gap-2">
