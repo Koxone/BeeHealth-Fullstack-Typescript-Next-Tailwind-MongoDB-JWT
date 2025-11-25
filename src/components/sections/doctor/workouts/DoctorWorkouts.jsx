@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Plus, Search } from 'lucide-react';
+import { Loader2, Plus, Search } from 'lucide-react';
 
 import ModalDelete from './components/modals/ModalDelete';
 import { workoutsMockData } from './components/workoutsMockData';
@@ -69,6 +69,21 @@ export default function DoctorWorkouts({ role }) {
     setWorkouts(workouts.filter((e) => e.id !== workoutToDelete.id));
     setShowDeleteModal(false);
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-[400px] items-center justify-center">
+        {error ? (
+          <p className="text-lg font-medium text-red-600">Error al cargar los datos del paciente</p>
+        ) : (
+          <div className="text-center">
+            <Loader2 className="mx-auto mb-4 h-16 w-16 animate-spin text-blue-600" />
+            <p className="text-lg font-medium text-gray-600">Cargando información...</p>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
