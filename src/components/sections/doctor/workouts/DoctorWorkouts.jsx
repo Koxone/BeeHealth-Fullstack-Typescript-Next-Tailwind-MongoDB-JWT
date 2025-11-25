@@ -186,11 +186,7 @@ export default function DoctorWorkouts({ role }) {
 
       {/* Doctor Create New Workout Modal */}
       {showCreateWorkoutModal && (
-        <ModalCreateWorkout
-          setShowCreateModal={setShowCreateWorkoutModal}
-          editingWorkout={editingWorkout}
-          handleSave={handleSave}
-        />
+        <ModalCreateWorkout setShowCreateModal={setShowCreateWorkoutModal} />
       )}
     </div>
   );
