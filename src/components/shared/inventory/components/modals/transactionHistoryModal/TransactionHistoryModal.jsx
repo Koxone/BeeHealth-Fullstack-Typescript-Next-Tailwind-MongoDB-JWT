@@ -158,6 +158,11 @@ export default function TransactionHistoryModal({ onClose, history, item, isLoad
               {transaction?.changedFields?.length > 0 && (
                 <TransactionBlock transaction={transaction} />
               )}
+
+              {/* Consult Sales */}
+              {transaction?.changedFields?.length === 0 && transaction?.reasonType === 'sale' && (
+                <TransactionBlock transaction={transaction} />
+              )}
             </div>
           ))}
         </div>
