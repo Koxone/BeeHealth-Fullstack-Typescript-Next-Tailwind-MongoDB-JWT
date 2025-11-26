@@ -1,16 +1,19 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Loader2, Plus, Search } from 'lucide-react';
-
-import ModalDelete from './components/modals/ModalDelete';
-import { workoutsMockData } from './components/workoutsMockData';
-import WorkoutCard from './components/workoutCard/WorkoutCard';
-import SharedModalOpenWorkout from '../../../shared/workouts/SharedModalOpenWorkout';
-import { useGetAllWorkouts } from '@/hooks/workouts/useGetAllWorkouts';
-import ModalEditWorkout from './components/modals/ModalEditWorkout';
-import ModalCreateWorkout from './components/modals/ModalCreateWorkout';
 import SharedSectionHeader from '@/components/shared/headers/SharedSectionHeader';
+import WorkoutCard from './components/workoutCard/WorkoutCard';
+
+// Hooks
+import { useGetAllWorkouts } from '@/hooks/workouts/useGetAllWorkouts';
+import { workoutsMockData } from './components/workoutsMockData';
+
+// Modals
+import SharedModalOpenWorkout from '../../../shared/workouts/SharedModalOpenWorkout';
+import ModalEditWorkout from './components/modals/ModalEditWorkout';
+import ModalDelete from './components/modals/ModalDelete';
+import ModalCreateWorkout from './components/modals/ModalCreateWorkout';
 
 export default function DoctorWorkouts({ role }) {
   // Get Workouts from API
@@ -70,6 +73,7 @@ export default function DoctorWorkouts({ role }) {
     setShowDeleteModal(false);
   };
 
+  // Loading State
   if (isLoading) {
     return (
       <div className="flex min-h-[400px] items-center justify-center">
@@ -125,13 +129,13 @@ export default function DoctorWorkouts({ role }) {
             />
           </div>
 
-          {/* Doctor New Workout Button */}
+          {/* Create Workout Button */}
           <button
             onClick={() => {
               setEditingWorkout(null);
               setShowCreateWorkoutModal(true);
             }}
-            className="bg-beehealth-blue-solid hover:bg-beehealth-blue-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white"
+            className="bg-beehealth-green-secondary-solid hover:bg-beehealth-green-secondary-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white"
           >
             <Plus className="h-5 w-5" /> Nuevo
           </button>
