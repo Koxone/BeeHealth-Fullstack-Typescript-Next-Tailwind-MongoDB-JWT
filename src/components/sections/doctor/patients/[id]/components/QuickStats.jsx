@@ -21,7 +21,9 @@ export default function QuickStats({ patientRecord, specialty }) {
               <FileText className="h-6 w-6 text-(--med-green)" />
             </div>
             <div>
-              <p className="text-3xl font-bold text-(--med-text-dark)">{patientRecord?.length}</p>
+              <p className="text-3xl font-bold text-(--med-text-dark)">
+                {patientRecord?.length > 0 ? patientRecord.length : 'Sin historial'}
+              </p>
               <p className="text-sm text-(--med-text-muted)">Consultas Totales</p>
             </div>
           </div>
@@ -38,7 +40,9 @@ export default function QuickStats({ patientRecord, specialty }) {
                 <Scale className="h-6 w-6 text-(--med-blue)" />
               </div>
               <div>
-                <p className="text-3xl font-bold text-(--med-text-dark)">{getAnswer(7)}</p>
+                <p className="text-3xl font-bold text-(--med-text-dark)">
+                  {patientRecord?.length > 0 ? getAnswer(7) : 'Sin historial'}
+                </p>
                 <p className="text-sm text-(--med-text-muted)">Peso Actual (kg)</p>
               </div>
             </div>
@@ -73,7 +77,7 @@ export default function QuickStats({ patientRecord, specialty }) {
               <Heart className="h-6 w-6 text-(--med-purple)" />
             </div>
             <div>
-              <p className="text-3xl font-bold text-(--med-text-dark)">{imc}</p>
+              <p className="text-3xl font-bold text-(--med-text-dark)">{imc || 'Sin historial'}</p>
               <p className="text-sm text-(--med-text-muted)">IMC Actual</p>
             </div>
           </div>

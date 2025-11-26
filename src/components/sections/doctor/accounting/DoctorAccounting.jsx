@@ -10,6 +10,7 @@ import SharedSectionHeader from '@/components/shared/headers/SharedSectionHeader
 import TodayConsultsList from '@/components/shared/todayConsults/TodayConsultsList';
 import { useGetAllConsults } from '@/hooks/consults/useGetAllConsults';
 import { getConsultTotals } from '../../employee/consultations/utils/getConsultTotals';
+import { Loader2 } from 'lucide-react';
 
 export default function DoctorAccounting({ role, specialty }) {
   // Get consults data
@@ -41,6 +42,21 @@ export default function DoctorAccounting({ role, specialty }) {
     consultas: c.consultPrice,
     medicamentos: c.totalItemsSold,
   }));
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-[400px] items-center justify-center">
+        {isError ? (
+          <p className="text-lg font-medium text-red-600">Error al cargar los datos del paciente</p>
+        ) : (
+          <div className="text-center">
+            <Loader2 className="mx-auto mb-4 h-16 w-16 animate-spin text-blue-600" />
+            <p className="text-lg font-medium text-gray-600">Cargando información...</p>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">

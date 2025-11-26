@@ -1,6 +1,6 @@
-import SharedWorkouts from '@/components/shared/workouts/SharedWorkouts';
 import React from 'react';
 import { getCurrentUser } from '@/lib/auth/getCurrentUser';
+import PatientWorkouts from '@/components/sections/patient/workouts/PatientWorkouts';
 export const runtime = 'nodejs';
 
 export default async function PatientWorkoutsPage() {
@@ -10,7 +10,7 @@ export default async function PatientWorkoutsPage() {
 
   return (
     <div className="h-screen overflow-hidden pb-40">
-      <SharedWorkouts role={role} />
+      <PatientWorkouts role={role} />
     </div>
   );
 }

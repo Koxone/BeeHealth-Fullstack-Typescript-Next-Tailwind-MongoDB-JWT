@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { doctorSchema } from './diets.doctor.schema';
-import { patientSchema } from './diets.patient.schema';
+import { patientSchema } from '../patient.schema';
 
 export const dietSchema = z.object({
   _id: z.string(),

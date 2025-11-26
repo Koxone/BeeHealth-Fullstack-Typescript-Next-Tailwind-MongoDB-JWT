@@ -27,10 +27,11 @@ import DeleteProductModal from './components/modals/deleteProductModal/DeletePro
 import ToggleProductModal from './components/modals/toggleProductModal/ToggleProductModal';
 import TransactionHistoryModal from './components/modals/transactionHistoryModal/TransactionHistoryModal';
 import { fetchProductHistory } from './components/modals/transactionHistoryModal/services/fetchProductHistory';
+import { Loader2 } from 'lucide-react';
 
 export default function SharedInventory({ role, showButton = true }) {
   // Fetch Full Inventory Items
-  const { inventory, loading, setInventory } = useGetFullInventory();
+  const { inventory, loading, setInventory, error } = useGetFullInventory();
 
   // States
   const [activeTab, setActiveTab] = useState('medicamentos');
@@ -137,8 +138,15 @@ export default function SharedInventory({ role, showButton = true }) {
   // Loading State
   if (loading) {
     return (
-      <div className="flex h-full items-center justify-center">
-        <p className="text-gray-500">Cargando inventario...</p>
+      <div className="flex min-h-[400px] items-center justify-center">
+        {error ? (
+          <p className="text-lg font-medium text-red-600">Error al cargar los datos del paciente</p>
+        ) : (
+          <div className="text-center">
+            <Loader2 className="mx-auto mb-4 h-16 w-16 animate-spin text-blue-600" />
+            <p className="text-lg font-medium text-gray-600">Cargando información...</p>
+          </div>
+        )}
       </div>
     );
   }

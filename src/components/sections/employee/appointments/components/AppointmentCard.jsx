@@ -8,7 +8,7 @@ export default function AppointmentCard({ index, cita, getEstadoBadge }) {
       style={{ animationDelay: `${index * 50}ms` }}
       className={`group animate-fadeInUp bg-beehealth-body-main relative overflow-hidden rounded-2xl border-2 p-5 transition-all duration-300 hover:shadow-xl ${
         cita.estado === 'Cancelada'
-          ? 'border-rose-200 bg-linear-to-r from-rose-50/50 to-white opacity-75'
+          ? 'bg-beehealth-body-main border-rose-200 opacity-75'
           : 'border-gray-200 hover:scale-[1.01] hover:border-emerald-300'
       }`}
     >

@@ -10,6 +10,7 @@ import { useGetFullInventory } from '@/hooks/inventory/useGetFullInventory';
 import DoctorStatsGrid from './components/DoctorStatsGrid';
 import { getConsultTotals } from '../../employee/consultations/utils/getConsultTotals';
 import { useGetAllConsults } from '@/hooks/consults/useGetAllConsults';
+import { Loader2 } from 'lucide-react';
 
 export default function DoctorDashboard({ currentUser, role, specialty }) {
   // Google Calendar Custom Hooks
@@ -31,6 +32,21 @@ export default function DoctorDashboard({ currentUser, role, specialty }) {
   } = useGetAllConsults({ speciality: specialty });
 
   const { consultPrice, totalItemsSold, totalCost } = getConsultTotals(consults);
+
+  if (loading || loadingInventory || loadingConsults) {
+    return (
+      <div className="flex min-h-[400px] items-center justify-center">
+        {error ? (
+          <p className="text-lg font-medium text-red-600">Error al cargar los datos del paciente</p>
+        ) : (
+          <div className="text-center">
+            <Loader2 className="mx-auto mb-4 h-16 w-16 animate-spin text-blue-600" />
+            <p className="text-lg font-medium text-gray-600">Cargando información...</p>
+          </div>
+        )}
+      </div>
+    );
+  }
   return (
     <DashboardLayout>
       {/* Header */}
@@ -51,7 +67,11 @@ export default function DoctorDashboard({ currentUser, role, specialty }) {
           totalCost={totalCost}
           consults={consults}
         />
-        <SharedInventoryAlerts inventory={inventory} role={currentUser?.role} />
+        <SharedInventoryAlerts
+          inventory={inventory}
+          role={currentUser?.role}
+          loading={loadingInventory}
+        />
       </div>
     </DashboardLayout>
   );

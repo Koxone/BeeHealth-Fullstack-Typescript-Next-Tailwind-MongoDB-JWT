@@ -12,7 +12,6 @@ export default function PatientHeader({ patient, onClickNew, patientRecord }) {
     stetic: 'Tratamiento Estético',
   };
   const specialtyName = specialtyLabels[patientRecord?.[0]?.specialty] || 'Sin especialidad';
-
   // Get label helper
   function getQuestionLabel(id) {
     const q = questionsMap.find((q) => q.id === Number(id));
@@ -57,11 +56,18 @@ export default function PatientHeader({ patient, onClickNew, patientRecord }) {
 
           <div>
             {/* Patient Name */}
-            <h1 className="text-4xl font-bold">{getAnswer(1)}</h1>
+            <h1 className="text-4xl font-bold">
+              {patientRecord?.length > 0 ? getAnswer(1) : patient?.fullName}
+            </h1>
             {/* Patient Age */}
-            <p className="text-sm">{getAnswer(4)} años</p>
+            <p className="text-sm">
+              {patientRecord?.length > 0 ? getAnswer(4) : 'No hay historial clinico'}{' '}
+              {patientRecord?.length > 0 ? 'años' : ''}
+            </p>
             {/* Patient Gender */}
-            <p className="mb-4 text-sm">{getAnswer(5)}</p>
+            <p className="mb-4 text-sm">
+              {patientRecord?.length > 0 ? getAnswer(5) : 'No hay historial clinico'}
+            </p>
           </div>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -72,7 +78,9 @@ export default function PatientHeader({ patient, onClickNew, patientRecord }) {
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-xs text-blue-100">Correo</p>
-                <p className="truncate text-sm font-semibold">{getAnswer(12)}</p>
+                <p className="truncate text-sm font-semibold">
+                  {patientRecord?.length > 0 ? getAnswer(12) : patient?.email}
+                </p>
               </div>
             </div>
 
@@ -83,7 +91,9 @@ export default function PatientHeader({ patient, onClickNew, patientRecord }) {
               </div>
               <div>
                 <p className="text-xs text-blue-100">Telefono</p>
-                <p className="text-sm font-semibold">{getAnswer(14)}</p>
+                <p className="text-sm font-semibold">
+                  {patientRecord?.length > 0 ? getAnswer(14) : patient?.phone}
+                </p>
               </div>
             </div>
 

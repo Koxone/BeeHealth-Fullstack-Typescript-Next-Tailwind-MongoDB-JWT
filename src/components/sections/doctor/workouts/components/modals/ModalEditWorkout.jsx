@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
-export default function ModalAddEdit({ setShowEditModal, editingWorkout, handleSave }) {
+export default function ModalEditWorkout({ setShowEditModal, editingWorkout, handleSave }) {
   const [form, setForm] = useState({
     nombre: '',
     categoria: 'Fuerza',
@@ -32,29 +32,19 @@ export default function ModalAddEdit({ setShowEditModal, editingWorkout, handleS
   useEffect(() => {
     if (editingWorkout) {
       setForm({
-        nombre: editingWorkout.nombre,
-        categoria: editingWorkout.categoria,
-        duracion: editingWorkout.duracion,
-        nivel: editingWorkout.nivel,
-        imagenes: editingWorkout.imagenes.join('\n'),
-        videoUrl: editingWorkout.videoUrl,
-        explicacion: editingWorkout.explicacion,
-        instrucciones: editingWorkout.instrucciones,
-        beneficios: editingWorkout.beneficios,
-        precauciones: editingWorkout.precauciones,
+        nombre: editingWorkout.name,
+        categoria: editingWorkout.type,
+        duracion: editingWorkout.duration,
+        nivel: editingWorkout.difficulty,
+        imagenes: editingWorkout.images.join('\n'),
+        videoUrl: editingWorkout.video,
+        explicacion: editingWorkout.about,
+        instrucciones: editingWorkout.instructions,
+        beneficios: editingWorkout.benefits,
+        precauciones: editingWorkout.cautions,
       });
     }
   }, [editingWorkout]);
-
-  const getCategoriaColor = (cat) => {
-    const colors = {
-      Fuerza: 'from-orange-500 to-red-500',
-      Cardio: 'from-red-500 to-pink-500',
-      Core: 'from-purple-500 to-indigo-500',
-      Flexibilidad: 'from-teal-500 to-cyan-500',
-    };
-    return colors[cat] || 'from-blue-500 to-purple-500';
-  };
 
   const getNivelColor = (nivel) => {
     const colors = {
@@ -76,7 +66,7 @@ export default function ModalAddEdit({ setShowEditModal, editingWorkout, handleS
       {/* Modal Container */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6">
         <div
-          className="animate-in fade-in zoom-in-95 relative max-h-[95vh] w-full max-w-5xl overflow-hidden rounded-3xl bg-linear-to-br from-white via-blue-50/30 to-purple-50/30 shadow-2xl duration-300"
+          className="animate-in fade-in zoom-in-95 bg-beehealth-body-main relative max-h-[95vh] w-full max-w-5xl overflow-hidden rounded-3xl shadow-2xl duration-300"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Decorative Background Elements */}
@@ -85,30 +75,23 @@ export default function ModalAddEdit({ setShowEditModal, editingWorkout, handleS
 
           {/* Header Premium */}
           <div className="bg-beehealth-body-main/80 relative overflow-hidden border-b border-white/50 backdrop-blur-xl">
-            <div
-              className={`absolute inset-0 bg-linear-to-r ${getCategoriaColor(form.categoria)} opacity-10`}
-            />
+            <div className={`bg-beehealth-blue-light absolute inset-0`} />
             <div className="relative px-6 py-6 sm:px-8">
               <div className="flex items-start justify-between">
                 <div className="flex items-start gap-4">
                   <div className="relative">
                     {/* Anillo pulsante */}
                     <div className="absolute inset-0 animate-ping rounded-2xl bg-blue-500 opacity-20" />
-                    <div
-                      className={`relative rounded-2xl bg-linear-to-br ${getCategoriaColor(form.categoria)} p-3 shadow-lg`}
-                    >
+                    <div className={`bg-beehealth-blue-solid relative rounded-2xl p-3 shadow-lg`}>
                       <Dumbbell className="h-7 w-7 text-white" />
                     </div>
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-                      {editingWorkout ? 'Editar Ejercicio' : 'Crear Nuevo Ejercicio'}
+                      Editar Ejercicio
                     </h2>
                     <p className="mt-1 flex items-center gap-2 text-sm text-gray-600">
-                      <Sparkles className="h-4 w-4 text-purple-500" />
-                      {editingWorkout
-                        ? 'Actualiza la información del ejercicio'
-                        : 'Completa todos los campos para agregar un nuevo ejercicio'}
+                      Actualiza la información del ejercicio
                     </p>
                   </div>
                 </div>
@@ -126,7 +109,7 @@ export default function ModalAddEdit({ setShowEditModal, editingWorkout, handleS
             <form onSubmit={(e) => handleSave(e, form)} className="space-y-6 p-6 sm:p-8">
               <div className="group bg-beehealth-body-main/80 rounded-2xl border border-gray-100 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl">
                 <div className="mb-6 flex items-center gap-3">
-                  <div className="rounded-xl bg-linear-to-br from-blue-500 to-purple-500 p-2.5">
+                  <div className="bg-beehealth-blue-solid rounded-xl p-2.5">
                     <Info className="h-5 w-5 text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900">Información Básica</h3>
@@ -159,10 +142,10 @@ export default function ModalAddEdit({ setShowEditModal, editingWorkout, handleS
                         onChange={(e) => setForm({ ...form, categoria: e.target.value })}
                         className="bg-beehealth-body-main w-full appearance-none rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 focus:border-purple-500 focus:shadow-md focus:shadow-purple-500/20 focus:outline-none"
                       >
-                        <option value="Fuerza">💪 Fuerza</option>
-                        <option value="Cardio">❤️ Cardio</option>
-                        <option value="Core">🎯 Core</option>
-                        <option value="Flexibilidad">🧘 Flexibilidad</option>
+                        <option value="Fuerza">Fuerza</option>
+                        <option value="Cardio">Cardio</option>
+                        <option value="Core">Core</option>
+                        <option value="Flexibilidad">Flexibilidad</option>
                       </select>
                       <div className="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2">
                         <svg
@@ -207,9 +190,9 @@ export default function ModalAddEdit({ setShowEditModal, editingWorkout, handleS
                         onChange={(e) => setForm({ ...form, nivel: e.target.value })}
                         className={`w-full appearance-none rounded-xl border-2 px-4 py-3.5 font-semibold shadow-sm transition-all duration-300 focus:shadow-md focus:outline-none ${getNivelColor(form.nivel)}`}
                       >
-                        <option value="Principiante">🟢 Principiante</option>
-                        <option value="Intermedio">🟡 Intermedio</option>
-                        <option value="Avanzado">🔴 Avanzado</option>
+                        <option value="Principiante">Principiante</option>
+                        <option value="Intermedio">Intermedio</option>
+                        <option value="Avanzado">Avanzado</option>
                       </select>
                       <div className="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2">
                         <svg
@@ -234,12 +217,13 @@ export default function ModalAddEdit({ setShowEditModal, editingWorkout, handleS
               {/* Multimedia Section */}
               <div className="group bg-beehealth-body-main/80 rounded-2xl border border-gray-100 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl">
                 <div className="mb-6 flex items-center gap-3">
-                  <div className="rounded-xl bg-linear-to-br from-pink-500 to-rose-500 p-2.5">
+                  <div className="bg-beehealth-blue-solid rounded-xl p-2.5">
                     <ImageIcon className="h-5 w-5 text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900">Contenido Multimedia</h3>
                 </div>
 
+                {/* Images */}
                 <div className="space-y-5">
                   <div className="space-y-2">
                     <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
@@ -286,7 +270,7 @@ export default function ModalAddEdit({ setShowEditModal, editingWorkout, handleS
               {/* Workout Details */}
               <div className="group bg-beehealth-body-main/80 rounded-2xl border border-gray-100 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl">
                 <div className="mb-6 flex items-center gap-3">
-                  <div className="rounded-xl bg-linear-to-br from-teal-500 to-emerald-500 p-2.5">
+                  <div className="bg-beehealth-blue-solid rounded-xl p-2.5">
                     <List className="h-5 w-5 text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900">Descripción Completa</h3>
@@ -352,7 +336,7 @@ export default function ModalAddEdit({ setShowEditModal, editingWorkout, handleS
                 </div>
               </div>
 
-              {/* Doctor Actions */}
+              {/* Actions */}
               <div className="flex gap-3">
                 <button
                   type="button"
@@ -363,20 +347,10 @@ export default function ModalAddEdit({ setShowEditModal, editingWorkout, handleS
                 </button>
                 <button
                   type="submit"
-                  className="group flex-1 rounded-xl bg-linear-to-r from-blue-600 to-purple-600 px-6 py-3.5 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-500/50 active:scale-95"
+                  className="group bg-beehealth-blue-solid hover:shadow-beehealth-blue-solid flex-1 rounded-xl px-6 py-3.5 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95"
                 >
                   <span className="flex items-center justify-center gap-2">
-                    {editingWorkout ? (
-                      <>
-                        <Sparkles className="h-5 w-5" />
-                        Actualizar Ejercicio
-                      </>
-                    ) : (
-                      <>
-                        <Dumbbell className="h-5 w-5 transition-transform group-hover:rotate-12" />
-                        Crear Ejercicio
-                      </>
-                    )}
+                    Actualizar Ejercicio
                   </span>
                 </button>
               </div>

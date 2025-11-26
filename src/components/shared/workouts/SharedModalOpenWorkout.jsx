@@ -21,17 +21,23 @@ const getNivelColor = (nivel) => {
   return map[nivel] || 'bg-gray-100 text-gray-800';
 };
 
-export default function WorkoutModal({
+export default function SharedModalOpenWorkout({
   workout,
   currentImageIndex,
   setCurrentImageIndex,
   onClose,
 }) {
   const nextImage = () =>
-    setCurrentImageIndex((prev) => (prev === workout.imagenes.length - 1 ? 0 : prev + 1));
+    setCurrentImageIndex((prev) => (prev === workout?.imagenes.length - 1 ? 0 : prev + 1));
   const prevImage = () =>
-    setCurrentImageIndex((prev) => (prev === 0 ? workout.imagenes.length - 1 : prev - 1));
+    setCurrentImageIndex((prev) => (prev === 0 ? workout?.imagenes.length - 1 : prev - 1));
 
+  // Convert video URL to embed format
+  const getEmbedUrl = (url) => {
+    const match = url.match(/v=([^&]+)/);
+    const id = match ? match[1] : null;
+    return id ? `https://www.youtube.com/embed/${id}` : url;
+  };
   return (
     <>
       <div
@@ -46,15 +52,15 @@ export default function WorkoutModal({
           {/* Header */}
           <div className="bg-beehealth-body-main sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 px-6 py-4">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">{workout.nombre}</h2>
+              <h2 className="text-2xl font-bold text-gray-900">{workout?.name}</h2>
               <div className="mt-1 flex items-center gap-2">
                 <span
-                  className={`rounded-full px-2 py-1 text-xs font-medium ${getNivelColor(workout.nivel)}`}
+                  className={`rounded-full px-2 py-1 text-xs font-medium ${getNivelColor(workout?.difficulty)}`}
                 >
-                  {workout.nivel}
+                  {workout?.difficulty}
                 </span>
                 <span className="rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800">
-                  {workout.categoria}
+                  {workout?.type}
                 </span>
               </div>
             </div>
@@ -71,11 +77,11 @@ export default function WorkoutModal({
             <div className="relative">
               <div className="relative h-64 overflow-hidden rounded-xl bg-gray-200 md:h-96">
                 <img
-                  src={workout.imagenes[currentImageIndex]}
-                  alt={`${workout.nombre} - Imagen ${currentImageIndex + 1}`}
+                  src={workout?.images[currentImageIndex]}
+                  alt={`${workout?.name} - Imagen ${currentImageIndex + 1}`}
                   className="h-full w-full object-cover"
                 />
-                {workout.imagenes.length > 1 && (
+                {workout?.images.length > 1 && (
                   <>
                     <button
                       onClick={prevImage}
@@ -90,7 +96,7 @@ export default function WorkoutModal({
                       <ChevronRight className="h-6 w-6" />
                     </button>
                     <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-2">
-                      {workout.imagenes.map((_, index) => (
+                      {workout?.images.map((_, index) => (
                         <button
                           key={index}
                           onClick={() => setCurrentImageIndex(index)}
@@ -115,7 +121,7 @@ export default function WorkoutModal({
               </div>
               <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                 <iframe
-                  src={workout.videoUrl}
+                  src={getEmbedUrl(workout?.video)}
                   className="absolute top-0 left-0 h-full w-full rounded-xl"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
@@ -128,7 +134,7 @@ export default function WorkoutModal({
               <Clock className="h-6 w-6 text-blue-600" />
               <div>
                 <p className="text-sm text-gray-600">Duración</p>
-                <p className="font-semibold text-gray-900">{workout.duracion}</p>
+                <p className="font-semibold text-gray-900">{workout?.duration} minutos</p>
               </div>
             </div>
 
@@ -138,7 +144,7 @@ export default function WorkoutModal({
                 <Info className="h-5 w-5 text-gray-600" />
                 <h3 className="text-lg font-semibold text-gray-900">Explicación</h3>
               </div>
-              <p className="leading-relaxed text-gray-700">{workout.explicacion}</p>
+              <p className="leading-relaxed text-gray-700">{workout?.about}</p>
             </div>
 
             {/* Instrucciones */}
@@ -148,7 +154,7 @@ export default function WorkoutModal({
                 <h3 className="text-lg font-semibold text-gray-900">Instrucciones</h3>
               </div>
               <ol className="space-y-2">
-                {workout.instrucciones.map((inst, index) => (
+                {workout?.instructions?.map((inst, index) => (
                   <li key={index} className="flex gap-3">
                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-500 text-sm font-medium text-white">
                       {index + 1}
@@ -166,7 +172,7 @@ export default function WorkoutModal({
                 <h3 className="text-lg font-semibold text-gray-900">Beneficios</h3>
               </div>
               <ul className="space-y-2">
-                {workout.beneficios.map((ben, index) => (
+                {workout?.benefits?.map((ben, index) => (
                   <li key={index} className="flex gap-2 text-gray-700">
                     <span className="font-bold text-green-600">✓</span>
                     <span>{ben}</span>
@@ -182,7 +188,7 @@ export default function WorkoutModal({
                 <h3 className="text-lg font-semibold text-gray-900">Precauciones</h3>
               </div>
               <ul className="space-y-2">
-                {workout.precauciones.map((prec, index) => (
+                {workout?.cautions?.map((prec, index) => (
                   <li key={index} className="flex gap-2 text-gray-700">
                     <span className="font-bold text-yellow-600">⚠</span>
                     <span>{prec}</span>

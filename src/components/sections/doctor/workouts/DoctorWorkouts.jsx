@@ -1,16 +1,21 @@
 'use client';
 
-import { useState } from 'react';
-import { Plus, Search } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Loader2, Plus, Search } from 'lucide-react';
 
-import ModalDelete from './components/ModalDelete';
-import ModalAddEdit from './components/ModalAddEdit';
+import ModalDelete from './components/modals/ModalDelete';
 import { workoutsMockData } from './components/workoutsMockData';
 import WorkoutCard from './components/workoutCard/WorkoutCard';
-import WorkoutModal from './components/WorkoutModal';
-import SharedSectionHeader from '../headers/SharedSectionHeader';
+import SharedModalOpenWorkout from '../../../shared/workouts/SharedModalOpenWorkout';
+import { useGetAllWorkouts } from '@/hooks/workouts/useGetAllWorkouts';
+import ModalEditWorkout from './components/modals/ModalEditWorkout';
+import ModalCreateWorkout from './components/modals/ModalCreateWorkout';
+import SharedSectionHeader from '@/components/shared/headers/SharedSectionHeader';
 
-export default function SharedWorkouts({ role }) {
+export default function DoctorWorkouts({ role }) {
+  // Get Workouts from API
+  const { workoutData, isLoading, error, refetch: fetchWorkouts } = useGetAllWorkouts();
+
   // Local States
   const [workouts, setWorkouts] = useState(workoutsMockData);
   const [filterCategorie, setFilterCategorie] = useState('Todos');
@@ -21,6 +26,7 @@ export default function SharedWorkouts({ role }) {
   const [editingWorkout, setEditingWorkout] = useState(null);
   const [workoutToDelete, setWorkoutToDelete] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showCreateWorkoutModal, setShowCreateWorkoutModal] = useState(false);
 
   // Workout Modal States
   const [seletctedWorkout, setSelectedWorkout] = useState();
@@ -28,9 +34,9 @@ export default function SharedWorkouts({ role }) {
 
   const categories = ['Todos', 'Fuerza', 'Cardio', 'Core', 'Flexibilidad', 'Movilidad'];
 
-  const filteredWorkouts = workouts.filter((e) => {
-    const matchCategorie = filterCategorie === 'Todos' || e.categoria === filterCategorie;
-    const matchSearch = e.nombre.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredWorkouts = workoutData.filter((e) => {
+    const matchCategorie = filterCategorie === 'Todos' || e.type === filterCategorie;
+    const matchSearch = e.name.toLowerCase().includes(searchTerm.toLowerCase());
     return matchCategorie && matchSearch;
   });
 
@@ -63,6 +69,21 @@ export default function SharedWorkouts({ role }) {
     setWorkouts(workouts.filter((e) => e.id !== workoutToDelete.id));
     setShowDeleteModal(false);
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-[400px] items-center justify-center">
+        {error ? (
+          <p className="text-lg font-medium text-red-600">Error al cargar los datos del paciente</p>
+        ) : (
+          <div className="text-center">
+            <Loader2 className="mx-auto mb-4 h-16 w-16 animate-spin text-blue-600" />
+            <p className="text-lg font-medium text-gray-600">Cargando información...</p>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
@@ -105,17 +126,15 @@ export default function SharedWorkouts({ role }) {
           </div>
 
           {/* Doctor New Workout Button */}
-          {role === 'doctor' && (
-            <button
-              onClick={() => {
-                setEditingWorkout(null);
-                setShowEditModal(true);
-              }}
-              className="bg-beehealth-blue-solid hover:bg-beehealth-blue-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white"
-            >
-              <Plus className="h-5 w-5" /> Nuevo
-            </button>
-          )}
+          <button
+            onClick={() => {
+              setEditingWorkout(null);
+              setShowCreateWorkoutModal(true);
+            }}
+            className="bg-beehealth-blue-solid hover:bg-beehealth-blue-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white"
+          >
+            <Plus className="h-5 w-5" /> Nuevo
+          </button>
         </div>
       </div>
 
@@ -123,8 +142,7 @@ export default function SharedWorkouts({ role }) {
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {filteredWorkouts.map((workout) => (
           <WorkoutCard
-            key={workout.id}
-            role={role}
+            key={workout._id}
             workout={workout}
             setShowDeleteModal={setShowDeleteModal}
             setWorkoutToDelete={setWorkoutToDelete}
@@ -139,7 +157,7 @@ export default function SharedWorkouts({ role }) {
 
       {/* Workout Modal */}
       {seletctedWorkout && (
-        <WorkoutModal
+        <SharedModalOpenWorkout
           workout={seletctedWorkout}
           currentImageIndex={currentImageIndex}
           setCurrentImageIndex={setCurrentImageIndex}
@@ -157,13 +175,18 @@ export default function SharedWorkouts({ role }) {
         />
       )}
 
-      {/* Doctor Create New Workout Modal */}
+      {/* Doctor Edit Workout Modal */}
       {showEditModal && (
-        <ModalAddEdit
+        <ModalEditWorkout
           setShowEditModal={setShowEditModal}
           editingWorkout={editingWorkout}
           handleSave={handleSave}
         />
+      )}
+
+      {/* Doctor Create New Workout Modal */}
+      {showCreateWorkoutModal && (
+        <ModalCreateWorkout setShowCreateModal={setShowCreateWorkoutModal} />
       )}
     </div>
   );

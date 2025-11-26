@@ -66,7 +66,7 @@ export default function DoctorDietDetail({ params, role, specialty }) {
   }
 
   return (
-    <div className="h-full min-h-full overflow-auto bg-linear-to-b from-gray-50 to-white">
+    <div className="bg-beehealth-body-main h-full min-h-full overflow-auto">
       {/* Header */}
       <div className="mb-8">
         {/* Go Back Button */}

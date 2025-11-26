@@ -1,21 +1,73 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { Heart, Activity, Calendar, Apple, Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { Heart, Activity, Calendar, Apple, TrendingDown } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import HomeHeader from './components/HomeHeader';
 
 export default function Home() {
   const router = useRouter();
   const [showMenu, setShowMenu] = useState(false);
+  const [totalWeightLoss, setTotalWeightLoss] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch total weight loss from API
+  useEffect(() => {
+    const fetchWeightLoss = async () => {
+      try {
+        const res = await fetch('/api/stats/total-weight-loss', {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          setTotalWeightLoss(data.totalWeightLoss || 0);
+        }
+      } catch (error) {
+        console.error('Error fetching weight loss:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchWeightLoss();
+  }, []);
+
+  // Animated counter component
+  const AnimatedCounter = ({ value, duration = 2000 }) => {
+    const [displayValue, setDisplayValue] = useState(0);
+
+    useEffect(() => {
+      if (loading) return;
+
+      let startTime;
+      const animate = (currentTime) => {
+        if (!startTime) startTime = currentTime;
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        setDisplayValue(Math.floor(value * progress));
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          setDisplayValue(value);
+        }
+      };
+
+      requestAnimationFrame(animate);
+    }, [value, duration, loading]);
+
+    return displayValue.toFixed(1);
+  };
 
   return (
-    <div className="bg-linear-to-br from-blue-50 via-white to-green-50">
+    <div className="bg-beehealth-body-main">
       {/* Header */}
       <HomeHeader setShowMenu={setShowMenu} showMenu={showMenu} />
 
       {/* Hero Section */}
-      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 md:py-20 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="grid items-center gap-8 md:grid-cols-2 md:gap-12">
           <div>
             <h1 className="mb-4 text-3xl leading-tight font-bold text-gray-900 md:mb-6 md:text-5xl">
@@ -40,48 +92,105 @@ export default function Home() {
               </button>
             </div>
           </div>
-          <div className="rounded-2xl bg-linear-to-br from-blue-100 to-green-100 p-8 shadow-xl md:p-12">
+
+          {/* Weight Loss Counter Card */}
+          <div className="animate-in fade-in slide-in-from-right-4 rounded-2xl bg-linear-to-br from-blue-100 to-green-100 p-8 shadow-xl duration-700 md:p-12">
             <div className="bg-beehealth-body-main rounded-xl p-6 shadow-lg md:p-8">
-              <Activity className="mx-auto mb-4 h-12 w-12 text-blue-500 md:h-16 md:w-16" />
+              {/* Icon with animation */}
+              <div className="mb-4 flex justify-center">
+                <div className="relative">
+                  <div className="absolute inset-0 animate-pulse rounded-full bg-green-200 blur-lg"></div>
+                  <div className="relative rounded-full bg-green-100 p-3 md:p-4">
+                    <TrendingDown className="h-8 w-8 text-green-600 md:h-10 md:w-10" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Main Counter */}
+              <div className="mb-4">
+                <div className="text-center">
+                  <div className="inline-block">
+                    <span className="text-5xl font-bold text-green-600 md:text-6xl">
+                      {loading ? '...' : <AnimatedCounter value={totalWeightLoss} />}
+                    </span>
+                    <span className="ml-2 text-2xl font-semibold text-gray-700 md:text-3xl">
+                      kg
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Subtitle */}
               <h3 className="text-center text-lg font-semibold text-gray-900 md:text-xl">
-                Tu salud en tiempo real
+                Kilos perdidos por nuestros pacientes
               </h3>
+
+              {/* Subtitle description */}
+              <p className="mt-3 text-center text-sm text-gray-600 md:text-base">
+                Únete a nuestra comunidad y comienza tu transformación hoy
+              </p>
+
+              {/* Success indicator */}
+              <div className="mt-6 flex items-center justify-center gap-2">
+                <div className="h-2 w-2 animate-pulse rounded-full bg-green-500"></div>
+                <span className="text-xs font-medium text-green-700 md:text-sm">
+                  {loading ? 'Cargando...' : 'En tiempo real'}
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Features */}
-      <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 md:py-20 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <h2 className="mb-8 text-center text-2xl font-bold text-gray-900 md:mb-12 md:text-3xl">
           Todo lo que necesitas para cuidar tu salud
         </h2>
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-8">
-          <div className="bg-beehealth-body-main rounded-xl p-4 shadow-md transition hover:shadow-lg md:p-6">
-            <Activity className="mb-3 h-8 w-8 text-blue-500 md:mb-4 md:h-12 md:w-12" />
-            <h3 className="mb-1 text-sm font-semibold text-gray-900 md:mb-2 md:text-lg">
-              Control de Peso
-            </h3>
-            <p className="text-xs text-gray-600 md:text-base">Monitorea tu peso e IMC</p>
+
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
+          {/* Weight Control */}
+          <div className="bg-beehealth-body-main rounded-xl p-6 shadow-sm transition hover:shadow-md">
+            <div className="mb-4 flex items-center justify-center rounded-full bg-blue-100 p-3">
+              <Activity className="h-8 w-8 text-blue-600" />
+            </div>
+            <h3 className="mb-2 text-lg font-semibold text-gray-900">Control de Peso</h3>
+            <p className="text-gray-600">
+              Lleva un seguimiento claro de tu peso, IMC y progresos diarios
+            </p>
           </div>
-          <div className="bg-beehealth-body-main rounded-xl p-4 shadow-md transition hover:shadow-lg md:p-6">
-            <Heart className="mb-3 h-8 w-8 text-red-500 md:mb-4 md:h-12 md:w-12" />
-            <h3 className="mb-1 text-sm font-semibold text-gray-900 md:mb-2 md:text-lg">
-              Historial Clínico
-            </h3>
-            <p className="text-xs text-gray-600 md:text-base">Historial completo</p>
+
+          {/* Clinical History */}
+          <div className="bg-beehealth-body-main rounded-xl p-6 shadow-sm transition hover:shadow-md">
+            <div className="mb-4 flex items-center justify-center rounded-full bg-red-100 p-3">
+              <Heart className="h-8 w-8 text-red-600" />
+            </div>
+            <h3 className="mb-2 text-lg font-semibold text-gray-900">Historial Clínico</h3>
+            <p className="text-gray-600">
+              Consulta tu información médica de forma ordenada y accesible
+            </p>
           </div>
-          <div className="bg-beehealth-body-main rounded-xl p-4 shadow-md transition hover:shadow-lg md:p-6">
-            <Calendar className="mb-3 h-8 w-8 text-green-500 md:mb-4 md:h-12 md:w-12" />
-            <h3 className="mb-1 text-sm font-semibold text-gray-900 md:mb-2 md:text-lg">
-              Citas Médicas
-            </h3>
-            <p className="text-xs text-gray-600 md:text-base">Agenda fácilmente</p>
+
+          {/* Medical Appointments */}
+          <div className="bg-beehealth-body-main rounded-xl p-6 shadow-sm transition hover:shadow-md">
+            <div className="mb-4 flex items-center justify-center rounded-full bg-green-100 p-3">
+              <Calendar className="h-8 w-8 text-green-600" />
+            </div>
+            <h3 className="mb-2 text-lg font-semibold text-gray-900">Citas Médicas</h3>
+            <p className="text-gray-600">
+              Programa y consulta tus próximas citas sin complicaciones
+            </p>
           </div>
-          <div className="bg-beehealth-body-main rounded-xl p-4 shadow-md transition hover:shadow-lg md:p-6">
-            <Apple className="mb-3 h-8 w-8 text-yellow-500 md:mb-4 md:h-12 md:w-12" />
-            <h3 className="mb-1 text-sm font-semibold text-gray-900 md:mb-2 md:text-lg">Dietas</h3>
-            <p className="text-xs text-gray-600 md:text-base">Planes a tu medida</p>
+
+          {/* Diet Plans */}
+          <div className="bg-beehealth-body-main rounded-xl p-6 shadow-sm transition hover:shadow-md">
+            <div className="mb-4 flex items-center justify-center rounded-full bg-yellow-100 p-3">
+              <Apple className="h-8 w-8 text-yellow-600" />
+            </div>
+            <h3 className="mb-2 text-lg font-semibold text-gray-900">Planes Alimenticios</h3>
+            <p className="text-gray-600">
+              Recibe recomendaciones nutricionales personalizadas a tus objetivos
+            </p>
           </div>
         </div>
       </section>

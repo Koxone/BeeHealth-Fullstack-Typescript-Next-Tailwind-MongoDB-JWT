@@ -74,7 +74,7 @@ export default function DietForm() {
   };
 
   return (
-    <div className="min-h-full bg-linear-to-br from-gray-50 to-white">
+    <div className="bg-beehealth-body-main min-h-full">
       <form className="mx-auto max-w-5xl space-y-8 p-4 md:p-0">
         {/* Header */}
         <div className="mb-8">

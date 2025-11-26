@@ -1,6 +1,6 @@
 import React from 'react';
 import { Scale, Activity, Stethoscope, Pill, Ruler, Edit2, Eye } from 'lucide-react';
-import useGetAnswer from '@/components/shared/hooks/useGetAnswer';
+import useGetAnswer from '@/hooks/useGetAnswer';
 
 function HistoryCard({ r, onEdit, specialty }) {
   const getAnswer = useGetAnswer(r);
