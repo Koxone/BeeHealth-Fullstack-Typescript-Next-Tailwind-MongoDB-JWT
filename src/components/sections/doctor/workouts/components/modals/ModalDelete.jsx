@@ -1,11 +1,15 @@
 'use client';
 
+import { useModalClose } from '@/hooks/useModalClose';
 import { AlertCircle, Trash2, X, AlertTriangle, CheckCircle, Loader } from 'lucide-react';
 import { useState } from 'react';
 
 export default function ModalDelete({ workoutToDelete, handleDelete, setShowDeleteModal }) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
+
+  // Modal close handler
+  const { handleOverlayClick } = useModalClose(() => setShowDeleteModal(false));
 
   const handleDeleteWithFeedback = async () => {
     setIsDeleting(true);
@@ -24,15 +28,13 @@ export default function ModalDelete({ workoutToDelete, handleDelete, setShowDele
   };
 
   return (
-    <>
-      {/* Overlay */}
-      <div
-        className="animate-in fade-in fixed inset-0 z-50 h-screen bg-black/70 backdrop-blur-md transition-all duration-300"
-        onClick={() => !isDeleting && setShowDeleteModal(false)}
-      />
-
+    <div
+      id="overlay"
+      onClick={handleOverlayClick}
+      className="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md"
+    >
       {/* Modal Container */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="relative inset-0 z-50 flex items-center justify-center p-4">
         <div
           className="animate-in fade-in zoom-in-95 relative w-full max-w-md overflow-hidden rounded-3xl bg-linear-to-r from-white via-red-50/30 to-orange-50/30 shadow-2xl duration-300"
           onClick={(e) => e.stopPropagation()}
@@ -192,6 +194,6 @@ export default function ModalDelete({ workoutToDelete, handleDelete, setShowDele
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
