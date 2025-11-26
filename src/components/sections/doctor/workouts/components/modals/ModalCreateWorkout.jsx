@@ -533,7 +533,7 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
                   </div>
 
                   <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                    {/* BENEFICIOS */}
+                    {/* Benefits */}
                     <div className="space-y-3">
                       <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                         <Award className="h-4 w-4 text-yellow-500" />
@@ -585,7 +585,7 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
                       </div>
                     </div>
 
-                    {/* PRECAUCIONES */}
+                    {/* Cautions */}
                     <div className="space-y-3">
                       <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                         <AlertCircle className="h-4 w-4 text-orange-500" />
