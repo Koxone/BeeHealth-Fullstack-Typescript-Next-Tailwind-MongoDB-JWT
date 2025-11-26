@@ -6,10 +6,14 @@ import { useState } from 'react';
 import BasicInfoSection from './components/basic/BasicInfoSection';
 import MultimediaSection from './components/multimedia/MultimediaSection';
 import DetailsSection from './components/details/DetailsSection';
+import { useModalClose } from '@/hooks/useModalClose';
 
 export default function ModalCreateWorkout({ setShowCreateModal }) {
   // Create Workout Hook
   const { createWorkout, loading, error } = useCreateWorkout();
+
+  // Modal close handler
+  const { handleOverlayClick } = useModalClose(() => setShowCreateModal(false));
 
   // Upload Images
   const [uploadingImages, setUploadingImages] = useState({});
@@ -228,15 +232,13 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
   };
 
   return (
-    <>
-      {/* Overlay */}
-      <div
-        className="animate-in fade-in fixed inset-0 z-50 h-screen bg-black/70 backdrop-blur-md transition-all duration-300"
-        onClick={() => setShowCreateModal(false)}
-      />
-
+    <div
+      id="overlay"
+      onClick={handleOverlayClick}
+      className="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md"
+    >
       {/* Modal Container */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6">
+      <div className="relative inset-0 z-50 flex items-center justify-center p-3 sm:p-6">
         <div
           className="animate-in fade-in zoom-in-95 bg-beehealth-body-main relative max-h-[95vh] w-full max-w-5xl overflow-hidden rounded-3xl shadow-2xl duration-300"
           onClick={(e) => e.stopPropagation()}
@@ -353,6 +355,6 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
