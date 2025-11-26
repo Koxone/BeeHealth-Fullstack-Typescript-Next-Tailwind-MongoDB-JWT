@@ -38,7 +38,7 @@ function DetailsSection({
             value={form.about}
             onChange={(e) => setForm({ ...form, about: e.target.value })}
             placeholder="Describe el ejercicio, qué músculos trabaja y sus características principales..."
-            className="bg-beehealth-body-main w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 placeholder:text-gray-400 focus:border-teal-500 focus:shadow-md focus:shadow-teal-500/20 focus:outline-none"
+            className="bg-beehealth-body-main w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 outline-none placeholder:text-gray-400"
             rows="3"
           />
         </div>

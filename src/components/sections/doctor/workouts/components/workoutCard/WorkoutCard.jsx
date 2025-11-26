@@ -27,7 +27,7 @@ export default function WorkoutCard({
       {/* Main Image */}
       <div className="relative h-48 overflow-hidden bg-gray-100">
         <img
-          src={workout?.images}
+          src={workout?.images?.[0]}
           alt={workout?.name}
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
         />

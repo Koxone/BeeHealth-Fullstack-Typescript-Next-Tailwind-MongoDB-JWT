@@ -41,7 +41,7 @@ function MultimediaSection({
             value={form.video}
             onChange={(e) => setForm({ ...form, video: e.target.value })}
             placeholder="https://www.youtube.com/embed/..."
-            className="bg-beehealth-body-main w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 font-mono text-sm text-gray-900 shadow-sm transition-all duration-300 placeholder:text-gray-400 focus:border-blue-500 focus:shadow-md focus:shadow-blue-500/20 focus:outline-none"
+            className="bg-beehealth-body-main w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 font-mono text-sm text-gray-900 shadow-sm transition-all duration-300 outline-none placeholder:text-gray-400"
           />
           <div className="bg-beehealth-blue-primary-light flex items-start gap-2 rounded-lg px-3 py-2">
             <Play className="text-beehealth-blue-primary-solid mt-0.5 h-4 w-4 shrink-0" />

@@ -32,7 +32,7 @@ function Cautions({
               <button
                 type="button"
                 onClick={() => handleRemoveCautionInput(index)}
-                className="border-beehealth-blue-primary-dark bg-beehealth-blue-primary-light text-beehealth-blue-primary-dark hover:border-beehealth-blue-primary-dark hover:bg-beehealth-blue-primary-light-hover h-fit rounded-xl border-2 px-3 py-3.5 font-semibold shadow-sm transition-all duration-300 active:scale-95"
+                className="h-fit rounded-xl border-2 border-red-300 bg-red-50 px-3 py-3.5 font-semibold text-red-600 shadow-sm transition-all duration-300 hover:border-red-400 hover:bg-red-100 active:scale-95"
               >
                 Eliminar
               </button>

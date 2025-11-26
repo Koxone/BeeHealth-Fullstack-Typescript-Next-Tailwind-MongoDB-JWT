@@ -62,14 +62,14 @@ export default function ImageGalleryUpload({
                     accept="image/*"
                     onChange={(e) => handleFileChange(index, e.target.files?.[0] || null)}
                     disabled={uploadingImages[index]}
-                    className="bg-beehealth-body-main file:text-beehealth-blue-secondary-solid file:bg-beehealth-blue-primary-light hover:file:bg-beehealth-blue-primary-light-hover focus:border-beehealth-blue-primary-solid focus:shadow-beehealth-blue-primary-solid/20 w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 text-sm text-gray-900 shadow-sm transition-all duration-300 file:mr-3 file:rounded-lg file:border-0 file:px-3 file:py-2 file:text-xs file:font-semibold placeholder:text-gray-400 focus:shadow-md focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                    className="bg-beehealth-body-main file:text-beehealth-blue-secondary-solid file:bg-beehealth-blue-primary-light hover:file:bg-beehealth-blue-primary-light-hover focus:border-beehealth-blue-primary-solid focus:shadow-beehealth-blue-primary-solid/20 w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 text-sm text-gray-900 shadow-sm transition-all duration-300 file:mr-3 file:rounded-lg file:border-0 file:px-3 file:py-1 file:text-xs file:font-semibold placeholder:text-gray-400 focus:shadow-md focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                   />
                 </div>
                 <button
                   type="button"
                   onClick={() => handleRemoveImage(index)}
                   disabled={uploadingImages[index]}
-                  className="text-beehealth-red-primary-solid rounded-xl border-2 border-red-300 bg-red-50 px-4 py-3.5 font-semibold shadow-sm transition-all duration-300 hover:border-red-400 hover:bg-red-100 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="h-fit rounded-xl border-2 border-red-300 bg-red-50 px-3 py-3.5 font-semibold text-red-600 shadow-sm transition-all duration-300 hover:border-red-400 hover:bg-red-100 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Eliminar
                 </button>
@@ -93,7 +93,7 @@ export default function ImageGalleryUpload({
                     )}
                   </div>
                   {index === 0 && file && (
-                    <span className="rounded-full bg-pink-200 px-2 py-1 text-xs font-semibold whitespace-nowrap text-pink-700">
+                    <span className="bg-beehealth-red-primary-light text-beehealth-red-primary-dark rounded-full px-2 py-1 text-xs font-semibold whitespace-nowrap">
                       Portada
                     </span>
                   )}
@@ -102,7 +102,7 @@ export default function ImageGalleryUpload({
 
               {/* Preview */}
               {previewUrls[index] && (
-                <div className="relative overflow-hidden rounded-xl border-2 border-pink-200 bg-gray-100">
+                <div className="border-beehealth-red-primary-light relative overflow-hidden rounded-xl border-2 bg-gray-100">
                   <img
                     src={previewUrls[index]}
                     alt={`Preview ${index + 1}`}

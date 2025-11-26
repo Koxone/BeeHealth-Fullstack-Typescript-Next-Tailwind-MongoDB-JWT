@@ -13,7 +13,7 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
 
   // Upload Images
   const [uploadingImages, setUploadingImages] = useState({});
-  const [imageFiles, setImageFiles] = useState([null]);
+  const [imageFiles, setImageFiles] = useState([]);
 
   const handleAddImageFile = (index, file) => {
     const newFiles = [...imageFiles];

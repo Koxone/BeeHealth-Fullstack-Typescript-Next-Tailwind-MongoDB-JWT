@@ -34,7 +34,7 @@ function Instructions({
               <button
                 type="button"
                 onClick={() => handleRemoveInstructionInput(index)}
-                className="border-red-primary-light bg-red-primary-light text-red-primary-solid hover:border-red-primary-light-hover hover:bg-red-primary-light-hover h-fit rounded-xl border-2 px-4 py-3.5 font-semibold shadow-sm transition-all duration-300 active:scale-95"
+                className="h-fit rounded-xl border-2 border-red-300 bg-red-50 px-3 py-3.5 font-semibold text-red-600 shadow-sm transition-all duration-300 hover:border-red-400 hover:bg-red-100 active:scale-95"
               >
                 Eliminar
               </button>
