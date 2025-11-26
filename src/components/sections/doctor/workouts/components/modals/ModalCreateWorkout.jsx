@@ -218,6 +218,7 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
                   <h3 className="text-xl font-bold text-gray-900">Información Básica</h3>
                 </div>
 
+                {/* Name */}
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   <div className="space-y-2">
                     <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
@@ -234,6 +235,7 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
                     />
                   </div>
 
+                  {/* Category */}
                   <div className="space-y-2">
                     <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                       <Sparkles className="h-4 w-4 text-purple-500" />
@@ -269,6 +271,7 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
                     </div>
                   </div>
 
+                  {/* Duration */}
                   <div className="space-y-2">
                     <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                       <Clock className="h-4 w-4 text-green-500" />
@@ -284,6 +287,7 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
                     />
                   </div>
 
+                  {/* Difficulty Level */}
                   <div className="space-y-2">
                     <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                       <TrendingUp className="h-4 w-4 text-orange-500" />
@@ -331,6 +335,7 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
 
                 {/* Images */}
                 <div className="space-y-5">
+                  {/* Images Gallery */}
                   <div className="space-y-2">
                     <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                       <ImageIcon className="h-4 w-4 text-pink-500" />
@@ -351,6 +356,7 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
                     </div>
                   </div>
 
+                  {/* Video Tutorial */}
                   <div className="space-y-2">
                     <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                       <Play className="h-4 w-4 text-red-500" />
