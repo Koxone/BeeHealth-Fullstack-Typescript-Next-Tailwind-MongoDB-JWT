@@ -66,9 +66,10 @@ export const metadata = {
 
   /* Manifest */
   manifest: '/site.webmanifest',
+};
 
-  /* Theme */
-  themeColor: '#ffffff',
+export const viewport = {
+  themeColor: '#0e1113',
 };
 
 export default async function MainRootLayout({ children }) {

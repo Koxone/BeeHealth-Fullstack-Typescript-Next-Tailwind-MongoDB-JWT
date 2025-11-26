@@ -4,7 +4,7 @@ import { UserData } from '@/lib/auth/getCurrentUser';
 
 interface DoctorPatientsProps {
   currentUser: UserData | null;
-  role?: string;
+  role?: 'doctor' | 'patient' | 'employee' | 'admin';
 }
 
 export const runtime = 'nodejs';
@@ -14,6 +14,8 @@ export default function DoctorPatients({ currentUser, role }: DoctorPatientsProp
     <div className="h-full space-y-6 overflow-y-auto">
       <SharedSectionHeader
         Icon="pacientes"
+        newPatient={true}
+        role={role}
         title="Mis Pacientes"
         subtitle="Gestiona tu lista de pacientes"
       />
