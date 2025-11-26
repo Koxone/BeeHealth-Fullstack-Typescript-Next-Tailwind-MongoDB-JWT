@@ -21,9 +21,9 @@ function DetailsSection({
   handleRemoveCautionInput,
 }) {
   return (
-    <div className="group bg-beehealth-body-main/80 border-beehealth-blue-light rounded-2xl border p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl">
+    <div className="group bg-beehealth-body-main/80 border-beehealth-blue-primary-solid rounded-2xl border p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl">
       <div className="mb-6 flex items-center gap-3">
-        <div className="bg-beehealth-blue-solid rounded-xl p-2.5">
+        <div className="bg-beehealth-blue-primary-solid rounded-xl p-2.5">
           <List className="h-5 w-5 text-white" />
         </div>
         <h3 className="text-xl font-bold text-gray-900">Descripción Completa</h3>
@@ -32,7 +32,7 @@ function DetailsSection({
       <div className="space-y-5">
         <div className="space-y-2">
           <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-            📝 Explicación General
+            Explicación General
           </label>
           <textarea
             value={form.about}

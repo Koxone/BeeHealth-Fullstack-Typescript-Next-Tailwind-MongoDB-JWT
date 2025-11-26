@@ -11,7 +11,7 @@ export default function Actions({ onClose, submitLabel }) {
       </button>
       <button
         type="submit"
-        className="bg-beehealth-blue-solid hover:bg-beehealth-blue-hover flex-1 rounded-xl px-6 py-3.5 font-semibold text-white"
+        className="bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover flex-1 rounded-xl px-6 py-3.5 font-semibold text-white"
       >
         {submitLabel}
       </button>

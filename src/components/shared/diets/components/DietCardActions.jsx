@@ -7,7 +7,7 @@ export default function DietCardActions({ id }) {
       {/* View button */}
       <Link
         href={`/doctor/diets/${id}?mode=read`}
-        className="bg-beehealth-blue-solid hover:bg-beehealth-blue-hover flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-white transition active:scale-95"
+        className="bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-white transition active:scale-95"
       >
         <Eye className="h-4 w-4" />
         Ver

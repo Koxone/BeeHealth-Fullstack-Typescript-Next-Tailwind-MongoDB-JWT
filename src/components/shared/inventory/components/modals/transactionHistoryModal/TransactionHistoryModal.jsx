@@ -107,7 +107,7 @@ export default function TransactionHistoryModal({ onClose, history, item, isLoad
             <div className="flex items-start justify-between">
               <div className="flex items-start gap-4">
                 <div className="relative">
-                  <div className="bg-beehealth-blue-solid relative flex items-center justify-center rounded-2xl p-3 shadow-lg">
+                  <div className="bg-beehealth-blue-primary-solid relative flex items-center justify-center rounded-2xl p-3 shadow-lg">
                     <History className="h-6 w-6 text-white" />
                   </div>
                 </div>

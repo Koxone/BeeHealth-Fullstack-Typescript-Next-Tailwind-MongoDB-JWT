@@ -225,7 +225,7 @@ export default function DietForm() {
             type="button"
             onClick={handleSubmit}
             disabled={loading}
-            className="bg-beehealth-blue-solid hover:bg-beehealth-blue-hover flex flex-1 items-center justify-center gap-2 rounded-lg px-6 py-3 font-semibold text-white shadow-md transition-all hover:shadow-lg active:scale-95 disabled:opacity-50"
+            className="bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover flex flex-1 items-center justify-center gap-2 rounded-lg px-6 py-3 font-semibold text-white shadow-md transition-all hover:shadow-lg active:scale-95 disabled:opacity-50"
           >
             <Check className="h-5 w-5" />
             {loading ? 'Creando...' : 'Crear Plan Dietético'}

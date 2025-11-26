@@ -8,7 +8,7 @@ export default function AppointmentsToday({ appointments, role }) {
         <h2 className="text-lg font-semibold text-gray-900 md:text-xl">Citas de Hoy</h2>
         <Link
           href={role === 'doctor' ? '/doctor/calendar' : '/employee/appointments'}
-          className="bg-beehealth-blue-solid hover:bg-beehealth-blue-hover flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-white transition active:scale-95"
+          className="bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-white transition active:scale-95"
         >
           Ver todas
           <ChevronRight className="h-4 w-4" />
@@ -29,7 +29,7 @@ export default function AppointmentsToday({ appointments, role }) {
             <Link
               key={cita.id}
               href={`/doctor/patients/${cita?.patientId}`}
-              className="border-beehealth-green-solid/30 hover:border-beehealth-green-hover block rounded-xl border-2 p-4 transition hover:bg-emerald-50"
+              className="border-beehealth-green-primary-dark/30 hover:border-beehealth-green-primary-dark-hover block rounded-xl border-2 p-4 transition hover:bg-emerald-50"
             >
               <div className="flex items-center justify-between">
                 <div className="flex-1">
@@ -65,7 +65,7 @@ export default function AppointmentsToday({ appointments, role }) {
           {appointments.map((cita) => (
             <div
               key={cita.id}
-              className="border-beehealth-green-solid/30 hover:border-beehealth-green-hover block rounded-xl border-2 p-4 transition hover:bg-emerald-50"
+              className="border-beehealth-green-primary-dark/30 hover:border-beehealth-green-primary-dark-hover block rounded-xl border-2 p-4 transition hover:bg-emerald-50"
             >
               <div className="flex items-center justify-between">
                 <div className="flex-1">

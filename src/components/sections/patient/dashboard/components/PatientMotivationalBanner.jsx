@@ -1,6 +1,6 @@
 export default function PatientMotivationalBanner({ message, ctaLabel, onCta }) {
   return (
-    <div className="bg-beehealth-blue-solid rounded-xl p-4 text-white shadow-sm md:p-6">
+    <div className="bg-beehealth-blue-primary-solid rounded-xl p-4 text-white shadow-sm md:p-6">
       <div className="flex items-start gap-4">
         <div className="bg-beehealth-body-main/20 rounded-lg p-3" aria-hidden />
         <div className="flex-1">

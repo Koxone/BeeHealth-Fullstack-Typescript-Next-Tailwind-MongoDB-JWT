@@ -7,7 +7,7 @@ function DoctorActionsButton({ onEdit, onDelete }) {
     <div className="flex gap-2">
       <button
         onClick={onEdit}
-        className="bg-beehealth-green-solid hover:bg-beehealth-green-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white transition active:scale-95"
+        className="bg-beehealth-green-primary-dark hover:bg-beehealth-green-primary-dark-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white transition active:scale-95"
       >
         <Edit2 className="h-4 w-4" />
         Editar

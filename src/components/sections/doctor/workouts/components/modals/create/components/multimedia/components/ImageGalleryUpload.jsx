@@ -47,7 +47,7 @@ export default function ImageGalleryUpload({
     <div className="space-y-5">
       <div className="space-y-3">
         <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-          <ImageIcon className="text-beehealth-blue-solid h-4 w-4" />
+          <ImageIcon className="text-beehealth-blue-primary-solid h-4 w-4" />
           Galería de Imágenes
         </label>
 
@@ -62,14 +62,14 @@ export default function ImageGalleryUpload({
                     accept="image/*"
                     onChange={(e) => handleFileChange(index, e.target.files?.[0] || null)}
                     disabled={uploadingImages[index]}
-                    className="bg-beehealth-body-main file:text-beehealth-blue-secondary-solid file:bg-beehealth-blue-light hover:file:bg-beehealth-blue-light-hover focus:border-beehealth-blue-solid focus:shadow-beehealth-blue-solid/20 w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 text-sm text-gray-900 shadow-sm transition-all duration-300 file:mr-3 file:rounded-lg file:border-0 file:px-3 file:py-2 file:text-xs file:font-semibold placeholder:text-gray-400 focus:shadow-md focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                    className="bg-beehealth-body-main file:text-beehealth-blue-secondary-solid file:bg-beehealth-blue-primary-light hover:file:bg-beehealth-blue-primary-light-hover focus:border-beehealth-blue-primary-solid focus:shadow-beehealth-blue-primary-solid/20 w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 text-sm text-gray-900 shadow-sm transition-all duration-300 file:mr-3 file:rounded-lg file:border-0 file:px-3 file:py-2 file:text-xs file:font-semibold placeholder:text-gray-400 focus:shadow-md focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                   />
                 </div>
                 <button
                   type="button"
                   onClick={() => handleRemoveImage(index)}
                   disabled={uploadingImages[index]}
-                  className="text-beehealth-red-solid rounded-xl border-2 border-red-300 bg-red-50 px-4 py-3.5 font-semibold shadow-sm transition-all duration-300 hover:border-red-400 hover:bg-red-100 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="text-beehealth-red-primary-solid rounded-xl border-2 border-red-300 bg-red-50 px-4 py-3.5 font-semibold shadow-sm transition-all duration-300 hover:border-red-400 hover:bg-red-100 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Eliminar
                 </button>
@@ -79,12 +79,14 @@ export default function ImageGalleryUpload({
               {file && (
                 <div className="flex items-start gap-3 rounded-lg bg-pink-50 px-3 py-2">
                   <div className="flex-1">
-                    <p className="text-beehealth-blue-solid text-xs font-medium">{file.name}</p>
-                    <p className="text-beehealth-blue-light text-xs">
+                    <p className="text-beehealth-blue-primary-solid text-xs font-medium">
+                      {file.name}
+                    </p>
+                    <p className="text-beehealth-blue-primary-light text-xs">
                       {(file.size / 1024).toFixed(2)} KB
                     </p>
                     {uploadingImages[index] && (
-                      <p className="text-beehealth-blue-light mt-1 flex items-center gap-2 text-xs">
+                      <p className="text-beehealth-blue-primary-light mt-1 flex items-center gap-2 text-xs">
                         <Loader className="h-3 w-3 animate-spin" />
                         Subiendo...
                       </p>
@@ -116,15 +118,17 @@ export default function ImageGalleryUpload({
         <button
           type="button"
           onClick={onAddImageButton}
-          className="text-beehealth-blue-secondary-solid border-beehealth-blue-solid bg-beehealth-blue-light hover:border-beehealth-blue-hover hover:bg-beehealth-blue-light-hover w-full rounded-xl border-2 border-dashed px-4 py-3.5 font-semibold shadow-sm transition-all duration-300 active:scale-95"
+          className="text-beehealth-blue-secondary-solid border-beehealth-blue-primary-solid bg-beehealth-blue-primary-light hover:border-beehealth-blue-primary-solid-hover hover:bg-beehealth-blue-primary-light-hover w-full rounded-xl border-2 border-dashed px-4 py-3.5 font-semibold shadow-sm transition-all duration-300 active:scale-95"
         >
           + Agregar otra imagen
         </button>
 
         {/* Info */}
-        <div className="flex items-start gap-2 rounded-lg bg-pink-50 px-3 py-2">
-          <Info className="mt-0.5 h-4 w-4 shrink-0 text-pink-600" />
-          <p className="text-xs text-pink-700">La primera imagen será la portada principal.</p>
+        <div className="bg-beehealth-blue-primary-light flex items-start gap-2 rounded-lg px-3 py-2">
+          <Info className="text-beehealth-blue-primary-dark mt-0.5 h-4 w-4 shrink-0" />
+          <p className="text-beehealth-blue-primary-dark text-xs">
+            La primera imagen será la portada principal.
+          </p>
         </div>
       </div>
     </div>

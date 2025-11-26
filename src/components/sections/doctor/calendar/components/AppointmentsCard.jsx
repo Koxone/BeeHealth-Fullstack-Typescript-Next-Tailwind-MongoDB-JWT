@@ -8,7 +8,7 @@ export default function AppointmentsCard({ selectedDate, appointments }) {
   return (
     <div className="bg-beehealth-body-main overflow-hidden rounded-2xl border-2 border-gray-200 shadow-lg transition hover:shadow-xl">
       {/* Header */}
-      <div className="bg-beehealth-blue-solid relative overflow-hidden px-6 py-5">
+      <div className="bg-beehealth-blue-primary-solid relative overflow-hidden px-6 py-5">
         <div className="bg-beehealth-body-main/10 absolute top-0 right-0 -mt-12 -mr-12 h-24 w-24 rounded-full" />
         <div className="relative z-10 flex items-center gap-3">
           <div className="bg-beehealth-body-main/20 rounded-xl p-2 backdrop-blur-sm">

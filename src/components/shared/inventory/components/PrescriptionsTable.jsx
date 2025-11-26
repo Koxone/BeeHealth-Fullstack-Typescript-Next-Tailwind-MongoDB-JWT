@@ -73,7 +73,7 @@ export default function PrescriptionsTable({ rows, getStockStatus, onEdit, onDel
                         >
                           <span
                             className={clsx(
-                              'bg-beehealth-blue-solid/40 rounded-md text-lg text-purple-600',
+                              'bg-beehealth-blue-primary-solid/40 rounded-md text-lg text-purple-600',
                               disabled && 'bg-gray-300 text-gray-500'
                             )}
                           >

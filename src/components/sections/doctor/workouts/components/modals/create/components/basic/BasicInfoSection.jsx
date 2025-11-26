@@ -3,9 +3,9 @@ import React from 'react';
 
 function BasicInfoSection({ form, setForm, getNivelColor }) {
   return (
-    <div className="group bg-beehealth-body-main/80 border-beehealth-blue-light rounded-2xl border p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl">
+    <div className="group bg-beehealth-body-main/80 border-beehealth-blue-primary-solid rounded-2xl border p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl">
       <div className="mb-6 flex items-center gap-3">
-        <div className="bg-beehealth-blue-solid rounded-xl p-2.5">
+        <div className="bg-beehealth-blue-primary-solid rounded-xl p-2.5">
           <Info className="h-5 w-5 text-white" />
         </div>
         <h3 className="text-xl font-bold text-gray-900">Información Básica</h3>
@@ -15,7 +15,7 @@ function BasicInfoSection({ form, setForm, getNivelColor }) {
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div className="space-y-2">
           <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-            <Dumbbell className="h-4 w-4 text-blue-500" />
+            <Dumbbell className="text-beehealth-blue-primary-dark h-4 w-4" />
             Nombre del Ejercicio
           </label>
           <input
@@ -24,14 +24,14 @@ function BasicInfoSection({ form, setForm, getNivelColor }) {
             required
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
-            className="bg-beehealth-body-main w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 placeholder:text-gray-400 focus:border-blue-500 focus:shadow-md focus:shadow-blue-500/20 focus:outline-none"
+            className="bg-beehealth-body-main w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 outline-none placeholder:text-gray-400"
           />
         </div>
 
         {/* Category */}
         <div className="space-y-2">
           <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-            <Sparkles className="h-4 w-4 text-purple-500" />
+            <Sparkles className="text-beehealth-blue-primary-dark h-4 w-4" />
             Categoría
           </label>
           <div className="relative">
@@ -67,7 +67,7 @@ function BasicInfoSection({ form, setForm, getNivelColor }) {
         {/* Duration */}
         <div className="space-y-2">
           <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-            <Clock className="h-4 w-4 text-green-500" />
+            <Clock className="text-beehealth-blue-primary-dark h-4 w-4" />
             Duración (minutos)
           </label>
           <input
@@ -76,14 +76,14 @@ function BasicInfoSection({ form, setForm, getNivelColor }) {
             min="1"
             value={form.duration}
             onChange={(e) => setForm({ ...form, duration: e.target.value })}
-            className="bg-beehealth-body-main w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 placeholder:text-gray-400 focus:border-green-500 focus:shadow-md focus:shadow-green-500/20 focus:outline-none"
+            className="bg-beehealth-body-main w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 outline-none placeholder:text-gray-400"
           />
         </div>
 
         {/* Difficulty Level */}
         <div className="space-y-2">
           <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-            <TrendingUp className="h-4 w-4 text-orange-500" />
+            <TrendingUp className="text-beehealth-blue-primary-dark h-4 w-4" />
             Nivel de Dificultad
           </label>
           <div className="relative">

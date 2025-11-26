@@ -31,7 +31,7 @@ function HistoryCard({ r, onEdit, specialty }) {
           <div className="grid grid-cols-2 gap-2 sm:gap-3 md:grid-cols-3 lg:grid-cols-4">
             {/* Peso */}
             <div className="rounded-lg bg-(--med-blue-light) p-2">
-              <div className="text-beehealth-green-solid flex items-center gap-1.5 text-xs font-medium sm:gap-2">
+              <div className="text-beehealth-green-primary-dark flex items-center gap-1.5 text-xs font-medium sm:gap-2">
                 <Scale className="h-3.5 w-3.5 sm:h-4 sm:w-4" />{' '}
                 <span className="truncate">Peso</span>
               </div>
@@ -90,7 +90,7 @@ function HistoryCard({ r, onEdit, specialty }) {
             {/* Consultation Reason */}
             <div className="bg-beehealth-body-main rounded-xl p-3 shadow-sm transition hover:shadow-md sm:p-4">
               <p className="flex items-center gap-2 text-sm font-semibold text-(--med-text-muted)">
-                <Activity className="text-beehealth-green-solid h-4 w-4" />
+                <Activity className="text-beehealth-green-primary-dark h-4 w-4" />
                 Tratamiento sugerido
               </p>
               <p className="mt-2 line-clamp-4 text-sm leading-relaxed text-(--med-text-dark)">
@@ -107,7 +107,7 @@ function HistoryCard({ r, onEdit, specialty }) {
           <div className="grid grid-cols-2 gap-2 sm:gap-3 md:grid-cols-3 lg:grid-cols-4">
             {/* Peso */}
             <div className="rounded-lg bg-(--med-blue-light) p-2">
-              <div className="text-beehealth-green-solid flex items-center gap-1.5 text-xs font-medium sm:gap-2">
+              <div className="text-beehealth-green-primary-dark flex items-center gap-1.5 text-xs font-medium sm:gap-2">
                 <Scale className="h-3.5 w-3.5 sm:h-4 sm:w-4" />{' '}
                 <span className="truncate">Peso</span>
               </div>
@@ -166,7 +166,7 @@ function HistoryCard({ r, onEdit, specialty }) {
             {/* Consultation Reason */}
             <div className="bg-beehealth-body-main rounded-xl p-3 shadow-sm transition hover:shadow-md sm:p-4">
               <p className="flex items-center gap-2 text-sm font-semibold text-(--med-text-muted)">
-                <Activity className="text-beehealth-green-solid h-4 w-4" />
+                <Activity className="text-beehealth-green-primary-dark h-4 w-4" />
                 Tratamiento sugerido
               </p>
               <p className="mt-2 line-clamp-4 text-sm leading-relaxed text-(--med-text-dark)">
@@ -181,7 +181,7 @@ function HistoryCard({ r, onEdit, specialty }) {
         {/* View Patient History */}
         <button
           onClick={() => onEdit(r, true)} // ← true indica modo lectura
-          className="hover:bg-beehealth-green-solid self-start rounded-lg bg-(--med-blue-light) p-2 hover:text-white active:scale-95 sm:self-auto sm:p-2.5"
+          className="hover:bg-beehealth-green-primary-dark self-start rounded-lg bg-(--med-blue-light) p-2 hover:text-white active:scale-95 sm:self-auto sm:p-2.5"
         >
           <Eye className="h-4 w-4 sm:h-5 sm:w-5" />
         </button>
@@ -189,7 +189,7 @@ function HistoryCard({ r, onEdit, specialty }) {
         {/* Edit */}
         <button
           onClick={() => onEdit(r, false)} // ← false indica modo edición
-          className="hover:bg-beehealth-green-solid self-start rounded-lg bg-(--med-blue-light) p-2 hover:text-white active:scale-95 sm:self-auto sm:p-2.5"
+          className="hover:bg-beehealth-green-primary-dark self-start rounded-lg bg-(--med-blue-light) p-2 hover:text-white active:scale-95 sm:self-auto sm:p-2.5"
         >
           <Edit2 className="h-4 w-4 sm:h-5 sm:w-5" />
         </button>

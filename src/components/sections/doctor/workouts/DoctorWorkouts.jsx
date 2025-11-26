@@ -107,7 +107,7 @@ export default function DoctorWorkouts({ role }) {
               onClick={() => setFilterCategorie(cat)}
               className={`rounded-lg px-4 py-2 font-medium ${
                 filterCategorie === cat
-                  ? 'bg-beehealth-blue-solid hover:bg-beehealth-blue-hover text-white'
+                  ? 'bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover text-white'
                   : 'bg-beehealth-body-main hover:bg-beehealth-body-main border border-gray-300'
               }`}
             >

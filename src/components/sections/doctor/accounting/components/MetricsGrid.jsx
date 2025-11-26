@@ -13,7 +13,7 @@ export default function MetricsGrid({
   return (
     <div className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
       {/* total día */}
-      <div className="bg-beehealth-blue-solid rounded-xl p-4 text-white shadow-sm md:p-6">
+      <div className="bg-beehealth-blue-primary-solid rounded-xl p-4 text-white shadow-sm md:p-6">
         <div className="mb-2 flex items-center justify-between">
           <DollarSign className="h-8 w-8 opacity-80" />
           <span className="bg-beehealth-body-main/20 rounded px-2 py-1 text-xs">Hoy</span>

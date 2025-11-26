@@ -81,7 +81,7 @@ export default function Stats({ historyData = [], type = 'weight' }) {
         <div className="relative z-10">
           <div className="mb-2 flex items-center justify-between">
             <p className="text-sm font-medium text-gray-600">Progreso</p>
-            <div className="bg-beehealth-green-solid rounded-lg p-2 backdrop-blur-sm">
+            <div className="bg-beehealth-green-primary-dark rounded-lg p-2 backdrop-blur-sm">
               <Award className="h-4 w-4 text-white" />
             </div>
           </div>

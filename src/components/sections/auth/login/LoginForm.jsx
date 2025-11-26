@@ -132,7 +132,7 @@ export default function LoginForm() {
               className={`w-full rounded-lg py-3 font-medium text-white transition ${
                 loading
                   ? 'cursor-not-allowed bg-blue-400'
-                  : 'bg-beehealth-blue-solid hover:bg-beehealth-blue-hover'
+                  : 'bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover'
               }`}
             >
               {loading ? 'Ingresando...' : 'Iniciar Sesión'}
@@ -144,7 +144,7 @@ export default function LoginForm() {
             ¿No tienes cuenta?{' '}
             <button
               onClick={() => router.push('/auth/signup')}
-              className="text-beehealth-blue-solid hover:text-beehealth-blue-hover font-medium"
+              className="text-beehealth-blue-primary-solid hover:text-beehealth-blue-primary-solid-hover font-medium"
             >
               Regístrate aquí
             </button>
@@ -174,7 +174,7 @@ export default function LoginForm() {
 
             {/* Role Badge */}
             <div className="mb-6 flex justify-center">
-              <span className="text-beehealth-blue-solid inline-block rounded-full bg-blue-100 px-4 py-2 text-sm font-medium capitalize">
+              <span className="text-beehealth-blue-primary-solid inline-block rounded-full bg-blue-100 px-4 py-2 text-sm font-medium capitalize">
                 {userRole === 'patient'
                   ? 'Paciente'
                   : userRole === 'doctor'
@@ -190,7 +190,7 @@ export default function LoginForm() {
 
             {/* Progress Bar */}
             <div className="mt-6 h-1 w-full overflow-hidden rounded-full bg-gray-200">
-              <div className="from-beehealth-blue-solid to-beehealth-blue-hover h-full w-full animate-pulse bg-linear-to-br"></div>
+              <div className="from-beehealth-blue-primary-solid to-beehealth-blue-primary-solid-hover h-full w-full animate-pulse bg-linear-to-br"></div>
             </div>
           </div>
         </div>
@@ -244,7 +244,7 @@ export default function LoginForm() {
                   setShowErrorModal(false);
                   router.push('/auth/signup');
                 }}
-                className="text-beehealth-blue-solid hover:text-beehealth-blue-hover font-medium"
+                className="text-beehealth-blue-primary-solid hover:text-beehealth-blue-primary-solid-hover font-medium"
               >
                 Regístrate aquí
               </button>

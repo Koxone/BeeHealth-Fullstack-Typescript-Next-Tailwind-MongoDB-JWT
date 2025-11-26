@@ -23,7 +23,7 @@ export default function PatientHeader({ patient, onClickNew, patientRecord }) {
   }
 
   return (
-    <div className="bg-beehealth-green-solid relative overflow-hidden rounded-2xl p-8 shadow-xl">
+    <div className="bg-beehealth-green-primary-dark relative overflow-hidden rounded-2xl p-8 shadow-xl">
       <div className="bg-beehealth-body-main/10 absolute -top-10 -right-10 h-40 w-40 rounded-full blur-3xl" />
       <div className="bg-beehealth-body-main/10 absolute -bottom-10 -left-10 h-40 w-40 rounded-full blur-3xl" />
 

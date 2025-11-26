@@ -27,7 +27,7 @@ export default function WeightChart({ patientRecord }) {
       {/* Header */}
       <div className="mb-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="bg-beehealth-blue-solid flex h-12 w-12 items-center justify-center rounded-xl">
+          <div className="bg-beehealth-blue-primary-solid flex h-12 w-12 items-center justify-center rounded-xl">
             <TrendingUp className="h-6 w-6 text-white" />
           </div>
           <div>
@@ -37,7 +37,9 @@ export default function WeightChart({ patientRecord }) {
         </div>
 
         <div className="rounded-full bg-blue-50 px-4 py-2">
-          <span className="text-beehealth-blue-solid text-sm font-semibold">{total} registros</span>
+          <span className="text-beehealth-blue-primary-solid text-sm font-semibold">
+            {total} registros
+          </span>
         </div>
       </div>
 

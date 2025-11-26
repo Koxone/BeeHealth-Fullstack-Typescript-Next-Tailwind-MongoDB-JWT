@@ -75,14 +75,16 @@ export default function ModalEditWorkout({ setShowEditModal, editingWorkout, han
 
           {/* Header Premium */}
           <div className="bg-beehealth-body-main/80 relative overflow-hidden border-b border-white/50 backdrop-blur-xl">
-            <div className={`bg-beehealth-blue-light absolute inset-0`} />
+            <div className={`bg-beehealth-blue-primary-light absolute inset-0`} />
             <div className="relative px-6 py-6 sm:px-8">
               <div className="flex items-start justify-between">
                 <div className="flex items-start gap-4">
                   <div className="relative">
                     {/* Anillo pulsante */}
                     <div className="absolute inset-0 animate-ping rounded-2xl bg-blue-500 opacity-20" />
-                    <div className={`bg-beehealth-blue-solid relative rounded-2xl p-3 shadow-lg`}>
+                    <div
+                      className={`bg-beehealth-blue-primary-solid relative rounded-2xl p-3 shadow-lg`}
+                    >
                       <Dumbbell className="h-7 w-7 text-white" />
                     </div>
                   </div>
@@ -109,7 +111,7 @@ export default function ModalEditWorkout({ setShowEditModal, editingWorkout, han
             <form onSubmit={(e) => handleSave(e, form)} className="space-y-6 p-6 sm:p-8">
               <div className="group bg-beehealth-body-main/80 rounded-2xl border border-gray-100 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl">
                 <div className="mb-6 flex items-center gap-3">
-                  <div className="bg-beehealth-blue-solid rounded-xl p-2.5">
+                  <div className="bg-beehealth-blue-primary-solid rounded-xl p-2.5">
                     <Info className="h-5 w-5 text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900">Información Básica</h3>
@@ -217,7 +219,7 @@ export default function ModalEditWorkout({ setShowEditModal, editingWorkout, han
               {/* Multimedia Section */}
               <div className="group bg-beehealth-body-main/80 rounded-2xl border border-gray-100 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl">
                 <div className="mb-6 flex items-center gap-3">
-                  <div className="bg-beehealth-blue-solid rounded-xl p-2.5">
+                  <div className="bg-beehealth-blue-primary-solid rounded-xl p-2.5">
                     <ImageIcon className="h-5 w-5 text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900">Contenido Multimedia</h3>
@@ -270,7 +272,7 @@ export default function ModalEditWorkout({ setShowEditModal, editingWorkout, han
               {/* Workout Details */}
               <div className="group bg-beehealth-body-main/80 rounded-2xl border border-gray-100 p-6 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl">
                 <div className="mb-6 flex items-center gap-3">
-                  <div className="bg-beehealth-blue-solid rounded-xl p-2.5">
+                  <div className="bg-beehealth-blue-primary-solid rounded-xl p-2.5">
                     <List className="h-5 w-5 text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900">Descripción Completa</h3>
@@ -347,7 +349,7 @@ export default function ModalEditWorkout({ setShowEditModal, editingWorkout, han
                 </button>
                 <button
                   type="submit"
-                  className="group bg-beehealth-blue-solid hover:shadow-beehealth-blue-solid flex-1 rounded-xl px-6 py-3.5 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95"
+                  className="group bg-beehealth-blue-primary-solid hover:shadow-beehealth-blue-primary-solid flex-1 rounded-xl px-6 py-3.5 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95"
                 >
                   <span className="flex items-center justify-center gap-2">
                     Actualizar Ejercicio

@@ -95,7 +95,7 @@ export default function ToggleProductModal({ item, onClose, onConfirm }) {
 
         {/* Content */}
         <div className="relative space-y-6 p-6">
-          <div className="bg-beehealth-green-light/30 rounded-lg pb-1">
+          <div className="bg-beehealth-green-primary-light/30 rounded-lg pb-1">
             <p className="text-center text-gray-800">
               ¿Seguro que deseas{' '}
               <span

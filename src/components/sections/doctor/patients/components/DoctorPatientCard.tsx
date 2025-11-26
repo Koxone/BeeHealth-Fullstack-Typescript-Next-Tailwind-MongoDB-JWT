@@ -23,7 +23,7 @@ export default function DoctorPatientCard({ patient }: DoctorPatientCardProps) {
         <img
           src={patient?.avatar || '/oochel.jpg'}
           alt=""
-          className="border-beehealth-green-solid h-12 w-12 scale-95 transform-gpu rounded-full border object-cover transition-all duration-100 ease-in-out hover:scale-100"
+          className="border-beehealth-green-primary-dark h-12 w-12 scale-95 transform-gpu rounded-full border object-cover transition-all duration-100 ease-in-out hover:scale-100"
         />
 
         <div className="flex-1">

@@ -230,7 +230,7 @@ export default function NewAppointment() {
               disabled={!selectedDoctor || !selectedDate || !selectedTime}
               className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-6 py-4 font-semibold transition-all duration-300 ${
                 selectedDoctor && selectedDate && selectedTime
-                  ? 'bg-beehealth-blue-solid text-white shadow-lg shadow-blue-500/30 hover:scale-105 hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl hover:shadow-blue-500/40 active:scale-95'
+                  ? 'bg-beehealth-blue-primary-solid text-white shadow-lg shadow-blue-500/30 hover:scale-105 hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl hover:shadow-blue-500/40 active:scale-95'
                   : 'cursor-not-allowed bg-gray-200 text-gray-400'
               }`}
             >

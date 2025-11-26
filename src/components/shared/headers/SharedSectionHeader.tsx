@@ -53,12 +53,11 @@ export default function SharedSectionHeader({
 
   const SelectedIcon = iconsMap[Icon] ?? Package;
 
-
   return (
     <div className="-mx-4 -mt-4 mb-6 flex w-full items-center justify-between px-4 pt-6 md:rounded-2xl">
       <div>
         <div className="flex items-start gap-4">
-          <div className="bg-beehealth-blue-solid rounded-2xl p-3 shadow-lg">
+          <div className="bg-beehealth-blue-primary-solid rounded-2xl p-3 shadow-lg">
             <SelectedIcon className="h-8 w-8 text-white" />
           </div>
           <div>
@@ -83,7 +82,7 @@ export default function SharedSectionHeader({
           </Link>
 
           {/* Doctor Export Button */}
-          <button className="bg-beehealth-blue-solid hover:bg-beehealth-blue-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white transition active:scale-95">
+          <button className="bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white transition active:scale-95">
             <Download className="h-5 w-5" />
             <span className="hidden sm:inline">Exportar</span>
           </button>

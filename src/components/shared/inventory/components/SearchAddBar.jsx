@@ -18,7 +18,7 @@ export default function SearchAddBar({ searchTerm, setSearchTerm, onAdd, onResto
       <div className="flex items-center gap-2">
         <button
           onClick={onAdd}
-          className="bg-beehealth-blue-solid hover:bg-beehealth-blue-hover flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white shadow-md transition active:scale-95"
+          className="bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white shadow-md transition active:scale-95"
         >
           <Plus className="h-4 w-4" />
           Nuevo Producto
@@ -26,7 +26,7 @@ export default function SearchAddBar({ searchTerm, setSearchTerm, onAdd, onResto
         <button
           onClick={onRestock}
           type="button"
-          className="bg-beehealth-blue-solid hover:bg-beehealth-blue-hover flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white transition active:scale-95"
+          className="bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white transition active:scale-95"
         >
           <Plus className="h-4 w-4" />
           Abastecer

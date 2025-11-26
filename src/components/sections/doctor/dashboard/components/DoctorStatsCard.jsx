@@ -12,7 +12,7 @@ export default function DoctorStatsCard({
 }) {
   const router = useRouter();
   const styles = {
-    primary: 'bg-beehealth-blue-solid text-white border-transparent',
+    primary: 'bg-beehealth-blue-primary-solid text-white border-transparent',
     success:
       'border border-gray-200 bg-beehealth-body-main text-gray-900 hover:border-green-300 active:scale-95',
     purple:

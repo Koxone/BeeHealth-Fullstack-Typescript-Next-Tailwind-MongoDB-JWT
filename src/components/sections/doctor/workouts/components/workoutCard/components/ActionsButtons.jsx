@@ -7,7 +7,7 @@ function ActionsButtons({ handleEdit, workout, setWorkoutToDelete, setShowDelete
       {/* Edit Workout */}
       <button
         onClick={(e) => handleEdit(workout)}
-        className="bg-beehealth-blue-solid hover:bg-beehealth-blue-hover hover:text-beehealth-blue-dark-hover flex flex-1 items-center justify-center gap-2 rounded-lg py-2 text-sm font-medium text-white transition active:scale-95"
+        className="bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover hover:text-beehealth-blue-dark-hover flex flex-1 items-center justify-center gap-2 rounded-lg py-2 text-sm font-medium text-white transition active:scale-95"
       >
         <Edit2 className="h-4 w-4" />
         Editar
@@ -19,7 +19,7 @@ function ActionsButtons({ handleEdit, workout, setWorkoutToDelete, setShowDelete
           setWorkoutToDelete(workout);
           setShowDeleteModal(true);
         }}
-        className="bg-beehealth-red-solid hover:bg-beehealth-red-hover flex flex-1 items-center justify-center gap-2 rounded-lg py-2 text-sm font-medium text-white transition active:scale-95"
+        className="bg-beehealth-red-primary-solid hover:bg-beehealth-red-primary-solid-hover flex flex-1 items-center justify-center gap-2 rounded-lg py-2 text-sm font-medium text-white transition active:scale-95"
       >
         <Trash2 className="h-4 w-4" />
         Eliminar

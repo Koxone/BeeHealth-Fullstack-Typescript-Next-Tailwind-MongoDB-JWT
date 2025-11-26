@@ -6,21 +6,21 @@ export default function StatsGrid({ stats, icons }) {
       value: stats.totalAppointmentsThisMonth,
       Icon: CalendarIcon,
       gradient: 'from-blue-500 to-indigo-600',
-      bg: 'from-beehealth-green-light to-beehealth-green-solid',
+      bg: 'from-beehealth-green-primary-light to-beehealth-green-primary-dark',
     },
     {
       label: 'Días con citas',
       value: stats.daysWithAppointments,
       Icon: CheckCircle,
       gradient: 'from-emerald-500 to-green-600',
-      bg: 'from-beehealth-green-light to-beehealth-green-solid',
+      bg: 'from-beehealth-green-primary-light to-beehealth-green-primary-dark',
     },
     {
       label: 'Citas hoy',
       value: stats.todayAppointments,
       Icon: Clock,
       gradient: 'from-amber-500 to-orange-600',
-      bg: 'from-beehealth-green-light to-beehealth-green-solid',
+      bg: 'from-beehealth-green-primary-light to-beehealth-green-primary-dark',
     },
   ];
   return (
@@ -30,7 +30,7 @@ export default function StatsGrid({ stats, icons }) {
           <div
             key={label}
             style={{ animationDelay: `${i * 100}ms` }}
-            className={`bg-beehealth-blue-solid/30 animate-fadeInUp group relative overflow-hidden rounded-2xl border-2 border-gray-200 p-4 shadow-sm transition hover:scale-105 hover:shadow-lg`}
+            className={`bg-beehealth-blue-primary-solid/30 animate-fadeInUp group relative overflow-hidden rounded-2xl border-2 border-gray-200 p-4 shadow-sm transition hover:scale-105 hover:shadow-lg`}
           >
             <div
               className={`absolute -right-4 -bottom-4 h-20 w-20 rounded-full bg-linear-to-br ${gradient} opacity-10 transition group-hover:scale-150`}

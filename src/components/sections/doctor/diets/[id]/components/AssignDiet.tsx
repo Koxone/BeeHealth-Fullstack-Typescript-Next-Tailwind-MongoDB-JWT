@@ -113,7 +113,7 @@ export default function AssignDiet({
                   type="checkbox"
                   checked={selected.includes(patient._id)}
                   onChange={() => togglePatient(patient._id)}
-                  className="text-beehealth-blue-solid focus:ring-beehealth-blue-solid h-4 w-4 rounded border-gray-300"
+                  className="text-beehealth-blue-primary-solid focus:ring-beehealth-blue-primary-solid h-4 w-4 rounded border-gray-300"
                 />
                 <span className="text-sm text-gray-700">{patient.fullName}</span>
               </li>
@@ -126,7 +126,7 @@ export default function AssignDiet({
       <button
         onClick={handleAssign}
         disabled={assigning}
-        className="bg-beehealth-blue-solid hover:bg-beehealth-blue-hover mt-2 rounded-md px-3 py-2 text-sm text-white disabled:opacity-50"
+        className="bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover mt-2 rounded-md px-3 py-2 text-sm text-white disabled:opacity-50"
       >
         {assigning ? 'Asignando...' : 'Asignar dieta'}
       </button>

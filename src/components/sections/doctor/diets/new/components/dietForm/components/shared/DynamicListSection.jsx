@@ -18,14 +18,14 @@ function DynamicListSection({
       buttons: 'bg-beehealth-green-secondary-solid hover:bg-beehealth-green-secondary-hover',
     },
     warning: {
-      background: 'bg-beehealth-red-solid',
+      background: 'bg-beehealth-red-primary-solid',
       text: 'text-white',
-      buttons: 'bg-beehealth-red-solid hover:bg-beehealth-red-hover',
+      buttons: 'bg-beehealth-red-primary-solid hover:bg-beehealth-red-primary-solid-hover',
     },
     neutral: {
-      background: 'bg-beehealth-blue-solid',
+      background: 'bg-beehealth-blue-primary-solid',
       text: 'text-white',
-      buttons: 'bg-beehealth-blue-solid hover:bg-beehealth-blue-hover',
+      buttons: 'bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover',
     },
   };
 

@@ -66,7 +66,7 @@ export default function StatsBar({ inventory }) {
           className="bg-beehealth-body-main animate-[fadeIn_.25s_ease-out] rounded-2xl border-2 border-gray-200 p-4 shadow-sm"
         >
           <div
-            className={`bg-beehealth-blue-solid mb-2 inline-block rounded-lg px-2 py-1 text-xs font-bold text-white`}
+            className={`bg-beehealth-blue-primary-solid mb-2 inline-block rounded-lg px-2 py-1 text-xs font-bold text-white`}
           >
             {s.label}
           </div>

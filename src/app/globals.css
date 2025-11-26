@@ -11,36 +11,44 @@ button {
   --color-beehealth-body-main: #f7f5f0;
 
   /* Green Primary */
-  --color-beehealth-green-dark: #5f6b66;
-  --color-beehealth-green-dark-hover: #4f5a55;
-  --color-beehealth-green-solid: #8b9c94;
-  --color-beehealth-green-hover: #7a8c83;
-  --color-beehealth-green-light: #e7ecea;
-  --color-beehealth-green-light-hover: #d4ddda;
+  --color-beehealth-green-primary-solid: #5f6b66;
+  --color-beehealth-green-primary-solid-hover: #4f5a55;
+  --color-beehealth-green-primary-light: #e7ecea;
+  --color-beehealth-green-primary-light-hover: #d4ddda;
+  --color-beehealth-green-primary-dark: #8b9c94;
+  --color-beehealth-green-primary-dark-hover: #7a8c83;
 
   /* Green Secondary */
   --color-beehealth-green-secondary-solid: #73c89f;
-  --color-beehealth-green-secondary-hover: #66b592;
+  --color-beehealth-green-secondary-solid-hover: #66b592;
   --color-beehealth-green-secondary-light: #c6e6d8;
   --color-beehealth-green-secondary-light-hover: #b2dccb;
+  --color-beehealth-green-secondary-dark: #5da986;
+  --color-beehealth-green-secondary-dark-hover: #4e9172;
 
   /* Blue Primary */
-  --color-beehealth-blue-solid: #678bda;
-  --color-beehealth-blue-hover: #5176cc;
-  --color-beehealth-blue-light: #bbd3fa;
-  --color-beehealth-blue-light-hover: #a3c0f5;
+  --color-beehealth-blue-primary-solid: #678bda;
+  --color-beehealth-blue-primary-solid-hover: #5176cc;
+  --color-beehealth-blue-primary-light: #eff6ff;
+  --color-beehealth-blue-primary-light-hover: #dbeafe;
+  --color-beehealth-blue-primary-dark: #4a6db6;
+  --color-beehealth-blue-primary-dark-hover: #3f5fa3;
 
   /* Blue Secondary */
   --color-beehealth-blue-secondary-solid: #5475b8;
   --color-beehealth-blue-secondary-solid-hover: #4967a5;
   --color-beehealth-blue-secondary-light: #3f5a92;
   --color-beehealth-blue-secondary-light-hover: #354e80;
+  --color-beehealth-blue-secondary-dark: #2c3f6e;
+  --color-beehealth-blue-secondary-dark-hover: #24365e;
 
   /* Red */
-  --color-beehealth-red-solid: #da6767;
-  --color-beehealth-red-hover: #cc5151;
-  --color-beehealth-red-light: #fabbba;
-  --color-beehealth-red-light-hover: #f5a3a3;
+  --color-beehealth-red-primary-solid: #da6767;
+  --color-beehealth-red-primary-solid-hover: #cc5151;
+  --color-beehealth-red-primary-light: #fabbba;
+  --color-beehealth-red-primary-light-hover: #f5a3a3;
+  --color-beehealth-red-primary-dark: #b84f4f;
+  --color-beehealth-red-primary-dark-hover: #a64646;
 
   --color-asana-beige: #efe1d5;
   --color-asana-blue: #2563eb;

@@ -8,7 +8,7 @@ export default function HeaderBar({ onBack }) {
     <div className="-mx-4 -mt-4 mb-6 px-4 pt-6 pb-8 md:rounded-2xl">
       <div className="mx-auto max-w-4xl">
         <div className="flex items-start gap-4">
-          <div className="bg-beehealth-blue-solid rounded-2xl p-3 shadow-lg">
+          <div className="bg-beehealth-blue-primary-solid rounded-2xl p-3 shadow-lg">
             <CalendarIcon className="h-8 w-8 text-white" />
           </div>
           <div>

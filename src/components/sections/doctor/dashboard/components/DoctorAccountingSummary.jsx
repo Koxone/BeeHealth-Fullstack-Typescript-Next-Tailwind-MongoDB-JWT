@@ -15,7 +15,7 @@ export default function DoctorAccountingSummary({
   return (
     <div className="bg-beehealth-body-main overflow-hidden rounded-2xl border-2 border-gray-200 shadow-lg transition-all duration-300 hover:shadow-xl">
       {/* Header */}
-      <div className="bg-beehealth-blue-solid relative overflow-hidden px-6 py-5">
+      <div className="bg-beehealth-blue-primary-solid relative overflow-hidden px-6 py-5">
         <div className="bg-beehealth-body-main/10 absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 rounded-full" />
         <div className="bg-beehealth-body-main/10 absolute bottom-0 left-0 -mb-12 -ml-12 h-24 w-24 rounded-full" />
 
@@ -36,10 +36,10 @@ export default function DoctorAccountingSummary({
       </div>
 
       {/* Total */}
-      <div className="bg-beehealth-green-light border-b-2 border-gray-200 px-6 py-4">
+      <div className="bg-beehealth-green-primary-light border-b-2 border-gray-200 px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="bg-beehealth-blue-solid rounded-lg p-2 shadow-lg">
+            <div className="bg-beehealth-blue-primary-solid rounded-lg p-2 shadow-lg">
               <TrendingUp className="h-5 w-5 text-white" />
             </div>
             <div>

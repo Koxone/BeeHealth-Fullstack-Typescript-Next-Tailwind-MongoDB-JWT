@@ -186,12 +186,12 @@ export default function MedsSoldTable({ consultsData }) {
           <tr className="font-bold">
             <td colSpan="3" className="px-6 py-4 text-sm text-gray-900">
               <div className="flex items-center gap-2">
-                <Award className="text-beehealth-blue-solid h-5 w-5" />
+                <Award className="text-beehealth-blue-primary-solid h-5 w-5" />
                 <span>Total General</span>
               </div>
             </td>
 
-            <td className="text-beehealth-blue-solid px-6 py-4 text-right text-lg font-bold">
+            <td className="text-beehealth-blue-primary-solid px-6 py-4 text-right text-lg font-bold">
               ${totalMedicamentos.toLocaleString()}
             </td>
 

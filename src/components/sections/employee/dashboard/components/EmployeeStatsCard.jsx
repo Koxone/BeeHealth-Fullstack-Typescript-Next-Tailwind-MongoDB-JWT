@@ -11,7 +11,7 @@ export default function EmployeeStatsCard({
   // --- Shared style maps ---
   const styles = {
     primary:
-      'bg-linear-to-r from-beehealth-green-dark to-beehealth-green-solid text-white border-transparent',
+      'bg-linear-to-r from-beehealth-green-primary-solid to-beehealth-green-primary-dark text-white border-transparent',
     success:
       'border border-gray-200 bg-beehealth-body-main text-gray-900 hover:border-green-300 active:scale-95',
     purple:

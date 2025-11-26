@@ -71,7 +71,7 @@ export default function CalendarPicker({
                 disabled={past || !isAvailable}
                 className={`group relative flex aspect-square items-center justify-center rounded-xl text-sm font-semibold transition-all duration-200 ${
                   selected
-                    ? 'bg-beehealth-blue-solid z-10 scale-110 text-white shadow-lg'
+                    ? 'bg-beehealth-blue-primary-solid z-10 scale-110 text-white shadow-lg'
                     : isAvailable && !past
                       ? 'bg-beehealth-body-main border-2 border-blue-300 text-gray-900 hover:scale-105 hover:bg-blue-50 hover:shadow-md active:scale-95'
                       : 'cursor-not-allowed bg-gray-100 text-gray-400 opacity-50'
@@ -97,7 +97,7 @@ export default function CalendarPicker({
             <span className="font-medium text-gray-700">No disponible</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="bg-beehealth-blue-solid h-5 w-5 rounded-lg shadow-sm" />
+            <div className="bg-beehealth-blue-primary-solid h-5 w-5 rounded-lg shadow-sm" />
             <span className="font-medium text-gray-700">Seleccionado</span>
           </div>
         </div>

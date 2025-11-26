@@ -15,7 +15,7 @@ export default function SharedInventoryAlerts({ role, inventory = [], showButton
   return (
     <div className="bg-beehealth-body-main overflow-hidden rounded-2xl border-2 border-gray-200 shadow-lg transition-all duration-300 hover:shadow-xl">
       {/* Header section */}
-      <div className="bg-beehealth-red-solid relative overflow-hidden px-6 py-5">
+      <div className="bg-beehealth-red-primary-solid relative overflow-hidden px-6 py-5">
         <div className="bg-beehealth-body-main/10 absolute top-0 right-0 -mt-16 -mr-16 h-32 w-32 animate-pulse rounded-full" />
         <div className="bg-beehealth-body-main/10 absolute bottom-0 left-0 -mb-12 -ml-12 h-24 w-24 rounded-full" />
 
@@ -44,7 +44,7 @@ export default function SharedInventoryAlerts({ role, inventory = [], showButton
       </div>
 
       {/* Statistics section */}
-      <div className="bg-beehealth-green-light grid grid-cols-3 gap-4 border-b-2 border-gray-200 px-6 py-4">
+      <div className="bg-beehealth-green-primary-light grid grid-cols-3 gap-4 border-b-2 border-gray-200 px-6 py-4">
         {/* Critical count */}
         <div className="text-center">
           <div className="mb-1 flex items-center justify-center gap-1">

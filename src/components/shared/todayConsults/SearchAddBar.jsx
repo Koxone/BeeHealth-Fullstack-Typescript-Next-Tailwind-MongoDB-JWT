@@ -19,7 +19,7 @@ export default function SearchAddBar({ value, onChange, onAdd }) {
         </div>
         <button
           onClick={onAdd}
-          className="group bg-beehealth-blue-solid hover:bg-beehealth-blue-hover flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-semibold text-white shadow-lg shadow-indigo-500/30 transition active:scale-95"
+          className="group bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-semibold text-white shadow-lg shadow-indigo-500/30 transition active:scale-95"
         >
           <Plus className="h-5 w-5 transition-transform group-hover:rotate-90" />
           <span>Registrar Consulta</span>

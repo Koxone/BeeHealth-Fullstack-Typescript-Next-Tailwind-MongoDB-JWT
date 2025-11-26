@@ -107,7 +107,7 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
     name: '',
     type: '',
     difficulty: '',
-    duration: 0,
+    duration: '',
     about: '',
     instructions: '',
     benefits: '',
@@ -203,7 +203,7 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
         name: '',
         type: '',
         difficulty: '',
-        duration: 0,
+        duration: '',
         about: '',
         instructions: '',
         benefits: '',
@@ -241,19 +241,17 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
           className="animate-in fade-in zoom-in-95 bg-beehealth-body-main relative max-h-[95vh] w-full max-w-5xl overflow-hidden rounded-3xl shadow-2xl duration-300"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Decorative Background Elements */}
-          <div className="pointer-events-none absolute top-0 right-0 h-64 w-64 rounded-full bg-linear-to-br from-blue-400/20 to-purple-400/20 blur-3xl" />
-          <div className="pointer-events-none absolute bottom-0 left-0 h-64 w-64 rounded-full bg-linear-to-tr from-pink-400/20 to-orange-400/20 blur-3xl" />
-
           {/* Header */}
           <div className="bg-beehealth-body-main/80 relative overflow-hidden border-b border-white/50 backdrop-blur-xl">
-            <div className={`bg-beehealth-blue-light absolute inset-0`} />
+            <div className={`bg-beehealth-blue-primary-light absolute inset-0`} />
             <div className="relative px-6 py-6 sm:px-8">
               <div className="flex items-start justify-between">
                 <div className="flex items-start gap-4">
                   <div className="relative">
-                    <div className="absolute inset-0 animate-ping rounded-2xl bg-blue-500 opacity-20" />
-                    <div className={`bg-beehealth-blue-solid relative rounded-2xl p-3 shadow-lg`}>
+                    <div className="bg-beehealth-blue-primary-solid absolute inset-0 animate-ping rounded-2xl" />
+                    <div
+                      className={`bg-beehealth-blue-primary-solid relative rounded-2xl p-3 shadow-lg`}
+                    >
                       <Dumbbell className="h-7 w-7 text-white" />
                     </div>
                   </div>
@@ -334,7 +332,7 @@ export default function ModalCreateWorkout({ setShowCreateModal }) {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="group bg-beehealth-blue-solid hover:shadow-beehealth-blue-solid flex-1 rounded-xl px-6 py-3.5 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="group bg-beehealth-blue-primary-solid hover:shadow-beehealth-blue-primary-solid flex-1 rounded-xl px-6 py-3.5 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   <span className="flex items-center justify-center gap-2">
                     {loading ? (

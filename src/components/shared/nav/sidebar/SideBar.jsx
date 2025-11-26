@@ -43,13 +43,13 @@ export default function Sidebar({ role, currentUser, specialty }) {
                 style={{ animationDelay: `${index * 50}ms` }}
                 className={`group animate-fadeInLeft relative flex w-full items-center justify-between gap-3 overflow-hidden rounded-xl px-4 py-3.5 ${
                   isActive
-                    ? 'border-beehealth-green-light text-beehealth-green-dark scale-105 border font-semibold shadow-md'
+                    ? 'border-beehealth-green-primary-light text-beehealth-green-primary-solid scale-105 border font-semibold shadow-md'
                     : 'hover:bg-beehealth-body-main border-2 border-transparent text-gray-700 hover:scale-105 hover:shadow-md active:scale-95'
                 }`}
               >
                 {/* Active background */}
                 {isActive && (
-                  <div className="from-beehealth-green-solid/30 to-beehealth-green-hover/30 absolute inset-0 animate-pulse bg-linear-to-r" />
+                  <div className="from-beehealth-green-primary-dark/30 to-beehealth-green-primary-dark-hover/30 absolute inset-0 animate-pulse bg-linear-to-r" />
                 )}
 
                 {/* Icon and label */}
@@ -57,7 +57,7 @@ export default function Sidebar({ role, currentUser, specialty }) {
                   <div
                     className={`rounded-lg p-2 transition-all duration-200 ${
                       isActive
-                        ? 'bg-beehealth-green-solid shadow-lg'
+                        ? 'bg-beehealth-green-primary-dark shadow-lg'
                         : 'bg-gray-100 group-hover:scale-110 group-hover:bg-blue-100'
                     }`}
                   >
@@ -65,7 +65,7 @@ export default function Sidebar({ role, currentUser, specialty }) {
                       className={`h-5 w-5 ${
                         isActive
                           ? 'text-white'
-                          : 'group-hover:text-beehealth-green-dark text-gray-600'
+                          : 'group-hover:text-beehealth-green-primary-solid text-gray-600'
                       }`}
                     />
                   </div>
@@ -74,12 +74,12 @@ export default function Sidebar({ role, currentUser, specialty }) {
 
                 {/* Chevron */}
                 {isActive && (
-                  <ChevronRight className="text-beehealth-green-dark relative z-10 h-4 w-4 animate-pulse" />
+                  <ChevronRight className="text-beehealth-green-primary-solid relative z-10 h-4 w-4 animate-pulse" />
                 )}
 
                 {/* Decorative Bar */}
                 {isActive && (
-                  <div className="from-beehealth-green-hover to-beehealth-green-solid absolute top-0 bottom-0 left-0 w-1.5 rounded-r-full bg-linear-to-b" />
+                  <div className="from-beehealth-green-primary-dark-hover to-beehealth-green-primary-dark absolute top-0 bottom-0 left-0 w-1.5 rounded-r-full bg-linear-to-b" />
                 )}
               </button>
             );
@@ -104,7 +104,7 @@ export default function Sidebar({ role, currentUser, specialty }) {
               >
                 {/* Active background */}
                 {isActive && (
-                  <div className="bg-beehealth-blue-solid animate-fadeIn absolute inset-0 rounded-xl" />
+                  <div className="bg-beehealth-blue-primary-solid animate-fadeIn absolute inset-0 rounded-xl" />
                 )}
 
                 {/* Icon Container */}
