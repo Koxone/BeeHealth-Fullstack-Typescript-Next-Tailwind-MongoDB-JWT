@@ -14,6 +14,7 @@ import DoctorClinicalRecordModal from './components/historyModal/DoctorClinicalR
 import { useClinicalRecord } from './hooks/useClinicalRecord';
 import DoctorBudgets from './components/budgets/DoctorBudgets';
 import DoctorProducts from './components/products/DoctorProducts';
+import LoadingState from '@/components/shared/feedback/LoadingState';
 
 // Types
 import { IClinicalRecord, TabName } from '@/types';
@@ -42,18 +43,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
   const [activeTab, setActiveTab] = useState<TabName>('Historial');
 
   if (error || isLoading) {
-    return (
-      <div className="flex min-h-[400px] items-center justify-center">
-        {error ? (
-          <p className="text-lg font-medium text-red-600">Error al cargar los datos del paciente</p>
-        ) : (
-          <div className="text-center">
-            <Loader2 className="mx-auto mb-4 h-16 w-16 animate-spin text-blue-600" />
-            <p className="text-lg font-medium text-gray-600">Cargando información...</p>
-          </div>
-        )}
-      </div>
-    );
+    return <LoadingState />;
   }
 
   return (

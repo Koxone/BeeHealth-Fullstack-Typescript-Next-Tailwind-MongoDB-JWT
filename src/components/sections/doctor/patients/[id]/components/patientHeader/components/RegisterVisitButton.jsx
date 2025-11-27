@@ -21,7 +21,7 @@ export default function RegisterVisitButton({ onClick }) {
   return (
     <button
       onClick={handleClick}
-      className="relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-lg bg-[#1bad69] px-5 py-2.5 text-sm font-medium text-white shadow-md transition-all duration-300 hover:bg-[#3d584c] active:scale-95 sm:w-auto"
+      className="bg-beehealth-green-secondary-dark hover:bg-beehealth-green-secondary-dark-hover relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-lg px-5 py-2.5 text-sm font-medium text-white shadow-md transition-all duration-300 active:scale-95 sm:w-auto"
     >
       {/* Normal state */}
       <span

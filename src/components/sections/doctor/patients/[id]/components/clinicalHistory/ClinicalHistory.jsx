@@ -32,7 +32,7 @@ export default function ClinicalHistory({ onAdd, onEdit, patientRecord, specialt
           {patientRecord.map((r, index) => (
             <div
               key={r._id}
-              className="bg-beehealth-body-main rounded-xl border border-(--med-gray-border) p-3 shadow-sm transition hover:shadow-md sm:p-4"
+              className="bg-beehealth-body-main border-beehealth-green-secondary-solid rounded-xl border p-3 shadow-sm transition hover:shadow-md sm:p-4"
               style={{
                 animationDelay: `${index * 100}ms`,
                 animation: 'fadeIn 0.3s ease-out forwards',
