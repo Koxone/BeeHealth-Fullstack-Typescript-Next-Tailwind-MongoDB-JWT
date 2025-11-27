@@ -4,7 +4,7 @@ import { Mail, Lock, User, Phone, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
 
 export default function CreatePatientForm({ setIsModalPatientsOpen, specialty }) {
-    console.log(specialty)
+  console.log(specialty);
   // State
   const [formData, setFormData] = useState({
     nombre: '',
@@ -88,7 +88,7 @@ export default function CreatePatientForm({ setIsModalPatientsOpen, specialty })
                   value={formData.nombre}
                   onChange={handleChange}
                   required
-                  className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 outline-none"
                   placeholder="Juan Pérez"
                 />
               </div>
@@ -107,7 +107,7 @@ export default function CreatePatientForm({ setIsModalPatientsOpen, specialty })
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 outline-none"
                   placeholder="correo@dominio.com"
                 />
               </div>
@@ -124,7 +124,7 @@ export default function CreatePatientForm({ setIsModalPatientsOpen, specialty })
                   value={formData.telefono}
                   onChange={handleChange}
                   required
-                  className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 outline-none"
                   placeholder="+52 55 1234 5678"
                 />
               </div>
@@ -141,7 +141,7 @@ export default function CreatePatientForm({ setIsModalPatientsOpen, specialty })
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 outline-none"
                   placeholder="Mínimo 6 caracteres"
                 />
               </div>
@@ -160,7 +160,7 @@ export default function CreatePatientForm({ setIsModalPatientsOpen, specialty })
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   required
-                  className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 outline-none"
                   placeholder="Repite tu contraseña"
                 />
               </div>
@@ -169,7 +169,7 @@ export default function CreatePatientForm({ setIsModalPatientsOpen, specialty })
             {/* Button */}
             <button
               type="submit"
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 py-3 font-medium text-white shadow-md transition hover:bg-blue-600 active:scale-95"
+              className="bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover flex w-full items-center justify-center gap-2 rounded-lg py-3 font-medium text-white shadow-md transition active:scale-95"
             >
               Crear usuario
               <ArrowRight className="h-5 w-5" />
