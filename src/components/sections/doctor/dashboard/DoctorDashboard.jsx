@@ -5,24 +5,22 @@ import HeaderWelcome from '@/components/shared/dashboard/header/HeaderWelcome';
 import AppointmentsToday from '@/components/shared/dashboard/appointmentsToday/AppointmentsToday';
 import DoctorAccountingSummary from '@/components/sections/doctor/dashboard/components/DoctorAccountingSummary';
 import SharedInventoryAlerts from '@/components/shared/dashboard/InventoryAlerts/SharedInventoryAlerts';
+import DoctorStatsGrid from './components/DoctorStatsGrid';
+
+// Custom Hooks
 import { useTodayAppointmentsBySpecialty } from '@/hooks/appointments/useTodayAppointmentsBySpecialty';
 import { useGetFullInventory } from '@/hooks/inventory/useGetFullInventory';
-import DoctorStatsGrid from './components/DoctorStatsGrid';
 import { getConsultTotals } from '../../employee/consultations/utils/getConsultTotals';
 import { useGetAllConsults } from '@/hooks/consults/useGetAllConsults';
 import { Loader2 } from 'lucide-react';
+import LoadingState from '@/components/shared/feedback/LoadingState';
 
 export default function DoctorDashboard({ currentUser, role, specialty }) {
   // Google Calendar Custom Hooks
-  const { appointments, loading, error } = useTodayAppointmentsBySpecialty();
+  const { appointments, loading } = useTodayAppointmentsBySpecialty();
 
   // Custom Hooks
-  const {
-    inventory,
-    loading: loadingInventory,
-    error: errorInventory,
-    setInventory,
-  } = useGetFullInventory();
+  const { inventory, loading: loadingInventory, error: errorInventory } = useGetFullInventory();
 
   // All Consults
   const {
@@ -34,18 +32,7 @@ export default function DoctorDashboard({ currentUser, role, specialty }) {
   const { consultPrice, totalItemsSold, totalCost } = getConsultTotals(consults);
 
   if (loading || loadingInventory || loadingConsults) {
-    return (
-      <div className="flex min-h-[400px] items-center justify-center">
-        {error ? (
-          <p className="text-lg font-medium text-red-600">Error al cargar los datos del paciente</p>
-        ) : (
-          <div className="text-center">
-            <Loader2 className="mx-auto mb-4 h-16 w-16 animate-spin text-blue-600" />
-            <p className="text-lg font-medium text-gray-600">Cargando información...</p>
-          </div>
-        )}
-      </div>
-    );
+    return <LoadingState />;
   }
   return (
     <DashboardLayout>
