@@ -5,7 +5,6 @@ import { X } from 'lucide-react';
 import CreatePatientForm from './CreatePatientForm';
 
 export default function CreatePatientModal({
-  isModalPatientsOpen,
   setIsModalPatientsOpen,
   specialty,
 }) {
