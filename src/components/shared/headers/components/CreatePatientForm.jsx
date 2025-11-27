@@ -1,10 +1,11 @@
 'use client';
 
 import { Mail, Lock, User, Phone, ArrowRight } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function CreatePatientForm({ setIsModalPatientsOpen, specialty }) {
-  console.log(specialty);
+  const router = useRouter();
   // State
   const [formData, setFormData] = useState({
     nombre: '',
@@ -57,6 +58,7 @@ export default function CreatePatientForm({ setIsModalPatientsOpen, specialty })
 
       // Close modal
       setIsModalPatientsOpen(false);
+      router.push(`/doctor/patients/${data.user.id}`);
     } catch (error) {
       console.error(error);
       alert('Error al crear usuario');
