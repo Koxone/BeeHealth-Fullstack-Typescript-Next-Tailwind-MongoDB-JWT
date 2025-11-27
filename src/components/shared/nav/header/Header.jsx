@@ -20,7 +20,7 @@ export default async function Header() {
   else if (role === 'employee') roleLabel = 'Empleado';
 
   return (
-    <header className="sticky top-0 z-40 border-b-2 border-gray-200 shadow-lg backdrop-blur-lg">
+    <header className="bg-beehealth-body-main sticky top-0 z-40 border-b-2 border-gray-200 shadow-lg backdrop-blur-lg">
       {/* Desktop header */}
       <div className="hidden items-center justify-between px-6 py-4 md:flex">
         {/* Logo */}
@@ -33,12 +33,12 @@ export default async function Header() {
         </div>
 
         <div className="flex items-center gap-3">
-          <button className="group relative rounded-xl border-2 border-transparent p-3 transition-all duration-200 hover:border-blue-200 hover:bg-linear-to-br hover:from-blue-50 hover:to-indigo-50 active:scale-95">
+          {/* <button className="group relative rounded-xl border-2 border-transparent p-3 transition-all duration-200 hover:border-blue-200 hover:bg-linear-to-br hover:from-blue-50 hover:to-indigo-50 active:scale-95">
             <Bell className="h-5 w-5 text-gray-600 transition-colors duration-200 group-hover:text-blue-600" />
             <span className="absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-linear-to-r from-red-500 to-rose-600 text-xs font-bold text-white shadow-lg">
               3
             </span>
-          </button>
+          </button> */}
 
           <div className="flex items-center gap-3 border-l-2 border-gray-200 pl-4">
             <div className="text-right">
