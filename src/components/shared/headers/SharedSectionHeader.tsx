@@ -110,7 +110,6 @@ export default function SharedSectionHeader({
 
           {isModalPatientsOpen && (
             <CreatePatientModal
-              isModalPatientsOpen={isModalPatientsOpen}
               setIsModalPatientsOpen={setIsModalPatientsOpen}
               specialty={specialty}
             />
