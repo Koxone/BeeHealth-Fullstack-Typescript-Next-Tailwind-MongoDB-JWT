@@ -4,7 +4,7 @@ import { Mail, Lock, User, Phone, ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-export default function CreatePatientForm({ setIsModalPatientsOpen, specialty }) {
+export default function CreatePatientForm({ setIsModalPatientsOpen, specialty, onClick }) {
   const router = useRouter();
   // State
   const [formData, setFormData] = useState({
@@ -168,14 +168,25 @@ export default function CreatePatientForm({ setIsModalPatientsOpen, specialty })
               </div>
             </div>
 
-            {/* Button */}
-            <button
-              type="submit"
-              className="bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover flex w-full items-center justify-center gap-2 rounded-lg py-3 font-medium text-white shadow-md transition active:scale-95"
-            >
-              Crear usuario
-              <ArrowRight className="h-5 w-5" />
-            </button>
+            <div className="flex items-center gap-8">
+              {/* Close button */}
+              <button
+                type="button"
+                onClick={onClick}
+                className="bg-beehealth-red-primary-solid hover:bg-beehealth-red-primary-solid-hover flex w-fit items-center justify-center gap-2 rounded-lg px-6 py-3 font-medium text-white shadow-md transition active:scale-95"
+              >
+                Cancelar
+              </button>
+
+              {/* Create Button */}
+              <button
+                type="submit"
+                className="bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover flex w-full items-center justify-center gap-2 rounded-lg py-3 font-medium text-white shadow-md transition active:scale-95"
+              >
+                Crear usuario
+                <ArrowRight className="h-5 w-5" />
+              </button>
+            </div>
           </form>
         </div>
       </div>

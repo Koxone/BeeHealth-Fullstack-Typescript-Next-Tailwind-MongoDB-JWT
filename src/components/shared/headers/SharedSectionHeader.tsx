@@ -6,7 +6,6 @@ import {
   Calendar,
   ClipboardClock,
   UserPlus,
-  Download,
   Apple,
   Plus,
   DollarSign,
