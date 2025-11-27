@@ -120,7 +120,6 @@ export default function SharedSectionHeader({
       {/* New Workout Button */}
       {role === 'doctor' && newWorkout && (
         <div className="flex items-center gap-4">
-          {/* Doctor New Diet Button */}
           <button
             onClick={() => {
               setEditingWorkout(null);
