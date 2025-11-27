@@ -77,7 +77,9 @@ export default function QuickStats({ patientRecord, specialty }) {
               <Heart className="h-6 w-6 text-white" />
             </div>
             <div>
-              <p className="text-3xl font-bold text-(--med-text-dark)">{imc || 'Sin historial'}</p>
+              <p className="text-3xl font-bold text-(--med-text-dark)">
+                {imc || getAnswer(127) || 'Sin historial'}
+              </p>
               <p className="text-sm text-(--med-text-muted)">IMC Actual</p>
             </div>
           </div>
