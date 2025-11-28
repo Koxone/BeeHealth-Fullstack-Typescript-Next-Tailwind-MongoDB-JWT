@@ -158,7 +158,7 @@ export default function DoctorClinicalRecordModal({
               <BasicInfoSection record={record} isReadOnly={isReadOnly} setAnswer={setAnswer} />
 
               <VitalsSection isReadOnly={isReadOnly} getAnswer={getAnswer} setAnswer={setAnswer} />
-              
+
               <DiagnosisSection
                 isReadOnly={isReadOnly}
                 getAnswer={getAnswer}
@@ -170,6 +170,7 @@ export default function DoctorClinicalRecordModal({
 
           {activeTab === 'completo' && (
             <QuestionnaireSection
+              record={record}
               isReadOnly={isReadOnly}
               getAnswer={getAnswer}
               setAnswer={setAnswer}

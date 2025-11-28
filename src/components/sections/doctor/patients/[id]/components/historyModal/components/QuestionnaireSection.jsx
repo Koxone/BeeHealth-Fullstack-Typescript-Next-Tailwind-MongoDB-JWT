@@ -1,4 +1,3 @@
-// src/components/sections/doctor/patients/[id]/components/historyModal/components/QuestionnaireSection.jsx
 'use client';
 
 import { useMemo, useState } from 'react';
@@ -7,7 +6,7 @@ import questions from '@/data/questions.json';
 import { Search, ClipboardList } from 'lucide-react';
 import useAuthStore from '@/zustand/useAuthStore';
 
-export default function QuestionnaireSection({ isReadOnly = false, getAnswer, setAnswer }) {
+export default function QuestionnaireSection({ isReadOnly = false, getAnswer, setAnswer, record }) {
   // Read specialty from store
   const { user } = useAuthStore();
   const specialty = user?.specialty || 'weight';
