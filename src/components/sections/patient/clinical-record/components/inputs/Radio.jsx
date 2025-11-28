@@ -15,7 +15,7 @@ function Radio({ id, question, value, options, onChange, required }) {
                 name={`q-${id}`}
                 value={val}
                 checked={value === val}
-                onChange={() => onChange(id, val)}
+                onChange={() => onChange(val)}
                 required={required}
               />
               {lbl}

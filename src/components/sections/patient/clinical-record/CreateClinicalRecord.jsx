@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState, useCallback, memo } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 import TabsHeader from './components/TabsHeader';
 import ActionButtons from './components/ActionButtons';
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/useGetAllQuestions';
@@ -11,11 +11,14 @@ import Number from './components/inputs/Number';
 import Date from './components/inputs/Date';
 import Select from './components/inputs/Select';
 import Radio from './components/inputs/Radio';
+import { useRouter } from 'next/navigation';
 
 export default function CreateClinicalRecord({ currentUser }) {
   // Local States
   const [formData, setFormData] = useState({});
   const [activeTab, setActiveTab] = useState('weight');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   // Fetch all questions
   const { questions } = useGetAllQuestions();
@@ -23,12 +26,9 @@ export default function CreateClinicalRecord({ currentUser }) {
   // Active Questions filter by active tab
   const activeQuestions = useMemo(() => {
     const list = questions || [];
-    const filtered = list
-      .filter((q) => {
-        return q.specialty === activeTab && q.version === 'full';
-      })
+    return list
+      .filter((q) => q.specialty === activeTab && q.version === 'full')
       .sort((a, b) => a.questionId - b.questionId);
-    return filtered;
   }, [questions, activeTab]);
 
   // setter
@@ -38,6 +38,46 @@ export default function CreateClinicalRecord({ currentUser }) {
       return { ...prev, [id]: val };
     });
   }, []);
+
+  // Submit handler
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    // Convert formData to array of answers
+    const answersArray = Object.entries(formData).map(([questionId, value]) => ({
+      questionId,
+      value,
+    }));
+
+    const body = {
+      specialty: activeTab,
+      answers: answersArray,
+    };
+
+    try {
+      const res = await fetch('/api/clinicalRecords', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+
+      const data = await res.json();
+
+      if (!data.ok) {
+        console.error('Error creating Clinical Record:', data.error);
+        setIsSubmitting(false);
+        return;
+      }
+
+      console.log('Clinical Record created:', data.clinicalRecord);
+      setFormData({});
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   // Render helper
   const QuestionComponents = {
@@ -63,7 +103,10 @@ export default function CreateClinicalRecord({ currentUser }) {
         <div className="bg-beehealth-body-main overflow-hidden rounded-2xl border border-gray-200 shadow-xl">
           <TabsHeader activeTab={activeTab} setActiveTab={setActiveTab} />
 
-          <form className="grid grid-cols-2 items-center space-x-4 p-4 md:p-8">
+          <form
+            className="grid grid-cols-2 items-center space-x-4 p-4 md:p-8"
+            onSubmit={handleSubmit}
+          >
             {/* Fields to render */}
             {activeQuestions?.map((question) => {
               const Component = QuestionComponents[question.type];
@@ -82,22 +125,12 @@ export default function CreateClinicalRecord({ currentUser }) {
             })}
 
             {/* Actions */}
-            <ActionButtons activeTab={activeTab} />
+            <div className="col-span-2 mt-4 flex justify-end">
+              <ActionButtons activeTab={activeTab} isSubmitting={isSubmitting} />
+            </div>
           </form>
         </div>
       </div>
     </div>
   );
 }
-
-// Filter questions by type
-//   const questionsByType = useMemo(() => {
-//     const result = {};
-//     activeQuestions.forEach((q) => {
-//       if (!result[q.type]) {
-//         result[q.type] = [];
-//       }
-//       result[q.type].push(q);
-//     });
-//     return result;
-//   }, [activeQuestions]);

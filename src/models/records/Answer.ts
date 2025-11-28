@@ -12,3 +12,4 @@ const AnswerSchema: Schema<IAnswer> = new Schema({
 });
 
 export default AnswerSchema;
+export const Answer = mongoose.models.Answer || mongoose.model<IAnswer>('Answer', AnswerSchema);
