@@ -21,5 +21,5 @@ const ClinicalRecordSchema: Schema<IClinicalRecord> = new Schema(
 );
 
 export const ClinicalRecord =
-  mongoose.models.ClinicalRecord ||
+  mongoose.models.ClinicalRecord || 
   mongoose.model<IClinicalRecord>('ClinicalRecord', ClinicalRecordSchema);

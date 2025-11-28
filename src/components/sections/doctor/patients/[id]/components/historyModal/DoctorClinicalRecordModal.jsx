@@ -157,21 +157,7 @@ export default function DoctorClinicalRecordModal({
         <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />
 
         <form onSubmit={handleSubmit} className="max-h-[calc(90vh-180px)] overflow-y-auto p-6">
-          {activeTab === 'basico' && (
-            // <div className="space-y-6">
-            //   <BasicInfoSection record={record} isReadOnly={isReadOnly} setAnswer={setAnswer} />
-
-            //   <VitalsSection isReadOnly={isReadOnly} getAnswer={getAnswer} setAnswer={setAnswer} />
-
-            //   <DiagnosisSection
-            //     isReadOnly={isReadOnly}
-            //     getAnswer={getAnswer}
-            //     setAnswer={setAnswer}
-            //     icons={{ Stethoscope }}
-            //   />
-            // </div>
-            <ShortVersion specialty={specialty} />
-          )}
+          {activeTab === 'basico' && <ShortVersion specialty={specialty} />}
 
           {activeTab === 'completo' && (
             <QuestionnaireSection

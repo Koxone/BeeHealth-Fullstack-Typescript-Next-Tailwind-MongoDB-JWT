@@ -1,19 +1,16 @@
+import LoadingState from '@/components/shared/feedback/LoadingState';
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/useGetAllQuestions';
 import { CalendarIcon, Ruler, Scale } from 'lucide-react';
 import React from 'react';
 
 export default function ShortVersion({ specialty }) {
-  // Helper function
-  function getValueByQuestionId(questionId) {
-    const record = patientRecord?.[0];
-    if (!record?.answers) return null;
-    const answer = record.answers.find((a) => a.question?.questionId === questionId);
-    return answer ? answer.value : null;
-  }
-
-  const { questions } = useGetAllQuestions();
+  const { questions, loading } = useGetAllQuestions();
 
   const filtered = questions?.filter((q) => q.version === 'short' && q.specialty === specialty);
+
+  if (loading) {
+    return <LoadingState />;
+  }
 
   return (
     <div>
