@@ -31,6 +31,8 @@ export default function DoctorPatientDetail({ patient, specialty }) {
   const { data: patientRecord, isLoading, error } = useClinicalRecord(id);
   const currentPatientInfo = patientRecord?.[0];
 
+  console.log(patientRecord);
+
   // History Modal
   const [historyMode, setHistoryMode] = useState<'create' | 'view' | 'edit'>('view');
   const [showHistoryModal, setShowHistoryModal] = useState<boolean>(false);
@@ -61,11 +63,11 @@ export default function DoctorPatientDetail({ patient, specialty }) {
       {/* Quick Stats */}
       <QuickStats patientRecord={patientRecord} specialty={specialty} />
 
-      {/* Tabs */}
-      {specialty === 'dental' && <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />}
+      {/* Tabs Dental */}
+      {/* {specialty === 'dental' && <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />} */}
 
       {/* Dental Clinical Records */}
-      {activeTab === 'Historial' && specialty === 'dental' && (
+      {/* {activeTab === 'Historial' && specialty === 'dental' && (
         <ClinicalHistory
           specialty={specialty}
           patientRecord={patientRecord}
@@ -83,13 +85,13 @@ export default function DoctorPatientDetail({ patient, specialty }) {
             setShowHistoryModal(true);
           }}
         />
-      )}
+      )} */}
 
       {/* Dental Patient Budgets */}
-      {activeTab === 'Presupuestos' && specialty === 'dental' && <DoctorBudgets />}
+      {/* {activeTab === 'Presupuestos' && specialty === 'dental' && <DoctorBudgets />} */}
 
       {/* Dental Patient Budgets */}
-      {activeTab === 'Productos' && specialty === 'dental' && <DoctorProducts />}
+      {/* {activeTab === 'Productos' && specialty === 'dental' && <DoctorProducts />} */}
 
       {/* Weight Control Clinical Records */}
       {specialty === 'weight' && (
@@ -112,7 +114,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
         />
       )}
 
-      {specialty === 'weight' && <WeightChart patientRecord={patientRecord} />}
+      {/* {specialty === 'weight' && <WeightChart patientRecord={patientRecord} />}
 
       {showHistoryModal && (
         <DoctorClinicalRecordModal
@@ -132,7 +134,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
           currentPatientInfo={currentPatientInfo}
           onClose={() => setShowCreateAppointmentModal(false)}
         />
-      )}
+      )} */}
     </div>
   );
 }
