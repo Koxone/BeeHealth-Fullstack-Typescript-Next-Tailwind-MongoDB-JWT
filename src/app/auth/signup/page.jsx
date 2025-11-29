@@ -1,4 +1,4 @@
-import SignupForm from '@/components/sections/auth/signup/SignUp';
+import SignupForm from '@/components/sections/auth/signUp/SignUp';
 import HomeHeader from '@/components/sections/home/components/HomeHeader';
 import React from 'react';
 

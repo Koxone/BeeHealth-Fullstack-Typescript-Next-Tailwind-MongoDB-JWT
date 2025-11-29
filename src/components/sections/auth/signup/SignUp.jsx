@@ -12,6 +12,7 @@ export default function SignupForm() {
     telefono: '',
     password: '',
     confirmPassword: '',
+    specialty: '',
   });
 
   // Field handler
@@ -20,7 +21,6 @@ export default function SignupForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Submit handler
   // Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,6 +45,7 @@ export default function SignupForm() {
           email: formData.email,
           phone: formData.telefono,
           password: formData.password,
+          specialty: formData.specialty,
         }),
       });
 
@@ -55,11 +56,8 @@ export default function SignupForm() {
         return;
       }
 
-      // Guardar datos en localStorage (incluyendo el ID)
-      localStorage.setItem('signupUser', JSON.stringify(data.user));
-
-      // Pasar al paso 2
-      router.push('/auth/signup/medical-history');
+      router.push('/auth/login');
+      return;
     } catch (error) {
       console.error(error);
       alert('Error al crear usuario');
@@ -72,12 +70,36 @@ export default function SignupForm() {
         {/* Header */}
         <div className="mb-6 text-center md:mb-8">
           <h1 className="mb-2 text-2xl font-bold text-gray-900 md:text-2xl">Crear Cuenta</h1>
-          <p className="text-sm text-gray-600 md:text-base">Paso 1 de 2: Información de acceso</p>
+          <p className="text-sm text-gray-600 md:text-base">
+            Elige el tipo de consulta y llena el resto de campos
+          </p>
         </div>
 
         {/* Form */}
         <div className="bg-beehealth-body-main rounded-2xl border border-gray-200 p-6 shadow-xl md:p-8">
           <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
+            {/* Specialty */}
+            <div>
+              {/* Label */}
+              <label className="mb-2 block text-sm font-medium text-gray-700">
+                Tipo de Consulta
+              </label>
+
+              {/* Select */}
+              <select
+                name="specialty"
+                value={formData.specialty}
+                onChange={handleChange}
+                required
+                className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-3 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Selecciona una opción</option>
+                <option value="weight">Control de Peso</option>
+                <option value="dental">Odontologia</option>
+                <option value="esthetic">Medicina Estetica</option>
+              </select>
+            </div>
+
             {/* Name */}
             <div>
               <label className="mb-2 block text-sm font-medium text-gray-700">
@@ -174,7 +196,7 @@ export default function SignupForm() {
               type="submit"
               className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 py-3 font-medium text-white shadow-md transition hover:bg-blue-600 active:scale-95"
             >
-              Continuar al historial clínico
+              Crear cuenta
               <ArrowRight className="h-5 w-5" />
             </button>
           </form>
@@ -191,12 +213,6 @@ export default function SignupForm() {
               </button>
             </p>
           </div>
-        </div>
-
-        {/* Progress Indicator */}
-        <div className="mt-6 flex items-center justify-center gap-2">
-          <div className="h-2 w-8 rounded-full bg-blue-500"></div>
-          <div className="h-2 w-8 rounded-full bg-gray-300"></div>
         </div>
       </div>
     </div>
