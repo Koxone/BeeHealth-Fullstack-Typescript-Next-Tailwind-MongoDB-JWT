@@ -1,15 +1,22 @@
-import { Activity, DollarSign, FileText, Heart, Scale, TrendingUp } from 'lucide-react';
+import { Activity, DollarSign, FileText, Heart, Ruler, Scale, TrendingUp } from 'lucide-react';
 
 export default function QuickStats({ patientRecord, specialty }) {
-  function getAnswer(id) {
-    return patientRecord?.[0]?.answers?.[id] || 'Sin respuesta';
+  // Helper function
+  function getValueByQuestionId(questionId) {
+    const record = patientRecord?.[0];
+    if (!record?.answers) return null;
+
+    // Handle both object and array formats
+    let answersArray = [];
+    if (Array.isArray(record.answers)) {
+      answersArray = record.answers;
+    } else if (typeof record.answers === 'object') {
+      answersArray = Object.values(record.answers);
+    }
+
+    const answer = answersArray.find((a) => a?.question?.questionId === questionId);
+    return answer ? answer.value : null;
   }
-
-  // BMI calculation
-  const height = Number(patientRecord?.[0]?.answers?.['6']);
-  const weight = Number(patientRecord?.[0]?.answers?.['7']);
-
-  const imc = height && weight ? (weight / (height / 100) ** 2).toFixed(2) : null;
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -20,10 +27,10 @@ export default function QuickStats({ patientRecord, specialty }) {
             <div className="bg-beehealth-blue-primary-solid flex h-12 w-12 items-center justify-center rounded-xl">
               <FileText className="h-6 w-6 text-white" />
             </div>
+
+            {/* Total Consults */}
             <div>
-              <p className="text-3xl font-bold text-(--med-text-dark)">
-                {patientRecord?.length > 0 ? patientRecord.length : 'Sin historial'}
-              </p>
+              <p className="text-3xl font-bold text-(--med-text-dark)">{patientRecord?.length}</p>
               <p className="text-sm text-(--med-text-muted)">Consultas Totales</p>
             </div>
           </div>
@@ -39,9 +46,12 @@ export default function QuickStats({ patientRecord, specialty }) {
               <div className="bg-beehealth-blue-primary-solid flex h-12 w-12 items-center justify-center rounded-xl">
                 <Scale className="h-6 w-6 text-white" />
               </div>
+
+              {/* Current Weight */}
               <div>
                 <p className="text-3xl font-bold text-(--med-text-dark)">
-                  {patientRecord?.length > 0 ? getAnswer(7) : 'Sin historial'}
+                  {getValueByQuestionId(7)}
+                  <span className="text-lg">kg</span>
                 </p>
                 <p className="text-sm text-(--med-text-muted)">Peso Actual (kg)</p>
               </div>
@@ -52,7 +62,7 @@ export default function QuickStats({ patientRecord, specialty }) {
       )}
 
       {/* Patients Debts */}
-      {specialty === 'dental' && (
+      {/* {specialty === 'dental' && (
         <div className="bg-beehealth-body-main rounded-2xl border border-(--med-gray-border) p-6 shadow-sm transition hover:shadow-md">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -67,20 +77,21 @@ export default function QuickStats({ patientRecord, specialty }) {
             <Activity className="text-beehealth-blue-primary-solid h-5 w-5" />
           </div>
         </div>
-      )}
+      )} */}
 
       {/* IMC Actual */}
       <div className="bg-beehealth-body-main rounded-2xl border border-(--med-gray-border) p-6 shadow-sm transition hover:shadow-md">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="bg-beehealth-blue-primary-solid flex h-12 w-12 items-center justify-center rounded-xl">
-              <Heart className="h-6 w-6 text-white" />
+              <Ruler className="h-6 w-6 text-white" />
             </div>
             <div>
               <p className="text-3xl font-bold text-(--med-text-dark)">
-                {imc || getAnswer(127) || 'Sin historial'}
+                {getValueByQuestionId(8)}
+                <span className="text-lg">cm</span>
               </p>
-              <p className="text-sm text-(--med-text-muted)">IMC Actual</p>
+              <p className="text-sm text-(--med-text-muted)">Talla Actual (cm)</p>
             </div>
           </div>
           <Activity className="text-beehealth-blue-primary-solid h-5 w-5" />

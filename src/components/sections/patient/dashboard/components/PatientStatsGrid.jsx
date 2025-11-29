@@ -1,66 +1,58 @@
 'use client';
 
-import { useTodayAppointmentsBySpecialty } from '@/hooks/appointments/useTodayAppointmentsBySpecialty';
-import { useGetFullInventory } from '@/hooks/inventory/useGetFullInventory';
-import {
-  Users,
-  DollarSign,
-  AlertTriangle,
-  Activity,
-  Calendar,
-  Weight,
-  TrendingDown,
-  Clock,
-  FileText,
-  Ruler,
-} from 'lucide-react';
+import { Activity, Weight, TrendingDown, Ruler } from 'lucide-react';
 import PatientStatsCard from './PatientStatsCard';
+import { useGetAllClinicalRecords } from '@/hooks/clinicalRecords/useGetAllClinicalRecords';
+import useGetAnswer from '@/hooks/useGetAnswer';
 
-export default function PatientStatsGrid({ role }) {
-  // Hooks
-  const { appointments, loading } = useTodayAppointmentsBySpecialty();
-  const todaysAppointmentsNumber = appointments?.length || 0;
+export default function PatientStatsGrid({ role, currentUser }) {
+  const { data } = useGetAllClinicalRecords({ patient: currentUser?.id });
 
-  const { inventory, loading: loadingInventory, error: errorInventory } = useGetFullInventory();
+  // Helpers
+  const getAnswerLatest = useGetAnswer(data[0]);
+  const getAnswerPrev = useGetAnswer(data[1]);
 
-  // Alerts logic
-  const criticalItems = inventory.filter((i) => i.quantity < i.minStock);
-  const lowItems = inventory.filter((i) => i.quantity === i.minStock);
-  const totalAlerts = criticalItems.length + lowItems.length;
+  /* Calc weight */
+  const pesoActual = Number(getAnswerLatest(7));
+  const pesoPrevio = Number(getAnswerPrev(7));
+  const diffPeso = pesoActual - pesoPrevio;
+  const pctPeso = pesoPrevio ? ((diffPeso / pesoPrevio) * 100).toFixed(1) : 0;
 
-  // Mock Data
-  const pendingAppointments = 3;
-  const completedConsults = 5;
+  /* Calc height */
+  const tallaActual = Number(getAnswerLatest(8));
+  const tallaPrev = Number(getAnswerPrev(8));
+  const diffTalla = tallaActual - tallaPrev;
+  const pctTalla = tallaPrev ? ((diffTalla / tallaPrev) * 100).toFixed(1) : 0;
 
   return (
     <div className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
       {[
         {
           Icon: Weight,
-          mainData: '70kg',
-          extraData: 'Actual',
+          mainData: `${pesoActual} kg`,
+          extraData: `${pctPeso}%`,
           title: 'Peso Actual',
           variant: 'primary',
         },
         {
-          Icon: Activity,
-          mainData: '22.8',
-          title: 'IMC Actual',
-          variant: 'success',
-        },
-        {
           Icon: Ruler,
-          mainData: '100cm',
-          extraData: '+12%',
+          mainData: `${tallaActual} cm`,
+          extraData: `${pctTalla}%`,
           title: 'Talla Actual',
           variant: 'success',
         },
         {
           Icon: TrendingDown,
-          mainData: '+2.4kg',
-          extraData: 'Este mes',
+          mainData: `${diffPeso} kg`,
+          extraData: `${pctPeso}%`,
           title: 'Progreso',
           variant: 'purple',
+        },
+        {
+          Icon: Activity,
+          mainData: `${getAnswerLatest(127)}`,
+          title: 'IMC Actual',
+          variant: 'success',
         },
       ].map((card, index) => (
         <PatientStatsCard

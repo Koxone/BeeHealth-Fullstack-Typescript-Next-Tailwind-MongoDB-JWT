@@ -10,6 +10,7 @@ import { getConsultTotals } from './utils/getConsultTotals';
 export default function EmployeeConsults({ role }) {
   // Get consults data
   const { consults, isLoading, error } = useGetAllConsults();
+  console.log(consults);
 
   // Calculate totals
   const totals = getConsultTotals(consults);
@@ -36,11 +37,12 @@ export default function EmployeeConsults({ role }) {
       <div className="mx-auto max-w-7xl space-y-6">
         {/* Metrics summary */}
         <MetricsGrid
+          consultsData={consults}
           totals={{
-            grandTotal: metrics.grandTotal,
-            consultsTotal: metrics.consultsTotal,
-            medsTotal: metrics.medsTotal,
-            count: metrics.count,
+            grandTotal: metrics?.grandTotal,
+            consultsTotal: metrics?.consultsTotal,
+            medsTotal: metrics?.medsTotal,
+            count: metrics?.count,
           }}
         />
 

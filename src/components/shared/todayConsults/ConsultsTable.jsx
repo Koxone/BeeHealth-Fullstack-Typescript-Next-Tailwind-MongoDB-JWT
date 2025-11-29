@@ -63,7 +63,7 @@ export default function ConsultsTable({ rows, totals, onEdit, onDelete }) {
   return (
     <div className="hidden overflow-x-auto md:block">
       <table className="w-full">
-        <thead className="border-b-2 border-gray-200 bg-linear-to-r from-gray-50 to-indigo-50">
+        <thead className="bg-beehealth-blue-primary-light border-b-2 border-gray-200">
           <tr>
             {columns.map((col) => (
               <th key={col.key} className={`px-6 py-4 text-${col.align} `}>
@@ -71,7 +71,9 @@ export default function ConsultsTable({ rows, totals, onEdit, onDelete }) {
                   className={`flex items-center ${col.align === 'right' ? 'justify-end' : ''} ${col.align === 'center' ? 'justify-center' : 'gap-2'} `}
                 >
                   {col.icon && <col.icon className="h-4 w-4 text-gray-500" />}
-                  <span className="text-sm font-bold text-gray-900">{col.label}</span>
+                  <span className="text-sm font-semibold tracking-wide text-gray-900">
+                    {col.label}
+                  </span>
                 </div>
               </th>
             ))}
@@ -139,12 +141,12 @@ export default function ConsultsTable({ rows, totals, onEdit, onDelete }) {
 
               {/* Cost */}
               <td className="px-6 py-4 text-right">
-                <span className="text-lg font-bold text-neutral-700">${c?.consultPrice}</span>
+                <span className="text-lg font-semibold text-neutral-700">${c?.consultPrice}</span>
               </td>
 
               {/* Extras */}
               <td className="px-6 py-4 text-right">
-                <span className="text-lg font-bold text-neutral-700">${c?.totalItemsSold}</span>
+                <span className="text-lg font-semibold text-neutral-700">${c?.totalItemsSold}</span>
               </td>
 
               {/* Payment Method */}
@@ -192,10 +194,9 @@ export default function ConsultsTable({ rows, totals, onEdit, onDelete }) {
         </tbody>
 
         <tfoot className="w-full border-t-2 border-gray-200">
-          <tr className="font-bold">
+          <tr className="font-semibold">
             <td colSpan="3" className="px-6 py-4 text-sm text-gray-900">
               <div className="flex items-center gap-2">
-                <Award className="text-beehealth-blue-primary-solid h-5 w-5" />
                 <span>Total General</span>
               </div>
             </td>

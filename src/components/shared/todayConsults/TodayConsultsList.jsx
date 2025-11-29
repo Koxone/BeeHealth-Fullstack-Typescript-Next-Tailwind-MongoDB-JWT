@@ -4,7 +4,6 @@ import SearchAddBar from './SearchAddBar';
 import ConsultsTable from './ConsultsTable';
 import ConsultationsMobile from './ConsultationsMobile';
 import EmptyState from './EmptyState';
-import EmployeeDeleteConsultModal from '@/components/sections/employee/consultations/components/modals/employeeDeleteConsultModal/EmployeeDeleteConsultModal';
 import {
   filterConsults,
   openCreate,
@@ -19,6 +18,7 @@ import {
 // Modals
 import EmployeeCreateConsultModal from '@/components/sections/employee/consultations/components/modals/employeeCreateConsultModal/EmployeeCreateConsultModal';
 import EmployeeEditConsultModal from '@/components/sections/employee/consultations/components/modals/employeeEditConsultModal/EmployeeEditConsultModal';
+import EmployeeDeleteConsultModal from '@/components/sections/employee/consultations/components/modals/employeeDeleteConsultModal/EmployeeDeleteConsultModal';
 
 export default function TodayConsultsList({ totals, consultsData }) {
   const [consults, setConsults] = useState([]);

@@ -26,6 +26,14 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Invalid Credentials' }, { status: 400 });
     }
 
+    // If user doesnt have hasRecord field, set it to false
+    if (!user.hasRecord) {
+      const result = await User.updateOne({ _id: user._id }, { $set: { hasRecord: false } });
+      console.log('Update result:', result);
+      const updatedUser = await User.findById(user._id);
+      user.hasRecord = updatedUser.hasRecord;
+    }
+
     //  Compare Passwords
     const ok = await bcrypt.compare(password, user.password);
     if (!ok) {
@@ -51,6 +59,7 @@ export async function POST(req) {
       fullName: user.fullName,
       email: user.email,
       phone: user.phone,
+      hasRecord: user.hasRecord,
       role: user.role,
       specialty: user.specialty,
       createdAt: user.createdAt,

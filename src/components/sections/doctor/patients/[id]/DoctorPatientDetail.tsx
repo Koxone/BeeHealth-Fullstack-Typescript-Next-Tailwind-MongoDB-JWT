@@ -2,24 +2,27 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { Loader2 } from 'lucide-react';
 import PatientHeader from './components/patientHeader/PatientHeader';
 import QuickStats from './components/QuickStats';
 import WeightChart from './components/WeightChart';
 import ClinicalHistory from './components/clinicalHistory/ClinicalHistory';
 import BackButton from './components/BackButton';
 import TabsNav from './components/TabsNav';
-import DoctorCreateAppointmentModal from './components/createAppointmentModal/DoctorCreateAppointmentModal';
-import DoctorClinicalRecordModal from './components/historyModal/DoctorClinicalRecordModal';
-import { useClinicalRecord } from './hooks/useClinicalRecord';
 import DoctorBudgets from './components/budgets/DoctorBudgets';
 import DoctorProducts from './components/products/DoctorProducts';
+import LoadingState from '@/components/shared/feedback/LoadingState';
+
+// Modals
+import DoctorCreateAppointmentModal from './components/createAppointmentModal/DoctorCreateAppointmentModal';
+import DoctorClinicalRecordModal from './components/historyModal/DoctorClinicalRecordModal';
+
+// Custom Hooks
+import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/useGetPatientClinicalRecords';
 
 // Types
 import { IClinicalRecord, TabName } from '@/types';
 
 export default function DoctorPatientDetail({ patient, specialty }) {
-  const router = useRouter();
   const params = useParams<{ id: string }>();
 
   // ID From URL Params
@@ -27,7 +30,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
 
   // Patient Clinical Record
   const [selectedRecord, setSelectedRecord] = useState<IClinicalRecord | null>(null);
-  const { data: patientRecord, isLoading, error } = useClinicalRecord(id);
+  const { data: patientRecord, isLoading, error } = useGetPatientClinicalRecords(id);
   const currentPatientInfo = patientRecord?.[0];
 
   // History Modal
@@ -42,18 +45,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
   const [activeTab, setActiveTab] = useState<TabName>('Historial');
 
   if (error || isLoading) {
-    return (
-      <div className="flex min-h-[400px] items-center justify-center">
-        {error ? (
-          <p className="text-lg font-medium text-red-600">Error al cargar los datos del paciente</p>
-        ) : (
-          <div className="text-center">
-            <Loader2 className="mx-auto mb-4 h-16 w-16 animate-spin text-blue-600" />
-            <p className="text-lg font-medium text-gray-600">Cargando información...</p>
-          </div>
-        )}
-      </div>
-    );
+    return <LoadingState />;
   }
 
   return (
@@ -71,7 +63,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
       {/* Quick Stats */}
       <QuickStats patientRecord={patientRecord} specialty={specialty} />
 
-      {/* Tabs */}
+      {/* Tabs Dental */}
       {specialty === 'dental' && <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />}
 
       {/* Dental Clinical Records */}
@@ -127,13 +119,11 @@ export default function DoctorPatientDetail({ patient, specialty }) {
       {showHistoryModal && (
         <DoctorClinicalRecordModal
           onClose={() => setShowHistoryModal(false)}
-          onSaved={() => {
-            router.refresh();
-          }}
           record={selectedRecord}
           readOnly={isReadOnly}
           patientId={id}
           mode={historyMode}
+          specialty={specialty}
         />
       )}
 

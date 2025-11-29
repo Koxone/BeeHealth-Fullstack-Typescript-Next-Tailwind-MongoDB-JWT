@@ -1,7 +1,7 @@
 import { IClinicalRecord, IClinicalRecordResponse } from '@/types';
 import { useState, useEffect } from 'react';
 
-export function useClinicalRecord(id: string): {
+export function useGetPatientClinicalRecords(id: string): {
   data: IClinicalRecord[] | null;
   isLoading: boolean;
   error: Error | null;
@@ -16,7 +16,7 @@ export function useClinicalRecord(id: string): {
 
     async function fetchRecord() {
       try {
-        const res = await fetch(`/api/clinical-records/${id}`);
+        const res = await fetch(`/api/clinicalRecords/${id}`);
         if (!res.ok) throw new Error('Error fetching clinical record');
         const json: IClinicalRecordResponse = await res.json();
         setData(json.data);

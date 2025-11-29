@@ -1,21 +1,22 @@
 'use client';
 
-/* actions */
-export default function FooterActions({ onCancel, submitLabel }) {
+export default function FooterActions({ onCancel, submitLabel, isSubmitting }) {
   return (
     <div className="mt-6 flex gap-3">
       <button
         type="button"
         onClick={onCancel}
-        className="bg-beehealth-body-main hover:bg-beehealth-body-main flex-1 rounded-xl border-2 border-gray-300 px-6 py-3 font-semibold text-gray-700 transition active:scale-95"
+        disabled={isSubmitting}
+        className="bg-beehealth-body-main hover:bg-beehealth-body-main flex-1 rounded-xl border-2 border-gray-300 px-6 py-3 font-semibold text-gray-700 transition active:scale-95 disabled:opacity-50"
       >
         Cancelar
       </button>
       <button
         type="submit"
-        className="flex-1 rounded-xl bg-linear-to-r from-blue-500 to-blue-600 px-6 py-3 font-semibold text-white shadow-lg transition hover:scale-105 hover:shadow-xl active:scale-95"
+        disabled={isSubmitting}
+        className="flex-1 rounded-xl bg-linear-to-r from-blue-500 to-blue-600 px-6 py-3 font-semibold text-white shadow-lg transition hover:scale-105 hover:shadow-xl active:scale-95 disabled:opacity-50"
       >
-        {submitLabel}
+        {isSubmitting ? 'Guardando...' : submitLabel}
       </button>
     </div>
   );

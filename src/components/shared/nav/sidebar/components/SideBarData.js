@@ -14,10 +14,10 @@ import {
 
 export const patientSidebarItems = [
   { icon: LayoutDashboard, label: 'Inicio', path: '/patient/dashboard', badge: null },
-  { icon: Activity, label: 'Historial', path: '/patient/history', badge: null },
   { icon: Calendar, label: 'Agendar Cita', path: '/patient/new-appointment', badge: null },
-  { icon: Apple, label: 'Dietas', path: '/patient/diets', badge: null },
-  { icon: Dumbbell, label: 'Ejercicios', path: '/patient/workouts', badge: null },
+  { icon: Activity, label: 'Mi Historial', path: '/patient/history', badge: null },
+  { icon: Apple, label: 'Mis Dietas', path: '/patient/diets', badge: null },
+  { icon: Dumbbell, label: 'Mis Ejercicios', path: '/patient/workouts', badge: null },
 ];
 
 export const weightControlSidebarItems = [

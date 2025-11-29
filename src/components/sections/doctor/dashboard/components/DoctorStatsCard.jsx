@@ -44,7 +44,7 @@ export default function DoctorStatsCard({
   return (
     <div
       onClick={() => router.push(`${href || '#'}`)}
-      className={`cursor-pointer rounded-xl p-4 shadow-sm transition-all duration-300 hover:shadow-md md:p-6 ${styles[variant]}`}
+      className={`scale-95 cursor-pointer rounded-xl p-4 shadow-sm transition-all duration-300 hover:scale-100 hover:shadow-md md:p-6 ${styles[variant]}`}
     >
       {/* Header */}
       <div className="mb-2 flex items-center justify-between">

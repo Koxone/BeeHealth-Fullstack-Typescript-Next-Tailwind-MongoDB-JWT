@@ -18,6 +18,7 @@ export interface UserData {
   fullName: string;
   email: string;
   phone: string;
+  hasRecord?: boolean;
   role: string;
   avatar?: string;
   createdAt?: Date;
@@ -48,6 +49,7 @@ export async function getCurrentUser(): Promise<UserData | null> {
       fullName: user.fullName,
       email: user.email,
       phone: user.phone,
+      hasRecord: user.hasRecord,
       role: user.role,
       avatar: user.avatar,
       createdAt: user.createdAt,

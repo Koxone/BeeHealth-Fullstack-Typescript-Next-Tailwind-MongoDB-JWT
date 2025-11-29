@@ -1,139 +1,91 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import ModalOverlay from './components/ModalOverlay';
+import { useState, useEffect } from 'react';
 import ModalContainer from './components/ModalContainer';
 import ModalHeader from './components/ModalHeader';
 import TabsNav from './components/TabsNav';
-import BasicInfoSection from './components/BasicInfoSection';
-import VitalsSection from './components/VitalsSection';
-import DiagnosisSection from './components/DiagnosisSection';
-import QuestionnaireSection from './components/QuestionnaireSection';
 import FooterActions from './components/FooterActions';
-import { X, FileText, Stethoscope, ClipboardList } from 'lucide-react';
-import useAuthStore from '@/zustand/useAuthStore';
-
-const ID = {
-  fullName: 1,
-  height: 6,
-  weight: 7,
-  size: 8,
-  bloodPressure: 122,
-  heartRate: 123,
-  temperature: 125,
-  imc: 127,
-  diagnosis: 131,
-  treatment: 132,
-  notes: 133,
-};
+import { X, FileText } from 'lucide-react';
+import ShortVersion from './components/ShortVersion';
+import FullVersion from './components/FullVersion';
+import { useModalClose } from '@/hooks/useModalClose';
+import { useCreateClinicalRecordDoctor } from '@/hooks/clinicalRecords/useCreateClinicalRecordDoctor';
+import { useGetAllQuestions } from '@/hooks/clinicalRecords/useGetAllQuestions';
 
 export default function DoctorClinicalRecordModal({
   onClose,
-  onSaved,
   record,
+  specialty,
   readOnly,
   patientId,
   mode = 'view',
 }) {
-  const { user } = useAuthStore();
-
   // Single source of truth
-  const [answersDraft, setAnswersDraft] = useState({});
   const [isReadOnly, setIsReadOnly] = useState(!!readOnly);
   const [activeTab, setActiveTab] = useState('basico');
 
+  // Close Modal Handler
+  const { handleOverlayClick } = useModalClose(onClose);
+
   const isCreate = mode === 'create';
 
+  const [formData, setFormData] = useState({
+    1: '',
+    6: '',
+    7: '',
+    8: '',
+    18: '',
+    19: '',
+    122: '',
+    123: '',
+    125: '',
+    126: '',
+    133: '',
+    148: '',
+    149: '',
+  });
+
   useEffect(() => {
-    const base = record?.answers ? { ...record.answers } : {};
-    setAnswersDraft(base);
-    setIsReadOnly(!!readOnly);
-  }, [record, readOnly]);
-
-  // Helpers
-  const getAnswer = useCallback(
-    (id) => {
-      const v = answersDraft?.[id];
-      return v ?? '';
-    },
-    [answersDraft]
-  );
-
-  const setAnswer = useCallback((id, value) => {
-    setAnswersDraft((prev) => {
-      if (prev?.[id] === value) return prev;
-      return { ...(prev || {}), [id]: value };
-    });
-  }, []);
-
-  const recalcIMC = useCallback((h, w) => {
-    const height = Number(h);
-    const weight = Number(w);
-    if (!height || !weight) return '';
-    const m = height / 100;
-    const bmi = weight / (m * m);
-    return bmi ? bmi.toFixed(2) : '';
-  }, []);
-
-  // Recalculate IMC when height or weight change
-  useEffect(() => {
-    const h = answersDraft?.[ID.height] || answersDraft?.[ID.size];
-    const w = answersDraft?.[ID.weight];
-    const bmi = recalcIMC(h, w);
-    if (bmi) {
-      setAnswersDraft((prev) => ({ ...(prev || {}), [ID.imc]: bmi }));
+    if (record?.answers) {
+      const initial = {};
+      record.answers.forEach((ans) => {
+        initial[ans.question?.questionId] = ans.value || '';
+      });
+      setFormData(initial);
     }
-  }, [answersDraft?.[ID.height], answersDraft?.[ID.size], answersDraft?.[ID.weight], recalcIMC]);
+  }, [record]);
+
+  const { submit, isSubmitting, error } = useCreateClinicalRecordDoctor();
+  const { questions } = useGetAllQuestions();
+  const filtered = questions?.filter((q) => q.version === 'short' && q.specialty === specialty);
 
   // Submit Handler
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const baseBody = {
-        doctor: user?.id || null,
-        specialty: user?.specialty || record?.specialty || 'weight',
-        version: record ? record.version || 'full' : 'full',
-        answers: answersDraft,
+    const answers = Object.entries(formData).map(([questionId, value]) => {
+      const question = filtered?.find((q) => q.questionId === parseInt(questionId));
+      return {
+        questionId: question?._id,
+        value,
       };
-
-      let res;
-
-      // Create New Record
-      if (isCreate) {
-        res = await fetch(`/api/clinical-records/${patientId}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(baseBody),
-        });
-      } else {
-        // Edit Patient Record
-        res = await fetch(`/api/clinical-records/record/${record._id}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(baseBody),
-        });
-      }
-
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.error || 'Error al guardar el historial clínico');
-      }
-
-      await res.json();
-
-      if (onSaved) onSaved();
+    });
+    const result = await submit({
+      patientId,
+      specialty,
+      version: 'short',
+      answers,
+    });
+    if (result.ok) {
       onClose();
-    } catch (error) {
-      console.error('Error al guardar:', error);
-      alert(error.message);
     }
   };
 
   return (
-    <>
-      <ModalOverlay onClick={onClose} />
-
+    <div
+      id="overlay"
+      onClick={handleOverlayClick}
+      className="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md"
+    >
       <ModalContainer onClick={(e) => e.stopPropagation()}>
         <ModalHeader
           title={
@@ -153,40 +105,36 @@ export default function DoctorClinicalRecordModal({
         <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />
 
         <form onSubmit={handleSubmit} className="max-h-[calc(90vh-180px)] overflow-y-auto p-6">
+          {/* Short Version */}
           {activeTab === 'basico' && (
-            <div className="space-y-6">
-              <BasicInfoSection
-                isReadOnly={isReadOnly}
-                getAnswer={getAnswer}
-                setAnswer={setAnswer}
-              />
-              <VitalsSection isReadOnly={isReadOnly} getAnswer={getAnswer} setAnswer={setAnswer} />
-              <DiagnosisSection
-                isReadOnly={isReadOnly}
-                getAnswer={getAnswer}
-                setAnswer={setAnswer}
-                icons={{ Stethoscope }}
-              />
-            </div>
-          )}
-
-          {activeTab === 'completo' && (
-            <QuestionnaireSection
+            <ShortVersion
+              specialty={specialty}
               isReadOnly={isReadOnly}
-              getAnswer={getAnswer}
-              setAnswer={setAnswer}
-              icons={{ ClipboardList }}
+              formData={formData}
+              setFormData={setFormData}
             />
           )}
 
-          {!isReadOnly && (
+          {/* Full Version */}
+          {activeTab === 'completo' && (
+            <FullVersion
+              specialty={specialty}
+              isReadOnly={isReadOnly}
+              formData={formData}
+              setFormData={setFormData}
+              patientId={patientId}
+            />
+          )}
+
+          {!isReadOnly && activeTab === 'basico' && (
             <FooterActions
               onCancel={onClose}
               submitLabel={isCreate ? 'Guardar nuevo registro' : 'Guardar cambios'}
+              isSubmitting={isSubmitting}
             />
           )}
         </form>
       </ModalContainer>
-    </>
+    </div>
   );
 }

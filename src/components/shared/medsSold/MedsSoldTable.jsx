@@ -31,12 +31,6 @@ export default function MedsSoldTable({ consultsData }) {
   /* Derived */
   const totalMedicamentos = medSold.reduce((acc, m) => acc + m.total, 0);
 
-  /* Actions */
-  const openAddModal = () => {
-    setEditingItem(null);
-    setShowModal(true);
-  };
-
   const openEditModal = (item) => {
     setEditingItem(item);
     setShowModal(true);
@@ -79,43 +73,45 @@ export default function MedsSoldTable({ consultsData }) {
   return (
     <div className="hidden overflow-x-auto md:block">
       <table className="w-full">
-        {/* HEADER */}
-        <thead className="border-b-2 border-gray-200 bg-linear-to-r from-gray-50 to-indigo-50">
+        {/* Header */}
+        <thead className="bg-beehealth-blue-primary-light border-b-2 border-gray-200">
           <tr>
             <th className="px-6 py-4 text-left">
               <div className="flex items-center gap-2">
                 <Pill className="h-4 w-4 text-gray-500" />
-                <span className="text-sm font-bold text-gray-900">Medicamento</span>
+                <span className="text-sm font-semibold tracking-wide text-gray-900">
+                  Medicamento
+                </span>
               </div>
             </th>
 
             <th className="px-6 py-4 text-center">
-              <span className="text-sm font-bold text-gray-900">Cant.</span>
+              <span className="text-sm font-semibold tracking-wide text-gray-900">Cant.</span>
             </th>
 
             <th className="px-6 py-4 text-right">
               <div className="flex items-center justify-end gap-2">
                 <DollarSign className="h-4 w-4 text-gray-500" />
-                <span className="text-sm font-bold text-gray-900">P. Unit.</span>
+                <span className="text-sm font-semibold tracking-wide text-gray-900">P. Unit.</span>
               </div>
             </th>
 
             <th className="px-6 py-4 text-right">
               <div className="flex items-center justify-end gap-2">
                 <DollarSign className="h-4 w-4 text-gray-500" />
-                <span className="text-sm font-bold text-gray-900">Total</span>
+                <span className="text-sm font-semibold tracking-wide text-gray-900">Total</span>
               </div>
             </th>
 
             <th className="px-6 py-4 text-left">
               <div className="flex items-center gap-2">
                 <Users className="h-4 w-4 text-gray-500" />
-                <span className="text-sm font-bold text-gray-900">Paciente</span>
+                <span className="text-sm font-semibold tracking-wide text-gray-900">Paciente</span>
               </div>
             </th>
 
             <th className="px-6 py-4 text-center">
-              <span className="text-sm font-bold text-gray-900">Acciones</span>
+              <span className="text-sm font-semibold tracking-wide text-gray-900">Acciones</span>
             </th>
           </tr>
         </thead>
@@ -147,7 +143,7 @@ export default function MedsSoldTable({ consultsData }) {
 
               {/* Total */}
               <td className="px-6 py-4 text-right">
-                <span className="text-lg font-bold text-neutral-700">
+                <span className="text-lg font-semibold tracking-wide text-neutral-700">
                   ${med?.total?.toLocaleString()}
                 </span>
               </td>
@@ -183,15 +179,14 @@ export default function MedsSoldTable({ consultsData }) {
 
         {/* FOOTER */}
         <tfoot className="w-full border-t-2 border-gray-200">
-          <tr className="font-bold">
+          <tr className="font-semibold">
             <td colSpan="3" className="px-6 py-4 text-sm text-gray-900">
               <div className="flex items-center gap-2">
-                <Award className="text-beehealth-blue-primary-solid h-5 w-5" />
                 <span>Total General</span>
               </div>
             </td>
 
-            <td className="text-beehealth-blue-primary-solid px-6 py-4 text-right text-lg font-bold">
+            <td className="text-beehealth-blue-primary-solid px-6 py-4 text-right text-lg font-semibold">
               ${totalMedicamentos.toLocaleString()}
             </td>
 

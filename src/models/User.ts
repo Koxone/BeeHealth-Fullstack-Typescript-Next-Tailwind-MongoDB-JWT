@@ -8,6 +8,7 @@ interface IUser extends Document {
   password: string;
   avatar?: string;
   isActive: boolean;
+  hasRecord: boolean;
   resetToken?: string | null;
   role: 'patient' | 'doctor' | 'admin' | 'employee';
   specialty: 'weight' | 'dental' | 'stetic' | 'none';
@@ -25,6 +26,7 @@ const UserSchema = new Schema<IUser>(
     password: { type: String, required: true },
     avatar: { type: String, default: '' },
     isActive: { type: Boolean, default: true },
+    hasRecord: { type: Boolean, default: false },
     resetToken: { type: String, default: null },
     role: { type: String, enum: ['patient', 'doctor', 'admin', 'employee'], default: 'patient' },
     specialty: { type: String, enum: ['weight', 'dental', 'stetic', 'none'], default: 'none' },

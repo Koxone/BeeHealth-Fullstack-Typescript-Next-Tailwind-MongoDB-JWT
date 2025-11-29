@@ -9,6 +9,8 @@ import {
   Tooltip,
   Line,
 } from 'recharts';
+import useGetAnswer from '@/hooks/useGetAnswer';
+import { Loader2 } from 'lucide-react';
 
 /* chart */
 export default function PatientEvolutionChart({
@@ -16,9 +18,41 @@ export default function PatientEvolutionChart({
   legendLabel,
   legendColor,
   data,
+  loading,
+  keyAnswer,
   unit,
   stroke,
 }) {
+  if (loading) {
+    return (
+      <div className="flex min-h-[400px] items-center justify-center">
+        {isError ? (
+          <p className="text-lg font-medium text-red-600">Error al cargar los datos del paciente</p>
+        ) : (
+          <div className="text-center">
+            <Loader2 className="mx-auto mb-4 h-16 w-16 animate-spin text-blue-600" />
+            <p className="text-lg font-medium text-gray-600">Cargando información...</p>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  const sortedData = [...data].sort(
+    (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+  );
+
+  const chartData = sortedData.map((record) => {
+    const getAnswer = useGetAnswer(record);
+    return {
+      mes: new Date(record.createdAt).toLocaleDateString('es-MX', {
+        month: 'short',
+        day: 'numeric',
+      }),
+      valor: Number(getAnswer(keyAnswer)),
+    };
+  });
+
   return (
     <div className="bg-beehealth-body-main rounded-xl border border-gray-200 p-4 shadow-sm md:p-6">
       <div className="mb-4 flex items-center justify-between">
@@ -30,7 +64,7 @@ export default function PatientEvolutionChart({
       </div>
 
       <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={data}>
+        <LineChart data={chartData}>
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
           <XAxis dataKey="mes" stroke="#6b7280" style={{ fontSize: '12px' }} />
           <YAxis stroke="#6b7280" style={{ fontSize: '12px' }} domain={['auto', 'auto']} />
@@ -53,12 +87,6 @@ export default function PatientEvolutionChart({
           />
         </LineChart>
       </ResponsiveContainer>
-
-      {/* <div className="mt-4 rounded-lg bg-blue-50 p-3">
-        <p className="text-sm text-gray-700">
-          Tip: usa los cards de arriba para cambiar la métrica mostrada.
-        </p>
-      </div> */}
     </div>
   );
 }

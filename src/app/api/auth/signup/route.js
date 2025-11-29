@@ -13,7 +13,7 @@ export async function POST(req) {
     await connectDB();
 
     // Get Body from Request
-    const { fullName, email, phone, password, isActive, role, specialty } = await req.json();
+    const { fullName, email, phone, password, role, specialty } = await req.json();
     if (!fullName || !email || !phone || !password) {
       return NextResponse.json({ error: 'All Fields are required' }, { status: 400 });
     }
@@ -34,6 +34,7 @@ export async function POST(req) {
       phone,
       password: hashed,
       isActive: true,
+      hasRecord: false,
       role: role || 'patient',
       specialty: specialty || 'none',
     });
@@ -57,6 +58,7 @@ export async function POST(req) {
       phone: user.phone,
       role: user.role,
       specialty: user.specialty,
+      hasRecord: user.hasRecord,
       createdAt: user.createdAt,
     };
 
