@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import ModalContainer from './components/ModalContainer';
 import ModalHeader from './components/ModalHeader';
 import TabsNav from './components/TabsNav';
-import QuestionnaireSection from './components/QuestionnaireSection';
 import FooterActions from './components/FooterActions';
-import { X, FileText, ClipboardList } from 'lucide-react';
+import { X, FileText } from 'lucide-react';
 import ShortVersion from './components/ShortVersion';
+import FullVersion from './components/FullVersion';
 import { useModalClose } from '@/hooks/useModalClose';
 import { useCreateClinicalRecordDoctor } from '@/hooks/clinicalRecords/useCreateClinicalRecordDoctor';
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/useGetAllQuestions';
@@ -56,14 +56,12 @@ export default function DoctorClinicalRecordModal({
   }, [record]);
 
   const { submit, isSubmitting, error } = useCreateClinicalRecordDoctor();
-
   const { questions } = useGetAllQuestions();
-
   const filtered = questions?.filter((q) => q.version === 'short' && q.specialty === specialty);
 
+  // Submit Handler
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const answers = Object.entries(formData).map(([questionId, value]) => {
       const question = filtered?.find((q) => q.questionId === parseInt(questionId));
       return {
@@ -71,14 +69,12 @@ export default function DoctorClinicalRecordModal({
         value,
       };
     });
-
     const result = await submit({
       patientId,
       specialty,
       version: 'short',
       answers,
     });
-
     if (result.ok) {
       onClose();
     }
@@ -121,12 +117,11 @@ export default function DoctorClinicalRecordModal({
 
           {/* Full Version */}
           {activeTab === 'completo' && (
-            <QuestionnaireSection
-              record={record}
+            <FullVersion
+              specialty={specialty}
               isReadOnly={isReadOnly}
-              getAnswer={getAnswer}
-              setAnswer={setAnswer}
-              icons={{ ClipboardList }}
+              formData={formData}
+              setFormData={setFormData}
             />
           )}
 
