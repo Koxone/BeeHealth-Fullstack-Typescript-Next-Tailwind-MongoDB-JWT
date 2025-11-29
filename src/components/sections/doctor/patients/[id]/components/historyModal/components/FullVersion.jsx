@@ -1,15 +1,26 @@
 import LoadingState from '@/components/shared/feedback/LoadingState';
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/useGetAllQuestions';
+import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/useGetPatientClinicalRecords';
 import { CalendarIcon } from 'lucide-react';
 
-export default function FullVersion({ specialty, isReadOnly = true, formData, setFormData }) {
+export default function FullVersion({ specialty, isReadOnly = true, patientId }) {
+  // Fetch patient records
+  const { data: records, loading: recordsLoading } = useGetPatientClinicalRecords(patientId);
+
+  // Get the full version record
+  const fullRecord = records?.find((r) => r.version === 'full' && r.specialty === specialty);
+
   // Fetch Questions to render UI
-  const { questions, loading } = useGetAllQuestions();
+  const { questions, loading: questionsLoading } = useGetAllQuestions();
   const filtered = questions?.filter((q) => q.version === 'full' && q.specialty === specialty);
 
   // Loading State
-  if (loading) {
+  if (recordsLoading || questionsLoading) {
     return <LoadingState />;
+  }
+
+  if (!fullRecord) {
+    return <div className="text-center text-gray-500">No hay registro completo disponible</div>;
   }
 
   return (
@@ -17,107 +28,82 @@ export default function FullVersion({ specialty, isReadOnly = true, formData, se
       <div className="flex flex-col gap-1">
         <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900">
           <CalendarIcon className="h-5 w-5 text-blue-600" />
-          Información Básica
+          Información Completa
         </h3>
 
-        <span
-          className={`mb-4 w-fit rounded-lg ${isReadOnly ? 'bg-beehealth-green-secondary-light text-beehealth-green-secondary-dark' : 'bg-beehealth-red-primary-light text-beehealth-red-primary-dark'} p-1 text-xs`}
-        >
-          {isReadOnly ? 'Solo Lectura' : 'Modo Edicion'}
+        <span className="bg-beehealth-green-secondary-light text-beehealth-green-secondary-dark mb-4 w-fit rounded-lg p-1 text-xs">
+          Solo Lectura
         </span>
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        {filtered?.map((q) => (
-          <div key={q?._id}>
-            {/* Label */}
-            <label className="mb-2 block text-sm font-semibold text-gray-700">{q?.text}</label>
+        {filtered?.map((q) => {
+          const answer = fullRecord.answers?.find((a) => a.question?._id === q._id);
+          const value = answer?.value || '';
 
-            {/* Input or Textarea */}
-            {q?.type === 'textarea' ? (
-              <textarea
-                rows={3}
-                value={formData[q.questionId] || ''}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, [q.questionId]: e.target.value }))
-                }
-                readOnly={isReadOnly}
-                disabled={isReadOnly}
-                placeholder=""
-                className={`focus:bg-beehealth-body-main bg-beehealth-body-main w-full resize-none rounded-xl border-2 px-4 py-3 transition outline-none ${
-                  isReadOnly ? 'border-gray-300 bg-gray-100 text-gray-500' : 'border-gray-200'
-                }`}
-              />
-            ) : q?.type === 'select' ? (
-              <select
-                value={formData[q.questionId] || ''}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, [q.questionId]: e.target.value }))
-                }
-                disabled={isReadOnly}
-                className={`focus:bg-beehealth-body-main bg-beehealth-body-main w-full rounded-xl border-2 px-4 py-3 transition outline-none ${
-                  isReadOnly ? 'border-gray-300 bg-gray-100 text-gray-500' : 'border-gray-200'
-                }`}
-              >
-                <option value="">Seleccionar</option>
-                {q?.options?.map((opt) => (
-                  <option key={opt._id} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
-            ) : q?.type === 'radio' ? (
-              <div className="flex gap-4">
-                {q?.options?.map((opt) => (
-                  <label key={opt._id} className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name={q.questionId}
-                      value={opt.value}
-                      checked={formData[q.questionId] === opt.value}
-                      onChange={(e) =>
-                        setFormData((prev) => ({ ...prev, [q.questionId]: e.target.value }))
-                      }
-                      disabled={isReadOnly}
-                      className="h-4 w-4"
-                    />
-                    <span className="text-sm text-gray-700">{opt.label}</span>
-                  </label>
-                ))}
-              </div>
-            ) : q?.type === 'checkbox' ? (
-              <div className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={formData[q.questionId] === 'true' || formData[q.questionId] === true}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      [q.questionId]: e.target.checked ? 'true' : 'false',
-                    }))
-                  }
-                  disabled={isReadOnly}
-                  className="h-4 w-4"
+          return (
+            <div key={q?._id}>
+              <label className="mb-2 block text-sm font-semibold text-gray-700">{q?.text}</label>
+
+              {q?.type === 'textarea' ? (
+                <textarea
+                  rows={3}
+                  value={value}
+                  readOnly
+                  disabled
+                  className="focus:bg-beehealth-body-main bg-beehealth-body-main w-full resize-none rounded-xl border-2 border-gray-300 px-4 py-3 text-gray-500 outline-none"
                 />
-                <span className="text-sm text-gray-700">{q?.text}</span>
-              </div>
-            ) : (
-              <input
-                type={q?.type}
-                value={formData[q.questionId] || ''}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, [q.questionId]: e.target.value }))
-                }
-                readOnly={isReadOnly}
-                disabled={isReadOnly}
-                placeholder=""
-                className={`focus:bg-beehealth-body-main bg-beehealth-body-main w-full rounded-xl border-2 px-4 py-3 transition outline-none ${
-                  isReadOnly ? 'border-gray-300 bg-gray-100 text-gray-500' : 'border-gray-200'
-                }`}
-              />
-            )}
-          </div>
-        ))}
+              ) : q?.type === 'select' ? (
+                <select
+                  value={value}
+                  disabled
+                  className="focus:bg-beehealth-body-main bg-beehealth-body-main w-full rounded-xl border-2 border-gray-300 px-4 py-3 text-gray-500 outline-none"
+                >
+                  <option value="">Seleccionar</option>
+                  {q?.options?.map((opt) => (
+                    <option key={opt._id} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
+              ) : q?.type === 'radio' ? (
+                <div className="flex gap-4">
+                  {q?.options?.map((opt) => (
+                    <label key={opt._id} className="flex items-center gap-2">
+                      <input
+                        type="radio"
+                        name={q.questionId}
+                        value={opt.value}
+                        checked={value === opt.value}
+                        disabled
+                        className="h-4 w-4"
+                      />
+                      <span className="text-sm text-gray-700">{opt.label}</span>
+                    </label>
+                  ))}
+                </div>
+              ) : q?.type === 'checkbox' ? (
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={value === 'true' || value === true}
+                    disabled
+                    className="h-4 w-4"
+                  />
+                  <span className="text-sm text-gray-700">{q?.text}</span>
+                </div>
+              ) : (
+                <input
+                  type={q?.type}
+                  value={value}
+                  readOnly
+                  disabled
+                  className="focus:bg-beehealth-body-main bg-beehealth-body-main w-full rounded-xl border-2 border-gray-300 px-4 py-3 text-gray-500 outline-none"
+                />
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

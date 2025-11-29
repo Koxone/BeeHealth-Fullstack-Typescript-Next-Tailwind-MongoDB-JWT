@@ -56,6 +56,19 @@ export async function POST(req) {
       });
     }
 
+    // Not sure if this works, verify later
+    if (finalVersion === 'full') {
+      const existingFullRecord = await ClinicalRecord.findOne({
+        patient: finalPatientId,
+        version: 'full',
+        specialty,
+      });
+
+      if (existingFullRecord) {
+        finalVersion = 'short';
+      }
+    }
+
     // Create ClinicalRecord
     const newRecord = new ClinicalRecord({
       patient: finalPatientId,

@@ -23,7 +23,6 @@ import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/useGetPati
 import { IClinicalRecord, TabName } from '@/types';
 
 export default function DoctorPatientDetail({ patient, specialty }) {
-  const router = useRouter();
   const params = useParams<{ id: string }>();
 
   // ID From URL Params

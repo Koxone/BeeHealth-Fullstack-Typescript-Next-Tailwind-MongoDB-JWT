@@ -278,7 +278,11 @@
       "dental": ["full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "28": {
     "text": "Hipertensión",
@@ -287,7 +291,11 @@
       "dental": ["full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "29": {
     "text": "Hepatitis",
@@ -296,7 +304,11 @@
       "dental": ["full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "30": {
     "text": "VIH",
@@ -305,7 +317,11 @@
       "dental": ["full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "31": {
     "text": "Cáncer",
@@ -314,7 +330,11 @@
       "dental": ["full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "32": {
     "text": "Asma",
@@ -323,7 +343,11 @@
       "dental": ["full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "33": {
     "text": "Epilepsia",
@@ -331,7 +355,11 @@
     "specialties": {
       "dental": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "34": {
     "text": "Gastritis",
@@ -339,7 +367,11 @@
     "specialties": {
       "dental": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "35": {
     "text": "Ansiedad o depresión",
@@ -403,7 +435,11 @@
       "dental": ["full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "40": {
     "text": "Lactancia",
@@ -412,7 +448,11 @@
       "dental": ["full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "41": {
     "text": "Anticonceptivos",
@@ -421,7 +461,11 @@
       "dental": ["full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "42": {
     "text": "¿Tiene hijos?",
@@ -710,7 +754,11 @@
       "dental": ["short", "full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "74": {
     "text": "Antecedente familiar de epilepsia",
@@ -720,7 +768,11 @@
       "dental": ["short", "full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "75": {
     "text": "Antecedente familiar de hepatitis",
@@ -730,7 +782,11 @@
       "dental": ["short", "full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "76": {
     "text": "Antecedente familiar de hipertensión",
@@ -740,7 +796,11 @@
       "dental": ["short", "full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "77": {
     "text": "Antecedente familiar de malformaciones",
@@ -750,7 +810,11 @@
       "dental": ["short", "full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "78": {
     "text": "Antecedente familiar de artritis",
@@ -760,7 +824,11 @@
       "dental": ["short", "full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "79": {
     "text": "Cardiopatías",
@@ -770,7 +838,11 @@
       "dental": ["short", "full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "80": {
     "text": "Enfermedades mentales",
@@ -794,7 +866,11 @@
       "dental": ["short", "full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "82": {
     "text": "Enfermedades renales",
@@ -1119,7 +1195,11 @@
       "dental": ["short", "full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "107": {
     "text": "Vacuna: Tuberculosis",
@@ -1129,7 +1209,11 @@
       "dental": ["short", "full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "108": {
     "text": "Vacuna: DTP",
@@ -1139,7 +1223,11 @@
       "dental": ["short", "full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "109": {
     "text": "Vacuna: Triple viral",
@@ -1149,7 +1237,11 @@
       "dental": ["short", "full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "110": {
     "text": "Vacuna: Sarampión",
@@ -1159,7 +1251,11 @@
       "dental": ["short", "full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "111": {
     "text": "Vacuna: Hepatitis B",
@@ -1169,7 +1265,11 @@
       "dental": ["short", "full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "112": {
     "text": "Otras vacunas",
@@ -1179,7 +1279,11 @@
       "dental": ["short", "full"],
       "weight": ["full"]
     },
-    "type": "checkbox"
+    "type": "radio",
+    "options": [
+      { "value": "true", "label": "Si" },
+      { "value": "false", "label": "No" }
+    ]
   },
   "113": {
     "text": "Alcohol (detalle de consumo)",

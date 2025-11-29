@@ -122,10 +122,11 @@ export default function DoctorClinicalRecordModal({
               isReadOnly={isReadOnly}
               formData={formData}
               setFormData={setFormData}
+              patientId={patientId}
             />
           )}
 
-          {!isReadOnly && (
+          {!isReadOnly && activeTab === 'basico' && (
             <FooterActions
               onCancel={onClose}
               submitLabel={isCreate ? 'Guardar nuevo registro' : 'Guardar cambios'}
