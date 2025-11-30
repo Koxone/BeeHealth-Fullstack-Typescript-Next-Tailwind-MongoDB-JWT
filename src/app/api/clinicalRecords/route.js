@@ -16,7 +16,8 @@ export async function POST(req) {
     await connectDB();
 
     // Read body
-    const { patientId, dietId, workoutId, specialty, version, answers } = await req.json();
+    const { patientId, dietId, workoutId, specialty, version, answers, recordDate } =
+      await req.json();
 
     let finalPatientId = patientId;
     let finalVersion = version;
@@ -78,6 +79,7 @@ export async function POST(req) {
       version: finalVersion,
       answers: answerDocs,
       diets: dietId ? [dietId] : [],
+      recordDate: new Date(),
     });
     await newRecord.save();
 

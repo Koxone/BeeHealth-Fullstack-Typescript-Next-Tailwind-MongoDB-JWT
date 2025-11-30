@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import ModalContainer from './components/ModalContainer';
 import ModalHeader from './components/ModalHeader';
 import TabsNav from './components/TabsNav';
 import ShortVersion from './components/ShortVersion';
@@ -110,7 +109,10 @@ export default function ClinicalRecordModal({
       onClick={handleOverlayClick}
       className="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md"
     >
-      <ModalContainer onClick={(e) => e.stopPropagation()}>
+      <div
+        className="bg-beehealth-body-main relative w-full max-w-4xl overflow-hidden rounded-3xl shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
         <ModalHeader
           title={
             record
@@ -129,7 +131,10 @@ export default function ClinicalRecordModal({
         <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />
 
         {/* Main content */}
-        <form onSubmit={handleSubmit} className="max-h-[calc(90vh-180px)] overflow-y-auto p-6">
+        <form
+          onSubmit={handleSubmit}
+          className="max-h-[calc(90vh-180px)] overflow-y-auto px-6 py-8"
+        >
           {activeTab === 'basico' && (
             <ShortVersion
               specialty={specialty}
@@ -155,7 +160,7 @@ export default function ClinicalRecordModal({
             />
           )}
         </form>
-      </ModalContainer>
+      </div>
     </div>
   );
 }

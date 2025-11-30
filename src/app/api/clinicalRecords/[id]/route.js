@@ -6,6 +6,9 @@ import User from '@/models/User';
 import { Question } from '@/models/records/Question';
 import { Answer } from '@/models/records/Answer';
 
+// @route    GET /api/clinicalRecords/:id
+// @desc     Get clinical records by patient ID
+// @access   Private
 export async function GET(req, { params }) {
   try {
     await connectDB();

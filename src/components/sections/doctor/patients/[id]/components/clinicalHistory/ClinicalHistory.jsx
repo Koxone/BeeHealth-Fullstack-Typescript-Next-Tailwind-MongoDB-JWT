@@ -1,6 +1,6 @@
 import { Plus, ClipboardList } from 'lucide-react';
 import AddHistoryButton from './components/AddHistoryButton';
-import HistoryCard from './components/HistoryCard';
+import HistoryCard from './components/history-card/HistoryCard';
 
 /* Clinical history */
 export default function ClinicalHistory({ onAdd, onEdit, patientRecord, specialty }) {
@@ -41,8 +41,7 @@ export default function ClinicalHistory({ onAdd, onEdit, patientRecord, specialt
                 key={r._id}
                 className={`${bgColorClass} rounded-xl p-3 shadow-sm transition hover:shadow-md sm:p-4`}
                 style={{
-                  animationDelay: `${index * 100}ms`,
-                  animation: 'fadeIn 0.3s ease-out forwards',
+                  animation: `fadeIn 0.3s ease-out ${index * 100}ms forwards`,
                 }}
               >
                 {/* History Card */}
