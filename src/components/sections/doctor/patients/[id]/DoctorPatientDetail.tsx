@@ -61,7 +61,6 @@ export default function DoctorPatientDetail({ patient, specialty }) {
         <BackButton />
         <PatientHeader
           patientRecord={patientRecord}
-          patient={patient}
           onClickNew={() => setShowCreateAppointmentModal(true)}
         />
       </div>
