@@ -30,7 +30,13 @@ export default function DoctorPatientDetail({ patient, specialty }) {
 
   // Patient Clinical Record
   const [selectedRecord, setSelectedRecord] = useState<IClinicalRecord | null>(null);
-  const { data: patientRecord, isLoading, error } = useGetPatientClinicalRecords(id);
+  const {
+    data: patientRecord,
+    isLoading,
+    error,
+    refetch: fetchRecord,
+  } = useGetPatientClinicalRecords(id);
+
   const currentPatientInfo = patientRecord?.[0];
 
   // History Modal
@@ -118,6 +124,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
 
       {showHistoryModal && (
         <ClinicalRecordModal
+          fetchRecord={fetchRecord}
           onClose={() => setShowHistoryModal(false)}
           record={selectedRecord}
           readOnly={isReadOnly}
