@@ -1,6 +1,8 @@
-// Clinical records hook
-import { useEffect, useState } from 'react';
+/* TanStack */
+import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData } from '@tanstack/react-query';
 
+/* Types */
 type Filters = {
   patient?: string;
   doctor?: string;
@@ -11,19 +13,14 @@ type Filters = {
   sort?: string;
 };
 
-type ClinicalRecord = any; // Puedes tiparlo si quieres
+type ClinicalRecord = any;
 
 export function useGetAllClinicalRecords(filters: Filters = {}) {
-  // State
-  const [data, setData] = useState<ClinicalRecord[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-
-  // Build query
+  /* Build query string */
   const buildQuery = () => {
     const params = new URLSearchParams();
 
-    // Loop filters
+    // Add filters
     Object.entries(filters).forEach(([key, value]) => {
       if (value !== undefined && value !== null && value !== '') {
         params.append(key, String(value));
@@ -33,43 +30,35 @@ export function useGetAllClinicalRecords(filters: Filters = {}) {
     return params.toString();
   };
 
-  // Fetch function
-  const fetchRecords = async () => {
-    setLoading(true);
-    setError(null);
+  /* Fetcher */
+  const fetchRecords = async (): Promise<ClinicalRecord[]> => {
+    // Build URL
+    const query = buildQuery();
+    const url = query ? `/api/clinicalRecords?${query}` : `/api/clinicalRecords`;
 
-    try {
-      const query = buildQuery();
-      const url = query ? `/api/clinicalRecords?${query}` : `/api/clinicalRecords`;
+    // Fetch request
+    const res = await fetch(url);
+    const json = await res.json();
 
-      const res = await fetch(url);
-      const json = await res.json();
+    if (!res.ok) throw new Error(json.error || 'Error fetching records');
 
-      if (!res.ok) throw new Error(json.error || 'Error fetching records');
-
-      setData(json.data);
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+    // Return list
+    return json.data;
   };
 
-  // Auto fetch
-  useEffect(() => {
-    fetchRecords();
-  }, [JSON.stringify(filters)]);
+  /* Query */
+  const query = useQuery({
+    queryKey: ['clinical-records-all', filters],
+    queryFn: fetchRecords,
+    staleTime: 1000 * 60 * 2,
+    retry: 1,
+    placeholderData: keepPreviousData,
+  });
 
   return {
-    data,
-    loading,
-    error,
-    refetch: fetchRecords,
+    data: query.data ?? [],
+    loading: query.isLoading,
+    error: query.error ? query.error.message : null,
+    refetch: query.refetch,
   };
 }
-
-// Patient
-// const { data } = useClinicalRecords({ patient: patientId });
-
-// Doctor
-// const { data } = useClinicalRecords({ doctor: doctorId });

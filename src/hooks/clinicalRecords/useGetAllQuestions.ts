@@ -1,4 +1,3 @@
-/* TanStack */
 import { useQuery } from '@tanstack/react-query';
 
 /* Types */
