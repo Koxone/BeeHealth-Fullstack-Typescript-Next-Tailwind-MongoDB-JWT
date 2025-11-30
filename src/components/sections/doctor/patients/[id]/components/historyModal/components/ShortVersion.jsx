@@ -3,6 +3,7 @@ import { useGetAllQuestions } from '@/hooks/clinicalRecords/useGetAllQuestions';
 import { CalendarIcon } from 'lucide-react';
 import AssignSection from './assign-section/AssignSection';
 import FooterActions from './FooterActions';
+import { useState } from 'react';
 
 export default function ShortVersion({
   specialty,
@@ -13,6 +14,8 @@ export default function ShortVersion({
   onClose,
   isSubmitting,
   isCreate,
+  dietSelected,
+  setDietSelected,
 }) {
   // Fetch Questions to render UI
   const { questions, loading } = useGetAllQuestions();
@@ -25,8 +28,9 @@ export default function ShortVersion({
 
   return (
     <div className="space-y-4">
+      {/* Assign Diet or Workout Section */}
       <div className="px">
-        <AssignSection />
+        <AssignSection onSelectDiet={setDietSelected} />
       </div>
       <div className="flex flex-col gap-1">
         <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900">

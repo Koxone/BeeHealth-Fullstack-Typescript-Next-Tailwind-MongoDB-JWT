@@ -12,6 +12,7 @@ import { useModalClose } from '@/hooks/useModalClose';
 import { useCreateClinicalRecordDoctor } from '@/hooks/clinicalRecords/useCreateClinicalRecordDoctor';
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/useGetAllQuestions';
 import AssignSection from '@/components/sections/doctor/patients/[id]/components/historyModal/components/assign-section/AssignSection';
+import { useAssignDiet } from '@/hooks/diets/useAssignDiet';
 
 export default function ClinicalRecordModal({
   onClose,
@@ -24,6 +25,10 @@ export default function ClinicalRecordModal({
   // Single source of truth
   const [isReadOnly, setIsReadOnly] = useState(!!readOnly);
   const [activeTab, setActiveTab] = useState('basico');
+
+  // AssignDiet States and Custom Hook
+  const [dietSelected, setDietSelected] = useState(null);
+  const { editPatients } = useAssignDiet();
 
   // Close Modal Handler
   const { handleOverlayClick } = useModalClose(onClose);
@@ -63,6 +68,8 @@ export default function ClinicalRecordModal({
   // Submit Handler
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    /* Collect answers */
     const answers = Object.entries(formData).map(([questionId, value]) => {
       const question = filtered?.find((q) => q.questionId === parseInt(questionId));
       return {
@@ -70,12 +77,26 @@ export default function ClinicalRecordModal({
         value,
       };
     });
+
+    /* Assign diet */
+    if (dietSelected) {
+      try {
+        await editPatients(dietSelected, [patientId]);
+      } catch (err) {
+        console.error('Error assigning diet:', err);
+        return;
+      }
+    }
+
+    /* Submit clinical record */
     const result = await submit({
       patientId,
       specialty,
       version: 'short',
       answers,
     });
+
+    /* Close modal */
     if (result.ok) {
       onClose();
     }
@@ -118,6 +139,8 @@ export default function ClinicalRecordModal({
               isCreate={isCreate}
               isSubmitting={isSubmitting}
               onClose={onClose}
+              dietSelected={dietSelected}
+              setDietSelected={setDietSelected}
             />
           )}
 

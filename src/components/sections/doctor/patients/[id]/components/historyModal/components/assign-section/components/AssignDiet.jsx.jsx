@@ -6,7 +6,7 @@ import { useGetAllDiets } from '@/hooks/diets/useGetAllDiets';
 import { useAssignDiet } from '@/hooks/diets/useAssignDiet';
 import { useParams } from 'next/navigation';
 
-export default function AssignDiet({ user }) {
+export default function AssignDiet({ user, onSelectDiet }) {
   const { editPatients } = useAssignDiet();
   const { id: patientId } = useParams();
   const { dietsData, refetch: fetchDiets } = useGetAllDiets();
@@ -22,19 +22,9 @@ export default function AssignDiet({ user }) {
   };
 
   // Assign Handler
-  const handleAssign = async () => {
+  const handleAssign = () => {
     if (selected.length === 0) return;
-    const dietId = selected[0];
-    try {
-      await editPatients(dietId, [patientId]);
-      await fetchDiets();
-      setShowSuccess(true);
-      setSelected([]);
-      setOpen(false);
-      setTimeout(() => setShowSuccess(false), 3000);
-    } catch (err) {
-      console.error(err);
-    }
+    return selected[0];
   };
 
   useEffect(() => {
@@ -60,6 +50,7 @@ export default function AssignDiet({ user }) {
 
       {/* Dropdown button */}
       <button
+        type="button"
         onClick={() => setOpen(!open)}
         className="bg-beehealth-body-main flex w-full items-center justify-between rounded-md border border-gray-300 px-3 py-2 text-left text-sm text-gray-900 hover:border-gray-400"
       >
@@ -119,7 +110,12 @@ export default function AssignDiet({ user }) {
 
       {/* Assign button */}
       <button
-        onClick={handleAssign}
+        type="button"
+        onClick={() => {
+          const id = handleAssign();
+          if (id) onSelectDiet(id);
+          setOpen(false);
+        }}
         disabled={selected.length === 0}
         className="bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover mt-2 rounded-md px-3 py-2 text-sm text-white disabled:opacity-50"
       >

@@ -5,7 +5,7 @@ import AssignDiet from './components/AssignDiet.jsx';
 import AssignWorkout from './components/AssignWorkout.jsx';
 import useAuthStore from '@/zustand/useAuthStore';
 
-export default function AssignSection() {
+export default function AssignSection({ onSelectDiet }) {
   // Custom Hook to get current user data
   const { user, isAuthenticated, token } = useAuthStore();
 
@@ -21,6 +21,7 @@ export default function AssignSection() {
       {/* Mode buttons */}
       <div className="mb-4 flex gap-2">
         <button
+          type="button"
           onClick={() => setMode(mode === 'diet' ? null : 'diet')}
           className="bg-beehealth-green-secondary-solid hover:bg-beehealth-green-secondary-solid-hover flex-1 rounded-lg px-4 py-2 text-xs font-medium text-white"
         >
@@ -28,6 +29,7 @@ export default function AssignSection() {
         </button>
 
         <button
+          type="button"
           onClick={() => setMode(mode === 'workout' ? null : 'workout')}
           className="bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover flex-1 rounded-lg px-4 py-2 text-xs font-medium text-white"
         >
@@ -36,7 +38,7 @@ export default function AssignSection() {
       </div>
 
       {/* Render component */}
-      {mode === 'diet' && <AssignDiet user={user} />}
+      {mode === 'diet' && <AssignDiet user={user} onSelectDiet={onSelectDiet} />}
       {mode === 'workout' && <AssignWorkout />}
 
       {!mode && (
