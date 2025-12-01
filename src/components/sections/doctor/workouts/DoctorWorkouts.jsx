@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Loader2, Plus, Search } from 'lucide-react';
 import SharedSectionHeader from '@/components/shared/headers/SharedSectionHeader';
 import WorkoutCard from './components/workoutCard/WorkoutCard';
+import LoadingState from '@/components/shared/feedback/LoadingState';
 
 // Hooks
 import { useGetAllWorkouts } from '@/hooks/workouts/useGetAllWorkouts';
@@ -12,9 +13,9 @@ import { useDeleteWorkout } from '@/hooks/workouts/useDeleteWorkout';
 
 // Modals
 import SharedModalOpenWorkout from '@/components/shared/workouts/SharedModalOpenWorkout';
-import ModalEditWorkout from './components/modals/ModalEditWorkout';
-import ModalDelete from './components/modals/ModalDelete';
+import ModalDelete from './components/modals/delete/ModalDelete';
 import ModalCreateWorkout from './components/modals/create/ModalCreateWorkout';
+import ModalEditWorkout from './components/modals/edit/ModalEditWorkout';
 
 export default function DoctorWorkouts({ role }) {
   // Get Workouts from API
@@ -84,18 +85,7 @@ export default function DoctorWorkouts({ role }) {
 
   // Loading State
   if (isLoading) {
-    return (
-      <div className="flex min-h-[400px] items-center justify-center">
-        {error ? (
-          <p className="text-lg font-medium text-red-600">Error al cargar los datos del paciente</p>
-        ) : (
-          <div className="text-center">
-            <Loader2 className="mx-auto mb-4 h-16 w-16 animate-spin text-blue-600" />
-            <p className="text-lg font-medium text-gray-600">Cargando información...</p>
-          </div>
-        )}
-      </div>
-    );
+    return <LoadingState />;
   }
 
   return (
@@ -140,17 +130,6 @@ export default function DoctorWorkouts({ role }) {
               className="w-full rounded-lg border border-gray-300 py-2 pr-3 pl-10 outline-none"
             />
           </div>
-
-          {/* Create Workout Button */}
-          {/* <button
-            onClick={() => {
-              setEditingWorkout(null);
-              setShowCreateWorkoutModal(true);
-            }}
-            className="bg-beehealth-green-secondary-solid hover:bg-beehealth-green-secondary-solid-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white"
-          >
-            <Plus className="h-5 w-5" /> Nuevo
-          </button> */}
         </div>
       </div>
 

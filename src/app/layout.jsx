@@ -1,4 +1,5 @@
 import './globals.css';
+import ReactQueryProvider from '@/lib/tanstack/ReactQueryProvider';
 
 /* Base info */
 export const metadata = {
@@ -68,7 +69,9 @@ export const viewport = {
 export default function AuthRootLayout({ children }) {
   return (
     <html lang="es">
-      <body className="bg-beehealth-body-main min-h-screen overflow-hidden">{children}</body>
+      <body className="bg-beehealth-body-main min-h-screen overflow-hidden">
+        <ReactQueryProvider>{children}</ReactQueryProvider>
+      </body>
     </html>
   );
 }

@@ -8,6 +8,7 @@ interface IClinicalRecord extends Document {
   diets?: Types.ObjectId[];
   workouts?: Types.ObjectId[];
   answers: IAnswer[];
+  recordDate: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -20,6 +21,7 @@ const ClinicalRecordSchema: Schema<IClinicalRecord> = new Schema(
     specialty: { type: String, enum: ['weight', 'dental', 'stetic'], required: true },
     version: { type: String, enum: ['short', 'full'], required: true },
     answers: [AnswerSchema],
+    recordDate: { type: Date, required: true },
   },
   { timestamps: true }
 );

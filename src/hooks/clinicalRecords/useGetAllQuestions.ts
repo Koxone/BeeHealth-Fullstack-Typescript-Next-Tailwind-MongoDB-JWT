@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
+/* Types */
 export interface Question {
   _id: string;
   questionId: number;
@@ -13,31 +14,32 @@ export interface Question {
 }
 
 export function useGetAllQuestions() {
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  /* Fetcher */
+  const fetchQuestions = async (): Promise<Question[]> => {
+    // Fetch request
+    const res = await fetch('/api/clinicalRecords/questions');
+    const data = await res.json();
 
-  useEffect(() => {
-    async function fetchQuestions() {
-      try {
-        setLoading(true);
-        const res = await fetch('/api/clinicalRecords/questions');
-        const data = await res.json();
-
-        if (!res.ok) {
-          throw new Error(data.message || 'Failed to fetch questions');
-        }
-
-        setQuestions(data.data.sort((a, b) => a.questionId - b.questionId));
-      } catch (err: any) {
-        setError(err.message || 'Unknown error');
-      } finally {
-        setLoading(false);
-      }
+    if (!res.ok) {
+      throw new Error(data.message || 'Failed to fetch questions');
     }
 
-    fetchQuestions();
-  }, []);
+    // Sort questions by questionId
+    return [...data.data].sort((a, b) => a.questionId - b.questionId);
+  };
 
-  return { questions, loading, error };
+  /* Query */
+  const query = useQuery({
+    queryKey: ['clinical-records-questions'],
+    queryFn: fetchQuestions,
+    staleTime: 1000 * 60 * 10,
+    retry: 1,
+  });
+
+  return {
+    questions: query.data ?? [],
+    loading: query.isLoading,
+    error: query.error ? query.error.message : null,
+    refetch: query.refetch,
+  };
 }

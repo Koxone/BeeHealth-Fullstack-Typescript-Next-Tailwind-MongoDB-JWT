@@ -1,40 +1,36 @@
+import { useQuery } from '@tanstack/react-query';
+
+/* Types */
 import { IClinicalRecord, IClinicalRecordResponse } from '@/types';
-import { useState, useEffect, useCallback } from 'react';
 
-export function useGetPatientClinicalRecords(id: string): {
-  data: IClinicalRecord[] | null;
-  isLoading: boolean;
-  error: Error | null;
-  refetch: () => Promise<void>;
-} {
-  /* State */
-  const [data, setData] = useState<IClinicalRecord[] | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
+export function useGetPatientClinicalRecords(id: string) {
+  /* Fetcher */
+  const fetchRecords = async (): Promise<IClinicalRecord[]> => {
+    const res = await fetch(`/api/clinicalRecords/${id}`);
+    if (!res.ok) throw new Error('Error fetching clinical records');
 
-  /* Fetch function */
-  const fetchRecord = useCallback(async () => {
-    if (!id) return;
-    setIsLoading(true);
-    setError(null);
+    // Parse json
+    const json: IClinicalRecordResponse = await res.json();
 
-    try {
-      const res = await fetch(`/api/clinicalRecords/${id}`);
-      if (!res.ok) throw new Error('Error fetching clinical record');
+    // Sort newest first
+    return [...json.data].sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+  };
 
-      const json: IClinicalRecordResponse = await res.json();
-      setData(json.data);
-    } catch (err: unknown) {
-      setError(err as Error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [id]);
+  /* Query */
+  const query = useQuery({
+    queryKey: ['clinical-records', id],
+    queryFn: fetchRecords,
+    enabled: Boolean(id),
+    staleTime: 1000 * 60 * 2,
+    retry: 1,
+  });
 
-  /* Auto load */
-  useEffect(() => {
-    fetchRecord();
-  }, [fetchRecord]);
-
-  return { data, isLoading, error, refetch: fetchRecord };
+  return {
+    data: query.data ?? null,
+    isLoading: query.isLoading,
+    error: query.error ?? null,
+    refetch: query.refetch,
+  };
 }

@@ -1,6 +1,8 @@
-import { Scale, Edit2, Eye } from 'lucide-react';
+import { Scale, Edit2, Eye, Pencil } from 'lucide-react';
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/useGetAllQuestions';
 import Link from 'next/link';
+import EditRecordDateButton from './components/EditRecordDateButton';
+import { useEditClinicalRecord } from '@/hooks/clinicalRecords/useEditClinicalRecord';
 
 function HistoryCard({ r, onEdit, specialty }) {
   function getValueByQuestionId(questionId) {
@@ -17,26 +19,35 @@ function HistoryCard({ r, onEdit, specialty }) {
     const ans = answersArray.find((a) => a?.question?.questionId === questionId);
     return ans ? ans.value : null;
   }
-
   const { questions } = useGetAllQuestions();
   const filtered = questions?.filter((q) => q.version === 'quick' && q.specialty === specialty);
+
+  const { editClinicalRecord } = useEditClinicalRecord();
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:gap-4">
       {/* Date block */}
       <div className="flex flex-col items-center justify-center text-center">
         <div className="bg-beehealth-blue-primary-light text-beehealth-blue-primary-dark border-beehealth-blue-primary-solid flex h-12 w-12 flex-col items-center justify-center rounded-lg border sm:h-14 sm:w-14">
           <span className="text-xs font-medium uppercase">
-            {new Date(r.updatedAt).toLocaleDateString('es-MX', { month: 'short' })}
+            {new Date(r.recordDate).toLocaleDateString('es-MX', { month: 'short' })}
           </span>
-          <span className="text-base font-bold sm:text-lg">
-            {new Date(r.updatedAt).toLocaleDateString('es-MX', { day: '2-digit' })}
-          </span>
+          <span className="text-base font-bold sm:text-lg">{r.recordDate.substring(8, 10)}</span>
         </div>
 
+        {/* First record badge */}
         {r?.version === 'full' && (
           <span className="text-beehealth-blue-primary-solid text-xs font-semibold">
             Primera Vez
           </span>
+        )}
+
+        {/* Edit record date */}
+        {r?.version === 'short' && (
+          <EditRecordDateButton
+            onSelect={(formattedDate) => {
+              editClinicalRecord(r._id, { recordDate: formattedDate });
+            }}
+          />
         )}
       </div>
 
