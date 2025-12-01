@@ -2,20 +2,17 @@
 
 import { useState } from 'react';
 import { ChevronDown, Check, X } from 'lucide-react';
+import { useGetAllWorkouts } from '@/hooks/workouts/useGetAllWorkouts';
 
 export default function AssignWorkout() {
+  // Fetch workouts with Custom Hook
+  const { workoutData, isLoading, error, refetch: fetchWorkouts } = useGetAllWorkouts();
+
   /* State */
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState([]);
   const [assigned, setAssigned] = useState([]);
   const [showSuccess, setShowSuccess] = useState(false);
-
-  /* Mock */
-  const mockWorkouts = [
-    { id: 'w1', name: 'Plancha Abdominal' },
-    { id: 'w2', name: 'Sentadillas' },
-    { id: 'w3', name: 'Cardio HIIT' },
-  ];
 
   /* Toggle */
   const toggleItem = (id) => {
@@ -24,7 +21,7 @@ export default function AssignWorkout() {
 
   /* Assign */
   const handleAssign = () => {
-    const assignedItems = mockWorkouts.filter((w) => selected.includes(w.id));
+    const assignedItems = workoutData?.filter((w) => selected.includes(w.id)) || [];
     setAssigned((prev) => [...prev, ...assignedItems]);
     setSelected([]);
     setOpen(false);
@@ -45,7 +42,7 @@ export default function AssignWorkout() {
       </label>
 
       {/* Dropdown */}
-      <button
+      <div
         onClick={() => setOpen(!open)}
         className="bg-beehealth-body-main flex w-full items-center justify-between rounded-md border border-gray-300 px-3 py-2 text-left text-sm text-gray-900 hover:border-gray-400"
       >
@@ -55,7 +52,7 @@ export default function AssignWorkout() {
           {selected.length > 1 && `${selected.length} seleccionados`}
         </span>
         <ChevronDown className="h-4 w-4 text-gray-600" />
-      </button>
+      </div>
 
       {/* Dropdown content */}
       {open && (
@@ -69,16 +66,19 @@ export default function AssignWorkout() {
           </div>
 
           <ul className="divide-y divide-gray-100">
-            {mockWorkouts.map((item) => (
+            {workoutData?.map((item) => (
               <li
-                key={item.id}
+                key={item._id}
                 className="hover:bg-beehealth-body-main flex cursor-pointer items-center gap-3 px-3 py-2"
                 onClick={() => toggleItem(item.id)}
               >
                 <input
                   type="checkbox"
                   checked={selected.includes(item.id)}
-                  onChange={() => toggleItem(item.id)}
+                  onChange={(e) => {
+                    e.stopPropagation();
+                    toggleItem(item.id);
+                  }}
                   className="text-beehealth-blue-primary-solid h-4 w-4 rounded border-gray-300"
                 />
                 <span className="text-sm text-gray-700">{item.name}</span>
