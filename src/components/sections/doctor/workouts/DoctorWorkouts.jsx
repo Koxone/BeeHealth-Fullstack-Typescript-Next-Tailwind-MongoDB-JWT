@@ -13,9 +13,9 @@ import { useDeleteWorkout } from '@/hooks/workouts/useDeleteWorkout';
 
 // Modals
 import SharedModalOpenWorkout from '@/components/shared/workouts/SharedModalOpenWorkout';
-import ModalEditWorkout from './components/modals/ModalEditWorkout';
-import ModalDelete from './components/modals/ModalDelete';
+import ModalDelete from './components/modals/delete/ModalDelete';
 import ModalCreateWorkout from './components/modals/create/ModalCreateWorkout';
+import ModalEditWorkout from './components/modals/edit/ModalEditWorkout';
 
 export default function DoctorWorkouts({ role }) {
   // Get Workouts from API
