@@ -87,7 +87,7 @@ export default function SharedSectionHeader({
           {/* Doctor New Diet Button */}
           <Link
             href="/doctor/diets/new"
-            className="bg-beehealth-green-secondary-solid hover:bg-beehealth-green-secondary-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white transition active:scale-95"
+            className="bg-beehealth-green-secondary-solid hover:bg-beehealth-green-secondary-solid-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white transition active:scale-95"
           >
             <Plus className="h-5 w-5" />
             Nueva Dieta

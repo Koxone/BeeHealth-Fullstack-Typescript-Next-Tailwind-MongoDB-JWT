@@ -44,12 +44,27 @@ export default function SharedDiets({ role }) {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {dietsData?.map((diet) =>
-          role === 'doctor' ? (
-            <DoctorDietCard diet={diet} key={diet._id} />
-          ) : (
-            <PatientDietCard diet={diet} key={diet._id} />
+        {dietsData && dietsData.length > 0 ? (
+          dietsData.map((diet) =>
+            role === 'doctor' ? (
+              <DoctorDietCard diet={diet} key={diet._id} />
+            ) : (
+              <PatientDietCard diet={diet} key={diet._id} />
+            )
           )
+        ) : (
+          // No diets message
+          <div className="col-span-full flex flex-col items-center justify-center py-10 text-center">
+            <p className="text-lg font-semibold text-gray-700">No hay dietas registradas</p>
+
+            {role === 'doctor' && (
+              <p className="text-gray-500">Crea un nuevo plan nutricional para comenzar</p>
+            )}
+
+            {role === 'patient' && (
+              <p className="text-gray-500">Todavía no tienes dietas asignadas</p>
+            )}
+          </div>
         )}
       </div>
     </div>
