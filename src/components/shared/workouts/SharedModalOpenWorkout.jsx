@@ -1,5 +1,6 @@
 'use client';
 
+import { useModalClose } from '@/hooks/useModalClose';
 import {
   ChevronLeft,
   ChevronRight,
@@ -27,11 +28,14 @@ export default function SharedModalOpenWorkout({
   setCurrentImageIndex,
   onClose,
 }) {
+  // Close handler
+  const { handleOverlayClick } = useModalClose(onClose);
+
+  // Carousel Handlers
   const nextImage = () =>
     setCurrentImageIndex((prev) =>
       workout?.images?.length ? (prev === workout.images.length - 1 ? 0 : prev + 1) : 0
     );
-
   const prevImage = () =>
     setCurrentImageIndex((prev) =>
       workout?.images?.length ? (prev === 0 ? workout.images.length - 1 : prev - 1) : 0
@@ -44,12 +48,12 @@ export default function SharedModalOpenWorkout({
     return id ? `https://www.youtube.com/embed/${id}` : url;
   };
   return (
-    <>
-      <div
-        className="animate-in fade-in fixed inset-0 z-50 h-screen bg-black/70 backdrop-blur-md transition-all duration-300"
-        onClick={onClose}
-      />
-      <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div
+      id="overlay"
+      onClick={handleOverlayClick}
+      className="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md"
+    >
+      <div className="pointer-events-none relative inset-0 z-50 flex items-center justify-center p-4">
         <div
           className="animate-slideUp bg-beehealth-body-main pointer-events-auto max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-2xl shadow-2xl"
           onClick={(e) => e.stopPropagation()}
@@ -204,6 +208,6 @@ export default function SharedModalOpenWorkout({
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
