@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Search } from 'lucide-react';
 
 import WorkoutCard from './components/WorkoutCard';
-import { useGetAllWorkouts } from '@/hooks/workouts/useGetAllWorkouts';
+import { useGetAllWorkouts } from '@/hooks/workouts/get/useGetAllWorkouts';
 import SharedSectionHeader from '@/components/shared/headers/SharedSectionHeader';
 import SharedModalOpenWorkout from '../../../shared/workouts/SharedModalOpenWorkout';
 

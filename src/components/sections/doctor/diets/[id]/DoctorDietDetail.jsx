@@ -1,9 +1,9 @@
 'use client';
 
 import { AlertCircle } from 'lucide-react';
-import { useGetAllDiets } from '@/hooks/diets/useGetAllDiets';
+import { useGetAllDiets } from '@/hooks/diets/get/useGetAllDiets';
 import { useEffect, useState } from 'react';
-import { useEditDiet } from '@/hooks/diets/useEditDiet';
+import { useEditDiet } from '@/hooks/diets/edit/useEditDiet';
 import { useSearchParams } from 'next/navigation';
 
 import AssignDiet from './components/AssignDiet';

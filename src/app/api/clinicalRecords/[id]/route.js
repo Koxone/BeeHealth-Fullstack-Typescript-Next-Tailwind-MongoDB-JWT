@@ -26,6 +26,9 @@ export async function GET(req, { params }) {
       /* Populate diets */
       .populate('diets', 'name')
 
+      /* Populate workouts */
+      .populate('workouts', 'name')
+
       /* Populate answers.question */
       .populate({
         path: 'answers.question',

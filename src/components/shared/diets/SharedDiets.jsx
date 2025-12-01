@@ -2,7 +2,7 @@
 
 export const runtime = 'nodejs';
 import SharedSectionHeader from '../headers/SharedSectionHeader';
-import { useGetAllDiets } from '@/hooks/diets/useGetAllDiets';
+import { useGetAllDiets } from '@/hooks/diets/get/useGetAllDiets';
 import { Loader2 } from 'lucide-react';
 import DoctorDietCard from '@/components/sections/doctor/diets/components/DoctorDietCard';
 import PatientDietCard from '@/components/sections/patient/diets/components/PatientDietCard';

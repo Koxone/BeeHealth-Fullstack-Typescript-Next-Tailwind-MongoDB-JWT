@@ -6,7 +6,7 @@ import BasicInfoSection from './components/basic/BasicInfoSection';
 import MultimediaSection from './components/multimedia/MultimediaSection';
 import DetailsSection from './components/details/DetailsSection';
 import { useModalClose } from '@/hooks/useModalClose';
-import { useEditWorkout } from '@/hooks/workouts/useEditWorkout';
+import { useEditWorkout } from '@/hooks/workouts/edit/useEditWorkout';
 
 export default function ModalEditWorkout({ setShowEditModal, editingWorkout }) {
   // Edit Workout Custom Hook

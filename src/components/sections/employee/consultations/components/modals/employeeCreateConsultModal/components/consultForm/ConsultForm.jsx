@@ -1,6 +1,6 @@
 import { Clock, User, DollarSign, Notebook } from 'lucide-react';
 import MedsSold from './components/MedsSold';
-import { useGetAllPatients } from '@/hooks/patients/useGetAllPatients';
+import { useGetAllPatients } from '@/hooks/patients/get/useGetAllPatients';
 import { useEffect } from 'react';
 
 /* Form */

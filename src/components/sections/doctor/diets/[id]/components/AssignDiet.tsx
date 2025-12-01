@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { ChevronDown, Check } from 'lucide-react';
-import { useGetAllPatients } from '@/hooks/patients/useGetAllPatients';
-import { useAssignDiet } from '@/hooks/diets/useAssignDiet';
+import { useGetAllPatients } from '@/hooks/patients/get/useGetAllPatients';
+import { useAssignDiet } from '@/hooks/diets/assign/useAssignDiet';
 
 export default function AssignDiet({
   specialty,

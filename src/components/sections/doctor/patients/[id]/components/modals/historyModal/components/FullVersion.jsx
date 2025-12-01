@@ -1,6 +1,6 @@
 import LoadingState from '@/components/shared/feedback/LoadingState';
-import { useGetAllQuestions } from '@/hooks/clinicalRecords/useGetAllQuestions';
-import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/useGetPatientClinicalRecords';
+import { useGetAllQuestions } from '@/hooks/clinicalRecords/get/useGetAllQuestions';
+import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/get/useGetPatientClinicalRecords';
 import { CalendarIcon } from 'lucide-react';
 
 export default function FullVersion({ specialty, isReadOnly = true, patientId }) {

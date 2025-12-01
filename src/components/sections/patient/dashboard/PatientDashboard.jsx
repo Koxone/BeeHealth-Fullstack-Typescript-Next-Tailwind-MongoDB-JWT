@@ -5,7 +5,7 @@ import HeaderWelcome from '@/components/shared/dashboard/header/HeaderWelcome';
 import PatientEvolutionChart from './components/PatientEvolutionChart';
 import PatientMotivationalBanner from './components/PatientMotivationalBanner';
 import PatientStatsGrid from './components/PatientStatsGrid';
-import { useGetAllClinicalRecords } from '@/hooks/clinicalRecords/useGetAllClinicalRecords';
+import { useGetAllClinicalRecords } from '@/hooks/clinicalRecords/get/useGetAllClinicalRecords';
 
 export default function PatientDashboard({ currentUser }) {
   // Fetch clinical records for the patient

@@ -1,6 +1,6 @@
 'use client';
 
-import { useCreateWorkout } from '@/hooks/workouts/useCreateWorkout';
+import { useCreateWorkout } from '@/hooks/workouts/create/useCreateWorkout';
 import { X, Dumbbell, AlertCircle, Loader } from 'lucide-react';
 import { useState } from 'react';
 import BasicInfoSection from './components/basic/BasicInfoSection';

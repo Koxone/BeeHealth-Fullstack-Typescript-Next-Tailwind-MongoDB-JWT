@@ -3,7 +3,7 @@
 import { useMemo, useState, useCallback } from 'react';
 import TabsHeader from './components/TabsHeader';
 import ActionButtons from './components/ActionButtons';
-import { useGetAllQuestions } from '@/hooks/clinicalRecords/useGetAllQuestions';
+import { useGetAllQuestions } from '@/hooks/clinicalRecords/get/useGetAllQuestions';
 
 // Inputs to render
 import Text from './components/inputs/Text';
@@ -11,7 +11,7 @@ import Number from './components/inputs/Number';
 import Date from './components/inputs/Date';
 import Select from './components/inputs/Select';
 import Radio from './components/inputs/Radio';
-import { useCreateClinicalRecordPatient } from '@/hooks/clinicalRecords/useCreateClinicalRecordPatient';
+import { useCreateClinicalRecordPatient } from '@/hooks/clinicalRecords/create/useCreateClinicalRecordPatient';
 
 export default function CreateClinicalRecord({ currentUser }) {
   // Local States

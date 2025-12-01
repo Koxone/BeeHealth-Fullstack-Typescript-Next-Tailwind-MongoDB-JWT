@@ -1,30 +1,39 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronDown, Check, X } from 'lucide-react';
-import { useGetAllWorkouts } from '@/hooks/workouts/useGetAllWorkouts';
+import { useGetAllWorkouts } from '@/hooks/workouts/get/useGetAllWorkouts';
+import { useParams } from 'next/navigation';
+import { useEditWorkout } from '@/hooks/workouts/edit/useEditWorkout';
 
-export default function AssignWorkout() {
+export default function AssignWorkout({ user, onSelectWorkout }) {
+  const { id: workoutId } = useParams();
+
   // Fetch workouts with Custom Hook
   const { workoutData, isLoading, error, refetch: fetchWorkouts } = useGetAllWorkouts();
 
   /* State */
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState([]); //Click on checkbox = _id
   const [assigned, setAssigned] = useState([]);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  /* Toggle */
+  // Force single selection
   const toggleItem = (id) => {
-    setSelected((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+    setSelected([id]);
   };
 
-  /* Assign */
+  useEffect(() => {
+    console.log(selected);
+  }, [selected]);
+
+  // Assign handler
   const handleAssign = () => {
-    const assignedItems = workoutData?.filter((w) => selected.includes(w.id)) || [];
-    setAssigned((prev) => [...prev, ...assignedItems]);
-    setSelected([]);
+    const workoutId = selected[0];
+    setAssigned([workoutId]);
+    onSelectWorkout(workoutId);
     setOpen(false);
+    console.log(assigned);
     setShowSuccess(true);
     setTimeout(() => setShowSuccess(false), 3000);
   };
@@ -70,11 +79,11 @@ export default function AssignWorkout() {
               <li
                 key={item._id}
                 className="hover:bg-beehealth-body-main flex cursor-pointer items-center gap-3 px-3 py-2"
-                onClick={() => toggleItem(item.id)}
+                onClick={() => toggleItem(item._id)}
               >
                 <input
                   type="checkbox"
-                  checked={selected.includes(item.id)}
+                  checked={selected.includes(item._id)}
                   onChange={(e) => {
                     e.stopPropagation();
                     toggleItem(item.id);
@@ -90,6 +99,7 @@ export default function AssignWorkout() {
 
       {/* Assign button */}
       <button
+        type="button"
         onClick={handleAssign}
         disabled={selected.length === 0}
         className="bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover mt-2 rounded-md px-3 py-2 text-sm text-white disabled:opacity-50"
@@ -113,7 +123,7 @@ export default function AssignWorkout() {
           <div className="flex flex-wrap gap-2">
             {assigned.map((item) => (
               <div
-                key={item.id}
+                key={item}
                 className="bg-beehealth-blue-secondary-solid flex items-center gap-2 rounded-lg px-3 py-1 text-xs font-medium text-white"
               >
                 {item.name}

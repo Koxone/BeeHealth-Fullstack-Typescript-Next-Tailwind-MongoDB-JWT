@@ -2,7 +2,7 @@
 
 import { Activity, Weight, TrendingDown, Ruler } from 'lucide-react';
 import PatientStatsCard from './PatientStatsCard';
-import { useGetAllClinicalRecords } from '@/hooks/clinicalRecords/useGetAllClinicalRecords';
+import { useGetAllClinicalRecords } from '@/hooks/clinicalRecords/get/useGetAllClinicalRecords';
 import useGetAnswer from '@/hooks/useGetAnswer';
 
 export default function PatientStatsGrid({ role, currentUser }) {

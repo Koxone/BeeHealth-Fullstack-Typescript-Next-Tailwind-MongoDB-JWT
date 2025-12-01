@@ -14,8 +14,12 @@ import RegisterVisitButton from './components/RegisterVisitButton';
 import moment from 'moment';
 import AssignedDiets from '@/components/sections/test/AssignedDiets';
 import AssignedWorkouts from '@/components/sections/test/AssignedWorkouts';
+import { useGetAllWorkouts } from '@/hooks/workouts/get/useGetAllWorkouts';
+import { useGetAllDiets } from '@/hooks/diets/get/useGetAllDiets';
+import { useParams } from 'next/navigation';
 
 export default function PatientHeader({ onClickNew, patientRecord }) {
+  const { id } = useParams();
   // Specialty map
   const specialtyLabels = {
     weight: 'Control de Peso',
@@ -50,6 +54,16 @@ export default function PatientHeader({ onClickNew, patientRecord }) {
     if (answerObj.value === 'false') return 'No';
     return answerObj.value;
   }
+
+  const { workoutData } = useGetAllWorkouts();
+  const { dietsData } = useGetAllDiets();
+
+  const assignedWorkoutsData = workoutData?.filter((workout) =>
+    workout.patients?.some((p) => p.patient?._id === id)
+  );
+  const assignedDietsData = dietsData?.filter((diet) =>
+    diet.patients?.some((p) => p.patient?._id === id)
+  );
 
   return (
     <div className="bg-beehealth-green-primary-dark relative overflow-hidden rounded-2xl p-8 shadow-xl">
@@ -88,9 +102,9 @@ export default function PatientHeader({ onClickNew, patientRecord }) {
 
             {/* Assigned Section */}
             <div className="grid grid-cols-2 items-center gap-4">
-              <AssignedDiets />
+              <AssignedDiets assignedDietsData={assignedDietsData} />
 
-              <AssignedWorkouts />
+              <AssignedWorkouts assignedWorkoutsData={assignedWorkoutsData} />
             </div>
           </div>
 

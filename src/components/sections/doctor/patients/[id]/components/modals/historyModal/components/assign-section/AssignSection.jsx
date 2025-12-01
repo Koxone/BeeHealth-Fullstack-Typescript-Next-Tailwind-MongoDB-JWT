@@ -5,7 +5,7 @@ import AssignDiet from './components/AssignDiet.jsx';
 import AssignWorkout from './components/AssignWorkout.jsx';
 import useAuthStore from '@/zustand/useAuthStore';
 
-export default function AssignSection({ onSelectDiet }) {
+export default function AssignSection({ onSelectDiet, onSelectWorkout }) {
   // Auth data
   const { user, isAuthenticated, token } = useAuthStore();
 
@@ -39,7 +39,7 @@ export default function AssignSection({ onSelectDiet }) {
 
       {/* Render component */}
       {mode === 'diet' && <AssignDiet user={user} onSelectDiet={onSelectDiet} />}
-      {mode === 'workout' && <AssignWorkout />}
+      {mode === 'workout' && <AssignWorkout user={user} onSelectWorkout={onSelectWorkout} />}
 
       {!mode && (
         <p className="text-xs text-gray-500">Selecciona Dieta o Ejercicio para continuar.</p>

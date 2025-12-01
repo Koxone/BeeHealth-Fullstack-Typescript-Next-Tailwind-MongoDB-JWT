@@ -3,7 +3,15 @@ import AddHistoryButton from './components/AddHistoryButton';
 import HistoryCard from './components/history-card/HistoryCard';
 
 /* Clinical history */
-export default function ClinicalHistory({ onAdd, onEdit, patientRecord, specialty }) {
+export default function ClinicalHistory({
+  onAdd,
+  onEdit,
+  onDelete,
+  patientRecord,
+  specialty,
+  showDeleteModal,
+  setShowDeleteModal,
+}) {
   return (
     <div className="bg-beehealth-body-main rounded-2xl border border-(--med-gray-border) p-4 shadow-sm sm:p-6">
       {/* Header */}
@@ -49,6 +57,9 @@ export default function ClinicalHistory({ onAdd, onEdit, patientRecord, specialt
                   specialty={specialty}
                   r={r}
                   onEdit={(record, readOnly) => onEdit(record, readOnly)}
+                  showDeleteModal={showDeleteModal}
+                  setShowDeleteModal={setShowDeleteModal}
+                  onDelete={onDelete}
                 />
               </div>
             );

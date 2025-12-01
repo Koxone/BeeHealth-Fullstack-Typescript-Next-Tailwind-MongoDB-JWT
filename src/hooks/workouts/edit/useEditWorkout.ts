@@ -1,10 +1,24 @@
 import { useState } from 'react';
 
-export function useEditWorkout() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+export interface WorkoutPayload {
+  patients?: string[];
+  name?: string;
+  type?: string;
+  difficulty?: 'Beginner' | 'Intermediate' | 'Advanced';
+  duration?: number;
+  about?: string;
+  instructions?: string[];
+  benefits?: string[];
+  cautions?: string[];
+  images?: string[];
+  video?: string;
+}
 
-  const editWorkout = async (workoutId, fields) => {
+export function useEditWorkout() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const editWorkout = async (workoutId: string, payload: WorkoutPayload) => {
     setIsLoading(true);
     setError(null);
 
@@ -13,7 +27,7 @@ export function useEditWorkout() {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify(fields),
+        body: JSON.stringify(payload),
       });
 
       if (!res.ok) {

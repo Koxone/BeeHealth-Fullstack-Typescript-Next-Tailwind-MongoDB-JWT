@@ -3,9 +3,10 @@
 import { useState, useEffect } from 'react';
 import { X, FileText } from 'lucide-react';
 import { useModalClose } from '@/hooks/useModalClose';
-import { useCreateClinicalRecordDoctor } from '@/hooks/clinicalRecords/useCreateClinicalRecordDoctor';
-import { useGetAllQuestions } from '@/hooks/clinicalRecords/useGetAllQuestions';
-import { useAssignDiet } from '@/hooks/diets/useAssignDiet';
+import { useCreateClinicalRecordDoctor } from '@/hooks/clinicalRecords/create/useCreateClinicalRecordDoctor';
+import { useGetAllQuestions } from '@/hooks/clinicalRecords/get/useGetAllQuestions';
+import { useEditWorkout } from '@/hooks/workouts/edit/useEditWorkout';
+import { useAssignDiet } from '@/hooks/diets/assign/useAssignDiet';
 import ModalHeader from './components/ModalHeader';
 import TabsNav from './components/TabsNav';
 import ShortVersion from './components/ShortVersion';
@@ -27,6 +28,10 @@ export default function ClinicalRecordModal({
   // Diet state
   const [dietSelected, setDietSelected] = useState(null);
   const { editPatients } = useAssignDiet();
+
+  // Workout state
+  const [workoutSelected, setWorkoutSelected] = useState(null);
+  const { editWorkout } = useEditWorkout();
 
   // Close handler
   const { handleOverlayClick } = useModalClose(onClose);
@@ -87,6 +92,17 @@ export default function ClinicalRecordModal({
       }
     }
 
+    // Assign workout to patient if selected
+    if (workoutSelected) {
+      try {
+        await editWorkout(workoutSelected, [patientId]);
+        console.log('Koxone:', workoutSelected, patientId);
+      } catch (err) {
+        console.error('Error assigning workout:', err);
+        return;
+      }
+    }
+
     // Submit clinical record including dietId
     const result = await submit({
       patientId,
@@ -94,7 +110,7 @@ export default function ClinicalRecordModal({
       version: 'short',
       answers,
       dietId: dietSelected || null,
-      workoutId: null,
+      workoutId: workoutSelected || null,
     });
 
     if (result.ok) {
@@ -147,6 +163,8 @@ export default function ClinicalRecordModal({
               onClose={onClose}
               dietSelected={dietSelected}
               setDietSelected={setDietSelected}
+              workoutSelected={workoutSelected}
+              setWorkoutSelected={setWorkoutSelected}
             />
           )}
 

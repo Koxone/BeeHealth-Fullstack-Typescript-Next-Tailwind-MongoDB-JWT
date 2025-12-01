@@ -8,7 +8,11 @@ button {
   --color-asana-green: #8b9c94;
 
   /* Body Main Color */
-  --color-beehealth-body-main: #f7f5f0;
+  --color-beehealth-body-main: #f8f3ed;
+  /* --color-beehealth-body-main: #f7f5f0; */
+
+  /* Logo Text */
+  --color-beehealth-logo-text: #726b61;
 
   /* Green Primary */
   --color-beehealth-green-primary-solid: #5f6b66;

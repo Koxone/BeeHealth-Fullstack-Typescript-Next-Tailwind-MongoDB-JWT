@@ -7,9 +7,9 @@ import WorkoutCard from './components/workoutCard/WorkoutCard';
 import LoadingState from '@/components/shared/feedback/LoadingState';
 
 // Hooks
-import { useGetAllWorkouts } from '@/hooks/workouts/useGetAllWorkouts';
+import { useGetAllWorkouts } from '@/hooks/workouts/get/useGetAllWorkouts';
 import { workoutsMockData } from './components/workoutsMockData';
-import { useDeleteWorkout } from '@/hooks/workouts/useDeleteWorkout';
+import { useDeleteWorkout } from '@/hooks/workouts/delete/useDeleteWorkout';
 
 // Modals
 import SharedModalOpenWorkout from '@/components/shared/workouts/SharedModalOpenWorkout';

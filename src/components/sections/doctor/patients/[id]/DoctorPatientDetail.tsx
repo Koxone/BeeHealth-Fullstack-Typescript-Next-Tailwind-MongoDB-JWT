@@ -1,7 +1,7 @@
 'use client';
 
 import { IClinicalRecord, TabName } from '@/types';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import PatientHeader from './components/patientHeader/PatientHeader';
 import QuickStats from './components/QuickStats';
@@ -14,11 +14,15 @@ import DoctorProducts from './components/products/DoctorProducts';
 import LoadingState from '@/components/shared/feedback/LoadingState';
 
 // Modals
-import ClinicalRecordModal from './components/historyModal/ClinicalRecordModal';
-import DoctorCreateAppointmentModal from './components/createAppointmentModal/DoctorCreateAppointmentModal';
+import ClinicalRecordModal from './components/modals/historyModal/ClinicalRecordModal';
+import DeleteRecordModal from './components/modals/delete-record-modal/DeleteRecordModal';
+import DoctorCreateAppointmentModal from './components/modals/createAppointmentModal/DoctorCreateAppointmentModal';
 
 // Fetch current patient clinical records
-import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/useGetPatientClinicalRecords';
+import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/get/useGetPatientClinicalRecords';
+
+// Delete clinical record custom hook
+import { useDeleteClinicalRecord } from '@/hooks/clinicalRecords/delete/useDeleteClinicalRecord';
 
 export default function DoctorPatientDetail({ patient, specialty }) {
   // ID From URL Params
@@ -41,6 +45,10 @@ export default function DoctorPatientDetail({ patient, specialty }) {
   const [showHistoryModal, setShowHistoryModal] = useState<boolean>(false);
   const [isReadOnly, setIsReadOnly] = useState<boolean>(false);
 
+  // Delete record modal
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+  const { deleteClinicalRecord } = useDeleteClinicalRecord();
+
   // Create Appointment Modal
   const [showCreateAppointmentModal, setShowCreateAppointmentModal] = useState<boolean>(false);
 
@@ -50,7 +58,6 @@ export default function DoctorPatientDetail({ patient, specialty }) {
   if (error || isLoading) {
     return <LoadingState />;
   }
-
   return (
     <div className="h-full space-y-6 overflow-y-auto">
       {/* Header */}
@@ -73,6 +80,8 @@ export default function DoctorPatientDetail({ patient, specialty }) {
         <ClinicalHistory
           specialty={specialty}
           patientRecord={patientRecord}
+          showDeleteModal={showDeleteModal}
+          setShowDeleteModal={setShowDeleteModal}
           onAdd={() => {
             const lastRecord = patientRecord?.[patientRecord.length - 1] || null;
             setSelectedRecord(lastRecord);
@@ -85,6 +94,10 @@ export default function DoctorPatientDetail({ patient, specialty }) {
             setIsReadOnly(readOnly);
             setHistoryMode(readOnly ? 'view' : 'edit');
             setShowHistoryModal(true);
+          }}
+          onDelete={(record) => {
+            setSelectedRecord(record);
+            setShowDeleteModal(true);
           }}
         />
       )}
@@ -100,6 +113,8 @@ export default function DoctorPatientDetail({ patient, specialty }) {
         <ClinicalHistory
           specialty={specialty}
           patientRecord={patientRecord}
+          showDeleteModal={showDeleteModal}
+          setShowDeleteModal={setShowDeleteModal}
           onAdd={() => {
             const lastRecord = patientRecord?.[0] || null;
             setSelectedRecord(lastRecord);
@@ -113,11 +128,17 @@ export default function DoctorPatientDetail({ patient, specialty }) {
             setHistoryMode(readOnly ? 'view' : 'edit');
             setShowHistoryModal(true);
           }}
+          onDelete={(record) => {
+            setSelectedRecord(record);
+            setShowDeleteModal(true);
+          }}
         />
       )}
 
+      {/* Weight Chart */}
       {specialty === 'weight' && <WeightChart patientRecord={patientRecord} />}
 
+      {/* Main Record Modal */}
       {showHistoryModal && (
         <ClinicalRecordModal
           fetchRecord={fetchRecord}
@@ -130,10 +151,23 @@ export default function DoctorPatientDetail({ patient, specialty }) {
         />
       )}
 
+      {/* Create Appointment Modal */}
       {showCreateAppointmentModal && (
         <DoctorCreateAppointmentModal
           currentPatientInfo={currentPatientInfo}
           onClose={() => setShowCreateAppointmentModal(false)}
+        />
+      )}
+
+      {/* Delete Record Modal */}
+      {showDeleteModal && (
+        <DeleteRecordModal
+          recordToDelete={selectedRecord}
+          handleDelete={async () => {
+            await deleteClinicalRecord(selectedRecord?._id);
+            await fetchRecord();
+          }}
+          setShowDeleteModal={setShowDeleteModal}
         />
       )}
     </div>

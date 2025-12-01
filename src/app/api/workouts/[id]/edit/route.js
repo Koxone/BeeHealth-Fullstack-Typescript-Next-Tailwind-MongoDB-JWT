@@ -28,38 +28,14 @@ export async function PATCH(req, { params }) {
       video,
     } = body;
 
-    if (
-      !name ||
-      !type ||
-      !difficulty ||
-      !duration ||
-      !about ||
-      !instructions ||
-      !benefits ||
-      !cautions ||
-      !images ||
-      !video
-    ) {
-      return NextResponse.json(
-        {
-          error:
-            'Name, type, difficulty, duration, about, instructions, benefits, cautions, images and video are required',
-        },
-        { status: 400 }
-      );
+    // Validate ID
+    if (!id || !id.match(/^[0-9a-fA-F]{24}$/)) {
+      return NextResponse.json({ error: 'Invalid workout ID' }, { status: 400 });
     }
 
     const auth = await getAuthUser(req);
     if (auth.error) {
       return NextResponse.json({ error: auth.error }, { status: auth.status });
-    }
-
-    // Get auth user
-    const { user } = auth;
-
-    // Validate if ID is a valid MongoDB ObjectId
-    if (!id || !id.match(/^[0-9a-fA-F]{24}$/)) {
-      return NextResponse.json({ error: 'Invalid workout ID' }, { status: 400 });
     }
 
     const workout = await Workout.findById(id);
@@ -68,18 +44,18 @@ export async function PATCH(req, { params }) {
     }
 
     // Update fields
-    workout.name = name;
-    workout.type = type;
-    workout.difficulty = difficulty;
-    workout.duration = duration;
-    workout.about = about;
-    workout.instructions = instructions;
-    workout.benefits = benefits;
-    workout.cautions = cautions;
-    workout.images = images;
-    workout.video = video;
+    if (name) workout.name = name;
+    if (type) workout.type = type;
+    if (difficulty) workout.difficulty = difficulty;
+    if (duration) workout.duration = duration;
+    if (about) workout.about = about;
+    if (instructions) workout.instructions = instructions;
+    if (benefits) workout.benefits = benefits;
+    if (cautions) workout.cautions = cautions;
+    if (images) workout.images = images;
+    if (video) workout.video = video;
 
-    // Update patients array if provided
+    // Update patients array
     if (patients && Array.isArray(patients)) {
       workout.patients = patients;
     }

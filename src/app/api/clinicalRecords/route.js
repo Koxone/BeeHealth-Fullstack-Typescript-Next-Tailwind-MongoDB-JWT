@@ -79,6 +79,7 @@ export async function POST(req) {
       version: finalVersion,
       answers: answerDocs,
       diets: dietId ? [dietId] : [],
+      workouts: workoutId ? [workoutId] : [],
       recordDate: new Date(),
     });
     await newRecord.save();

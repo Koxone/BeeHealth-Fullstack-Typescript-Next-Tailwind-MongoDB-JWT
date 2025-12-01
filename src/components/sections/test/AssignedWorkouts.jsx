@@ -2,69 +2,61 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { ChevronDown } from 'lucide-react';
 
-export default function AssignedWorkouts() {
+export default function AssignedWorkouts({ assignedWorkoutsData }) {
   // State
-  const [hasAssignedWorkouts] = useState(true);
-  const [workoutsCount] = useState(0);
+  const workoutsCount = assignedWorkoutsData?.length || 0;
+  const hasAssignedWorkouts = workoutsCount > 0;
+  const assignedWorkouts = assignedWorkoutsData || [];
 
-  // Mock data
-  const mockWorkouts = [
-    { id: '1', name: 'Plancha Abdominal' },
-    { id: '2', name: 'Sentadillas' },
-    { id: '3', name: 'Cardio Intensivo' },
-  ];
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="bg-beehealth-green-primary-solid flex h-full flex-col justify-between space-y-2 rounded-lg p-2">
       {/* Title */}
       <p className="text-xs">
-        {hasAssignedWorkouts
+        {hasAssignedWorkouts && workoutsCount > 0
           ? 'Ejercicios asignados a este paciente:'
           : 'Ningún ejercicio asignado'}
       </p>
 
       {/* Content */}
-      {hasAssignedWorkouts ? (
-        workoutsCount === 0 ? (
-          /* Zero workouts assigned */
-          <Link
-            href="/doctor/workouts"
-            className="bg-beehealth-blue-secondary-solid hover:bg-beehealth-blue-secondary-solid-hover flex w-full items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-medium text-white shadow-md transition active:scale-95 sm:w-auto"
+      {hasAssignedWorkouts && workoutsCount > 0 ? (
+        <div className="relative">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="bg-beehealth-blue-secondary-solid hover:bg-beehealth-blue-secondary-solid-hover flex w-full appearance-none items-center justify-between rounded-lg px-3 py-2 text-sm text-white focus:outline-none"
           >
-            Ir a asignar ejercicio
-          </Link>
-        ) : workoutsCount > 1 ? (
-          /* Select when multiple workouts assigned */
-          <select className="bg-beehealth-blue-secondary-solid w-full rounded-lg px-3 py-2 text-sm text-white focus:outline-none">
-            <option value="">
-              {workoutsCount === 1 ? mockWorkouts[0].name : `${workoutsCount} ejercicios asignados`}
-            </option>
+            {workoutsCount === 1
+              ? assignedWorkouts[0].name
+              : `${workoutsCount} ejercicios asignados`}
+            <ChevronDown
+              size={18}
+              className={`transition-transform ${isOpen ? 'rotate-180' : ''}`}
+            />
+          </button>
 
-            {mockWorkouts.map((workout) => (
-              <option key={workout.id} value={workout.id}>
-                {workout.name}
-              </option>
-            ))}
-          </select>
-        ) : (
-          /* Single workout */
-          <div>
-            <Link
-              href="/doctor/workouts"
-              className="bg-beehealth-blue-secondary-solid hover:bg-beehealth-blue-secondary-solid-hover flex w-full items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-medium text-white shadow-md transition active:scale-95 sm:w-auto"
-            >
-              {mockWorkouts[0].name}
-            </Link>
-          </div>
-        )
+          {isOpen && (
+            <div className="absolute top-full right-0 left-0 z-10 mt-1 max-h-48 overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg">
+              {assignedWorkouts.map((workout) => (
+                <Link
+                  key={workout._id}
+                  href={`/doctor/workouts/`}
+                  className="block w-full px-3 py-2 text-sm text-gray-800 transition first:rounded-t-lg last:rounded-b-lg hover:bg-gray-100"
+                >
+                  {workout.name}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
       ) : (
-        /* No workouts (hasAssignedWorkouts = false) */
         <Link
           href="/doctor/workouts"
           className="bg-beehealth-blue-secondary-solid hover:bg-beehealth-blue-secondary-solid-hover flex w-full items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-medium text-white shadow-md transition active:scale-95 sm:w-auto"
         >
-          Ir a asignar ejercicio
+          {hasAssignedWorkouts ? 'Ir a asignar ejercicio' : 'Ir a asignar ejercicio'}
         </Link>
       )}
     </div>

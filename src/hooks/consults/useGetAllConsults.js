@@ -1,37 +1,23 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 export function useGetAllConsults({ speciality = null } = {}) {
-  const [consults, setConsults] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { data, isLoading, error, refetch } = useQuery({
+    queryKey: ['consults', speciality],
+    queryFn: async () => {
+      const res = await fetch('/api/consults');
+      if (!res.ok) throw new Error('Failed to fetch consults');
+      return res.json();
+    },
+  });
 
-  useEffect(() => {
-    async function fetchConsults() {
-      try {
-        setIsLoading(true);
+  const filteredConsults = speciality
+    ? (data?.filter((c) => c.speciality === speciality) ?? [])
+    : (data ?? []);
 
-        const res = await fetch('/api/consults');
-        if (!res.ok) {
-          throw new Error('Failed to fetch consults');
-        }
-
-        const data = await res.json();
-
-        setConsults(data || []);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    fetchConsults();
-  }, []);
-
-  const filteredConsults = useMemo(() => {
-    if (!speciality) return consults;
-    return consults.filter((c) => c.speciality === speciality);
-  }, [consults, speciality]);
-
-  return { consults: filteredConsults, isLoading, error, setConsults };
+  return {
+    consults: filteredConsults,
+    isLoading,
+    error: error?.message ?? null,
+    refetch,
+  };
 }
