@@ -25,7 +25,7 @@ export default function CalendarPicker({
         </div>
       </div>
 
-      <div className="rounded-xl border border-gray-200 bg-linear-to-br from-gray-50 to-blue-50 p-5">
+      <div className="rounded-xl border border-gray-200 bg-beehealth-body-main p-5">
         {/* header */}
         <div className="mb-6 flex items-center justify-between">
           <button
