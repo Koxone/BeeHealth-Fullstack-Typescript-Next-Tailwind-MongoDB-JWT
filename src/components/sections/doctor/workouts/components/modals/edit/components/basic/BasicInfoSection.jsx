@@ -1,5 +1,4 @@
 import { Info, Sparkles, Clock, Dumbbell, TrendingUp } from 'lucide-react';
-import React from 'react';
 import AssignWorkout from '../AssignWorkout';
 
 function BasicInfoSection({ form, setForm, getNivelColor }) {
@@ -72,9 +71,8 @@ function BasicInfoSection({ form, setForm, getNivelColor }) {
             Duración (minutos)
           </label>
           <input
-            type="number"
+            type="text"
             placeholder="Ej: 30"
-            min="1"
             value={form.duration}
             onChange={(e) => setForm({ ...form, duration: e.target.value })}
             className="bg-beehealth-body-main w-full rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 outline-none placeholder:text-gray-400"
@@ -115,12 +113,14 @@ function BasicInfoSection({ form, setForm, getNivelColor }) {
         <div className="sm:col-span-2">
           <AssignWorkout
             selectedPatients={
-              form.patients?.map((p) => {
-                if (typeof p === 'string') return p;
-                if (p.patient && typeof p.patient === 'object') return p.patient._id;
-                if (p.patient) return p.patient;
-                return p._id;
-              }).filter(Boolean) || []
+              form.patients
+                ?.map((p) => {
+                  if (typeof p === 'string') return p;
+                  if (p.patient && typeof p.patient === 'object') return p.patient._id;
+                  if (p.patient) return p.patient;
+                  return p._id;
+                })
+                .filter(Boolean) || []
             }
             onChange={(newIds) => {
               setForm({

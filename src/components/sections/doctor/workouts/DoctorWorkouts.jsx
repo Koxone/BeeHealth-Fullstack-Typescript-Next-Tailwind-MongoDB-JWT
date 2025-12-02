@@ -1,14 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { Loader2, Plus, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
+
 import SharedSectionHeader from '@/components/shared/headers/SharedSectionHeader';
 import WorkoutCard from './components/workoutCard/WorkoutCard';
-import LoadingState from '@/components/shared/feedback/LoadingState';
 
 // Hooks
 import { useGetAllWorkouts } from '@/hooks/workouts/get/useGetAllWorkouts';
-import { workoutsMockData } from './components/workoutsMockData';
 import { useDeleteWorkout } from '@/hooks/workouts/delete/useDeleteWorkout';
 
 // Feedback Components
@@ -16,80 +15,68 @@ import SharedModalOpenWorkout from '@/components/shared/workouts/SharedModalOpen
 import ModalDelete from './components/modals/delete/ModalDelete';
 import ModalCreateWorkout from './components/modals/create/ModalCreateWorkout';
 import ModalEditWorkout from './components/modals/edit/ModalEditWorkout';
+import SuccessModal from '@/components/shared/feedback/SuccessModal';
+import LoadingState from '@/components/shared/feedback/LoadingState';
 
 export default function DoctorWorkouts({ role }) {
-  // Get Workouts from API
+  // Get Workouts Hook
   const { workoutData, isLoading, error, refetch: fetchWorkouts } = useGetAllWorkouts();
 
   // Delete Workout Hook
   const { deleteWorkout } = useDeleteWorkout();
 
   // Local States
-  const [workouts, setWorkouts] = useState(workoutsMockData);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [filterCategorie, setFilterCategorie] = useState('Todos');
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Doctor Actions Modal
+  // Modals
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [editingWorkout, setEditingWorkout] = useState(null);
   const [workoutToDelete, setWorkoutToDelete] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showCreateWorkoutModal, setShowCreateWorkoutModal] = useState(false);
 
-  // Workout Modal States
+  // Workout modal
   const [seletctedWorkout, setSelectedWorkout] = useState();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  // Available categories
   const categories = ['Todos', 'Fuerza', 'Cardio', 'Core', 'Flexibilidad', 'Movilidad'];
 
+  // Filter workouts
   const filteredWorkouts = workoutData.filter((e) => {
     const matchCategorie = filterCategorie === 'Todos' || e.type === filterCategorie;
     const matchSearch = e.name.toLowerCase().includes(searchTerm.toLowerCase());
     return matchCategorie && matchSearch;
   });
 
-  const handleSave = (e, form) => {
-    e.preventDefault();
-    const imagesArray = form.imagenes.split('\n').filter((url) => url.trim());
-    const newWorkout = {
-      id: editingWorkout ? editingWorkout.id : Date.now(),
-      ...form,
-      imagenPrincipal: imagesArray[0] || form.imagenPrincipal,
-      imagenes: imagesArray,
-    };
-    if (editingWorkout) {
-      setWorkouts(workouts.map((e) => (e.id === editingWorkout.id ? newWorkout : e)));
-    } else {
-      setWorkouts([...workouts, newWorkout]);
-    }
-    setShowEditModal(false);
-    setEditingWorkout(null);
-  };
-
-  // Edit Workout
-  const handleEdit = (workout) => {
-    setEditingWorkout(workout);
-    setShowEditModal(true);
-  };
-
-  // Delete Workout
+  // Delete handler
   const handleDelete = async () => {
     if (!workoutToDelete) return;
     const result = await deleteWorkout({ id: workoutToDelete._id });
     if (result) {
-      setWorkouts(workouts.filter((e) => e._id !== workoutToDelete._id));
-      fetchWorkouts();
+      await fetchWorkouts();
     }
     setShowDeleteModal(false);
   };
 
-  // Loading State
+  // Loading state
   if (isLoading) {
     return <LoadingState />;
   }
 
   return (
     <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
+      {/* Success Modal */}
+      <SuccessModal
+        message="Ejercicio editado exitosamente"
+        setShowSuccessModal={setShowSuccessModal}
+        showSuccessModal={showSuccessModal}
+        title="Ejercicio Actualizado"
+      />
+
+      {/* Section Header */}
       <SharedSectionHeader
         role={role}
         Icon="workouts"
@@ -100,8 +87,9 @@ export default function DoctorWorkouts({ role }) {
         subtitle={role === 'doctor' ? 'Crea y personaliza ejercicios' : 'Ejercicios Personalizados'}
       />
 
+      {/* Filters and Search */}
       <div className="flex flex-col gap-3 md:flex-row">
-        {/* Tabs Filter */}
+        {/* Categories */}
         <div className="flex gap-2 overflow-x-auto">
           {categories.map((cat) => (
             <button
@@ -118,8 +106,8 @@ export default function DoctorWorkouts({ role }) {
           ))}
         </div>
 
+        {/* Search */}
         <div className="flex gap-2">
-          {/* Search Workout */}
           <div className="relative flex-1 md:w-64">
             <Search className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 text-gray-400" />
             <input
@@ -133,16 +121,19 @@ export default function DoctorWorkouts({ role }) {
         </div>
       </div>
 
-      {/* Workout Card */}
+      {/* Workout grid */}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {filteredWorkouts && filteredWorkouts.length > 0 ? (
+        {filteredWorkouts.length > 0 ? (
           filteredWorkouts.map((workout) => (
             <WorkoutCard
               key={workout._id}
               workout={workout}
               setShowDeleteModal={setShowDeleteModal}
               setWorkoutToDelete={setWorkoutToDelete}
-              handleEdit={handleEdit}
+              handleEdit={(e) => {
+                setEditingWorkout(e);
+                setShowEditModal(true);
+              }}
               onOpen={() => {
                 setSelectedWorkout(workout);
                 setCurrentImageIndex(0);
@@ -157,7 +148,7 @@ export default function DoctorWorkouts({ role }) {
         )}
       </div>
 
-      {/* Workout Modal */}
+      {/* Open workout modal */}
       {seletctedWorkout && (
         <SharedModalOpenWorkout
           workout={seletctedWorkout}
@@ -167,7 +158,7 @@ export default function DoctorWorkouts({ role }) {
         />
       )}
 
-      {/* Doctor Delete Workout Modal */}
+      {/* Delete modal */}
       {showDeleteModal && (
         <ModalDelete
           workoutToDelete={workoutToDelete}
@@ -177,16 +168,17 @@ export default function DoctorWorkouts({ role }) {
         />
       )}
 
-      {/* Doctor Edit Workout Modal */}
+      {/* Edit modal */}
       {showEditModal && (
         <ModalEditWorkout
+          fetchWorkouts={fetchWorkouts}
           setShowEditModal={setShowEditModal}
           editingWorkout={editingWorkout}
-          handleSave={handleSave}
+          setShowSuccessModal={setShowSuccessModal}
         />
       )}
 
-      {/* Doctor Create New Workout Modal */}
+      {/* Create modal */}
       {showCreateWorkoutModal && (
         <ModalCreateWorkout setShowCreateModal={setShowCreateWorkoutModal} />
       )}

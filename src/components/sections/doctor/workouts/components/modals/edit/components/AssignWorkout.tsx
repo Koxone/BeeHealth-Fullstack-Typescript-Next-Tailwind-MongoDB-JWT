@@ -16,7 +16,7 @@ export default function AssignWorkout({
   specialty,
 }: AssignWorkoutProps) {
   // Fetch patients
-  const { patients, isLoading } = useGetAllPatients();
+  const { patients } = useGetAllPatients();
   const [patientsData, setPatientsData] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
 

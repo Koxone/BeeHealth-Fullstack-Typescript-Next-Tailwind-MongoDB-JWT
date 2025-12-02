@@ -2,13 +2,21 @@
 
 import { X, Dumbbell, AlertCircle, Loader } from 'lucide-react';
 import { useState, useEffect } from 'react';
+
 import BasicInfoSection from './components/basic/BasicInfoSection';
 import MultimediaSection from './components/multimedia/MultimediaSection';
 import DetailsSection from './components/details/DetailsSection';
-import { useModalClose } from '@/hooks/useModalClose';
-import { useEditWorkout } from '@/hooks/workouts/edit/useEditWorkout';
 
-export default function ModalEditWorkout({ setShowEditModal, editingWorkout }) {
+// Custom Hooks
+import { useEditWorkout } from '@/hooks/workouts/edit/useEditWorkout';
+import { useModalClose } from '@/hooks/useModalClose';
+
+export default function ModalEditWorkout({
+  setShowEditModal,
+  editingWorkout,
+  setShowSuccessModal,
+  fetchWorkouts,
+}) {
   // Edit Workout Custom Hook
   const { editWorkout, isLoading: loading, error } = useEditWorkout();
 
@@ -159,6 +167,7 @@ export default function ModalEditWorkout({ setShowEditModal, editingWorkout }) {
 
   const [submitError, setSubmitError] = useState(null);
 
+  // Form Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitError(null);
@@ -175,7 +184,7 @@ export default function ModalEditWorkout({ setShowEditModal, editingWorkout }) {
       setSubmitError('Selecciona un nivel de dificultad');
       return;
     }
-    if (!form.duration || form.duration <= 0) {
+    if (!form.duration) {
       setSubmitError('La duración debe ser mayor a 0');
       return;
     }
@@ -195,7 +204,6 @@ export default function ModalEditWorkout({ setShowEditModal, editingWorkout }) {
         return await uploadImage(file, idx);
       })
     );
-
     const validNewImages = newUploadedImages.filter((img) => img !== null);
     const finalImages = [...existingImages, ...validNewImages];
 
@@ -235,15 +243,16 @@ export default function ModalEditWorkout({ setShowEditModal, editingWorkout }) {
     };
 
     try {
-      const res = await editWorkout(editingWorkout._id || editingWorkout.id, payload);
-
-      if (res) {
-        setShowEditModal(false);
-        window.location.reload(); 
-      }
+      const res = await editWorkout(editingWorkout._id, payload);
+      fetchWorkouts();
+      setShowEditModal(false);
+      setShowSuccessModal(true);
+      setTimeout(() => {
+        setShowSuccessModal(false);
+      }, 500);
     } catch (err) {
-      console.error("Error updating workout:", err);
-      setSubmitError(err.message || "Error al actualizar el ejercicio");
+      console.error('Error updating workout:', err);
+      setSubmitError(err.message || 'Error al actualizar el ejercicio');
     }
   };
 
@@ -315,11 +324,7 @@ export default function ModalEditWorkout({ setShowEditModal, editingWorkout }) {
               )}
 
               {/* Basic Info Section */}
-              <BasicInfoSection
-                form={form}
-                setForm={setForm}
-                getNivelColor={getNivelColor}
-              />
+              <BasicInfoSection form={form} setForm={setForm} getNivelColor={getNivelColor} />
 
               {/* Multimedia Section */}
               <MultimediaSection

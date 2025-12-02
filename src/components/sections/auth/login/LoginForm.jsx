@@ -6,7 +6,7 @@ import { Heart, Mail, Lock, CheckCircle, AlertCircle, X } from 'lucide-react';
 import useAuthStore from '@/zustand/useAuthStore';
 
 export default function LoginForm() {
-  // Hooks
+  // Custom Hooks
   const router = useRouter();
 
   // Zustand

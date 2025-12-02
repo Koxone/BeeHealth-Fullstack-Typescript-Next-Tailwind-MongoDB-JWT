@@ -67,7 +67,7 @@ export default function NewAppointment() {
   // Zustand
   const { user } = useAuthStore();
 
-  // Hooks
+  // Custom Hooks
   const router = useRouter();
 
   // Local States

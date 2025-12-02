@@ -1,12 +1,15 @@
 'use client';
 
-import { useCreateWorkout } from '@/hooks/workouts/create/useCreateWorkout';
 import { X, Dumbbell, AlertCircle, Loader } from 'lucide-react';
 import { useState } from 'react';
+
 import BasicInfoSection from './components/basic/BasicInfoSection';
 import MultimediaSection from './components/multimedia/MultimediaSection';
 import DetailsSection from './components/details/DetailsSection';
+
+// Custom hooks
 import { useModalClose } from '@/hooks/useModalClose';
+import { useCreateWorkout } from '@/hooks/workouts/create/useCreateWorkout';
 
 export default function ModalCreateWorkout({ setShowCreateModal }) {
   // Create Workout Hook

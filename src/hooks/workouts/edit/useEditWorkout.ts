@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 
 export interface WorkoutPayload {
   patients?: string[];
@@ -15,14 +15,8 @@ export interface WorkoutPayload {
 }
 
 export function useEditWorkout() {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const editWorkout = async (workoutId: string, payload: WorkoutPayload) => {
-    setIsLoading(true);
-    setError(null);
-
-    try {
+  const mutation = useMutation({
+    mutationFn: async ({ workoutId, payload }: { workoutId: string; payload: WorkoutPayload }) => {
       const res = await fetch(`/api/workouts/${workoutId}/edit`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
@@ -35,14 +29,16 @@ export function useEditWorkout() {
         throw new Error(errData.error || 'Failed to edit workout');
       }
 
-      return await res.json();
-    } catch (err) {
-      setError(err.message);
-      throw err;
-    } finally {
-      setIsLoading(false);
-    }
-  };
+      return res.json();
+    },
+  });
 
-  return { isLoading, error, editWorkout };
+  return {
+    isLoading: mutation.isPending,
+    error: mutation.error?.message || null,
+    editWorkout: (workoutId: string, payload: WorkoutPayload) =>
+      mutation.mutateAsync({ workoutId, payload }),
+
+    refetch: mutation.reset,
+  };
 }

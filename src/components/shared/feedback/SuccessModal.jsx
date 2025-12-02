@@ -9,7 +9,7 @@ export default function SuccessModal({ title, message, showSuccessModal, setShow
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+    <div className="fixed inset-0 z-50 flex h-screen items-center justify-center bg-black/50 p-4">
       <div className="animate-slideDown bg-beehealth-body-main relative w-full max-w-lg rounded-3xl border-2 border-green-500 p-8 shadow-2xl">
         {/* Close button */}
         <button

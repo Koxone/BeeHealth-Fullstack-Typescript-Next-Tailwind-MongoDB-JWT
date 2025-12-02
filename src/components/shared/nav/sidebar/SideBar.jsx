@@ -10,7 +10,7 @@ import {
 import { usePathname, useRouter } from 'next/navigation';
 
 export default function Sidebar({ role, currentUser, specialty }) {
-  // Hooks
+  // Custom Hooks
   const pathname = usePathname();
   const router = useRouter();
 
