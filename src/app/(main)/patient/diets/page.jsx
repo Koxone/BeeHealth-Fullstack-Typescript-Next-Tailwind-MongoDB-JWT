@@ -1,6 +1,7 @@
 import React from 'react';
 import { getCurrentUser } from '@/lib/auth/getCurrentUser';
 import SharedDiets from '@/components/shared/diets/SharedDiets';
+import PatientDiets from '@/components/sections/patient/PatientDiets';
 export const runtime = 'nodejs';
 
 export default async function PatientDietsPage() {
@@ -9,7 +10,7 @@ export default async function PatientDietsPage() {
   const role = currentUser?.role;
   return (
     <div className="h-screen overflow-hidden pb-40">
-      <SharedDiets role={role} />
+      <PatientDiets role={role} currentUser={currentUser} />
     </div>
   );
 }
