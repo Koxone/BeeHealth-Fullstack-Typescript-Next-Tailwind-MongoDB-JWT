@@ -29,7 +29,7 @@ export default function AppointmentsToday({ appointments, role }) {
             <Link
               key={cita.id}
               href={`/doctor/patients/${cita?.patientId}`}
-              className="border-beehealth-green-primary-dark/30 hover:border-beehealth-green-primary-dark-hover block rounded-xl border-2 p-4 transition hover:bg-emerald-50"
+              className="border-beehealth-green-primary-dark/30 hover:bg-beehealth-green-primary-light block rounded-xl border-2 p-4 transition"
             >
               <div className="flex items-center justify-between">
                 <div className="flex-1">
