@@ -122,7 +122,11 @@ export async function POST(req) {
 
     if (logs.length === 0) {
       const weight =
-        answers.find((a) => a.questionId === '692a02539ba6da2362d98aad')?.value || null;
+        answers.find(
+          (a) =>
+            a.questionId === '692a02539ba6da2362d98aad' ||
+            a.questionId === '692a02539ba6da2362d98aac'
+        )?.value || null;
 
       const newWeightLog = new WeightLog({
         patient: finalPatientId,
