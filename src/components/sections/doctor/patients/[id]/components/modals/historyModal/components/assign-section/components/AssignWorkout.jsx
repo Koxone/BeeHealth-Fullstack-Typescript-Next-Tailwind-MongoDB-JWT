@@ -86,7 +86,10 @@ export default function AssignWorkout({ user, onSelectWorkout, patientId }) {
               >
                 <input
                   type="checkbox"
-                  checked={item.patients?.some((p) => p.patient?._id === patientId)}
+                  checked={
+                    item.patients?.some((p) => p.patient?._id === patientId) ||
+                    selected.includes(item?._id)
+                  }
                   disabled={item.patients?.some((p) => p.patient?._id === patientId)}
                   onChange={(e) => {
                     e.stopPropagation();
