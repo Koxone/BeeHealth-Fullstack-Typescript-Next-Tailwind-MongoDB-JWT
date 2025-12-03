@@ -10,7 +10,6 @@ import { getConsultTotals } from './utils/getConsultTotals';
 export default function EmployeeConsults({ role }) {
   // Get consults data
   const { consults, isLoading, error } = useGetAllConsults();
-  console.log(consults);
 
   // Calculate totals
   const totals = getConsultTotals(consults);

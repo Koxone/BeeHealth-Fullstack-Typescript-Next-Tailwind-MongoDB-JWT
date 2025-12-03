@@ -23,6 +23,7 @@ export default function ClinicalRecordModal({
   patientId,
   mode = 'view',
   fetchRecord,
+  setShowSuccessModal,
 }) {
   // Readonly state
   const [isReadOnly, setIsReadOnly] = useState(!!readOnly);
@@ -99,7 +100,6 @@ export default function ClinicalRecordModal({
     if (workoutSelected) {
       try {
         await editWorkout(workoutSelected, [patientId]);
-        console.log('Koxone:', workoutSelected, patientId);
       } catch (err) {
         console.error('Error assigning workout:', err);
         return;
@@ -119,6 +119,8 @@ export default function ClinicalRecordModal({
     if (result.ok) {
       onClose();
       fetchRecord();
+      setShowSuccessModal(true);
+      setTimeout(() => setShowSuccessModal(false), 1000);
     }
   };
 

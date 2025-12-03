@@ -3,7 +3,6 @@ import Link from 'next/link';
 import React from 'react';
 
 function TransactionBlock({ transaction }) {
-  console.log(transaction);
   /* Maps */
   const fieldMap = {
     costPrice: 'Costo',

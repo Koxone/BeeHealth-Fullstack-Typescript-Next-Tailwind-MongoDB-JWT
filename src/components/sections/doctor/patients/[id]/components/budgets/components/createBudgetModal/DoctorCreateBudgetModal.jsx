@@ -32,7 +32,6 @@ export default function DoctorCreateBudgetModal({ onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Nuevo presupuesto:', budgetForm);
     onClose();
   };
 

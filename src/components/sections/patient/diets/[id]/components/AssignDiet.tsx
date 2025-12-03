@@ -59,7 +59,6 @@ export default function AssignDiet({
     const patientsPayload = selected.map((id) => ({ patient: id }));
     try {
       const updatedDiet = await assignDietToPatients(dietId, patientsPayload);
-      console.log('Diet updated:', updatedDiet);
       setShowSuccess(true);
       refetch();
       setTimeout(() => setShowSuccess(false), 3000);

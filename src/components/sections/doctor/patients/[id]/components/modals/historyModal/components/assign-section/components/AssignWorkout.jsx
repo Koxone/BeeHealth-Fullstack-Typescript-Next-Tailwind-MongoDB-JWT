@@ -23,17 +23,12 @@ export default function AssignWorkout({ user, onSelectWorkout, patientId }) {
     setSelected([id]);
   };
 
-  useEffect(() => {
-    console.log(selected);
-  }, [selected]);
-
   // Assign handler
   const handleAssign = () => {
     const workoutId = selected[0];
     setAssigned([workoutId]);
     onSelectWorkout(workoutId);
     setOpen(false);
-    console.log(assigned);
     setShowSuccess(true);
     setTimeout(() => setShowSuccess(false), 3000);
   };

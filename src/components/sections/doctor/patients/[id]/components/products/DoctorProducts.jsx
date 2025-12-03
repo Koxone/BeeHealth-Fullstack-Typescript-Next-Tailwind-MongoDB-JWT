@@ -117,7 +117,6 @@ export default function DoctorProducts() {
                 {/* Actions */}
                 <td className="flex items-center justify-center gap-2 p-3">
                   <button
-                    onClick={() => console.log('Editar producto', p.id)}
                     className="rounded-lg bg-yellow-100 p-2 transition hover:bg-yellow-200 active:scale-95"
                   >
                     <svg
@@ -136,7 +135,6 @@ export default function DoctorProducts() {
                     </svg>
                   </button>
                   <button
-                    onClick={() => console.log('Eliminar producto', p.id)}
                     className="rounded-lg bg-red-100 p-2 transition hover:bg-red-200 active:scale-95"
                   >
                     <svg

@@ -28,7 +28,6 @@ export default function EmployeeCreateConsultModal({ onClose, onCreate }) {
     itemsSold: [],
     notes: '',
   });
-  console.log(form);
 
   // Loading and error states
   const [isLoading, setIsLoading] = useState(false);

@@ -10,7 +10,6 @@ import TransactionBlock from './components/TransactionBlock';
 
 export default function TransactionHistoryModal({ onClose, history, item, isLoading }) {
   const { handleOverlayClick } = useModalClose(onClose);
-  console.log(history);
 
   const itemName = item?.product?.name;
 

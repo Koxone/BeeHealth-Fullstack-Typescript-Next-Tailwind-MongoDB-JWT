@@ -5,7 +5,6 @@ import { AlertCircle, Trash2, X, AlertTriangle, CheckCircle, Loader } from 'luci
 import { useState } from 'react';
 
 export default function DeleteRecordModal({ recordToDelete, handleDelete, setShowDeleteModal }) {
-  console.log(recordToDelete);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
 

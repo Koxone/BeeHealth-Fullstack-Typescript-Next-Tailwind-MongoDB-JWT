@@ -17,6 +17,7 @@ import ClinicalRecordModal from './components/modals/historyModal/ClinicalRecord
 import DeleteRecordModal from './components/modals/delete-record-modal/DeleteRecordModal';
 import DoctorCreateAppointmentModal from './components/modals/createAppointmentModal/DoctorCreateAppointmentModal';
 import LoadingState from '@/components/shared/feedback/LoadingState';
+import SuccessModal from '@/components/shared/feedback/SuccessModal';
 
 // Fetch current patient clinical records
 import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/get/useGetPatientClinicalRecords';
@@ -39,6 +40,9 @@ export default function DoctorPatientDetail({ patient, specialty }) {
   } = useGetPatientClinicalRecords(id);
 
   const currentPatientInfo = patientRecord?.[0];
+
+  // Success Modal
+  const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
 
   // History Modal
   const [historyMode, setHistoryMode] = useState<'create' | 'view' | 'edit'>('view');
@@ -148,6 +152,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
           patientId={id}
           mode={historyMode}
           specialty={specialty}
+          setShowSuccessModal={setShowSuccessModal}
         />
       )}
 
@@ -168,6 +173,16 @@ export default function DoctorPatientDetail({ patient, specialty }) {
             await fetchRecord();
           }}
           setShowDeleteModal={setShowDeleteModal}
+        />
+      )}
+
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <SuccessModal
+          title="Consulta registrada"
+          message="La operación se ha realizado con éxito."
+          setShowSuccessModal={setShowSuccessModal}
+          showSuccessModal={showSuccessModal}
         />
       )}
     </div>

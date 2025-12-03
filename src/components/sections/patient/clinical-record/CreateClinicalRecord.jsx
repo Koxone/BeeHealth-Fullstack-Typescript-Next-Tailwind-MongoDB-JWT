@@ -63,8 +63,6 @@ export default function CreateClinicalRecord({ currentUser }) {
       return;
     }
 
-    console.log('Clinical Record created:', result.clinicalRecord);
-
     setFormData({});
     setIsSubmitting(false);
   };

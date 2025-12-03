@@ -110,7 +110,6 @@ export default function DoctorBudgets() {
                 {/* PDF Icon */}
                 <td className="p-3 text-center">
                   <button
-                    onClick={() => console.log(`Ver PDF presupuesto #${b.id}`)}
                     className="rounded-lg bg-blue-100 p-2 transition hover:bg-blue-200 active:scale-95"
                   >
                     <FileText className="h-5 w-5 text-blue-600" />

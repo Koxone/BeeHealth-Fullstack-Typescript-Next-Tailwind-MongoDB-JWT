@@ -77,7 +77,6 @@ export default async function MainRootLayout({ children }) {
   const currentUser = await getCurrentUser();
   const role = currentUser?.role;
   const specialty = currentUser?.specialty;
-  console.log(role);
 
   const cookieStore = await cookies();
   const refreshToken = cookieStore.get('refreshToken')?.value;

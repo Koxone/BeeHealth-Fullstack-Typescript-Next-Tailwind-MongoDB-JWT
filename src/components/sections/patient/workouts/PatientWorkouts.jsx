@@ -11,7 +11,7 @@ import SharedModalOpenWorkout from '../../../shared/workouts/SharedModalOpenWork
 export default function PatientWorkouts({ role, currentUser }) {
   // Get Workouts from API
   const { workoutData, isLoading, error, refetch: fetchWorkouts } = useGetAllWorkouts();
-  console.log(workoutData);
+  
   // Local States
   const [filterCategorie, setFilterCategorie] = useState('Todos');
   const [searchTerm, setSearchTerm] = useState('');

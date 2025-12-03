@@ -41,7 +41,6 @@ export default function DoctorCreateAppointmentModal({ currentPatientInfo, onClo
         .toUpperCase(),
     };
 
-    console.log('Nueva cita creada:', nuevaCita);
     onClose();
   };
 

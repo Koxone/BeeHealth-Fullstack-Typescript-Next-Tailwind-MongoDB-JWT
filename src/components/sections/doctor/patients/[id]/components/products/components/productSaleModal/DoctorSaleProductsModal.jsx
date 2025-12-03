@@ -41,7 +41,6 @@ export default function DoctorSaleProductsModal({ onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Nuevo producto agregado:', productForm);
     onClose();
   };
 
