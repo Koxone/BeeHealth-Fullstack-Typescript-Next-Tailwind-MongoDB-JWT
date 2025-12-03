@@ -11,12 +11,12 @@ import BackButton from './components/BackButton';
 import TabsNav from './components/TabsNav';
 import DoctorBudgets from './components/budgets/DoctorBudgets';
 import DoctorProducts from './components/products/DoctorProducts';
-import LoadingState from '@/components/shared/feedback/LoadingState';
 
 // Feedback Components
 import ClinicalRecordModal from './components/modals/historyModal/ClinicalRecordModal';
 import DeleteRecordModal from './components/modals/delete-record-modal/DeleteRecordModal';
 import DoctorCreateAppointmentModal from './components/modals/createAppointmentModal/DoctorCreateAppointmentModal';
+import LoadingState from '@/components/shared/feedback/LoadingState';
 
 // Fetch current patient clinical records
 import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/get/useGetPatientClinicalRecords';

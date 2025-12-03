@@ -2,15 +2,18 @@
 
 import { useState, useEffect } from 'react';
 import { X, FileText } from 'lucide-react';
+
+import ModalHeader from './components/ModalHeader';
+import TabsNav from './components/TabsNav';
+import ShortVersion from './components/ShortVersion';
+import FullVersion from './components/FullVersion';
+
+// Custom Hooks
 import { useModalClose } from '@/hooks/useModalClose';
 import { useCreateClinicalRecordDoctor } from '@/hooks/clinicalRecords/create/useCreateClinicalRecordDoctor';
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/get/useGetAllQuestions';
 import { useEditWorkout } from '@/hooks/workouts/edit/useEditWorkout';
 import { useAssignDiet } from '@/hooks/diets/assign/useAssignDiet';
-import ModalHeader from './components/ModalHeader';
-import TabsNav from './components/TabsNav';
-import ShortVersion from './components/ShortVersion';
-import FullVersion from './components/FullVersion';
 
 export default function ClinicalRecordModal({
   onClose,
@@ -153,6 +156,7 @@ export default function ClinicalRecordModal({
         >
           {activeTab === 'basico' && (
             <ShortVersion
+              patientId={patientId}
               specialty={specialty}
               isReadOnly={isReadOnly}
               formData={formData}

@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import User from '@/models/User';
 import { Question } from '@/models/records/Question';
 import { Answer } from '@/models/records/Answer';
+import Workout from '@/models/Workout';
 
 // @route    GET /api/clinicalRecords/:id
 // @desc     Get clinical records by patient ID

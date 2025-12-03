@@ -17,6 +17,7 @@ export default function ShortVersion({
   setDietSelected,
   workoutSelected,
   setWorkoutSelected,
+  patientId,
 }) {
   // Fetch questions
   const { questions, loading } = useGetAllQuestions();
@@ -32,6 +33,7 @@ export default function ShortVersion({
       {/* Assign Diet or Workout Section */}
       <div className="px">
         <AssignSection
+          patientId={patientId}
           onSelectDiet={(dietId) => {
             setDietSelected(dietId);
           }}

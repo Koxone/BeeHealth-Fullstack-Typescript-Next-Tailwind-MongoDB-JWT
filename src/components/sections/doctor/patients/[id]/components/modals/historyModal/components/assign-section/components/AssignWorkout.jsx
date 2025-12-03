@@ -6,7 +6,7 @@ import { useGetAllWorkouts } from '@/hooks/workouts/get/useGetAllWorkouts';
 import { useParams } from 'next/navigation';
 import { useEditWorkout } from '@/hooks/workouts/edit/useEditWorkout';
 
-export default function AssignWorkout({ user, onSelectWorkout }) {
+export default function AssignWorkout({ user, onSelectWorkout, patientId }) {
   const { id: workoutId } = useParams();
 
   // Fetch workouts with Custom Hook
@@ -77,20 +77,24 @@ export default function AssignWorkout({ user, onSelectWorkout }) {
           <ul className="divide-y divide-gray-100">
             {workoutData?.map((item) => (
               <li
-                key={item._id}
+                key={item?._id}
                 className="hover:bg-beehealth-body-main flex cursor-pointer items-center gap-3 px-3 py-2"
-                onClick={() => toggleItem(item._id)}
+                onClick={() => {
+                  if (item.patients?.some((p) => p.patient?._id === patientId)) return;
+                  toggleItem(item?._id);
+                }}
               >
                 <input
                   type="checkbox"
-                  checked={selected.includes(item._id)}
+                  checked={item.patients?.some((p) => p.patient?._id === patientId)}
+                  disabled={item.patients?.some((p) => p.patient?._id === patientId)}
                   onChange={(e) => {
                     e.stopPropagation();
-                    toggleItem(item.id);
+                    toggleItem(item?._id);
                   }}
                   className="text-beehealth-blue-primary-solid h-4 w-4 rounded border-gray-300"
                 />
-                <span className="text-sm text-gray-700">{item.name}</span>
+                <span className="text-sm text-gray-700">{item?.name}</span>
               </li>
             ))}
           </ul>
