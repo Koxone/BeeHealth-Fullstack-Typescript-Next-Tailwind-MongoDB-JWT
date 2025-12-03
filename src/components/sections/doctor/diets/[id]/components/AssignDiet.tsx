@@ -17,7 +17,7 @@ export default function AssignDiet({
   diet: any;
 }) {
   // Fetch patients
-  const { patients, isLoading, error } = useGetAllPatients();
+  const { patients } = useGetAllPatients();
   const [patientsData, setPatientsData] = useState(patients || []);
   useEffect(() => {
     if (patients && patients.length > 0) {
