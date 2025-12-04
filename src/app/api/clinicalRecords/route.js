@@ -118,6 +118,7 @@ export async function POST(req) {
     }
 
     /* ================= WeightLog Section ================= */
+    //#region
     const logs = await WeightLog.find({ patient: finalPatientId }).sort({ createdAt: 1 });
 
     // Identify FULL or SHORT answer
@@ -190,6 +191,7 @@ export async function POST(req) {
 
       await newWeightLog.save();
     }
+    //#endregion
 
     return NextResponse.json({
       ok: true,
