@@ -46,9 +46,9 @@ WeightLogSchema.index({ patient: 1, createdAt: -1 });
 WeightLogSchema.pre('save', function (next) {
   this.differenceFromPrevious = this.currentWeight - this.previousWeight;
   this.differenceFromOriginal = this.currentWeight - this.originalWeight;
+  
   this.differenceSizeFromPrevious = this.currentSize - this.previousSize;
   this.differenceSizeFromOriginal = this.currentSize - this.originalSize;
-  next();
 });
 
 export default WeightLogSchema;
