@@ -66,7 +66,7 @@ export default function PatientHistory({ role, currentUser }) {
 
   /* Render */
   return (
-    <div className="w-full h-full overflow-y-auto space-y-6">
+    <div className="w-full h-full overflow-y-auto space-y-6 pb-40">
       <SharedSectionHeader
         role={role}
         title="Historial Clínico"
