@@ -16,7 +16,7 @@ export default function PatientStatsGrid({ role, currentUser }) {
     error: weightLogsError,
     refetch: refetchWeightLogs,
   } = useGetAllWeightLogs();
-
+console.log(weightLogs)
   // Helpers
   const getAnswerLatest = useGetAnswer(data[0]);
   const getAnswerPrev = useGetAnswer(data[1]);
@@ -45,7 +45,7 @@ export default function PatientStatsGrid({ role, currentUser }) {
         },
         {
           Icon: Ruler,
-          mainData: `${tallaActual} cm`,
+          mainData: `${weightLogs[0]?.currentSize} cm`,
           extraData: `${pctTalla}%`,
           title: 'Talla Actual',
           variant: 'success',

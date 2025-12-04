@@ -167,9 +167,13 @@ export async function POST(req) {
     //#region
     const logs = await WeightLog.find({ patient: finalPatientId }).sort({ createdAt: 1 });
 
-    // Identify FULL or SHORT answer
-    const isFull = answers.some((a) => a.questionId === '692a02539ba6da2362d98aad');
-    const isShort = answers.some((a) => a.questionId === '692a02539ba6da2362d98aac');
+    // Identify FULL or SHORT Weight answer
+    const isFullWeight = answers.some((a) => a.questionId === '692a02539ba6da2362d98aad');
+    const isShortWeight = answers.some((a) => a.questionId === '692a02539ba6da2362d98aac');
+
+    // Identify FULL or SHORT Size answer
+    const isFullSize = answers.some((a) => a.questionId === '692a02539ba6da2362d98aaf');
+    const isShortSize = answers.some((a) => a.questionId === '692a02539ba6da2362d98aae');
 
     // Current weight from this consultation
     const currentWeight =
@@ -178,12 +182,20 @@ export async function POST(req) {
           a.questionId === '692a02539ba6da2362d98aad' || a.questionId === '692a02539ba6da2362d98aac'
       )?.value || null;
 
+    // Current size from this consultation
+    const currentSize =
+      answers.find(
+        (a) =>
+          a.questionId === '692a02539ba6da2362d98aaf' || a.questionId === '692a02539ba6da2362d98aae'
+      )?.value || null;
+
     // First time weight log
     if (logs.length === 0) {
       let originalWeight = currentWeight;
+      let originalSize = currentSize;
 
       // If this record is SHORT, get original weight from FIRST clinicalRecord
-      if (isShort) {
+      if (isShortWeight) {
         const firstRecord = await ClinicalRecord.findOne({ patient: finalPatientId }).sort({
           createdAt: 1,
         });
@@ -201,6 +213,25 @@ export async function POST(req) {
         }
       }
 
+      // If this record is SHORT, get original size from FIRST clinicalRecord
+      if (isShortSize) {
+        const firstRecord = await ClinicalRecord.findOne({ patient: finalPatientId }).sort({
+          createdAt: 1,
+        });
+
+        if (firstRecord) {
+          const firstSizeAnswer = firstRecord.answers.find(
+            (ans) =>
+              ans.question.toString() === '692a02539ba6da2362d98aaf' || // FULL Size ID
+              ans.question.toString() === '692a02539ba6da2362d98aae' // SHORT Size ID
+          );
+
+          if (firstSizeAnswer) {
+            originalSize = firstSizeAnswer.value;
+          }
+        }
+      }
+
       const newWeightLog = new WeightLog({
         patient: finalPatientId,
         clinicalRecord: newRecord._id,
@@ -208,6 +239,11 @@ export async function POST(req) {
         currentWeight: currentWeight,
         differenceFromPrevious: 0,
         differenceFromOriginal: 0,
+
+        originalSize: originalSize,
+        currentSize: currentSize,
+        differenceSizeFromPrevious: 0,
+        differenceSizeFromOriginal: 0,
       });
 
       await newWeightLog.save();
@@ -223,6 +259,16 @@ export async function POST(req) {
       const currentWeight =
         answers.find((a) => a.questionId === '692a02539ba6da2362d98aac')?.value || null;
 
+      const currentSize =
+        answers.find(
+          (a) =>
+            a.questionId === '692a02539ba6da2362d98aaf' ||
+            a.questionId === '692a02539ba6da2362d98aae'
+        )?.value || null;
+
+      const differenceSizeFromPrevious = currentSize - previousLog.currentSize;
+      const differenceSizeFromOriginal = currentSize - firstLog.originalSize;
+
       const differenceFromPrevious = currentWeight - previousLog.currentWeight;
       const differenceFromOriginal = currentWeight - firstLog.originalWeight;
 
@@ -233,6 +279,11 @@ export async function POST(req) {
         currentWeight: currentWeight,
         differenceFromPrevious: differenceFromPrevious,
         differenceFromOriginal: differenceFromOriginal,
+
+        originalSize: firstLog.originalSize,
+        currentSize: currentSize,
+        differenceSizeFromPrevious: differenceSizeFromPrevious,
+        differenceSizeFromOriginal: differenceSizeFromOriginal,
       });
 
       await newWeightLog.save();

@@ -10,6 +10,13 @@ export interface IWeightLog extends Document {
 
   differenceFromPrevious: number;
   differenceFromOriginal: number;
+
+  originalSize: number;
+  previousSize: number;
+  currentSize: number;
+
+  differenceSizeFromPrevious: number;
+  differenceSizeFromOriginal: number;
 }
 
 const WeightLogSchema: Schema<IWeightLog> = new Schema(
@@ -23,6 +30,13 @@ const WeightLogSchema: Schema<IWeightLog> = new Schema(
 
     differenceFromPrevious: { type: Number },
     differenceFromOriginal: { type: Number },
+
+    originalSize: { type: Number, required: true },
+    previousSize: { type: Number },
+    currentSize: { type: Number },
+
+    differenceSizeFromPrevious: { type: Number },
+    differenceSizeFromOriginal: { type: Number },
   },
   { timestamps: true }
 );
@@ -32,6 +46,8 @@ WeightLogSchema.index({ patient: 1, createdAt: -1 });
 WeightLogSchema.pre('save', function (next) {
   this.differenceFromPrevious = this.currentWeight - this.previousWeight;
   this.differenceFromOriginal = this.currentWeight - this.originalWeight;
+  this.differenceSizeFromPrevious = this.currentSize - this.previousSize;
+  this.differenceSizeFromOriginal = this.currentSize - this.originalSize;
   next();
 });
 
