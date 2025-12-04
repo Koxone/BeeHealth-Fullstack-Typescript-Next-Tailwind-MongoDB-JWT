@@ -3,12 +3,16 @@
 import { useState, useEffect } from 'react';
 import { X, Calendar, Clock, User, Sparkles, Info, Mail, Phone, Plus } from 'lucide-react';
 
+// Custom Hooks
+import { useModalClose } from '@/hooks/useModalClose';
+import { useCreateAppointment } from '@/hooks/appointments/useCreateAppointment';
+
 export default function DoctorCreateAppointmentModal({ currentPatientInfo, onClose }) {
-  // Disable scroll when modal is open
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => (document.body.style.overflow = '');
-  }, []);
+  // Modal close handler
+  const { handleOverlayClick } = useModalClose(onClose);
+
+  // Create appointment Custom Hook
+  const { createAppointment, loading: creating, error: createError } = useCreateAppointment();
 
   // Local form state
   const [citaForm, setCitaForm] = useState({
@@ -27,33 +31,35 @@ export default function DoctorCreateAppointmentModal({ currentPatientInfo, onClo
   };
 
   // Handle submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const nuevaCita = {
-      id: Date.now(),
-      ...citaForm,
-      estado: 'Pendiente',
-      avatar: citaForm.paciente
-        .split(' ')
-        .map((n) => n[0])
-        .join('')
-        .toUpperCase(),
-    };
+    try {
+      await createAppointment({
+        patientId: currentPatientInfo?.patient?._id,
+        patientName: currentPatientInfo?.patient?.fullName,
+        date: citaForm.fecha,
+        time: citaForm.hora,
+        phone: currentPatientInfo?.patient?.phone,
+        email: currentPatientInfo?.patient?.email,
+        reason: citaForm.motivo,
+        specialty: currentPatientInfo?.specialty,
+      });
+    } catch (err) {
+      console.error('Error al crear cita:', err.message);
+    }
 
     onClose();
   };
 
   return (
-    <>
-      {/* Overlay */}
-      <div
-        className="animate-in fade-in fixed inset-0 z-50 h-screen bg-black/70 backdrop-blur-md transition-all duration-300"
-        onClick={onClose}
-      />
-
+    <div
+      id="overlay"
+      onClick={handleOverlayClick}
+      className="animate-in fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md"
+    >
       {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6">
+      <div className="relative inset-0 z-50 flex w-full items-center justify-center p-3 sm:p-6">
         <div
           className="animate-in fade-in zoom-in-95 relative max-h-[95vh] w-full max-w-3xl overflow-hidden rounded-3xl bg-linear-to-br from-white via-emerald-50/30 to-teal-50/30 shadow-2xl backdrop-blur-md duration-300"
           onClick={(e) => e.stopPropagation()}
@@ -202,6 +208,6 @@ export default function DoctorCreateAppointmentModal({ currentPatientInfo, onClo
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

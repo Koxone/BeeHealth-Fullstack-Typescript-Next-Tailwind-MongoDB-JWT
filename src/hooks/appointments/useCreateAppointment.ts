@@ -104,41 +104,24 @@ export function useCreateAppointment(): UseCreateAppointmentResult {
   return { createAppointment, loading, error, data, reset };
 }
 
-// // Example.jsx
-// 'use client';
+// How to use?:
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
 
-// import { useState } from 'react';
-// import { useCreateAppointment } from '@/hooks/useCreateAppointment';
+//   try {
+//     await createAppointment({
+//       patientId: currentPatientInfo?.patient?._id,
+//       patientName: currentPatientInfo?.patient?.fullName,
+//       date: citaForm.fecha,
+//       time: citaForm.hora,
+//       phone: currentPatientInfo?.patient?.phone,
+//       email: currentPatientInfo?.patient?.email,
+//       reason: citaForm.motivo,
+//       specialty: currentPatientInfo?.specialty,
+//     });
+//   } catch (err) {
+//     console.error('Error al crear cita:', err.message);
+//   }
 
-// export default function Example() {
-//   // Local
-//   const [form, setForm] = useState({
-//     patientName: 'Laura Hernández',
-//     date: '2025-11-07',
-//     time: '10:30',
-//     phone: '5551234567',
-//     email: 'laura@example.com',
-//     reason: 'Consulta inicial',
-//     specialty: 'weight',
-//   });
-
-//   // Hook
-//   const { createAppointment, loading, error, data } = useCreateAppointment();
-
-//   // Submit
-//   const onSubmit = async (e) => {
-//     e.preventDefault();
-//     await createAppointment(form);
-//   };
-
-//   // UI
-//   return (
-//     <form onSubmit={onSubmit}>
-//       <button type="submit" disabled={loading}>
-//         {loading ? 'Creando' : 'Crear cita'}
-//       </button>
-//       {error && <p>Error {error}</p>}
-//       {data && <p>Creada {data.id}</p>}
-//     </form>
-//   );
-// }
+//   onClose();
+// };

@@ -3,11 +3,15 @@
 import { useEffect, useState } from 'react';
 import ControlsBar from './components/ControlsBar';
 import AppointmentCard from './components/AppointmentCard';
-import EmployeeCreateAppointmentModal from './components/EmployeeCreateAppointmentModal';
 import EmptyState from './components/EmptyState';
 import SharedSectionHeader from '@/components/shared/headers/SharedSectionHeader';
+
+// Custom Hooks
 import { useAllAppointments } from '@/hooks/appointments/useAllAppointments';
 import { useCreateAppointment } from '@/hooks/appointments/useCreateAppointment';
+
+// Feedback Components
+import EmployeeCreateAppointmentModal from './components/EmployeeCreateAppointmentModal';
 
 export default function EmployeeAppointments({ role, patients }) {
   const [showModal, setShowModal] = useState(false);

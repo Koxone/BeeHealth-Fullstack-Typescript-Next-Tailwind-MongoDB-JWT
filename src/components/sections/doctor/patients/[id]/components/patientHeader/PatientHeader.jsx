@@ -14,6 +14,7 @@ import RegisterVisitButton from './components/RegisterVisitButton';
 import moment from 'moment';
 import AssignedDiets from '@/components/sections/test/AssignedDiets';
 import AssignedWorkouts from '@/components/sections/test/AssignedWorkouts';
+
 import { useGetAllWorkouts } from '@/hooks/workouts/get/useGetAllWorkouts';
 import { useGetAllDiets } from '@/hooks/diets/get/useGetAllDiets';
 import { useParams } from 'next/navigation';

@@ -3,6 +3,7 @@
 import { IClinicalRecord, TabName } from '@/types';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
+
 import PatientHeader from './components/patientHeader/PatientHeader';
 import QuickStats from './components/QuickStats';
 import WeightChart from './components/WeightChart';

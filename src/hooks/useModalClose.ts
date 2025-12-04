@@ -19,3 +19,6 @@ export function useModalClose(onClose?: () => void) {
 
   return { handleOverlayClick };
 }
+
+// How to use?:
+// const { handleOverlayClick } = useModalClose(() => setShowDeleteModal(false));
