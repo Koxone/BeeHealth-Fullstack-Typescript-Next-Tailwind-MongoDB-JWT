@@ -2,16 +2,32 @@
 
 import { Weight, TrendingDown, Ruler, Clock } from 'lucide-react';
 import PatientStatsCard from './PatientStatsCard';
-import { useGetAllWeightLogs } from '@/hooks/clinicalRecords/get/useGetAllWeightLogs';
 
-export default function PatientStatsGrid({ role }) {
-  // Weight Logs Hook
+// Custom Hooks
+import { useGetAllWeightLogs } from '@/hooks/clinicalRecords/get/useGetAllWeightLogs';
+import { useGetPatientWeightLogs } from '@/hooks/clinicalRecords/get/useGetPatientWeightLogs';
+
+export default function PatientStatsGrid({ role, currentUser }) {
+  // Weight Logs Hook for Global counter
   const {
     weightLogs,
     loading: weightLogsLoading,
     error: weightLogsError,
     refetch: refetchWeightLogs,
   } = useGetAllWeightLogs();
+
+  // Patient Weight Logs Hook
+  const {
+    weightLogs: patientWeightLogs,
+    loading: patientWeightLogsLoading,
+    error: patientWeightLogsError,
+    refetch: refetchPatientWeightLogs,
+  } = useGetPatientWeightLogs(currentUser?.id);
+
+  // Calculate last visit in days
+  const lastVisitCount = Math.floor(
+    (Date.now() - new Date(patientWeightLogs[0]?.createdAt).getTime()) / (1000 * 60 * 60 * 24)
+  );
 
   return (
     <div className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
@@ -51,9 +67,11 @@ export default function PatientStatsGrid({ role }) {
         },
         {
           Icon: Clock,
-          mainData: `06 dias`,
+          mainData: `${lastVisitCount} dias`,
           title: 'Tiempo desde tu ultima consulta',
           variant: 'danger',
+          count: true,
+          href: "/patient/new-appointment",
         },
       ].map((card, index) => (
         <PatientStatsCard
@@ -65,6 +83,8 @@ export default function PatientStatsGrid({ role }) {
           extraData={card.extraData || null}
           title={card.title}
           variant={card.variant}
+          lastVisitCount={lastVisitCount}
+          count={card.count}
         />
       ))}
     </div>

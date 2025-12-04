@@ -9,6 +9,8 @@ export default function PatientStatsCard({
   href,
   extraData,
   variant = 'primary',
+  lastVisitCount,
+  count,
 }) {
   const router = useRouter();
   const styles = {
@@ -48,7 +50,15 @@ export default function PatientStatsCard({
     >
       {/* Header */}
       <div className="mb-2 flex items-center justify-between">
-        <Icon className={`h-8 w-8 ${iconColors[variant]}`} />
+        <div className="flex w-full items-center justify-between">
+          <Icon className={`h-8 w-8 ${iconColors[variant]}`} />
+
+          {count && (
+            <button className="bg-beehealth-red-primary-solid hover:bg-beehealth-red-primary-solid-hover rounded-lg px-4 py-2 text-sm font-medium text-white transition active:scale-95">
+              Agendar Cita
+            </button>
+          )}
+        </div>
         {extraData && (
           <span className={`rounded px-2 py-1 text-xs font-medium ${badgeColors[variant]}`}>
             {extraData}

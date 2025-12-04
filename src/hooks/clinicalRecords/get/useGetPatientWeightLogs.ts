@@ -21,10 +21,16 @@ export interface Log {
   updatedAt: Date;
 }
 
-export function useGetAllWeightLogs() {
+export function useGetPatientWeightLogs(id?: string) {
   const fetchLogs = async (): Promise<Log[]> => {
     // Fetch request
-    const res = await fetch('/api/clinicalRecords/weight-logs');
+    const res = await fetch(`/api/users/${id}/weight-logs`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
     const data = await res.json();
 
     if (!res.ok) {
@@ -39,8 +45,9 @@ export function useGetAllWeightLogs() {
 
   /* Query */
   const query = useQuery({
-    queryKey: ['weightLogs'],
+    queryKey: ['weightLogs', id],
     queryFn: fetchLogs,
+    enabled: !!id,
     staleTime: 1000 * 60 * 10,
     retry: 1,
   });
