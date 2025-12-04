@@ -23,7 +23,6 @@ export interface Log {
 }
 
 export function useGetAllWeightLogs() {
-  /* Fetcher */
   const fetchLogs = async (): Promise<Log[]> => {
     // Fetch request
     const res = await fetch('/api/clinicalRecords/weight-logs');
