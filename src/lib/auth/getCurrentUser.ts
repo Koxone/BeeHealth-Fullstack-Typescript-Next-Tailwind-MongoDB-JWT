@@ -1,3 +1,4 @@
+import { CurrentUserData } from '@/types/user/user.types';
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 import { connectDB } from '@/lib/mongodb';
@@ -12,20 +13,7 @@ interface DecodedToken {
   exp?: number;
 }
 
-// Types UserData
-export interface UserData {
-  id: string;
-  fullName: string;
-  email: string;
-  phone: string;
-  hasRecord?: boolean;
-  role: string;
-  avatar?: string;
-  createdAt?: Date;
-  specialty?: string;
-}
-
-export async function getCurrentUser(): Promise<UserData | null> {
+export async function getCurrentUser(): Promise<CurrentUserData | null> {
   // Connect to DB
   await connectDB();
 

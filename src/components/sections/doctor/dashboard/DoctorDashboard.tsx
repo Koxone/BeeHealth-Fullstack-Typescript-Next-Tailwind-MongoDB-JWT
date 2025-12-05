@@ -15,7 +15,18 @@ import { useGetFullInventory } from '@/hooks/inventory/useGetFullInventory';
 import { getConsultTotals } from '../../employee/consultations/utils/getConsultTotals';
 import { useGetAllConsults } from '@/hooks/consults/useGetAllConsults';
 
-export default function DoctorDashboard({ currentUser, role, specialty }) {
+// Types
+import { CurrentUserData } from '@/types/user/user.types';
+
+interface DoctorDashboardProps {
+  currentUser: CurrentUserData;
+}
+
+export default function DoctorDashboard({ currentUser }: DoctorDashboardProps) {
+  // Props
+  const role = currentUser?.role;
+  const specialty = currentUser?.specialty;
+
   // Google Calendar Custom Hooks
   const { appointments, isLoading: loadingAppointments } = useTodayAppointmentsBySpecialty();
 
@@ -33,13 +44,13 @@ export default function DoctorDashboard({ currentUser, role, specialty }) {
   return (
     <div className="h-full space-y-4 overflow-y-auto pb-40 md:space-y-6">
       {/* Header */}
-      <HeaderWelcome fullName={currentUser?.fullName} role="doctor" />
+      <HeaderWelcome fullName={currentUser?.fullName} role={role} />
 
       {/* Stats */}
-      <DoctorStatsGrid role="doctor" specialty={specialty} />
+      <DoctorStatsGrid role={role} specialty={specialty} />
 
       {/* Appointments */}
-      <AppointmentsToday role={currentUser?.role} appointments={appointments} />
+      <AppointmentsToday role={role} appointments={appointments} />
 
       {/* Summaries */}
       <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-2">
@@ -50,7 +61,7 @@ export default function DoctorDashboard({ currentUser, role, specialty }) {
           totalCost={totalCost}
           consults={consults}
         />
-        <SharedInventoryAlerts inventory={inventory} role={currentUser?.role} showButton={true} />
+        <SharedInventoryAlerts inventory={inventory} role={role} showButton={true} />
       </div>
     </div>
   );
