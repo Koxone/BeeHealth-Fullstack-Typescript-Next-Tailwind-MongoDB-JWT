@@ -5,6 +5,7 @@ import { Loader2 } from 'lucide-react';
 import PatientDietCard from '@/components/sections/patient/diets/components/PatientDietCard';
 import SharedSectionHeader from '@/components/shared/headers/SharedSectionHeader';
 import EmptyState from '@/components/shared/feedback/EmptyState';
+import LoadingState from '@/components/shared/feedback/LoadingState';
 
 export default function PatientDiets({ role, currentUser }) {
   // Fetch diets
@@ -16,18 +17,7 @@ export default function PatientDiets({ role, currentUser }) {
 
   // Loading state
   if (isLoading) {
-    return (
-      <div className="flex min-h-[400px] items-center justify-center">
-        {error ? (
-          <p className="text-lg font-medium text-red-600">Error al cargar tus dietas</p>
-        ) : (
-          <div className="text-center">
-            <Loader2 className="mx-auto mb-4 h-16 w-16 animate-spin text-blue-600" />
-            <p className="text-lg font-medium text-gray-600">Cargando información...</p>
-          </div>
-        )}
-      </div>
-    );
+    return <LoadingState />;
   }
 
   return (

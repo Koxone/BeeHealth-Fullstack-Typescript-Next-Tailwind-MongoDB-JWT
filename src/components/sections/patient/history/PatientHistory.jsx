@@ -10,6 +10,7 @@ import SharedSectionHeader from '@/components/shared/headers/SharedSectionHeader
 import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/get/useGetPatientClinicalRecords';
 import { useGetPatientWeightLogs } from '@/hooks/clinicalRecords/get/useGetPatientWeightLogs';
 import EmptyState from '@/components/shared/feedback/EmptyState';
+import LoadingState from '@/components/shared/feedback/LoadingState';
 
 export default function PatientHistory({ role, currentUser }) {
   const { data, isLoading, error } = useGetPatientClinicalRecords(currentUser?.id);
@@ -33,7 +34,7 @@ export default function PatientHistory({ role, currentUser }) {
     notas: r?.motivoConsulta || 'Sin notas',
   }));
 
-  if (isLoading) return <p className="p-6 text-center text-gray-500">Cargando historial...</p>;
+  if (isLoading) return <LoadingState />;
   if (error)
     return <p className="p-6 text-center text-red-600">Error: {error?.message || 'Desconocido'}</p>;
   if (!historyData.length) return <EmptyState onAdd={() => setShowModal(true)} />;

@@ -7,10 +7,15 @@ import PatientMotivationalBanner from './components/PatientMotivationalBanner';
 import PatientStatsGrid from './components/stats-grid/PatientStatsGrid';
 import { useGetAllClinicalRecords } from '@/hooks/clinicalRecords/get/useGetAllClinicalRecords';
 import GlobalWeightLogs from '@/components/shared/dashboard/weight-logs/GlobalWeightLogs';
+import LoadingState from '@/components/shared/feedback/LoadingState';
 
 export default function PatientDashboard({ currentUser }) {
   // Fetch clinical records for the patient
-  const { data } = useGetAllClinicalRecords({ patient: currentUser?.id });
+  const { data, loading } = useGetAllClinicalRecords({ patient: currentUser?.id });
+
+  if (loading) {
+    return <LoadingState />;
+  }
 
   return (
     <DashboardLayout>

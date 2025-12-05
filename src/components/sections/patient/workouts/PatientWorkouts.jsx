@@ -8,6 +8,7 @@ import { useGetAllWorkouts } from '@/hooks/workouts/get/useGetAllWorkouts';
 import SharedSectionHeader from '@/components/shared/headers/SharedSectionHeader';
 import SharedModalOpenWorkout from '../../../shared/workouts/SharedModalOpenWorkout';
 import EmptyState from '@/components/shared/feedback/EmptyState';
+import LoadingState from '@/components/shared/feedback/LoadingState';
 
 export default function PatientWorkouts({ role, currentUser }) {
   // Get Workouts from API
@@ -32,6 +33,10 @@ export default function PatientWorkouts({ role, currentUser }) {
     const matchSearch = e.name.toLowerCase().includes(searchTerm.toLowerCase());
     return matchCategorie && matchSearch;
   });
+
+  if (isLoading) {
+    return <LoadingState />;
+  }
 
   return (
     <div className="h-full w-full space-y-4 overflow-y-auto px-4 md:space-y-6">
