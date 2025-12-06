@@ -1,31 +1,9 @@
 'use client';
-import useAuthStore from '@/zustand/useAuthStore';
 import { useState, useEffect, useMemo } from 'react';
-import { AuthUser } from '@/zustand/useAuthStore';
+import useAuthStore from '@/zustand/useAuthStore';
 
-interface Product {
-  _id: string;
-  name: string;
-  type: string;
-  category: string;
-  inStock: boolean;
-  costPrice: number;
-  salePrice: number;
-  createdAt: string;
-  specialty: AuthUser['specialty'];
-  updatedAt: string;
-}
-
-interface InventoryItem {
-  _id: string;
-  product: Product;
-  productType: string;
-  quantity: number;
-  minStock: number;
-  maxStock: number;
-  createdAt: string;
-  updatedAt: string;
-}
+// Types
+import { InventoryItem } from '@/types/inventory/inventory.types';
 
 export function useGetFullInventory() {
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
@@ -91,7 +69,6 @@ export function useGetFullInventory() {
     lowItems,
     totalAlerts,
 
-    // Manual refetch
     refetch: fetchInventory,
   };
 }

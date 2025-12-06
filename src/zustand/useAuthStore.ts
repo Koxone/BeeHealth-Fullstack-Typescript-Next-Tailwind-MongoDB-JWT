@@ -1,23 +1,14 @@
 import { create } from 'zustand';
+import { CurrentUserData } from '@/types/user/user.types';
 import { persist, createJSONStorage } from 'zustand/middleware';
-
-/* User type */
-export interface AuthUser {
-  _id: string;
-  fullName: string;
-  email: string;
-  role: string;
-  avatar?: string;
-  specialty?: string;
-}
 
 /* Store shape */
 interface AuthState {
-  user: AuthUser | null;
+  user: CurrentUserData | null;
   token: string | null;
   isAuthenticated: boolean;
 
-  setUser: (user: AuthUser | null) => void;
+  setUser: (user: CurrentUserData | null) => void;
   setToken: (token: string | null) => void;
   clearAuth: () => void;
   loadUser: () => Promise<void>;
