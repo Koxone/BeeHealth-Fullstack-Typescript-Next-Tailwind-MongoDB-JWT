@@ -12,7 +12,7 @@ import LoadingState from '@/components/shared/feedback/LoadingState';
 
 // Custom Hooks
 import { useGetAllConsults } from '@/hooks/consults/useGetAllConsults';
-import { getConsultTotals } from '../../employee/consultations/utils/getConsultTotals';
+import { getConsultTotals } from '@/components/sections/employee/consultations/utils/getConsultTotals';
 
 export default function DoctorAccounting({ role, specialty }) {
   // Get consults data
