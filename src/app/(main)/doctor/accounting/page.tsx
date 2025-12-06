@@ -9,7 +9,7 @@ export default async function DoctorAccountingPage() {
   const specialty = currentUser?.specialty;
 
   return (
-    <div className="h-screen overflow-hidden">
+    <div>
       <DoctorAccounting role={role} specialty={specialty} />
     </div>
   );

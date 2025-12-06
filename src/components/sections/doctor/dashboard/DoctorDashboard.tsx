@@ -42,7 +42,7 @@ export default function DoctorDashboard({ currentUser }: DoctorDashboardProps) {
     return <LoadingState />;
   }
   return (
-    <div className="h-full space-y-4 overflow-y-auto pb-40 md:space-y-6">
+    <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
       {/* Header */}
       <HeaderWelcome fullName={currentUser?.fullName} role={role} />
 

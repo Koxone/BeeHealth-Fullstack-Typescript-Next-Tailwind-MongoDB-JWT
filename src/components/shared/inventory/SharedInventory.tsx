@@ -159,7 +159,7 @@ export default function SharedInventory({ role, showButton = true }) {
   }
 
   return (
-    <div className="h-full space-y-6 overflow-x-hidden overflow-y-auto pb-40">
+    <div className="h-full space-y-6 overflow-x-hidden overflow-y-auto">
       {/* Success Modal */}
       <SuccessModal
         title="Inventario actualizado con éxito"

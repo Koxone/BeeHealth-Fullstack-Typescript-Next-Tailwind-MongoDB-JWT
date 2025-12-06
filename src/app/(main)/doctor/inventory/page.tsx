@@ -8,7 +8,7 @@ export default async function DoctorInventoryPage() {
   const role = currentUser?.role;
 
   return (
-    <div className="h-screen overflow-hidden">
+    <div>
       <SharedInventory role={role} showButton={false} />
     </div>
   );

@@ -1,7 +1,15 @@
+import { cookies } from 'next/headers';
 import './globals.css';
+import jwt from 'jsonwebtoken';
+import { getCurrentUser } from '@/lib/auth/getCurrentUser';
+
+import Sidebar from '@/components/shared/nav/sidebar/SideBar';
+import Header from '@/components/shared/nav/header/Header';
+import ServerRoleGuard from '@/components/sections/auth/ServerRoleGuard';
 import ReactQueryProvider from '@/lib/tanstack/ReactQueryProvider';
 
-/* Base info */
+export const runtime = 'nodejs';
+
 export const metadata = {
   title: 'BeeHealth',
   description:
@@ -66,10 +74,11 @@ export const viewport = {
   themeColor: '#0e1113',
 };
 
-export default function AuthRootLayout({ children }) {
+export default function PublicLayout({ children }) {
   return (
     <html lang="es">
-      <body className="bg-beehealth-body-main min-h-screen overflow-hidden">
+      <body className="bg-beehealth-body-main min-h-screen">
+        {/* React Query */}
         <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>
     </html>

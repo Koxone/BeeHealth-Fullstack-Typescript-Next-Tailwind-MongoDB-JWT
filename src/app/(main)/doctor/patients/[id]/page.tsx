@@ -32,7 +32,7 @@ export default async function DoctorPatientDetailPage(props: DoctorPatientDetail
   const specialty = currentUser?.specialty;
 
   return (
-    <div className="h-screen overflow-hidden pb-40">
+    <div>
       <DoctorPatientDetail patient={serializedPatient} specialty={specialty} />
     </div>
   );

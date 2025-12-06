@@ -1,10 +1,12 @@
 import { cookies } from 'next/headers';
+import '../globals.css';
 import jwt from 'jsonwebtoken';
 import { getCurrentUser } from '@/lib/auth/getCurrentUser';
 
 import Sidebar from '@/components/shared/nav/sidebar/SideBar';
 import Header from '@/components/shared/nav/header/Header';
 import ServerRoleGuard from '@/components/sections/auth/ServerRoleGuard';
+import ReactQueryProvider from '@/lib/tanstack/ReactQueryProvider';
 
 export const runtime = 'nodejs';
 
@@ -94,14 +96,18 @@ export default async function MainRootLayout({ children }) {
   }
   return (
     <ServerRoleGuard allowedRoles={['doctor', 'employee', 'patient']}>
-      <div>
-        <div className="grid grid-rows-[auto_1fr]">
+      <div className="bg-beehealth-body-main h-screen overflow-hidden">
+        <header className="fixed top-0 right-0 left-0 z-50 h-16">
           <Header type={type} />
-          <main className="grid grid-cols-1 md:grid-cols-[auto_1fr]">
+        </header>
+
+        <div className="flex h-screen pt-16">
+          <aside className="top-21 bottom-0 left-0 hidden w-64 md:fixed md:flex">
             <Sidebar currentUser={currentUser} role={role} specialty={specialty} />
-            <div className="mx-auto flex min-h-screen w-full max-w-7xl p-6 flex-col items-center justify-center overflow-y-auto pb-10 md:block ">
-              {children}
-            </div>
+          </aside>
+
+          <main className="flex-1 overflow-y-auto p-4 md:ml-64 md:p-0 md:py-10 md:pr-6 md:pl-14">
+            <ReactQueryProvider>{children}</ReactQueryProvider>
           </main>
         </div>
       </div>

@@ -67,7 +67,7 @@ export default function DoctorWorkouts({ role }) {
   }
 
   return (
-    <div className="h-full space-y-4 overflow-y-auto pb-40 md:space-y-6">
+    <div className="h-full space-y-4 overflow-y-auto md:space-y-6">
       {/* Success Modal */}
       <SuccessModal
         message="Ejercicio editado exitosamente"

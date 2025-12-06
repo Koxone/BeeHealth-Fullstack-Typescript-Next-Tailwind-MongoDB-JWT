@@ -3,7 +3,7 @@ import React from 'react';
 
 function DoctorNewDietPage() {
   return (
-    <div className="h-screen overflow-hidden pb-40">
+    <div>
       <DoctorDietNew />
     </div>
   );

@@ -9,7 +9,7 @@ export default async function DoctorDietsIDPage({ params }) {
   const newParams = await params;
 
   return (
-    <div className="h-screen overflow-hidden pb-40">
+    <div>
       <DoctorDietDetail params={newParams} specialty={specialty} />
     </div>
   );

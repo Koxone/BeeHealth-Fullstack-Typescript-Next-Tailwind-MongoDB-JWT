@@ -8,7 +8,7 @@ export default async function DoctorDashboardPage() {
   const currentUser = await getCurrentUser();
 
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="">
       <DoctorDashboard currentUser={currentUser} />
     </div>
   );
