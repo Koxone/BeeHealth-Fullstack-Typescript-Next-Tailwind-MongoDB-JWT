@@ -207,9 +207,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
           onClose={() => setShowFullHistoryModal(false)}
           record={selectedRecord}
           specialty={specialty}
-          readOnly={isReadOnly}
           patientId={id}
-          mode={historyMode}
           fetchRecord={fetchRecord}
           setShowSuccessModal={setShowSuccessModal}
         />
