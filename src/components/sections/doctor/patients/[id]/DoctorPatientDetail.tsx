@@ -20,6 +20,7 @@ import LoadingState from '@/components/shared/feedback/LoadingState';
 import SuccessModal from '@/components/shared/feedback/SuccessModal';
 import DoctorCreateAppointmentModal from './components/modals/createAppointmentModal/DoctorCreateAppointmentModal';
 import CreateGoalModal from './components/modals/create-goal-modal/CreateGoalModal';
+import FullHistoryModal from './components/modals/full-history-modal/FullHistoryModal';
 
 // Custom Hooks
 import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/get/useGetPatientClinicalRecords';
@@ -59,6 +60,9 @@ export default function DoctorPatientDetail({ patient, specialty }) {
   // Create Goal Modal
   const [showCreateGoalModal, setShowCreateGoalModal] = useState<boolean>(false);
 
+  // Full History Modal
+  const [showFullHistoryModal, setShowFullHistoryModal] = useState<boolean>(false);
+
   // Dental Tabs Nav
   const [activeTab, setActiveTab] = useState<TabName>('Historial');
 
@@ -73,6 +77,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
         <PatientHeader
           patientRecord={patientRecord}
           onClickNew={() => setShowCreateAppointmentModal(true)}
+          onClickFullHistory={() => setShowFullHistoryModal(true)}
         />
       </div>
 
@@ -194,6 +199,20 @@ export default function DoctorPatientDetail({ patient, specialty }) {
       {/* Create Goal Modal */}
       {showCreateGoalModal && (
         <CreateGoalModal patient={patient} onClose={() => setShowCreateGoalModal(false)} />
+      )}
+
+      {/* Full History Modal */}
+      {showFullHistoryModal && (
+        <FullHistoryModal
+          onClose={() => setShowFullHistoryModal(false)}
+          record={selectedRecord}
+          specialty={specialty}
+          readOnly={isReadOnly}
+          patientId={id}
+          mode={historyMode}
+          fetchRecord={fetchRecord}
+          setShowSuccessModal={setShowSuccessModal}
+        />
       )}
     </div>
   );

@@ -4,41 +4,26 @@ import { useState, useEffect } from 'react';
 import { X, FileText } from 'lucide-react';
 
 import ModalHeader from './components/ModalHeader';
-import ShortVersion from './components/ShortVersion';
+import FullVersion from './components/FullVersion';
 
 // Custom Hooks
 import { useModalClose } from '@/hooks/useModalClose';
 import { useCreateClinicalRecordDoctor } from '@/hooks/clinicalRecords/create/useCreateClinicalRecordDoctor';
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/get/useGetAllQuestions';
-import { useEditWorkout } from '@/hooks/workouts/edit/useEditWorkout';
-import { useAssignDiet } from '@/hooks/diets/assign/useAssignDiet';
 
-export default function ClinicalRecordModal({
+export default function FullHistoryModal({
   onClose,
   record,
   specialty,
-  readOnly,
   patientId,
-  mode = 'view',
   fetchRecord,
   setShowSuccessModal,
 }) {
-  // Readonly state
-  const [isReadOnly, setIsReadOnly] = useState(!!readOnly);
-  const [activeTab, setActiveTab] = useState('basico');
-
-  // Diet state
-  const [dietSelected, setDietSelected] = useState(null);
-  const { editPatients } = useAssignDiet();
-
-  // Workout state
-  const [workoutSelected, setWorkoutSelected] = useState(null);
-  const { editWorkout } = useEditWorkout();
+  // Is editing state
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   // Close handler
   const { handleOverlayClick } = useModalClose(onClose);
-
-  const isCreate = mode === 'create';
 
   // Form data
   const [formData, setFormData] = useState({
@@ -84,34 +69,12 @@ export default function ClinicalRecordModal({
       };
     });
 
-    // Assign diet to patient if selected
-    if (dietSelected) {
-      try {
-        await editPatients(dietSelected, [patientId]);
-      } catch (err) {
-        console.error('Error assigning diet:', err);
-        return;
-      }
-    }
-
-    // Assign workout to patient if selected
-    if (workoutSelected) {
-      try {
-        await editWorkout(workoutSelected, [patientId]);
-      } catch (err) {
-        console.error('Error assigning workout:', err);
-        return;
-      }
-    }
-
     // Submit clinical record including dietId
     const result = await submit({
       patientId,
       specialty,
       version: 'short',
       answers,
-      dietId: dietSelected || null,
-      workoutId: workoutSelected || null,
     });
 
     if (result.ok) {
@@ -133,15 +96,7 @@ export default function ClinicalRecordModal({
         onClick={(e) => e.stopPropagation()}
       >
         <ModalHeader
-          title={
-            record
-              ? isReadOnly
-                ? 'Ver Historial Clínico'
-                : isCreate
-                  ? 'Nuevo Historial Clínico'
-                  : 'Editar Historial Clínico'
-              : 'Nuevo Historial Clínico'
-          }
+          title="Historia Clínica Completa"
           subtitle="Registro médico del paciente"
           onClose={onClose}
           icons={{ X, FileText }}
@@ -152,23 +107,12 @@ export default function ClinicalRecordModal({
           onSubmit={handleSubmit}
           className="max-h-[calc(90vh-180px)] overflow-y-auto px-6 py-8"
         >
-          {activeTab === 'basico' && (
-            <ShortVersion
-              patientId={patientId}
-              specialty={specialty}
-              isReadOnly={isReadOnly}
-              formData={formData}
-              setFormData={setFormData}
-              activeTab={activeTab}
-              isCreate={isCreate}
-              isSubmitting={isSubmitting}
-              onClose={onClose}
-              dietSelected={dietSelected}
-              setDietSelected={setDietSelected}
-              workoutSelected={workoutSelected}
-              setWorkoutSelected={setWorkoutSelected}
-            />
-          )}
+          <FullVersion
+            specialty={specialty}
+            patientId={patientId}
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+          />
         </form>
       </div>
     </div>

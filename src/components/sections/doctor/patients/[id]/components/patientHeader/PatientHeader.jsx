@@ -12,14 +12,15 @@ import {
 import CreateAppointmentButton from './components/CreateAppointmentButton';
 import RegisterVisitButton from './components/RegisterVisitButton';
 import moment from 'moment';
-import AssignedDiets from '@/components/sections/test/AssignedDiets';
-import AssignedWorkouts from '@/components/sections/test/AssignedWorkouts';
+import AssignedDiets from '@/components/sections/doctor/patients/[id]/components/patientHeader/components/AssignedDiets';
+import AssignedWorkouts from '@/components/sections/doctor/patients/[id]/components/patientHeader/components/AssignedWorkouts';
 
 import { useGetAllWorkouts } from '@/hooks/workouts/get/useGetAllWorkouts';
 import { useGetAllDiets } from '@/hooks/diets/get/useGetAllDiets';
 import { useParams } from 'next/navigation';
+import FullHistoryButton from './components/FullHistoryButton';
 
-export default function PatientHeader({ onClickNew, patientRecord }) {
+export default function PatientHeader({ onClickNew, patientRecord, onClickFullHistory }) {
   const { id } = useParams();
   // Specialty map
   const specialtyLabels = {
@@ -101,10 +102,14 @@ export default function PatientHeader({ onClickNew, patientRecord }) {
               </span>
             </div>
 
-            {/* Assigned Section */}
-            <div className="grid grid-cols-2 items-center gap-4">
+            <div className="grid grid-cols-3 items-center gap-4">
+              {/* Full Clinical History */}
+              <FullHistoryButton onClickFullHistory={onClickFullHistory} />
+
+              {/* Assigned Diets */}
               <AssignedDiets assignedDietsData={assignedDietsData} />
 
+              {/* Assigned Workouts */}
               <AssignedWorkouts assignedWorkoutsData={assignedWorkoutsData} />
             </div>
           </div>
