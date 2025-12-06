@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import DoctorPatientCard from './DoctorPatientCard';
 import PatientsSearchBar from '@/components/shared/patients/PatientsSearchBar';
-import { UserData } from '@/lib/auth/getCurrentUser';
+import { CurrentUserData } from '../../../../../types/user/user.types';
 
 interface ClientPatientsListProps {
   patients: {
@@ -13,7 +13,7 @@ interface ClientPatientsListProps {
     phone: string;
     lastVisit?: Date | null;
   }[];
-  currentUser: UserData | null;
+  currentUser: CurrentUserData | null;
   role?: string;
 }
 

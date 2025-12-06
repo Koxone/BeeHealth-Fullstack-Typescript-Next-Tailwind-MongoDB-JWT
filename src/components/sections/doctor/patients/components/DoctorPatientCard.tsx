@@ -1,6 +1,6 @@
 import { Phone, Mail, Calendar, Eye } from 'lucide-react';
 import Link from 'next/link';
-import { UserData } from '@/lib/auth/getCurrentUser';
+import { CurrentUserData } from '../../../../../types/user/user.types';
 
 interface DoctorPatientCardProps {
   patient: {
@@ -11,7 +11,7 @@ interface DoctorPatientCardProps {
     avatar?: string;
     lastVisit?: string | Date | null;
   };
-  currentUser: UserData | null;
+  currentUser: CurrentUserData | null;
   role?: string;
 }
 
