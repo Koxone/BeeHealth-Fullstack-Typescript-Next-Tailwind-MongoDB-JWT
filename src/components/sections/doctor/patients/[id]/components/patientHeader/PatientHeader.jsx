@@ -81,7 +81,7 @@ export default function PatientHeader({
           {/* Action Buttons */}
           <div className="flex flex-col items-center gap-2">
             {/* Check In */}
-            <RegisterVisitButton onClick={() => {}} />
+            <RegisterVisitButton />
 
             {/* Create Appointment */}
             <CreateAppointmentButton onClickNew={onClickNew} />
