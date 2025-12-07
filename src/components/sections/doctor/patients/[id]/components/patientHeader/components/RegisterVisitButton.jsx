@@ -4,7 +4,7 @@ import { Check, BadgeCheck } from 'lucide-react';
 import { useState } from 'react';
 import useSound from 'use-sound';
 
-export default function RegisterVisitButton({ onClick }) {
+export default function RegisterVisitButton() {
   const [isChecked, setIsChecked] = useState(false);
 
   // Load your sound from public/

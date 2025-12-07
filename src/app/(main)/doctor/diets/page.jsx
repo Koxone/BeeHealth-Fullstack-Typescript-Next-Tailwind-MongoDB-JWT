@@ -9,7 +9,7 @@ export default async function DoctorDietsPage() {
   const role = currentUser?.role;
 
   return (
-    <div className="h-screen overflow-hidden">
+    <div>
       <DoctorDiets role={role} />
     </div>
   );

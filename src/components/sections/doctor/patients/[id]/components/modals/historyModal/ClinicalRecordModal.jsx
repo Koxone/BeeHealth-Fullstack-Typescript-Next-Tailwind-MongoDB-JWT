@@ -4,9 +4,7 @@ import { useState, useEffect } from 'react';
 import { X, FileText } from 'lucide-react';
 
 import ModalHeader from './components/ModalHeader';
-import TabsNav from './components/TabsNav';
 import ShortVersion from './components/ShortVersion';
-import FullVersion from './components/FullVersion';
 
 // Custom Hooks
 import { useModalClose } from '@/hooks/useModalClose';
@@ -149,8 +147,6 @@ export default function ClinicalRecordModal({
           icons={{ X, FileText }}
         />
 
-        <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />
-
         {/* Main content */}
         <form
           onSubmit={handleSubmit}
@@ -171,16 +167,6 @@ export default function ClinicalRecordModal({
               setDietSelected={setDietSelected}
               workoutSelected={workoutSelected}
               setWorkoutSelected={setWorkoutSelected}
-            />
-          )}
-
-          {activeTab === 'completo' && (
-            <FullVersion
-              specialty={specialty}
-              isReadOnly={isReadOnly}
-              formData={formData}
-              setFormData={setFormData}
-              patientId={patientId}
             />
           )}
         </form>

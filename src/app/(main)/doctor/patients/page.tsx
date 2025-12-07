@@ -8,7 +8,7 @@ export default async function DoctorPatientsPage() {
   const role = currentUser?.role as 'doctor' | 'patient' | 'employee' | 'admin';
 
   return (
-    <div className="h-screen overflow-hidden pb-40">
+    <div>
       <DoctorPatients currentUser={currentUser} role={role} />
     </div>
   );

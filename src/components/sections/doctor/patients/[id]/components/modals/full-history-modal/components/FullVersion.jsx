@@ -1,17 +1,14 @@
 import LoadingState from '@/components/shared/feedback/LoadingState';
+import { CalendarIcon } from 'lucide-react';
+import ToggleEditModeButton from './ToggleEditModeButton';
+
+// Custom Hooks
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/get/useGetAllQuestions';
 import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/get/useGetPatientClinicalRecords';
-import { CalendarIcon } from 'lucide-react';
 
-export default function FullVersion({
-  specialty,
-  isReadOnly = true,
-  patientId,
-  formData,
-  setFormData,
-}) {
+export default function FullVersion({ specialty, patientId, isEditing, setIsEditing }) {
   // Fetch patient records
-  const { data: records, loading: recordsLoading } = useGetPatientClinicalRecords(patientId);
+  const { data: records, isLoading: recordsLoading } = useGetPatientClinicalRecords(patientId);
 
   // Get the full version record
   const fullRecord = records?.find((r) => r.version === 'full' && r.specialty === specialty);
@@ -31,15 +28,25 @@ export default function FullVersion({
 
   return (
     <div>
-      <div className="flex flex-col gap-1">
-        <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900">
-          <CalendarIcon className="h-5 w-5 text-blue-600" />
-          Información Completa
-        </h3>
+      <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-1">
+          <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900">
+            <CalendarIcon className="h-5 w-5 text-blue-600" />
+            Información Completa
+          </h3>
 
-        <span className="bg-beehealth-green-secondary-light text-beehealth-green-secondary-dark mb-4 w-fit rounded-lg p-1 text-xs">
-          Solo Lectura
-        </span>
+          {isEditing ? (
+            <span className="bg-beehealth-red-primary-solid mb-4 w-fit rounded-lg p-1 text-xs text-white">
+              Modo Edición
+            </span>
+          ) : (
+            <span className="bg-beehealth-green-secondary-solid mb-4 w-fit rounded-lg p-1 text-xs text-white">
+              Solo Lectura
+            </span>
+          )}
+        </div>
+
+        <ToggleEditModeButton isEditing={isEditing} setIsEditing={setIsEditing} />
       </div>
 
       {/* Main Content */}

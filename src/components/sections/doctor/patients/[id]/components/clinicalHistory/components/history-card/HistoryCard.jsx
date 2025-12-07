@@ -1,28 +1,46 @@
-import { Scale, Edit2, Eye, Pencil, Trash2 } from 'lucide-react';
-import { useGetAllQuestions } from '@/hooks/clinicalRecords/get/useGetAllQuestions';
+import { Edit2, Eye, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import EditRecordDateButton from './components/EditRecordDateButton';
-import { useEditClinicalRecord } from '@/hooks/clinicalRecords/edit/useEditClinicalRecord';
 
-function HistoryCard({ r, onEdit, specialty, showDeleteModal, setShowDeleteModal, onDelete }) {
+// Custom Hooks
+import { useEditClinicalRecord } from '@/hooks/clinicalRecords/edit/useEditClinicalRecord';
+import { useGetAllQuestions } from '@/hooks/clinicalRecords/get/useGetAllQuestions';
+
+function HistoryCard({ r, onEdit, specialty, onDelete, patientRecord }) {
   function getValueByQuestionId(questionId) {
     if (!r?.answers) return null;
-
-    // Handle both object and array formats
     let answersArray = [];
     if (Array.isArray(r.answers)) {
       answersArray = r.answers;
     } else if (typeof r.answers === 'object') {
       answersArray = Object.values(r.answers);
     }
-
     const ans = answersArray.find((a) => a?.question?.questionId === questionId);
     return ans ? ans.value : null;
   }
+  // Fetch all questions from the custom hook
   const { questions } = useGetAllQuestions();
-  const filtered = questions?.filter((q) => q.version === 'quick' && q.specialty === specialty);
+  const filtered = questions?.filter((q) => q?.version === 'quick' && q?.specialty === specialty);
+
+  const DISEASE_QUESTION_IDS = [
+    27, 28, 29, 30, 31, 32, 39, 40, 41, 73, 74, 75, 76, 77, 78, 79, 81, 82, 87, 88, 89, 92, 93, 94,
+    95, 96,
+  ];
 
   const { editClinicalRecord } = useEditClinicalRecord();
+
+  const firstRecord = patientRecord?.find((record) => record.version === 'full');
+  const diseasesFromFirstRecord = firstRecord
+    ? firstRecord.answers
+        ?.filter(
+          (answer) =>
+            answer.question?.type === 'radio' &&
+            answer.value === 'true' &&
+            DISEASE_QUESTION_IDS.includes(answer.question.questionId)
+        )
+        .map((answer) => answer.question.text)
+    : [];
+
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:gap-4">
       {/* Date block */}
@@ -103,6 +121,15 @@ function HistoryCard({ r, onEdit, specialty, showDeleteModal, setShowDeleteModal
 
           <p className="text-sm font-medium text-gray-900">{r?.workouts?.[0]?.name || 'Ninguna'}</p>
         </Link>
+
+        {diseasesFromFirstRecord.map((disease, index) => (
+          <div key={index} className="bg-beehealth-red-primary-light h-full rounded-lg p-2">
+            <div className="text-beehealth-red-primary-solid flex items-center gap-1.5 text-xs font-medium sm:gap-2">
+              <span className="truncate">Diagnóstico Positivo</span>
+            </div>
+            <p className="text-sm font-medium text-gray-900">{disease}</p>
+          </div>
+        ))}
       </div>
 
       {/* Actions */}

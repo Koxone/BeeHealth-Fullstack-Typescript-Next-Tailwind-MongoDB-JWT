@@ -20,6 +20,8 @@ import LoadingState from '@/components/shared/feedback/LoadingState';
 import SuccessModal from '@/components/shared/feedback/SuccessModal';
 import DoctorCreateAppointmentModal from './components/modals/createAppointmentModal/DoctorCreateAppointmentModal';
 import CreateGoalModal from './components/modals/create-goal-modal/CreateGoalModal';
+import FullHistoryModal from './components/modals/full-history-modal/FullHistoryModal';
+import CreateFirstRecordModal from './components/modals/create-first-record-modal/CreateFirstRecordModal';
 
 // Custom Hooks
 import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/get/useGetPatientClinicalRecords';
@@ -59,6 +61,12 @@ export default function DoctorPatientDetail({ patient, specialty }) {
   // Create Goal Modal
   const [showCreateGoalModal, setShowCreateGoalModal] = useState<boolean>(false);
 
+  // Full History Modal
+  const [showFullHistoryModal, setShowFullHistoryModal] = useState<boolean>(false);
+
+  // Create First Record Modal
+  const [showCreateFirstRecordModal, setShowCreateFirstRecordModal] = useState<boolean>(false);
+
   // Dental Tabs Nav
   const [activeTab, setActiveTab] = useState<TabName>('Historial');
 
@@ -73,6 +81,8 @@ export default function DoctorPatientDetail({ patient, specialty }) {
         <PatientHeader
           patientRecord={patientRecord}
           onClickNew={() => setShowCreateAppointmentModal(true)}
+          onClickFullHistory={() => setShowFullHistoryModal(true)}
+          onCreateNew={() => setShowCreateFirstRecordModal(true)}
         />
       </div>
 
@@ -88,6 +98,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
           specialty={specialty}
           patientRecord={patientRecord}
           showDeleteModal={showDeleteModal}
+          onCreateNew={() => setShowCreateFirstRecordModal(true)}
           setShowDeleteModal={setShowDeleteModal}
           onAdd={() => {
             const lastRecord = patientRecord?.[patientRecord.length - 1] || null;
@@ -123,6 +134,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
           patientRecord={patientRecord}
           showDeleteModal={showDeleteModal}
           setShowDeleteModal={setShowDeleteModal}
+          onCreateNew={() => setShowCreateFirstRecordModal(true)}
           onAdd={() => {
             const lastRecord = patientRecord?.[0] || null;
             setSelectedRecord(lastRecord);
@@ -194,6 +206,23 @@ export default function DoctorPatientDetail({ patient, specialty }) {
       {/* Create Goal Modal */}
       {showCreateGoalModal && (
         <CreateGoalModal patient={patient} onClose={() => setShowCreateGoalModal(false)} />
+      )}
+
+      {/* Full History Modal */}
+      {showFullHistoryModal && (
+        <FullHistoryModal
+          onClose={() => setShowFullHistoryModal(false)}
+          record={selectedRecord}
+          specialty={specialty}
+          patientId={id}
+          fetchRecord={fetchRecord}
+          setShowSuccessModal={setShowSuccessModal}
+        />
+      )}
+
+      {/* Create First Record Modal */}
+      {showCreateFirstRecordModal && (
+        <CreateFirstRecordModal onClose={() => setShowCreateFirstRecordModal(false)} />
       )}
     </div>
   );
