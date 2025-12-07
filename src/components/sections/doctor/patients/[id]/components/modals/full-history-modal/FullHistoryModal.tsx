@@ -59,7 +59,6 @@ export default function FullHistoryModal({
       };
     });
 
-    // Submit clinical record including dietId
     const result = await submit({
       patientId,
       specialty,
