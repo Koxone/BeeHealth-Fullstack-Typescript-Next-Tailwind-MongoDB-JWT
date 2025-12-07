@@ -102,7 +102,7 @@ export default async function MainRootLayout({ children }) {
         </header>
 
         <div className="flex h-screen pt-16">
-          <aside className="top-21 bottom-0 left-0 hidden w-64 md:fixed md:flex">
+          <aside className="top-21 bottom-0 z-50 left-0  w-64 fixed flex">
             <Sidebar currentUser={currentUser} role={role} specialty={specialty} />
           </aside>
 
