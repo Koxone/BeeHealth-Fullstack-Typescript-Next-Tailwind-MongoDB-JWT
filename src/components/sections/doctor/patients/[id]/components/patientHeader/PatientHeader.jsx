@@ -1,24 +1,14 @@
-import {
-  User,
-  Mail,
-  Phone,
-  CalendarIcon,
-  Activity,
-  Stethoscope,
-  Weight,
-  Dumbbell,
-  Apple,
-} from 'lucide-react';
+import { Mail, Phone, CalendarIcon, Stethoscope } from 'lucide-react';
+import moment from 'moment';
 import CreateAppointmentButton from './components/CreateAppointmentButton';
 import RegisterVisitButton from './components/RegisterVisitButton';
-import moment from 'moment';
 import AssignedDiets from '@/components/sections/doctor/patients/[id]/components/patientHeader/components/AssignedDiets';
 import AssignedWorkouts from '@/components/sections/doctor/patients/[id]/components/patientHeader/components/AssignedWorkouts';
+import FullHistoryButton from './components/FullHistoryButton';
 
 import { useGetAllWorkouts } from '@/hooks/workouts/get/useGetAllWorkouts';
 import { useGetAllDiets } from '@/hooks/diets/get/useGetAllDiets';
 import { useParams } from 'next/navigation';
-import FullHistoryButton from './components/FullHistoryButton';
 
 export default function PatientHeader({
   onClickNew,
@@ -91,7 +81,7 @@ export default function PatientHeader({
           {/* Action Buttons */}
           <div className="flex flex-col items-center gap-2">
             {/* Check In */}
-            <RegisterVisitButton />
+            <RegisterVisitButton onClick={() => {}} />
 
             {/* Create Appointment */}
             <CreateAppointmentButton onClickNew={onClickNew} />

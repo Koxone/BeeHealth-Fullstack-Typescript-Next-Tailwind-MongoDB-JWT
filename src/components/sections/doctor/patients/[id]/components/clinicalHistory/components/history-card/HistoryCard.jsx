@@ -6,15 +6,7 @@ import EditRecordDateButton from './components/EditRecordDateButton';
 import { useEditClinicalRecord } from '@/hooks/clinicalRecords/edit/useEditClinicalRecord';
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/get/useGetAllQuestions';
 
-function HistoryCard({
-  r,
-  onEdit,
-  specialty,
-  showDeleteModal,
-  setShowDeleteModal,
-  onDelete,
-  patientRecord,
-}) {
+function HistoryCard({ r, onEdit, specialty, onDelete, patientRecord }) {
   function getValueByQuestionId(questionId) {
     if (!r?.answers) return null;
     let answersArray = [];
