@@ -11,7 +11,13 @@ import { useGetSinglePatient } from '@/hooks/patients/get/useGetSinglePatient';
 // Zustand
 import useAuthStore from '@/zustand/useAuthStore';
 
-export default function CreateFirstRecordModal({ onClose }) {
+export default function CreateFirstRecordModal({
+  onClose,
+  showSuccessModal,
+  setShowSuccessModal,
+  setShowCreateFirstRecordModal,
+  fetchRecord,
+}) {
   // Close handler
   const { handleOverlayClick } = useModalClose(onClose);
 
@@ -42,7 +48,14 @@ export default function CreateFirstRecordModal({ onClose }) {
 
         {/* Main content with scroll */}
         <div className="flex-1 overflow-y-auto">
-          <CreateFirstRecordForm specialty={user?.specialty} patientId={patientId} />
+          <CreateFirstRecordForm
+            fetchRecord={fetchRecord}
+            setShowCreateFirstRecordModal={setShowCreateFirstRecordModal}
+            specialty={user?.specialty}
+            patientId={patientId}
+            showSuccessModal={showSuccessModal}
+            setShowSuccessModal={setShowSuccessModal}
+          />
         </div>
       </div>
     </div>

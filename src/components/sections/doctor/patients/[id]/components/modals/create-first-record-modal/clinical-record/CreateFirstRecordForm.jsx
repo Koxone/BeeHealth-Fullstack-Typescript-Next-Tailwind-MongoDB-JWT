@@ -10,11 +10,21 @@ import Date from './components/inputs/Date';
 import Select from './components/inputs/Select';
 import Radio from './components/inputs/Radio';
 
+// Feedback components
+import SuccessModal from '@/components/shared/feedback/SuccessModal';
+
 // Custom Hooks
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/get/useGetAllQuestions';
 import { useCreateFirstRecordDoctor } from '@/hooks/clinicalRecords/create/useCreateFirstRecordDoctor';
 
-export default function CreateFirstRecordForm({ specialty, patientId }) {
+export default function CreateFirstRecordForm({
+  specialty,
+  patientId,
+  showSuccessModal,
+  setShowSuccessModal,
+  setShowCreateFirstRecordModal,
+  fetchRecord,
+}) {
   // Local state
   const [formData, setFormData] = useState({});
   const [activeTab, setActiveTab] = useState(specialty);
@@ -62,6 +72,9 @@ export default function CreateFirstRecordForm({ specialty, patientId }) {
       return;
     }
 
+    setShowCreateFirstRecordModal(false);
+    fetchRecord();
+    setShowSuccessModal(true);
     setFormData({});
     setIsSubmitting(false);
   };

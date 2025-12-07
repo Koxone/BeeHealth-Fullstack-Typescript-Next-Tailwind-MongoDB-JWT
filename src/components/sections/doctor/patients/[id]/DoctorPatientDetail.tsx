@@ -222,7 +222,13 @@ export default function DoctorPatientDetail({ patient, specialty }) {
 
       {/* Create First Record Modal */}
       {showCreateFirstRecordModal && (
-        <CreateFirstRecordModal onClose={() => setShowCreateFirstRecordModal(false)} />
+        <CreateFirstRecordModal
+          fetchRecord={fetchRecord}
+          setShowCreateFirstRecordModal={setShowCreateFirstRecordModal}
+          setShowSuccessModal={setShowSuccessModal}
+          showSuccessModal={showSuccessModal}
+          onClose={() => setShowCreateFirstRecordModal(false)}
+        />
       )}
     </div>
   );
