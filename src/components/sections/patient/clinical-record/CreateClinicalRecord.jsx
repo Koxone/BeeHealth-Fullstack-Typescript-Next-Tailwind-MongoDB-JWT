@@ -13,7 +13,7 @@ import Select from './components/inputs/Select';
 import Radio from './components/inputs/Radio';
 import { useCreateClinicalRecordPatient } from '@/hooks/clinicalRecords/create/useCreateClinicalRecordPatient';
 
-export default function CreateClinicalRecord({ currentUser }) {
+export default function CreateClinicalRecord() {
   // Local States
   const [formData, setFormData] = useState({});
   const [activeTab, setActiveTab] = useState('weight');

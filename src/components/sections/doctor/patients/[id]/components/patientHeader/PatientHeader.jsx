@@ -20,7 +20,12 @@ import { useGetAllDiets } from '@/hooks/diets/get/useGetAllDiets';
 import { useParams } from 'next/navigation';
 import FullHistoryButton from './components/FullHistoryButton';
 
-export default function PatientHeader({ onClickNew, patientRecord, onClickFullHistory }) {
+export default function PatientHeader({
+  onClickNew,
+  patientRecord,
+  onClickFullHistory,
+  onCreateNew,
+}) {
   const { id } = useParams();
   // Specialty map
   const specialtyLabels = {
@@ -104,7 +109,11 @@ export default function PatientHeader({ onClickNew, patientRecord, onClickFullHi
 
             <div className="grid grid-cols-3 items-center gap-4">
               {/* Full Clinical History */}
-              <FullHistoryButton onClickFullHistory={onClickFullHistory} />
+              <FullHistoryButton
+                onClickFullHistory={onClickFullHistory}
+                patientRecord={patientRecord}
+                onCreateNew={onCreateNew}
+              />
 
               {/* Assigned Diets */}
               <AssignedDiets assignedDietsData={assignedDietsData} />
