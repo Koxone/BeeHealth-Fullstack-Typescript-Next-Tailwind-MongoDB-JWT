@@ -102,7 +102,9 @@ export default async function MainRootLayout({ children }) {
         </header>
 
         <div className="flex h-screen pt-16">
-          <Sidebar currentUser={currentUser} role={role} specialty={specialty} />
+          <aside className="top-21 bottom-0 left-0 hidden w-64 md:fixed md:flex">
+            <Sidebar currentUser={currentUser} role={role} specialty={specialty} />
+          </aside>
 
           <main className="flex-1 overflow-y-auto p-4 md:ml-64 md:p-0 md:py-10 md:pr-6 md:pl-14">
             <ReactQueryProvider>{children}</ReactQueryProvider>
