@@ -42,16 +42,6 @@ export default function FullHistoryModal({
     149: '',
   });
 
-  useEffect(() => {
-    if (record?.answers) {
-      const initial = {};
-      record.answers.forEach((ans) => {
-        initial[ans.question?.questionId] = ans.value || '';
-      });
-      setFormData(initial);
-    }
-  }, [record]);
-
   const { submit, isSubmitting, error } = useCreateClinicalRecordDoctor();
   const { questions } = useGetAllQuestions();
   const filtered = questions?.filter((q) => q.version === 'short' && q.specialty === specialty);
