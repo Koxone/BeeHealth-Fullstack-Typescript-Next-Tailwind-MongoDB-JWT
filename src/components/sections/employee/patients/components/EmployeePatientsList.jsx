@@ -16,7 +16,7 @@ export default function EmployeePatientsList({ currentUser, role, searchTerm, pa
   });
 
   return (
-    <div className="grid h-full max-h-[600px] grid-cols-1 gap-3 overflow-y-auto">
+    <div className="grid h-full grid-cols-1 gap-3 overflow-y-auto">
       {filteredPatients.map((patient) => (
         <EmployeePatientCard
           key={patient._id}

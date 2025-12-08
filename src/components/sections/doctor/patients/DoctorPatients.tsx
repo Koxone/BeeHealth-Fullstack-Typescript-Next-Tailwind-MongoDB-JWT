@@ -1,6 +1,6 @@
 import SharedSectionHeader from '@/components/shared/headers/SharedSectionHeader';
 import DoctorPatientsList from './components/DoctorPatientsList';
-import { CurrentUserData } from '@/types/user/user.types';
+import { CurrentUserData } from '@/types/user/user.types'; 
 
 interface DoctorPatientsProps {
   currentUser: CurrentUserData | null;
