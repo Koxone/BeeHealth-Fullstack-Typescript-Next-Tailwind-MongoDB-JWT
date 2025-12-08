@@ -3,7 +3,7 @@
 import { useModalClose } from '@/hooks/useModalClose';
 import CreatePatientForm from './CreatePatientForm';
 
-export default function CreatePatientModal({ setIsModalPatientsOpen, specialty }) {
+export default function CreatePatientModal({ setIsModalPatientsOpen, specialty, role, refetch }) {
   // Close handler
   const { handleOverlayClick } = useModalClose(() => setIsModalPatientsOpen(false));
 
@@ -15,6 +15,8 @@ export default function CreatePatientModal({ setIsModalPatientsOpen, specialty }
     >
       <div className="relative inset-0 z-50 flex w-full max-w-[600px] items-center justify-center p-4">
         <CreatePatientForm
+          role={role}
+          refetch={refetch}
           setIsModalPatientsOpen={setIsModalPatientsOpen}
           specialty={specialty}
           onClick={() => setIsModalPatientsOpen(false)}

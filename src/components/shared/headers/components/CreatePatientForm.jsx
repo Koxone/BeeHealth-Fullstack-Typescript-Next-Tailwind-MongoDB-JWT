@@ -4,7 +4,13 @@ import { Mail, Lock, User, Phone, ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-export default function CreatePatientForm({ setIsModalPatientsOpen, specialty, onClick }) {
+export default function CreatePatientForm({
+  setIsModalPatientsOpen,
+  specialty,
+  onClick,
+  role,
+  refetch,
+}) {
   const router = useRouter();
   // State
   const [formData, setFormData] = useState({
@@ -36,6 +42,13 @@ export default function CreatePatientForm({ setIsModalPatientsOpen, specialty, o
       return;
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(formData.email)) {
+      alert('Correo inválido');
+      return;
+    }
+
     try {
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
@@ -58,7 +71,12 @@ export default function CreatePatientForm({ setIsModalPatientsOpen, specialty, o
 
       // Close modal
       setIsModalPatientsOpen(false);
-      router.push(`/doctor/patients/${data.user.id}`);
+      refetch();
+      {
+        role === 'doctor'
+          ? router.push(`/doctor/patients/${data.user.id}`)
+          : router.push('/employee/patients');
+      }
     } catch (error) {
       console.error(error);
       alert('Error al crear usuario');
@@ -77,6 +95,29 @@ export default function CreatePatientForm({ setIsModalPatientsOpen, specialty, o
         {/* Form */}
         <div className="bg-beehealth-body-main rounded-2xl border border-gray-200 p-6 shadow-xl md:p-8">
           <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
+            {role === 'employee' && (
+              <div>
+                {/* Label */}
+                <label className="mb-2 block text-sm font-medium text-gray-700">
+                  Tipo de Consulta
+                </label>
+
+                {/* Select */}
+                <select
+                  name="specialty"
+                  value={formData.specialty}
+                  onChange={handleChange}
+                  required
+                  className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-3 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">Selecciona una opción</option>
+                  <option value="weight">Control de Peso</option>
+                  <option value="dental">Odontologia</option>
+                  <option value="esthetic">Medicina Estetica</option>
+                </select>
+              </div>
+            )}
+
             {/* Name */}
             <div>
               <label className="mb-2 block text-sm font-medium text-gray-700">

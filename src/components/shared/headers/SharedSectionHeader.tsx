@@ -13,11 +13,14 @@ import {
   Dumbbell,
 } from 'lucide-react';
 import Link from 'next/link';
+
+// Feedback components
 import CreatePatientModal from './components/CreatePatientModal';
 
 interface GeneralSectionHeaderProps {
   newPatient?: boolean;
   newWorkout?: boolean;
+  refetch?: () => void;
   specialty?: string;
   setShowCreateWorkoutModal?: React.Dispatch<React.SetStateAction<boolean>>;
   setEditingWorkout?: React.Dispatch<React.SetStateAction<any>>;
@@ -38,6 +41,7 @@ interface GeneralSectionHeaderProps {
 export default function SharedSectionHeader({
   role,
   newPatient,
+  refetch,
   newWorkout,
   setEditingWorkout,
   specialty,
@@ -109,6 +113,31 @@ export default function SharedSectionHeader({
 
           {isModalPatientsOpen && (
             <CreatePatientModal
+              role={role}
+              refetch={refetch}
+              setIsModalPatientsOpen={setIsModalPatientsOpen}
+              specialty={specialty}
+            />
+          )}
+        </div>
+      )}
+
+      {/* New Patient Button for Employee */}
+      {role === 'employee' && newPatient && (
+        <div className="flex items-center gap-4">
+          {/* Doctor New Diet Button */}
+          <button
+            onClick={() => setIsModalPatientsOpen(true)}
+            className="bg-beehealth-green-secondary-solid hover:bg-beehealth-green-secondary-solid-hover flex items-center gap-2 rounded-lg px-4 py-2 text-white transition active:scale-95"
+          >
+            <Plus className="h-5 w-5" />
+            Nuevo Paciente
+          </button>
+
+          {isModalPatientsOpen && (
+            <CreatePatientModal
+              role={role}
+              refetch={refetch}
               setIsModalPatientsOpen={setIsModalPatientsOpen}
               specialty={specialty}
             />
