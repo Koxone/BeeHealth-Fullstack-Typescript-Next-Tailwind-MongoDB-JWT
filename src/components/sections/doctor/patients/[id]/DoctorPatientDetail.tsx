@@ -41,6 +41,8 @@ export default function DoctorPatientDetail({ patient, specialty }) {
     refetch: fetchRecord,
   } = useGetPatientClinicalRecords(id);
 
+  console.log(patientRecord)
+
   const currentPatientInfo = patientRecord?.[0];
 
   // Success Modal
@@ -87,7 +89,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
       </div>
 
       {/* Quick Stats */}
-      <QuickStats patientRecord={patientRecord} specialty={specialty} />
+      <QuickStats patientRecord={patientRecord} specialty={specialty} patientId={id} />
 
       {/* Tabs Dental */}
       {specialty === 'dental' && <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />}

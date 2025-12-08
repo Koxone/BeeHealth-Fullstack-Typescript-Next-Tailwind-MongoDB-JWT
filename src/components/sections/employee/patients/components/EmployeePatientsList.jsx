@@ -1,14 +1,13 @@
 'use client';
 
-import { useGetAllPatients } from '@/hooks/patients/get/useGetAllPatients';
 import EmployeePatientCard from './EmployeePatientCard';
 
-export default function EmployeePatientsList({ currentUser, role, searchTerm }) {
-  const { patients } = useGetAllPatients();
-
-  const filteredPatients = patients.filter((patient) => {
+export default function EmployeePatientsList({ currentUser, role, searchTerm, patients }) {
+  const sortedPatients = [...patients].sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+  const filteredPatients = sortedPatients.filter((patient) => {
     const searchLower = searchTerm.toLowerCase();
-
     return (
       patient.fullName.toLowerCase().includes(searchLower) ||
       patient.phone.toLowerCase().includes(searchLower) ||
@@ -17,7 +16,7 @@ export default function EmployeePatientsList({ currentUser, role, searchTerm }) 
   });
 
   return (
-    <div className="grid h-full max-h-[600px] grid-cols-1 gap-3 overflow-y-auto">
+    <div className="grid h-full grid-cols-1 gap-3 overflow-y-auto">
       {filteredPatients.map((patient) => (
         <EmployeePatientCard
           key={patient._id}

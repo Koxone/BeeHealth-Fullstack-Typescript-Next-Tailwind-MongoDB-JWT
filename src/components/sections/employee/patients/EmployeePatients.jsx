@@ -5,13 +5,20 @@ import EmployeePatientsList from './components/EmployeePatientsList';
 import PatientsSearchBar from '@/components/shared/patients/PatientsSearchBar';
 import { useEffect, useState } from 'react';
 
+// Custom Hooks
+import { useGetAllPatients } from '@/hooks/patients/get/useGetAllPatients';
+
 export default function EmployeePatients({ currentUser, role }) {
   const [searchTerm, setSearchTerm] = useState('');
+  const { patients, refetch } = useGetAllPatients();
 
   return (
     <div className="h-full space-y-6 overflow-y-auto">
       <SharedSectionHeader
         Icon="pacientes"
+        newPatient={true}
+        refetch={refetch}
+        role={role}
         title="Pacientes"
         subtitle="Lista de todos los pacientes de la clínica"
       />
@@ -24,7 +31,12 @@ export default function EmployeePatients({ currentUser, role }) {
         />
       </div>
 
-      <EmployeePatientsList currentUser={currentUser} role={role} searchTerm={searchTerm} />
+      <EmployeePatientsList
+        currentUser={currentUser}
+        role={role}
+        searchTerm={searchTerm}
+        patients={patients}
+      />
     </div>
   );
 }

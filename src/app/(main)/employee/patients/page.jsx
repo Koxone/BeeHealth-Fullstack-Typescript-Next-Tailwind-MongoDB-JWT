@@ -9,7 +9,7 @@ export default async function EmployeePatientsPage() {
   const role = currentUser?.role;
 
   return (
-    <div className="max-h-screen overflow-hidden">
+    <div>
       <EmployeePatients currentUser={currentUser} role={role} />
     </div>
   );
