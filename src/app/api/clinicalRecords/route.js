@@ -168,25 +168,25 @@ export async function POST(req) {
     const logs = await WeightLog.find({ patient: finalPatientId }).sort({ createdAt: 1 });
 
     // Identify FULL or SHORT Weight answer
-    const isFullWeight = answers.some((a) => a.questionId === '692a02539ba6da2362d98aad');
-    const isShortWeight = answers.some((a) => a.questionId === '692a02539ba6da2362d98aac');
+    const isFullWeight = answers.some((a) => a.questionId === '693732df9ba6da2362da8aeb');
+    const isShortWeight = answers.some((a) => a.questionId === '693732df9ba6da2362da8aea');
 
     // Identify FULL or SHORT Size answer
-    const isFullSize = answers.some((a) => a.questionId === '692a02539ba6da2362d98aaf');
-    const isShortSize = answers.some((a) => a.questionId === '692a02539ba6da2362d98aae');
+    const isFullSize = answers.some((a) => a.questionId === '693732df9ba6da2362da8aee');
+    const isShortSize = answers.some((a) => a.questionId === '693732df9ba6da2362da8aed');
 
     // Current weight from this consultation
     const currentWeight =
       answers.find(
         (a) =>
-          a.questionId === '692a02539ba6da2362d98aad' || a.questionId === '692a02539ba6da2362d98aac'
+          a.questionId === '693732df9ba6da2362da8aeb' || a.questionId === '693732df9ba6da2362da8aea'
       )?.value || null;
 
     // Current size from this consultation
     const currentSize =
       answers.find(
         (a) =>
-          a.questionId === '692a02539ba6da2362d98aaf' || a.questionId === '692a02539ba6da2362d98aae'
+          a.questionId === '693732df9ba6da2362da8aee' || a.questionId === '693732df9ba6da2362da8aed'
       )?.value || null;
 
     // First time weight log
@@ -203,8 +203,8 @@ export async function POST(req) {
         if (firstRecord) {
           const firstWeightAnswer = firstRecord.answers.find(
             (ans) =>
-              ans.question.toString() === '692a02539ba6da2362d98aad' || // FULL ID
-              ans.question.toString() === '692a02539ba6da2362d98aac' // SHORT ID
+              ans.question.toString() === '693732df9ba6da2362da8aeb' || // FULL ID
+              ans.question.toString() === '693732df9ba6da2362da8aea' // SHORT ID
           );
 
           if (firstWeightAnswer) {
@@ -222,8 +222,8 @@ export async function POST(req) {
         if (firstRecord) {
           const firstSizeAnswer = firstRecord.answers.find(
             (ans) =>
-              ans.question.toString() === '692a02539ba6da2362d98aaf' || // FULL Size ID
-              ans.question.toString() === '692a02539ba6da2362d98aae' // SHORT Size ID
+              ans.question.toString() === '693732df9ba6da2362da8aee' || // FULL Size ID
+              ans.question.toString() === '693732df9ba6da2362da8aed' // SHORT Size ID
           );
 
           if (firstSizeAnswer) {
@@ -257,13 +257,13 @@ export async function POST(req) {
       const previousLog = logs[logs.length - 1];
 
       const currentWeight =
-        answers.find((a) => a.questionId === '692a02539ba6da2362d98aac')?.value || null;
+        answers.find((a) => a.questionId === '693732df9ba6da2362da8aea')?.value || null;
 
       const currentSize =
         answers.find(
           (a) =>
-            a.questionId === '692a02539ba6da2362d98aaf' ||
-            a.questionId === '692a02539ba6da2362d98aae'
+            a.questionId === '693732df9ba6da2362da8aee' ||
+            a.questionId === '693732df9ba6da2362da8aed'
         )?.value || null;
 
       const differenceSizeFromPrevious = currentSize - previousLog.currentSize;
@@ -301,7 +301,7 @@ export async function POST(req) {
         ok: false,
         error: {
           code: 'SERVER_ERROR',
-          message: 'An unexpected error occurred',
+          message: 'An error ocurred while creating the Clinical Record',
           reason: error.message,
         },
       },

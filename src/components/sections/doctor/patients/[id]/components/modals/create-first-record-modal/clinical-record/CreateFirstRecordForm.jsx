@@ -16,6 +16,7 @@ import SuccessModal from '@/components/shared/feedback/SuccessModal';
 // Custom Hooks
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/get/useGetAllQuestions';
 import { useCreateFirstRecordDoctor } from '@/hooks/clinicalRecords/create/useCreateFirstRecordDoctor';
+import LoadingState from '@/components/shared/feedback/LoadingState';
 
 export default function CreateFirstRecordForm({
   specialty,
@@ -31,7 +32,7 @@ export default function CreateFirstRecordForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Fetch questions
-  const { questions } = useGetAllQuestions();
+  const { questions, loading: isLoadingQuestions } = useGetAllQuestions();
 
   // Filter questions
   const activeQuestions = useMemo(() => {
@@ -88,20 +89,26 @@ export default function CreateFirstRecordForm({
     radio: Radio,
   };
 
+  if (isLoadingQuestions) {
+    return <LoadingState />;
+  }
+
   return (
     <form className="grid grid-cols-2 items-center space-x-4 p-4 md:p-8" onSubmit={handleSubmit}>
       {/* Questions */}
       {activeQuestions?.map((question) => {
-        const Component = QuestionComponents[question.type];
+        const Component = QuestionComponents[question?.type];
         if (!Component) return null;
         return (
           <Component
-            key={question._id}
-            id={question._id}
-            question={question.text}
-            value={formData[question._id] || ''}
-            onChange={(val) => handleChange(question._id, val)}
-            options={question.options}
+            key={question?._id}
+            id={question?._id}
+            placeholder={question?.placeholder}
+            question={question?.text}
+            value={formData[question?._id] || ''}
+            onChange={(val) => handleChange(question?._id, val)}
+            options={question?.options}
+            required={question?.required || false}
           />
         );
       })}

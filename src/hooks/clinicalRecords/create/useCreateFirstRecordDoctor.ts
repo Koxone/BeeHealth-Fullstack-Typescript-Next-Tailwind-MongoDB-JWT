@@ -33,7 +33,7 @@ export function useCreateFirstRecordDoctor() {
         const fail = await res.json();
         setError(fail?.error || 'Error');
         setIsSubmitting(false);
-        return { ok: false, error: fail?.error || 'Error' };
+        return { ok: false, error: fail?.error || 'Error in useCreateFirstRecordDoctor' };
       }
 
       const data = await res.json();
