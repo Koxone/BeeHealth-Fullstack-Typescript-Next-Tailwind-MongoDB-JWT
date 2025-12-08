@@ -50,7 +50,7 @@ export default function QuickStats({ patientRecord, specialty }) {
               {/* Current Weight */}
               <div>
                 <p className="text-3xl font-bold text-(--med-text-dark)">
-                  {getValueByQuestionId(7)}
+                  {getValueByQuestionId(7) || 0}
                   <span className="text-lg">kg</span>
                 </p>
                 <p className="text-sm text-(--med-text-muted)">Peso Actual (kg)</p>
@@ -88,7 +88,7 @@ export default function QuickStats({ patientRecord, specialty }) {
             </div>
             <div>
               <p className="text-3xl font-bold text-(--med-text-dark)">
-                {getValueByQuestionId(8)}
+                {getValueByQuestionId(8) || 0}
                 <span className="text-lg">cm</span>
               </p>
               <p className="text-sm text-(--med-text-muted)">Talla Actual (cm)</p>

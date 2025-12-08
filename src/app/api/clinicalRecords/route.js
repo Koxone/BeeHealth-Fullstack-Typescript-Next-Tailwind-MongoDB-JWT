@@ -39,7 +39,7 @@ export async function GET(req) {
       .populate({
         path: 'answers.question',
         model: 'Question',
-        select: 'questionId text specialty version type options isMetric',
+        select: 'questionId text specialty version type options isMetric placeholder required',
       })
       .lean();
 
@@ -99,11 +99,18 @@ export async function POST(req) {
 
     // Validate answers and prepare Answer objects
     const answerDocs = [];
+
     for (const ans of answers || []) {
-      const question = await Question.findById(ans.questionId);
-      if (!question) continue;
+      const question = await Question.findById(ans.id);
+
+      if (!question) {
+        console.warn(`Question not found for questionId=${ans.id}`);
+        continue;
+      }
+
       answerDocs.push({
         question: question._id,
+        questionId: question.questionId,
         value: ans.value ?? null,
       });
     }
@@ -167,80 +174,27 @@ export async function POST(req) {
     //#region
     const logs = await WeightLog.find({ patient: finalPatientId }).sort({ createdAt: 1 });
 
-    // Identify FULL or SHORT Weight answer
-    const isFullWeight = answers.some((a) => a.questionId === '692a02539ba6da2362d98aad');
-    const isShortWeight = answers.some((a) => a.questionId === '692a02539ba6da2362d98aac');
+    // Find weight (questionId 7)
+    const weightAnswer = answers.find((a) => a.questionId === 7);
 
-    // Identify FULL or SHORT Size answer
-    const isFullSize = answers.some((a) => a.questionId === '692a02539ba6da2362d98aaf');
-    const isShortSize = answers.some((a) => a.questionId === '692a02539ba6da2362d98aae');
+    // Find size (questionId 8)
+    const sizeAnswer = answers.find((a) => a.questionId === 8);
 
-    // Current weight from this consultation
-    const currentWeight =
-      answers.find(
-        (a) =>
-          a.questionId === '692a02539ba6da2362d98aad' || a.questionId === '692a02539ba6da2362d98aac'
-      )?.value || null;
-
-    // Current size from this consultation
-    const currentSize =
-      answers.find(
-        (a) =>
-          a.questionId === '692a02539ba6da2362d98aaf' || a.questionId === '692a02539ba6da2362d98aae'
-      )?.value || null;
+    // Extract values
+    const currentWeight = weightAnswer?.value || null;
+    const currentSize = sizeAnswer?.value || null;
 
     // First time weight log
     if (logs.length === 0) {
-      let originalWeight = currentWeight;
-      let originalSize = currentSize;
-
-      // If this record is SHORT, get original weight from FIRST clinicalRecord
-      if (isShortWeight) {
-        const firstRecord = await ClinicalRecord.findOne({ patient: finalPatientId }).sort({
-          createdAt: 1,
-        });
-
-        if (firstRecord) {
-          const firstWeightAnswer = firstRecord.answers.find(
-            (ans) =>
-              ans.question.toString() === '692a02539ba6da2362d98aad' || // FULL ID
-              ans.question.toString() === '692a02539ba6da2362d98aac' // SHORT ID
-          );
-
-          if (firstWeightAnswer) {
-            originalWeight = firstWeightAnswer.value;
-          }
-        }
-      }
-
-      // If this record is SHORT, get original size from FIRST clinicalRecord
-      if (isShortSize) {
-        const firstRecord = await ClinicalRecord.findOne({ patient: finalPatientId }).sort({
-          createdAt: 1,
-        });
-
-        if (firstRecord) {
-          const firstSizeAnswer = firstRecord.answers.find(
-            (ans) =>
-              ans.question.toString() === '692a02539ba6da2362d98aaf' || // FULL Size ID
-              ans.question.toString() === '692a02539ba6da2362d98aae' // SHORT Size ID
-          );
-
-          if (firstSizeAnswer) {
-            originalSize = firstSizeAnswer.value;
-          }
-        }
-      }
-
       const newWeightLog = new WeightLog({
         patient: finalPatientId,
         clinicalRecord: newRecord._id,
-        originalWeight: originalWeight,
+        originalWeight: currentWeight,
         currentWeight: currentWeight,
         differenceFromPrevious: 0,
         differenceFromOriginal: 0,
 
-        originalSize: originalSize,
+        originalSize: currentSize,
         currentSize: currentSize,
         differenceSizeFromPrevious: 0,
         differenceSizeFromOriginal: 0,
@@ -252,19 +206,10 @@ export async function POST(req) {
         ok: true,
         clinicalRecord: newRecord,
       });
+      // Subsequent weight logs
     } else {
       const firstLog = logs[0];
       const previousLog = logs[logs.length - 1];
-
-      const currentWeight =
-        answers.find((a) => a.questionId === '692a02539ba6da2362d98aac')?.value || null;
-
-      const currentSize =
-        answers.find(
-          (a) =>
-            a.questionId === '692a02539ba6da2362d98aaf' ||
-            a.questionId === '692a02539ba6da2362d98aae'
-        )?.value || null;
 
       const differenceSizeFromPrevious = currentSize - previousLog.currentSize;
       const differenceSizeFromOriginal = currentSize - firstLog.originalSize;
@@ -301,7 +246,7 @@ export async function POST(req) {
         ok: false,
         error: {
           code: 'SERVER_ERROR',
-          message: 'An unexpected error occurred',
+          message: 'An error ocurred while creating the Clinical Record',
           reason: error.message,
         },
       },

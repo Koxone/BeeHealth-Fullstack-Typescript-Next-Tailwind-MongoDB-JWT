@@ -78,8 +78,10 @@ export default function ClinicalRecordModal({
     // Collect answers
     const answers = Object.entries(formData).map(([questionId, value]) => {
       const question = filtered?.find((q) => q.questionId === parseInt(questionId, 10));
+
       return {
-        questionId: question?._id,
+        id: question?._id, 
+        questionId: question?.questionId, 
         value,
       };
     });

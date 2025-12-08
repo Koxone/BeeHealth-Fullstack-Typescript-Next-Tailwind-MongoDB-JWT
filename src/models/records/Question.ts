@@ -13,6 +13,8 @@ export interface IQuestion extends Document {
   isMetric?: boolean;
   type: string;
   options?: IOption[];
+  placeholder?: string;
+  required?: boolean;
 }
 
 const OptionSchema: Schema<IOption> = new Schema({
@@ -28,6 +30,8 @@ const QuestionSchema: Schema<IQuestion> = new Schema({
   isMetric: { type: Boolean, default: false },
   type: { type: String },
   options: { type: [OptionSchema], required: false },
+  placeholder: { type: String, required: false },
+  required: { type: Boolean, default: false },
 });
 
 export const Question =
