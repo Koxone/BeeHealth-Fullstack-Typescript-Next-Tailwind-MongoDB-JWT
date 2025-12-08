@@ -15,13 +15,14 @@ export function useCreateFirstRecordDoctor() {
     setRecord(null);
 
     try {
-      // Full payload
       const payload = {
         patientId,
         specialty,
         version: 'full',
         answers,
       };
+
+      console.log('Hook:', payload)
 
       const res = await fetch('/api/clinicalRecords', {
         method: 'POST',

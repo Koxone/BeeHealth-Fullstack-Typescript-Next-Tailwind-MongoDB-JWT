@@ -30,6 +30,7 @@ export default function CreateFirstRecordForm({
   const [formData, setFormData] = useState({});
   const [activeTab, setActiveTab] = useState(specialty);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  console.log(formData);
 
   // Fetch questions
   const { questions, loading: isLoadingQuestions } = useGetAllQuestions();
@@ -41,6 +42,15 @@ export default function CreateFirstRecordForm({
       .filter((q) => q.specialty === activeTab && q.version === 'full')
       .sort((a, b) => a.questionId - b.questionId);
   }, [questions, activeTab]);
+
+  // Map question IDs
+  const questionIdMap = useMemo(() => {
+    const map = {};
+    activeQuestions.forEach((q) => {
+      map[q._id] = q.questionId;
+    });
+    return map;
+  }, [activeQuestions]);
 
   // Setter
   const handleChange = useCallback((id, val) => {
@@ -56,8 +66,9 @@ export default function CreateFirstRecordForm({
     setIsSubmitting(true);
 
     // Format answers
-    const answersArray = Object.entries(formData).map(([questionId, value]) => ({
-      questionId,
+    const answersArray = Object.entries(formData).map(([id, value]) => ({
+      id,
+      questionId: questionIdMap[id],
       value,
     }));
 
@@ -78,6 +89,9 @@ export default function CreateFirstRecordForm({
     setShowSuccessModal(true);
     setFormData({});
     setIsSubmitting(false);
+    setTimeout(() => {
+      setShowSuccessModal(false);
+    }, 500);
   };
 
   // Components mapping
@@ -92,7 +106,6 @@ export default function CreateFirstRecordForm({
   if (isLoadingQuestions) {
     return <LoadingState />;
   }
-
   return (
     <form className="grid grid-cols-2 items-center space-x-4 p-4 md:p-8" onSubmit={handleSubmit}>
       {/* Questions */}
@@ -103,7 +116,7 @@ export default function CreateFirstRecordForm({
           <Component
             key={question?._id}
             id={question?._id}
-            placeholder={question?.placeholder}
+            placeholder={question?.placeholder || ''}
             question={question?.text}
             value={formData[question?._id] || ''}
             onChange={(val) => handleChange(question?._id, val)}
