@@ -10,7 +10,7 @@ export default async function DoctorPatientsList({ currentUser, role }) {
   let query: Record<string, any> = { role: 'patient', isActive: true };
   if (currentUser.role === 'doctor') query.specialty = currentUser.specialty;
 
-  const patients = await User.find(query, '-password -resetToken').sort({ createdAt: -1 }).lean();
+  const patients = await User.find(query, '-password -resetToken').sort({ fullName: 1 }).lean();
 
   const serializedPatients = patients.map((p) => ({
     ...p,
