@@ -15,7 +15,7 @@ export default function FullHistoryButton({ onClickFullHistory, patientRecord, o
           onClick={onClickFullHistory}
           className="bg-beehealth-green-secondary-solid hover:bg-beehealth-green-secondary-solid-hover flex w-full items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-medium text-white shadow-md transition active:scale-95 sm:w-auto"
         >
-          Ver historia completa
+          Ver o Editar
         </button>
       )}
     </div>
