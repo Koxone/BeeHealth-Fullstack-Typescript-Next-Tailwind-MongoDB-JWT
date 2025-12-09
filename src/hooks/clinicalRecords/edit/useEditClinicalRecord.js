@@ -32,3 +32,7 @@ export function useEditClinicalRecord() {
 
   return { isLoading, error, editClinicalRecord };
 }
+
+// Usage example:
+// const { isLoading, error, editClinicalRecord } = useEditClinicalRecord();
+// await editClinicalRecord(recordId, { answers: [...], recordDate: '2024-06-15' });

@@ -15,6 +15,7 @@ export default function ClinicalHistory({
   showDeleteModal,
   setShowDeleteModal,
   setShowCreateGoalModal,
+  setShowEditRecordModal,
 }) {
   return (
     <div className="bg-beehealth-body-main rounded-2xl border border-(--med-gray-border) p-4 shadow-sm sm:p-6">
@@ -75,6 +76,7 @@ export default function ClinicalHistory({
                   setShowDeleteModal={setShowDeleteModal}
                   onDelete={onDelete}
                   patientRecord={patientRecord}
+                  setShowEditRecordModal={setShowEditRecordModal}
                 />
               </div>
             );
