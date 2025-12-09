@@ -22,10 +22,12 @@ import DoctorCreateAppointmentModal from './components/modals/createAppointmentM
 import CreateGoalModal from './components/modals/create-goal-modal/CreateGoalModal';
 import FullHistoryModal from './components/modals/full-history-modal/FullHistoryModal';
 import CreateFirstRecordModal from './components/modals/create-first-record-modal/CreateFirstRecordModal';
+import EditRecordModal from './components/modals/edit-record-modal/EditRecordModal';
 
 // Custom Hooks
 import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/get/useGetPatientClinicalRecords';
 import { useDeleteClinicalRecord } from '@/hooks/clinicalRecords/delete/useDeleteClinicalRecord';
+import { useEditClinicalRecord } from '@/hooks/clinicalRecords/edit/useEditClinicalRecord';
 
 export default function DoctorPatientDetail({ patient, specialty }) {
   // ID From URL Params
@@ -40,17 +42,21 @@ export default function DoctorPatientDetail({ patient, specialty }) {
     error,
     refetch: fetchRecord,
   } = useGetPatientClinicalRecords(id);
-  console.log(patientRecord)
+  // console.log(patientRecord);
 
   const currentPatientInfo = patientRecord?.[0];
 
   // Success Modal
   const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
 
-  // History Modal
+  // Short History Modal States
   const [historyMode, setHistoryMode] = useState<'create' | 'view' | 'edit'>('view');
   const [showHistoryModal, setShowHistoryModal] = useState<boolean>(false);
   const [isReadOnly, setIsReadOnly] = useState<boolean>(false);
+
+  // Edit Record Modal States
+  const [showEditRecordModal, setShowEditRecordModal] = useState<boolean>(false);
+  const { editClinicalRecord } = useEditClinicalRecord();
 
   // Delete record modal
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
@@ -94,7 +100,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
       {specialty === 'dental' && <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />}
 
       {/* Dental Clinical Records */}
-      {activeTab === 'Historial' && specialty === 'dental' && (
+      {/* {activeTab === 'Historial' && specialty === 'dental' && (
         <ClinicalHistory
           specialty={specialty}
           patientRecord={patientRecord}
@@ -119,8 +125,9 @@ export default function DoctorPatientDetail({ patient, specialty }) {
             setShowDeleteModal(true);
           }}
           setShowCreateGoalModal={setShowCreateGoalModal}
+          setShowEditRecordModal={setShowEditRecordModal}
         />
-      )}
+      )} */}
 
       {/* Dental Patient Budgets */}
       {activeTab === 'Presupuestos' && specialty === 'dental' && <DoctorBudgets />}
@@ -136,6 +143,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
           showDeleteModal={showDeleteModal}
           setShowDeleteModal={setShowDeleteModal}
           onCreateNew={() => setShowCreateFirstRecordModal(true)}
+          // Add Section
           onAdd={() => {
             const lastRecord = patientRecord?.[0] || null;
             setSelectedRecord(lastRecord);
@@ -143,24 +151,40 @@ export default function DoctorPatientDetail({ patient, specialty }) {
             setHistoryMode('create');
             setShowHistoryModal(true);
           }}
+          // Edit Section
           onEdit={(record, readOnly) => {
             setSelectedRecord(record);
             setIsReadOnly(readOnly);
             setHistoryMode(readOnly ? 'view' : 'edit');
-            setShowHistoryModal(true);
+            setShowEditRecordModal(true);
           }}
+          // Delete Section
           onDelete={(record) => {
             setSelectedRecord(record);
             setShowDeleteModal(true);
           }}
           setShowCreateGoalModal={setShowCreateGoalModal}
+          setShowEditRecordModal={setShowEditRecordModal}
         />
       )}
 
       {/* Weight Chart */}
       {specialty === 'weight' && <WeightChart patientRecord={patientRecord} />}
 
-      {/* Main Record Modal */}
+      {/* Full History Modal */}
+      {showFullHistoryModal && (
+        <FullHistoryModal
+          onClose={() => setShowFullHistoryModal(false)}
+          record={selectedRecord}
+          specialty={specialty}
+          setShowFullHistoryModal={setShowFullHistoryModal}
+          patientId={id}
+          fetchRecord={fetchRecord}
+          setShowSuccessModal={setShowSuccessModal}
+        />
+      )}
+
+      {/* Short History Modal */}
       {showHistoryModal && (
         <ClinicalRecordModal
           fetchRecord={fetchRecord}
@@ -174,11 +198,26 @@ export default function DoctorPatientDetail({ patient, specialty }) {
         />
       )}
 
-      {/* Create Appointment Modal */}
-      {showCreateAppointmentModal && (
-        <DoctorCreateAppointmentModal
-          currentPatientInfo={currentPatientInfo}
-          onClose={() => setShowCreateAppointmentModal(false)}
+      {/* Create First Record Modal */}
+      {showCreateFirstRecordModal && (
+        <CreateFirstRecordModal
+          fetchRecord={fetchRecord}
+          setShowCreateFirstRecordModal={setShowCreateFirstRecordModal}
+          setShowSuccessModal={setShowSuccessModal}
+          showSuccessModal={showSuccessModal}
+          onClose={() => setShowCreateFirstRecordModal(false)}
+        />
+      )}
+
+      {/* Edit Record Modal */}
+      {showEditRecordModal && (
+        <EditRecordModal
+          onClose={() => setShowEditRecordModal(false)}
+          record={selectedRecord}
+          patientId={id}
+          specialty={specialty}
+          setShowSuccessModal={setShowSuccessModal}
+          fetchRecord={fetchRecord}
         />
       )}
 
@@ -191,6 +230,14 @@ export default function DoctorPatientDetail({ patient, specialty }) {
             await fetchRecord();
           }}
           setShowDeleteModal={setShowDeleteModal}
+        />
+      )}
+
+      {/* Create Appointment Modal */}
+      {showCreateAppointmentModal && (
+        <DoctorCreateAppointmentModal
+          currentPatientInfo={currentPatientInfo}
+          onClose={() => setShowCreateAppointmentModal(false)}
         />
       )}
 
@@ -207,30 +254,6 @@ export default function DoctorPatientDetail({ patient, specialty }) {
       {/* Create Goal Modal */}
       {showCreateGoalModal && (
         <CreateGoalModal patient={patient} onClose={() => setShowCreateGoalModal(false)} />
-      )}
-
-      {/* Full History Modal */}
-      {showFullHistoryModal && (
-        <FullHistoryModal
-          onClose={() => setShowFullHistoryModal(false)}
-          record={selectedRecord}
-          specialty={specialty}
-          setShowFullHistoryModal={setShowFullHistoryModal}
-          patientId={id}
-          fetchRecord={fetchRecord}
-          setShowSuccessModal={setShowSuccessModal}
-        />
-      )}
-
-      {/* Create First Record Modal */}
-      {showCreateFirstRecordModal && (
-        <CreateFirstRecordModal
-          fetchRecord={fetchRecord}
-          setShowCreateFirstRecordModal={setShowCreateFirstRecordModal}
-          setShowSuccessModal={setShowSuccessModal}
-          showSuccessModal={showSuccessModal}
-          onClose={() => setShowCreateFirstRecordModal(false)}
-        />
       )}
     </div>
   );

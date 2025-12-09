@@ -14,7 +14,7 @@ export function useGetPatientClinicalRecords(id: string) {
 
     // Sort newest first
     return [...json.data].sort(
-      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      (a, b) => new Date(b.recordDate).getTime() - new Date(a.recordDate).getTime()
     );
   };
 

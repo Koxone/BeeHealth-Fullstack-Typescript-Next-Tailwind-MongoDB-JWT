@@ -15,6 +15,7 @@ export default function ClinicalHistory({
   showDeleteModal,
   setShowDeleteModal,
   setShowCreateGoalModal,
+  setShowEditRecordModal,
 }) {
   return (
     <div className="bg-beehealth-body-main rounded-2xl border border-(--med-gray-border) p-4 shadow-sm sm:p-6">
@@ -53,8 +54,8 @@ export default function ClinicalHistory({
         <div className="space-y-3 sm:space-y-4">
           {patientRecord?.map((r, index) => {
             const bgColors = [
-              'bg-beehealth-green-primary-light ',
-              'bg-beehealth-blue-primary-light ',
+              'bg-beehealth-green-primary-light',
+              'bg-beehealth-blue-primary-light',
             ];
             const bgColorClass = bgColors[index % bgColors.length];
 
@@ -75,6 +76,7 @@ export default function ClinicalHistory({
                   setShowDeleteModal={setShowDeleteModal}
                   onDelete={onDelete}
                   patientRecord={patientRecord}
+                  setShowEditRecordModal={setShowEditRecordModal}
                 />
               </div>
             );
