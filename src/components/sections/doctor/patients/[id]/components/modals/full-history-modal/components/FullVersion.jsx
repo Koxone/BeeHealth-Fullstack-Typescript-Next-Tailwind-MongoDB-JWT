@@ -6,7 +6,14 @@ import ToggleEditModeButton from './ToggleEditModeButton';
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/get/useGetAllQuestions';
 import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/get/useGetPatientClinicalRecords';
 
-export default function FullVersion({ specialty, patientId, isEditing, setIsEditing }) {
+export default function FullVersion({
+  specialty,
+  patientId,
+  isEditing,
+  setIsEditing,
+  formData,
+  setFormData,
+}) {
   // Fetch patient records
   const { data: records, isLoading: recordsLoading } = useGetPatientClinicalRecords(patientId);
 
@@ -25,6 +32,14 @@ export default function FullVersion({ specialty, patientId, isEditing, setIsEdit
   if (!fullRecord) {
     return <div className="text-center text-gray-500">No hay registro completo disponible</div>;
   }
+
+  // Handle input change
+  const handleInputChange = (questionId, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [questionId]: value,
+    }));
+  };
 
   return (
     <div>
@@ -53,7 +68,8 @@ export default function FullVersion({ specialty, patientId, isEditing, setIsEdit
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {filtered?.map((q) => {
           const answer = fullRecord.answers?.find((a) => a.question?._id === q._id);
-          const value = answer?.value || '';
+          const currentValue =
+            formData[q.questionId] !== undefined ? formData[q.questionId] : answer?.value || '';
 
           return (
             <div key={q?._id}>
@@ -62,16 +78,26 @@ export default function FullVersion({ specialty, patientId, isEditing, setIsEdit
               {q?.type === 'textarea' ? (
                 <textarea
                   rows={3}
-                  value={value}
-                  readOnly
-                  disabled
-                  className="focus:bg-beehealth-body-main bg-beehealth-body-main w-full resize-none rounded-xl border-2 border-gray-300 px-4 py-3 text-gray-500 outline-none"
+                  value={currentValue}
+                  readOnly={!isEditing}
+                  disabled={!isEditing}
+                  onChange={(e) => handleInputChange(q.questionId, e.target.value)}
+                  className={`w-full resize-none rounded-xl border-2 px-4 py-3 outline-none ${
+                    isEditing
+                      ? 'border-blue-300 bg-white text-gray-900 focus:border-blue-500'
+                      : 'bg-beehealth-body-main border-gray-300 text-gray-500'
+                  }`}
                 />
               ) : q?.type === 'select' ? (
                 <select
-                  value={value}
-                  disabled
-                  className="focus:bg-beehealth-body-main bg-beehealth-body-main w-full rounded-xl border-2 border-gray-300 px-4 py-3 text-gray-500 outline-none"
+                  value={currentValue}
+                  disabled={!isEditing}
+                  onChange={(e) => handleInputChange(q.questionId, e.target.value)}
+                  className={`w-full rounded-xl border-2 px-4 py-3 outline-none ${
+                    isEditing
+                      ? 'border-blue-300 bg-white text-gray-900 focus:border-blue-500'
+                      : 'bg-beehealth-body-main border-gray-300 text-gray-500'
+                  }`}
                 >
                   <option value="">Seleccionar</option>
                   {q?.options?.map((opt) => (
@@ -88,8 +114,9 @@ export default function FullVersion({ specialty, patientId, isEditing, setIsEdit
                         type="radio"
                         name={q.questionId}
                         value={opt.value}
-                        checked={value === opt.value}
-                        disabled
+                        checked={currentValue === opt.value}
+                        disabled={!isEditing}
+                        onChange={(e) => handleInputChange(q.questionId, e.target.value)}
                         className="h-4 w-4"
                       />
                       <span className="text-sm text-gray-700">{opt.label}</span>
@@ -100,8 +127,9 @@ export default function FullVersion({ specialty, patientId, isEditing, setIsEdit
                 <div className="flex items-center gap-2">
                   <input
                     type="checkbox"
-                    checked={value === 'true' || value === true}
-                    disabled
+                    checked={currentValue === 'true' || currentValue === true}
+                    disabled={!isEditing}
+                    onChange={(e) => handleInputChange(q.questionId, e.target.checked.toString())}
                     className="h-4 w-4"
                   />
                   <span className="text-sm text-gray-700">{q?.text}</span>
@@ -109,10 +137,15 @@ export default function FullVersion({ specialty, patientId, isEditing, setIsEdit
               ) : (
                 <input
                   type={q?.type}
-                  value={value}
-                  readOnly
-                  disabled
-                  className="focus:bg-beehealth-body-main bg-beehealth-body-main w-full rounded-xl border-2 border-gray-300 px-4 py-3 text-gray-500 outline-none"
+                  value={currentValue}
+                  readOnly={!isEditing}
+                  disabled={!isEditing}
+                  onChange={(e) => handleInputChange(q.questionId, e.target.value)}
+                  className={`w-full rounded-xl border-2 px-4 py-3 outline-none ${
+                    isEditing
+                      ? 'border-blue-300 bg-white text-gray-900 focus:border-blue-500'
+                      : 'bg-beehealth-body-main border-gray-300 text-gray-500'
+                  }`}
                 />
               )}
             </div>
