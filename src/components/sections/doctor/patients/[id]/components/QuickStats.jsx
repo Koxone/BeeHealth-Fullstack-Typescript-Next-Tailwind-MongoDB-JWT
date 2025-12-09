@@ -124,7 +124,7 @@ export default function QuickStats({ patientRecord, specialty, patientId }) {
             </div>
             <div>
               <p className="text-3xl font-bold text-(--med-text-dark)">
-                {weightLogs[0]?.differenceFromOriginal || 0}
+                {(weightLogs[0]?.differenceFromOriginal.toFixed(2)) || 0}
                 <span className="text-lg">kg</span>
               </p>
               <p className="text-beehealth-red-primary-dark text-sm">Peso perdido (kg)</p>
