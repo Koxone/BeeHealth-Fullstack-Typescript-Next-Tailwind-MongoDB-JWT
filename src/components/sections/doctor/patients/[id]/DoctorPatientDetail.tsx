@@ -42,7 +42,6 @@ export default function DoctorPatientDetail({ patient, specialty }) {
     error,
     refetch: fetchRecord,
   } = useGetPatientClinicalRecords(id);
-  // console.log(patientRecord);
 
   const currentPatientInfo = patientRecord?.[0];
 
