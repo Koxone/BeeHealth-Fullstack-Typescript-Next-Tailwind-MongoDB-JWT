@@ -19,21 +19,41 @@ export async function PATCH(req, { params }) {
       return NextResponse.json({ error: 'ID inválido' }, { status: 400 });
     }
 
-    const { recordDate } = await req.json();
+    const body = await req.json();
+    const { answers, recordDate } = body;
 
-    if (!recordDate) {
-      return NextResponse.json({ error: 'Nueva fecha es requerido' }, { status: 400 });
+    const updateFields = {};
+
+    // Update recordDate if provided
+    if (recordDate) {
+      updateFields.recordDate = new Date(recordDate + 'T00:00:00.000Z');
     }
 
-    // Force update to recordDate
+    // Update answers if provided
+    if (answers && Array.isArray(answers)) {
+      updateFields.answers = answers.map((answer) => ({
+        question: answer.questionId,
+        value: answer.value,
+      }));
+    }
+
+    // Perform update
     const updatedRecord = await ClinicalRecord.findByIdAndUpdate(
       id,
-      { $set: { recordDate: new Date(recordDate + 'T00:00:00.000Z') } },
+      { $set: updateFields },
       { new: true }
-    ).lean();
+    )
+      .populate('patient', 'name email')
+      .populate('answers.question')
+      .lean();
+
+    if (!updatedRecord) {
+      return NextResponse.json({ error: 'Registro no encontrado' }, { status: 404 });
+    }
 
     return NextResponse.json({ data: updatedRecord }, { status: 200 });
   } catch (error) {
+    console.error('Error updating clinical record:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

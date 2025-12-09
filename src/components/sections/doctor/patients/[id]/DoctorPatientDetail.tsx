@@ -41,8 +41,6 @@ export default function DoctorPatientDetail({ patient, specialty }) {
     refetch: fetchRecord,
   } = useGetPatientClinicalRecords(id);
 
-  console.log(patientRecord)
-
   const currentPatientInfo = patientRecord?.[0];
 
   // Success Modal
@@ -216,6 +214,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
           onClose={() => setShowFullHistoryModal(false)}
           record={selectedRecord}
           specialty={specialty}
+          setShowFullHistoryModal={setShowFullHistoryModal}
           patientId={id}
           fetchRecord={fetchRecord}
           setShowSuccessModal={setShowSuccessModal}
