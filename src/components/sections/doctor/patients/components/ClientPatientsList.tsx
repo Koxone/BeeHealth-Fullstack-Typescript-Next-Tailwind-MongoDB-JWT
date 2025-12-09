@@ -3,6 +3,8 @@
 import { useState, useMemo } from 'react';
 import DoctorPatientCard from './DoctorPatientCard';
 import PatientsSearchBar from '@/components/shared/patients/PatientsSearchBar';
+
+// Types
 import { CurrentUserData } from '@/types/user/user.types';
 
 interface ClientPatientsListProps {
