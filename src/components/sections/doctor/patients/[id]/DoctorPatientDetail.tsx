@@ -216,6 +216,8 @@ export default function DoctorPatientDetail({ patient, specialty }) {
           record={selectedRecord}
           patientId={id}
           specialty={specialty}
+          setShowSuccessModal={setShowSuccessModal}
+          fetchRecord={fetchRecord}
         />
       )}
 

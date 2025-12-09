@@ -23,8 +23,6 @@ export default function ShortVersion({
     return <LoadingState />;
   }
 
-  console.log(filtered);
-
   return (
     <div className="space-y-4">
       {/* Assign Diet or Workout Section */}
@@ -47,7 +45,7 @@ export default function ShortVersion({
         </h3>
 
         <span className="bg-beehealth-red-primary-light text-beehealth-red-primary-dark mb-4 w-fit rounded-lg p-1 text-xs">
-          Modo Edicion
+          Modo Edición
         </span>
       </div>
 
@@ -66,21 +64,17 @@ export default function ShortVersion({
                 onChange={(e) =>
                   setFormData((prev) => ({ ...prev, [q.questionId]: e.target.value }))
                 }
-                readOnly={false}
-                disabled={false}
                 placeholder=""
-                className="focus:bg-beehealth-body-main bg-beehealth-body-main w-full resize-none rounded-xl border-2 border-gray-200 px-4 py-3 transition outline-none"
+                className="focus:bg-beehealth-body-main bg-beehealth-body-main w-full resize-none rounded-xl border-2 border-gray-200 px-4 py-3 transition outline-none focus:border-blue-400"
               />
             ) : (
               <input
-                type={q?.type}
+                type={q?.type || 'text'}
                 value={formData[q.questionId] || ''}
                 onChange={(e) =>
                   setFormData((prev) => ({ ...prev, [q.questionId]: e.target.value }))
                 }
-                readOnly={false}
-                disabled={false}
-                className="focus:bg-beehealth-body-main bg-beehealth-body-main w-full rounded-xl border-2 border-gray-200 px-4 py-3 transition outline-none"
+                className="focus:bg-beehealth-body-main bg-beehealth-body-main w-full rounded-xl border-2 border-gray-200 px-4 py-3 transition outline-none focus:border-blue-400"
               />
             )}
           </div>

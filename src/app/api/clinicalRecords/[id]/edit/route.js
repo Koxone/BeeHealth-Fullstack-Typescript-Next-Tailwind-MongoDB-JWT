@@ -20,7 +20,7 @@ export async function PATCH(req, { params }) {
     }
 
     const body = await req.json();
-    const { answers, recordDate } = body;
+    const { answers, recordDate, diets, workouts } = body;
 
     const updateFields = {};
 
@@ -29,10 +29,34 @@ export async function PATCH(req, { params }) {
       updateFields.recordDate = new Date(recordDate + 'T00:00:00.000Z');
     }
 
+    // Update diets if provided
+    if (diets && Array.isArray(diets)) {
+      updateFields.diets = diets;
+    }
+
+    // Update workouts if provided
+    if (workouts && Array.isArray(workouts)) {
+      updateFields.workouts = workouts;
+    }
+
     // Update answers if provided
     if (answers && Array.isArray(answers)) {
+      // Get all questionIds from the answers
+      const questionIds = answers.map((a) => a.questionId);
+
+      // Find all questions by questionId to get their ObjectIds
+      const questions = await Question.find({ questionId: { $in: questionIds } }).lean();
+
+      // Create a map of questionId -> ObjectId
+      const questionMap = {};
+      questions.forEach((q) => {
+        questionMap[q.questionId] = q._id;
+      });
+
+      // Build answers array with proper ObjectId references
       updateFields.answers = answers.map((answer) => ({
-        question: answer.questionId,
+        question: questionMap[answer.questionId],
+        questionId: answer.questionId,
         value: answer.value,
       }));
     }
@@ -43,7 +67,9 @@ export async function PATCH(req, { params }) {
       { $set: updateFields },
       { new: true }
     )
-      .populate('patient', 'name email')
+      .populate('patient', 'fullName email phone avatar')
+      .populate('diets', 'name')
+      .populate('workouts', 'name')
       .populate('answers.question')
       .lean();
 

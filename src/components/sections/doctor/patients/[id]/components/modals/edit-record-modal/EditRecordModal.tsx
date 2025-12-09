@@ -15,8 +15,14 @@ import { useEditWorkout } from '@/hooks/workouts/edit/useEditWorkout';
 import { useAssignDiet } from '@/hooks/diets/assign/useAssignDiet';
 import { useEditClinicalRecord } from '@/hooks/clinicalRecords/edit/useEditClinicalRecord';
 
-export default function EditRecordModal({ onClose, record, specialty, patientId }) {
-  console.log(record)
+export default function EditRecordModal({
+  onClose,
+  record,
+  specialty,
+  patientId,
+  setShowSuccessModal,
+  fetchRecord,
+}) {
   // Record ID
   const recordId = record?._id;
 
@@ -35,42 +41,61 @@ export default function EditRecordModal({ onClose, record, specialty, patientId 
   // Close Modal handler
   const { handleOverlayClick } = useModalClose(onClose);
 
-  // Form data
-  const [formData, setFormData] = useState({
-    7: '',
-    8: '',
-    18: '',
-    19: '',
-    122: '',
-    133: '',
-    148: '',
-    149: '',
-  });
+  // Form data - stores questionId -> value pairs
+  const [formData, setFormData] = useState({});
 
   // Populate form data with existing record answers
   useEffect(() => {
     if (record?.answers) {
-      const initial = {
-        1: '',
-        6: '',
-        7: '',
-        8: '',
-        18: '',
-        19: '',
-        122: '',
-        123: '',
-        125: '',
-        126: '',
-        133: '',
-        148: '',
-        149: '',
-      };
+      const initial = {};
       record.answers.forEach((ans) => {
-        initial[ans.question?.questionId] = ans.value || '';
+        const qId = ans.question?.questionId || ans.questionId;
+        if (qId !== undefined) {
+          initial[qId] = ans.value || '';
+        }
       });
       setFormData(initial);
     }
   }, [record]);
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      // Build answers array from formData
+      const answers = Object.entries(formData).map(([questionId, value]) => ({
+        questionId: Number(questionId),
+        value: value,
+      }));
+
+      // Update clinical record
+      await editClinicalRecord(recordId, { answers });
+
+      // Assign diet if selected
+      if (dietSelected) {
+        await editPatients(dietSelected, [patientId]);
+      }
+
+      // Assign workout if selected
+      if (workoutSelected) {
+        await editWorkout(workoutSelected, { patients: [patientId] });
+      }
+
+      // Success callback
+      fetchRecord();
+      setShowSuccessModal(true);
+      onClose();
+      setTimeout(() => {
+        setShowSuccessModal(false);
+        setIsSubmitting(false);
+      }, 1200);
+    } catch (err) {
+      console.error('Error updating record:', err);
+    } finally {
+    }
+  };
 
   if (isLoading) {
     return <LoadingState />;
@@ -93,9 +118,14 @@ export default function EditRecordModal({ onClose, record, specialty, patientId 
           icons={{ X, FileText }}
         />
 
+        {/* Error display */}
+        {error && (
+          <div className="mx-6 mt-4 rounded-lg bg-red-100 p-3 text-sm text-red-700">{error}</div>
+        )}
+
         {/* Main content */}
         <form
-          // onSubmit={handleSubmit}
+          onSubmit={handleSubmit}
           className="max-h-[calc(90vh-180px)] overflow-y-auto px-6 py-8"
         >
           <ShortVersion
