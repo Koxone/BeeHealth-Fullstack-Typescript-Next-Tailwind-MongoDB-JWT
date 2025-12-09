@@ -143,24 +143,20 @@ function HistoryCard({ r, onEdit, specialty, onDelete, patientRecord }) {
 
         <div className="flex flex-col justify-between">
           {/* Edit Record Button */}
-          {r?.version === 'short' && (
-            <button
-              onClick={() => onEdit(r, false)}
-              className="hover:bg-beehealth-blue-primary-solid-hover bg-beehealth-blue-primary-solid mb-2 rounded-lg p-2 text-white active:scale-95 sm:p-2.5"
-            >
-              <Edit2 className="h-4 w-4 sm:h-5 sm:w-5" />
-            </button>
-          )}
+          <button
+            onClick={() => onEdit(r, false)}
+            className="hover:bg-beehealth-yellow-secondary-solid-hover bg-beehealth-yellow-secondary-solid self-start rounded-lg p-2 text-white active:scale-95 sm:self-auto sm:p-2.5"
+          >
+            <Edit2 className="h-4 w-4 sm:h-5 sm:w-5" />
+          </button>
 
           {/* Delete Record Button */}
-          {r?.version === 'short' && (
-            <button
-              onClick={() => onDelete(r._id)}
-              className="hover:bg-beehealth-red-primary-solid-hover bg-beehealth-red-primary-solid mt-2 self-start rounded-lg p-2 text-white active:scale-95 sm:self-auto sm:p-2.5"
-            >
-              <Trash2 className="h-4 w-4 sm:h-5 sm:w-5" />
-            </button>
-          )}
+          <button
+            onClick={() => onDelete(r)}
+            className="hover:bg-beehealth-red-primary-solid-hover bg-beehealth-red-primary-solid self-start rounded-lg p-2 text-white active:scale-95 sm:self-auto sm:p-2.5"
+          >
+            <Trash2 className="h-4 w-4 sm:h-5 sm:w-5" />
+          </button>
         </div>
       </div>
     </div>
