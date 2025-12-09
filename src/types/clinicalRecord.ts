@@ -17,6 +17,7 @@ export interface IClinicalRecord {
   answers: { [key: string]: any };
   createdAt: string;
   updatedAt: string;
+  recordDate: Date;
   __v?: number;
 }
 

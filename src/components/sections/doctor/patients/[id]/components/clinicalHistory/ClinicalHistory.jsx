@@ -53,8 +53,8 @@ export default function ClinicalHistory({
         <div className="space-y-3 sm:space-y-4">
           {patientRecord?.map((r, index) => {
             const bgColors = [
-              'bg-beehealth-green-primary-light ',
-              'bg-beehealth-blue-primary-light ',
+              'bg-beehealth-green-primary-light',
+              'bg-beehealth-blue-primary-light',
             ];
             const bgColorClass = bgColors[index % bgColors.length];
 

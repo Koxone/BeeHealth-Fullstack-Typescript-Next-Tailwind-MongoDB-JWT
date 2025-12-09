@@ -2,8 +2,16 @@
 
 import { useState } from 'react';
 import { Calendar, Check, Pencil, X } from 'lucide-react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useParams } from 'next/navigation';
 
 export default function EditRecordDateButton({ onSelect }) {
+  // React Query Client
+  const queryClient = useQueryClient();
+
+  // Get patient ID from URL params
+  const { id } = useParams();
+
   // UI state
   const [open, setOpen] = useState(false);
   const [updated, setUpdated] = useState(false);
@@ -24,6 +32,10 @@ export default function EditRecordDateButton({ onSelect }) {
     await new Promise((resolve) => setTimeout(resolve, 300));
 
     onSelect(selectedDate);
+
+    // Invalidate queries to refetch data
+    queryClient.invalidateQueries(['patientClinicalRecords', id]);
+
     setIsLoading(false);
     setOpen(false);
     setSelectedDate('');

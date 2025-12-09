@@ -59,23 +59,12 @@ function HistoryCard({ r, onEdit, specialty, onDelete, patientRecord }) {
           </span>
         )}
 
-        {/* Edit record date */}
-        {r?.version === 'short' && (
-          <EditRecordDateButton
-            onSelect={(formattedDate) => {
-              editClinicalRecord(r._id, { recordDate: formattedDate });
-            }}
-          />
-        )}
-
-        {/* Edit record date */}
-        {r?.version === 'full' && (
-          <EditRecordDateButton
-            onSelect={(formattedDate) => {
-              editClinicalRecord(r._id, { recordDate: formattedDate });
-            }}
-          />
-        )}
+        {/* Edit Date Button */}
+        <EditRecordDateButton
+          onSelect={(formattedDate) => {
+            editClinicalRecord(r._id, { recordDate: formattedDate });
+          }}
+        />
       </div>
 
       {/* Info cards */}

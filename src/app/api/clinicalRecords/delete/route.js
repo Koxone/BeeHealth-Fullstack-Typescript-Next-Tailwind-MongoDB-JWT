@@ -5,6 +5,7 @@ import { getAuthUser } from '@/lib/auth/getAuthUser';
 import Workout from '@/models/Workout';
 import User from '@/models/User';
 import { ClinicalRecord } from '@/models/records/ClinicalRecord';
+import { WeightLog } from '@/models/records/WeightLog';
 
 // @route    DELETE /api/clinicalRecords/:id/delete
 // @desc     Delete a clinical record by ID
@@ -51,6 +52,10 @@ export async function DELETE(req) {
 
     // Find and delete
     const deletedRecord = await ClinicalRecord.findByIdAndDelete(id);
+
+    // Cascade delete related WeightLogs
+    const weightLogsToDelete = await WeightLog.find({ clinicalRecord: id });
+    await WeightLog.deleteMany({ clinicalRecord: id });
 
     // Not found
     if (!deletedRecord) {
