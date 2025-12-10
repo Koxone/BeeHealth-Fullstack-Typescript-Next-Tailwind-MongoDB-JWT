@@ -127,7 +127,7 @@ export default function DoctorDietDetail({ params, specialty }) {
           <button
             type="button"
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className="mb-6 rounded-lg bg-blue-600 px-4 py-2 text-white"
+            className="bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover mb-6 rounded-lg px-4 py-2 text-white"
           >
             {isCollapsed ? 'Ocultar dieta' : 'Mostrar dieta'}
           </button>
