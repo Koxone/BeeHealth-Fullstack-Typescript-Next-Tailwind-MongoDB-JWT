@@ -9,20 +9,17 @@ import QuickStats from './components/QuickStats';
 import WeightChart from './components/WeightChart';
 import ClinicalHistory from './components/clinicalHistory/ClinicalHistory';
 import BackButton from './components/BackButton';
-import TabsNav from './components/TabsNav';
-import DoctorBudgets from './components/budgets/DoctorBudgets';
-import DoctorProducts from './components/products/DoctorProducts';
 
 // Feedback Components
 import ClinicalRecordModal from './components/modals/historyModal/ClinicalRecordModal';
-import DeleteRecordModal from './components/modals/delete-record-modal/DeleteRecordModal';
-import LoadingState from '@/components/shared/feedback/LoadingState';
-import SuccessModal from '@/components/shared/feedback/SuccessModal';
-import DoctorCreateAppointmentModal from './components/modals/createAppointmentModal/DoctorCreateAppointmentModal';
-import CreateGoalModal from './components/modals/create-goal-modal/CreateGoalModal';
 import FullHistoryModal from './components/modals/full-history-modal/FullHistoryModal';
 import CreateFirstRecordModal from './components/modals/create-first-record-modal/CreateFirstRecordModal';
 import EditRecordModal from './components/modals/edit-record-modal/EditRecordModal';
+import DeleteRecordModal from './components/modals/delete-record-modal/DeleteRecordModal';
+import SuccessModal from '@/components/shared/feedback/SuccessModal';
+import DoctorCreateAppointmentModal from './components/modals/createAppointmentModal/DoctorCreateAppointmentModal';
+import CreateGoalModal from './components/modals/create-goal-modal/CreateGoalModal';
+import LoadingState from '@/components/shared/feedback/LoadingState';
 
 // Custom Hooks
 import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/get/useGetPatientClinicalRecords';
@@ -42,7 +39,6 @@ export default function DoctorPatientDetail({ patient, specialty }) {
     error,
     refetch: fetchRecord,
   } = useGetPatientClinicalRecords(id);
-  // console.log(patientRecord);
 
   const currentPatientInfo = patientRecord?.[0];
 
@@ -74,9 +70,6 @@ export default function DoctorPatientDetail({ patient, specialty }) {
   // Create First Record Modal
   const [showCreateFirstRecordModal, setShowCreateFirstRecordModal] = useState<boolean>(false);
 
-  // Dental Tabs Nav
-  const [activeTab, setActiveTab] = useState<TabName>('Historial');
-
   if (error || isLoading) {
     return <LoadingState />;
   }
@@ -95,45 +88,6 @@ export default function DoctorPatientDetail({ patient, specialty }) {
 
       {/* Quick Stats */}
       <QuickStats patientRecord={patientRecord} specialty={specialty} patientId={id} />
-
-      {/* Tabs Dental */}
-      {specialty === 'dental' && <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />}
-
-      {/* Dental Clinical Records */}
-      {/* {activeTab === 'Historial' && specialty === 'dental' && (
-        <ClinicalHistory
-          specialty={specialty}
-          patientRecord={patientRecord}
-          showDeleteModal={showDeleteModal}
-          onCreateNew={() => setShowCreateFirstRecordModal(true)}
-          setShowDeleteModal={setShowDeleteModal}
-          onAdd={() => {
-            const lastRecord = patientRecord?.[patientRecord.length - 1] || null;
-            setSelectedRecord(lastRecord);
-            setIsReadOnly(false);
-            setHistoryMode('create');
-            setShowHistoryModal(true);
-          }}
-          onEdit={(record, readOnly) => {
-            setSelectedRecord(record);
-            setIsReadOnly(readOnly);
-            setHistoryMode(readOnly ? 'view' : 'edit');
-            setShowHistoryModal(true);
-          }}
-          onDelete={(record) => {
-            setSelectedRecord(record);
-            setShowDeleteModal(true);
-          }}
-          setShowCreateGoalModal={setShowCreateGoalModal}
-          setShowEditRecordModal={setShowEditRecordModal}
-        />
-      )} */}
-
-      {/* Dental Patient Budgets */}
-      {activeTab === 'Presupuestos' && specialty === 'dental' && <DoctorBudgets />}
-
-      {/* Dental Patient Budgets */}
-      {activeTab === 'Productos' && specialty === 'dental' && <DoctorProducts />}
 
       {/* Weight Control Clinical Records */}
       {specialty === 'weight' && (

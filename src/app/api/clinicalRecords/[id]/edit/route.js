@@ -2,9 +2,8 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import { ClinicalRecord } from '@/models/records/ClinicalRecord';
 import { Question } from '@/models/records/Question';
-import { Answer } from '@/models/records/Answer';
+import { WeightLog } from '@/models/records/WeightLog';
 import mongoose from 'mongoose';
-import User from '@/models/User';
 
 // @route    PATCH /api/clinicalRecords/:id/edit
 // @desc     Edit clinical record by ID
@@ -39,6 +38,10 @@ export async function PATCH(req, { params }) {
       updateFields.workouts = workouts;
     }
 
+    // Track weight/size changes for WeightLog update
+    let newWeight = null;
+    let newSize = null;
+
     // Update answers if provided
     if (answers && Array.isArray(answers)) {
       // Get all questionIds from the answers
@@ -54,11 +57,21 @@ export async function PATCH(req, { params }) {
       });
 
       // Build answers array with proper ObjectId references
-      updateFields.answers = answers.map((answer) => ({
-        question: questionMap[answer.questionId],
-        questionId: answer.questionId,
-        value: answer.value,
-      }));
+      updateFields.answers = answers.map((answer) => {
+        // Check for weight (questionId 7) or size (questionId 8)
+        if (answer.questionId === 7) {
+          newWeight = Number(answer.value);
+        }
+        if (answer.questionId === 8) {
+          newSize = Number(answer.value);
+        }
+
+        return {
+          question: questionMap[answer.questionId],
+          questionId: answer.questionId,
+          value: answer.value,
+        };
+      });
     }
 
     // Perform update
@@ -75,6 +88,50 @@ export async function PATCH(req, { params }) {
 
     if (!updatedRecord) {
       return NextResponse.json({ error: 'Registro no encontrado' }, { status: 404 });
+    }
+
+    // Update WeightLog if weight or size changed
+    if (newWeight !== null || newSize !== null) {
+      const weightLog = await WeightLog.findOne({ clinicalRecord: id });
+
+      if (weightLog) {
+        const weightLogUpdate = {};
+
+        if (newWeight !== null && !isNaN(newWeight)) {
+          weightLogUpdate.currentWeight = newWeight;
+
+          // Only calculate differences if previous values exist
+          const prevWeight = weightLog.previousWeight ?? weightLog.originalWeight;
+          const origWeight = weightLog.originalWeight;
+
+          if (prevWeight != null && !isNaN(prevWeight)) {
+            weightLogUpdate.differenceFromPrevious = newWeight - prevWeight;
+          }
+          if (origWeight != null && !isNaN(origWeight)) {
+            weightLogUpdate.differenceFromOriginal = newWeight - origWeight;
+          }
+        }
+
+        if (newSize !== null && !isNaN(newSize)) {
+          weightLogUpdate.currentSize = newSize;
+
+          // Only calculate differences if previous values exist
+          const prevSize = weightLog.previousSize ?? weightLog.originalSize;
+          const origSize = weightLog.originalSize;
+
+          if (prevSize != null && !isNaN(prevSize)) {
+            weightLogUpdate.differenceSizeFromPrevious = newSize - prevSize;
+          }
+          if (origSize != null && !isNaN(origSize)) {
+            weightLogUpdate.differenceSizeFromOriginal = newSize - origSize;
+          }
+        }
+
+        // Only update if there are valid fields
+        if (Object.keys(weightLogUpdate).length > 0) {
+          await WeightLog.findByIdAndUpdate(weightLog._id, { $set: weightLogUpdate });
+        }
+      }
     }
 
     return NextResponse.json({ data: updatedRecord }, { status: 200 });

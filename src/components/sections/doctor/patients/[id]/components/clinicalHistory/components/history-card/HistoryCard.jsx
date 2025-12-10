@@ -73,7 +73,7 @@ function HistoryCard({ r, onEdit, specialty, onDelete, patientRecord, setShowEdi
           const value = getValueByQuestionId(element.questionId);
 
           const bgClass =
-            element.questionId === 18 || element.questionId === 26
+            element.questionId === 818 || element.questionId === 826
               ? 'bg-beehealth-red-primary-light'
               : 'bg-beehealth-green-secondary-light';
 
