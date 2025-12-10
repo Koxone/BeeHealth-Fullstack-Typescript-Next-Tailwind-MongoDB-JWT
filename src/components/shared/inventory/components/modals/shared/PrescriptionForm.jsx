@@ -3,10 +3,11 @@
 import { useState } from 'react';
 
 /* Prescription Form (connected to backend, with labels) */
-export default function PrescriptionForm({ mode, initialData, onCancel, onSubmit }) {
+export default function PrescriptionForm({ mode, initialData, onCancel, onSubmit, role }) {
   // Local state
   const [form, setForm] = useState(() => ({
     category: initialData?.product?.category || '',
+    specialty: initialData?.product?.specialty || '',
     quantity: initialData?.quantity != null ? String(initialData.quantity) : '',
     minStock: initialData?.minStock != null ? String(initialData.minStock) : '',
     maxStock: initialData?.maxStock != null ? String(initialData.maxStock) : '',
@@ -22,6 +23,7 @@ export default function PrescriptionForm({ mode, initialData, onCancel, onSubmit
       name: form.category.trim() || 'Receta sin nombre',
       type: 'receta',
       category: form.category.trim() || 'General',
+      specialty: form.specialty,
       inStock: true,
       costPrice: 0,
       salePrice: 0,
@@ -36,6 +38,27 @@ export default function PrescriptionForm({ mode, initialData, onCancel, onSubmit
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div className="bg-beehealth-body-main/80 space-y-4 rounded-2xl border border-gray-100 p-5 shadow-lg backdrop-blur-sm">
+        {/* Specialty */}
+        {role === 'employee' && (
+          <div>
+            {/* Label */}
+            <label className="mb-2 block text-sm font-medium text-gray-700">Inventario de:</label>
+
+            {/* Select */}
+            <select
+              name="specialty"
+              value={form.specialty}
+              onChange={(e) => handleChange('specialty', e.target.value)}
+              required
+              className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-3 outline-none"
+            >
+              <option value="">Selecciona una opción</option>
+              <option value="weight">Control de Peso</option>
+              <option value="dental">Odontologia</option>
+              <option value="esthetic">Medicina Estetica</option>
+            </select>
+          </div>
+        )}
         {/* Tipo de receta */}
         <div className="grid gap-1">
           <label className="text-sm font-semibold text-gray-600">Tipo de receta</label>

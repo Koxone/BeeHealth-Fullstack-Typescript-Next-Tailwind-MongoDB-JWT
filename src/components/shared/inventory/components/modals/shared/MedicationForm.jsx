@@ -3,11 +3,12 @@
 
 import { useState } from 'react';
 
-export default function MedicationForm({ mode, initialData, onCancel, onSubmit }) {
+export default function MedicationForm({ mode, initialData, onCancel, onSubmit, role }) {
   // Local state
   const [form, setForm] = useState(() => ({
     name: initialData?.product?.name || '',
     category: initialData?.product?.category || '',
+    specialty: initialData?.product?.specialty || '',
     costPrice: initialData?.product?.costPrice != null ? String(initialData.product.costPrice) : '',
     salePrice: initialData?.product?.salePrice != null ? String(initialData.product.salePrice) : '',
     quantity: initialData?.quantity != null ? String(initialData.quantity) : '',
@@ -26,6 +27,7 @@ export default function MedicationForm({ mode, initialData, onCancel, onSubmit }
       name: form.name.trim(),
       type: 'medicamento',
       category: form.category.trim(),
+      specialty: form.specialty,
       inStock: true,
       costPrice: Number(form.costPrice || 0),
       salePrice: Number(form.salePrice || 0),
@@ -41,6 +43,28 @@ export default function MedicationForm({ mode, initialData, onCancel, onSubmit }
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div className="bg-beehealth-body-main/80 space-y-4 rounded-2xl border border-gray-100 p-5 shadow-lg backdrop-blur-sm">
+        {/* Specialty */}
+        {role === 'employee' && (
+          <div>
+            {/* Label */}
+            <label className="mb-2 block text-sm font-medium text-gray-700">Inventario de:</label>
+
+            {/* Select */}
+            <select
+              name="specialty"
+              value={form.specialty}
+              onChange={(e) => handleChange('specialty', e.target.value)}
+              required
+              className="w-full rounded-lg border border-gray-300 py-3 pr-4 pl-3 outline-none"
+            >
+              <option value="">Selecciona una opción</option>
+              <option value="weight">Control de Peso</option>
+              <option value="dental">Odontologia</option>
+              <option value="esthetic">Medicina Estetica</option>
+            </select>
+          </div>
+        )}
+
         {/* Name */}
         <div className="grid gap-1">
           <label className="text-sm font-semibold text-gray-600">Nombre</label>
