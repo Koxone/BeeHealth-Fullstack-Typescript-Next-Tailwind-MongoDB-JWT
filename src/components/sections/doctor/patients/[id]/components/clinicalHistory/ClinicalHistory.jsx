@@ -100,24 +100,24 @@ export default function ClinicalHistory({
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="bg-beehealth-blue-primary-solid flex w-fit items-center gap-6 justify-self-center rounded-xl px-4 py-3">
+            <div className="bg-beehealth-body-main border-beehealth-blue-primary-solid flex w-fit items-center gap-6 justify-self-center rounded-xl px-4 py-3">
               <button
                 onClick={handlePrevious}
                 disabled={currentPage === 1}
-                className="hover:bg-beehealth-blue-primary-dark flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-white transition disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent"
+                className="hover:bg-beehealth-blue-primary-solid flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-gray-700 transition hover:text-white disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-gray-900"
               >
                 <ChevronLeft className="h-4 w-4" />
                 Anterior
               </button>
 
-              <span className="text-sm text-gray-600">
+              <span className="text-sm text-gray-700">
                 Página {currentPage} de {totalPages}
               </span>
 
               <button
                 onClick={handleNext}
                 disabled={currentPage === totalPages}
-                className="hover:bg-beehealth-blue-primary-dark flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-white transition disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent"
+                className="hover:bg-beehealth-blue-primary-solid flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-gray-700 transition hover:text-white disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-gray-900"
               >
                 Siguiente
                 <ChevronRight className="h-4 w-4" />
@@ -136,7 +136,7 @@ export default function ClinicalHistory({
           </p>
           <button
             onClick={onAdd}
-            className="bg-beehealth-green-primary-dark flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700 active:scale-95"
+            className="bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white transition active:scale-95"
           >
             <Plus className="h-4 w-4" />
             Agregar Registro
