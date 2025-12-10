@@ -17,6 +17,7 @@ import ModalCreateWorkout from './components/modals/create/ModalCreateWorkout';
 import ModalEditWorkout from './components/modals/edit/ModalEditWorkout';
 import SuccessModal from '@/components/shared/feedback/SuccessModal';
 import LoadingState from '@/components/shared/feedback/LoadingState';
+import ModalAssignWorkout from './components/modals/assign/ModalAssignWorkout';
 
 export default function DoctorWorkouts({ role }) {
   // Get Workouts Hook
@@ -30,16 +31,24 @@ export default function DoctorWorkouts({ role }) {
   const [filterCategorie, setFilterCategorie] = useState('Todos');
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Modals
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [editingWorkout, setEditingWorkout] = useState(null);
-  const [workoutToDelete, setWorkoutToDelete] = useState(null);
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [showCreateWorkoutModal, setShowCreateWorkoutModal] = useState(false);
+  // Assign Workout Modal
+  const [showAssignModal, setShowAssignModal] = useState<boolean>(false);
+  const [workoutToAssign, setWorkoutToAssign] = useState<null | (typeof workoutData)[0]>(null);
+
+  // Delete Workout Modal
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+  const [workoutToDelete, setWorkoutToDelete] = useState<null | (typeof workoutData)[0]>(null);
+
+  // Edit Workout Modal
+  const [editingWorkout, setEditingWorkout] = useState<null | (typeof workoutData)[0]>(null);
+  const [showEditModal, setShowEditModal] = useState<boolean>(false);
+
+  // Create Workout Modal
+  const [showCreateWorkoutModal, setShowCreateWorkoutModal] = useState<boolean>(false);
 
   // Workout modal
-  const [seletctedWorkout, setSelectedWorkout] = useState();
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [seletctedWorkout, setSelectedWorkout] = useState<null | (typeof workoutData)[0]>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
 
   // Available categories
   const categories = ['Todos', 'Fuerza', 'Cardio', 'Core', 'Flexibilidad', 'Movilidad'];
@@ -128,8 +137,10 @@ export default function DoctorWorkouts({ role }) {
             <WorkoutCard
               key={workout._id}
               workout={workout}
-              setShowDeleteModal={setShowDeleteModal}
-              setWorkoutToDelete={setWorkoutToDelete}
+              onClickAssign={(e) => {
+                setWorkoutToAssign(workout);
+                setShowAssignModal(true);
+              }}
               handleEdit={(e) => {
                 setEditingWorkout(e);
                 setShowEditModal(true);
@@ -162,7 +173,7 @@ export default function DoctorWorkouts({ role }) {
       {showDeleteModal && (
         <ModalDelete
           workoutToDelete={workoutToDelete}
-          setSeletctedWorkout={setSelectedWorkout}
+          // setSeletctedWorkout={setSelectedWorkout}
           handleDelete={handleDelete}
           setShowDeleteModal={setShowDeleteModal}
         />
@@ -184,6 +195,16 @@ export default function DoctorWorkouts({ role }) {
           setShowCreateModal={setShowCreateWorkoutModal}
           fetchWorkouts={fetchWorkouts}
           setShowSuccessModal={setShowSuccessModal}
+        />
+      )}
+
+      {/* Assign Modal */}
+      {showAssignModal && (
+        <ModalAssignWorkout
+          workoutToAssign={workoutToAssign}
+          setShowAssignModal={setShowAssignModal}
+          setShowSuccessModal={setShowSuccessModal}
+          refetch={fetchWorkouts}
         />
       )}
     </div>
