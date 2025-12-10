@@ -22,7 +22,7 @@ export async function GET(req, { params }) {
 
     const logs = await WeightLog.find({ patient: id })
       .populate('patient', 'firstName lastName email')
-      .populate('clinicalRecord', 'createdAt');
+      .populate('clinicalRecord', 'createdAt recordDate');
 
     return NextResponse.json({ weightLogs: logs }, { status: 200 });
   } catch (error) {
