@@ -29,7 +29,7 @@ export default function ModalAssignDiet({
     >
       <div className="relative inset-0 z-50 flex items-center justify-center p-4">
         <div
-          className="animate-in fade-in zoom-in-95 relative w-full max-w-2xl overflow-hidden rounded-3xl bg-linear-to-r from-white via-red-50/30 to-orange-50/30 shadow-2xl duration-300"
+          className="animate-in fade-in zoom-in-95 relative w-full max-w-2xl overflow-hidden rounded-3xl bg-linear-to-r from-white via-red-50/30 to-orange-50/30 shadow-2xl transition-all duration-300"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}

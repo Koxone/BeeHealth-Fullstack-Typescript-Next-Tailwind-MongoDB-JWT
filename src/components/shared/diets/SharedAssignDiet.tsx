@@ -87,8 +87,12 @@ export default function SharedAssignDiet({
       </button>
 
       {/* Dropdown panel */}
-      {openDropdown && (
-        <div className="bg-beehealth-body-main mt-2 max-h-56 w-full overflow-y-auto rounded-lg border border-gray-400 shadow-md">
+      <div
+        className={`mt-2 w-full overflow-hidden transition-all duration-300 ease-out ${
+          openDropdown ? 'max-h-56 opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <div className="bg-beehealth-body-main h-56 overflow-y-auto rounded-lg border border-gray-400 shadow-md">
           <div className="bg-beehealth-body-main sticky top-0 p-2 shadow-sm">
             <input
               type="text"
@@ -117,7 +121,7 @@ export default function SharedAssignDiet({
             ))}
           </ul>
         </div>
-      )}
+      </div>
 
       {/* Assign button */}
       <button
