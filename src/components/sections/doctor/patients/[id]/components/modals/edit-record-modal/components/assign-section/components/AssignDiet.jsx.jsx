@@ -81,19 +81,13 @@ export default function AssignDiet({ onSelectDiet }) {
               return (
                 <li
                   key={item._id}
-                  className={`flex items-center gap-3 px-3 py-2 ${
-                    isAssigned
-                      ? 'cursor-not-allowed opacity-50'
-                      : 'hover:bg-beehealth-body-main cursor-pointer'
-                  }`}
+                  className="hover:bg-beehealth-body-main flex cursor-pointer items-center gap-3 px-3 py-2"
                   onClick={() => {
                     if (!isAssigned) toggleItem(item._id);
                   }}
                 >
                   <input
                     type="checkbox"
-                    checked={selected.includes(item._id)}
-                    disabled={isAssigned}
                     onChange={() => toggleItem(item._id)}
                     className="text-beehealth-blue-primary-solid h-4 w-4 rounded border-gray-300"
                   />

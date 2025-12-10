@@ -1,22 +1,58 @@
-import { connectDB } from '@/lib/mongodb';
-import User from '@/models/User';
-import ClientPatientsList from './ClientPatientsList';
+'use client';
 
-export const runtime = 'nodejs';
+import { useState, useMemo } from 'react';
+import DoctorPatientCard from './DoctorPatientCard';
+import PatientsSearchBar from '@/components/shared/patients/PatientsSearchBar';
 
-export default async function DoctorPatientsList({ currentUser, role }) {
-  await connectDB();
+// Types
+import { CurrentUserData } from '@/types/user/user.types';
 
-  let query: Record<string, any> = { role: 'patient', isActive: true };
-  if (currentUser.role === 'doctor') query.specialty = currentUser.specialty;
+interface DoctorPatientsListProps {
+  patients: {
+    _id: string;
+    fullName: string;
+    email: string;
+    phone: string;
+    lastVisit?: string | null;
+  }[];
+  currentUser: CurrentUserData | null;
+  role?: string;
+}
 
-  const patients = await User.find(query, '-password -resetToken').sort({ fullName: 1 }).lean();
+export default function DoctorPatientsList({
+  patients,
+  currentUser,
+  role,
+}: DoctorPatientsListProps) {
+  const [search, setSearch] = useState('');
 
-  const serializedPatients = patients.map((p) => ({
-    ...p,
-    _id: p._id.toString(),
-    lastVisit: p.lastVisit ?? null,
-  }));
+  const filtered = useMemo(() => {
+    if (!search.trim()) return patients;
+    const lower = search.toLowerCase();
+    return patients.filter(
+      (p) =>
+        p.fullName.toLowerCase().includes(lower) ||
+        p.email.toLowerCase().includes(lower) ||
+        p.phone.toLowerCase().includes(lower)
+    );
+  }, [search, patients]);
 
-  return <ClientPatientsList patients={serializedPatients} currentUser={currentUser} role={role} />;
+  return (
+    <div className="flex h-full flex-col gap-3 overflow-y-auto">
+      <div className="bg-beehealth-body-main rounded-xl border border-gray-200 p-4 shadow-sm">
+        <PatientsSearchBar onSearch={setSearch} searchValue={search} setSearchValue={setSearch} />
+      </div>
+
+      <div className="grid grid-cols-1 gap-3 overflow-y-auto">
+        {filtered.map((patient) => (
+          <DoctorPatientCard
+            key={patient._id}
+            patient={patient}
+            currentUser={currentUser}
+            role={role}
+          />
+        ))}
+      </div>
+    </div>
+  );
 }
