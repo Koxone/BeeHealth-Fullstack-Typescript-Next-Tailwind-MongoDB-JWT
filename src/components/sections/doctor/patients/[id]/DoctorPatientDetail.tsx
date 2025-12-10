@@ -1,6 +1,6 @@
 'use client';
 
-import { IClinicalRecord, TabName } from '@/types';
+import { IClinicalRecord } from '@/types';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
 
