@@ -1,8 +1,10 @@
 import LoadingState from '@/components/shared/feedback/LoadingState';
-import { useGetAllQuestions } from '@/hooks/clinicalRecords/get/useGetAllQuestions';
 import { CalendarIcon } from 'lucide-react';
 import AssignSection from './assign-section/AssignSection';
 import FooterActions from './FooterActions';
+
+// Custom Hooks
+import { useGetAllQuestions } from '@/hooks/clinicalRecords/get/useGetAllQuestions';
 
 export default function ShortVersion({
   specialty,

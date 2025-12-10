@@ -128,6 +128,8 @@ export async function POST(req) {
       }
     }
 
+    const todayMX = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Mexico_City' });
+
     // Create ClinicalRecord
     const newRecord = new ClinicalRecord({
       patient: finalPatientId,
@@ -136,7 +138,7 @@ export async function POST(req) {
       answers: answerDocs,
       diets: dietId ? [dietId] : [],
       workouts: workoutId ? [workoutId] : [],
-      recordDate: new Date(),
+      recordDate: new Date(todayMX + 'T12:00:00'),
     });
     await newRecord.save();
 
@@ -144,29 +146,42 @@ export async function POST(req) {
     await User.findByIdAndUpdate(finalPatientId, { hasRecord: true });
 
     /* ================= Workout Section ================= */
-    if (workoutId && patientId) {
+    if (workoutId && finalPatientId) {
       const workout = await Workout.findById(workoutId);
 
       if (workout) {
-        const alreadyAssigned = workout.patients.some((p) => p.patient.toString() === patientId);
+        const alreadyAssigned = workout.patients.some(
+          (p) => p.patient.toString() === finalPatientId
+        );
 
-        if (alreadyAssigned) {
-          return NextResponse.json(
-            {
-              ok: false,
-              message: 'El paciente ya está asignado a este ejercicio',
-            },
-            { status: 400 }
-          );
+        // Assign workout to patient if not already assigned
+        if (!alreadyAssigned) {
+          workout.patients.push({
+            patient: finalPatientId,
+            isActive: true,
+            assignedAt: new Date(),
+          });
+          await workout.save();
         }
+      }
+    }
 
-        workout.patients.push({
-          patient: patientId,
-          isActive: true,
-          assignedAt: new Date(),
-        });
+    /* ================= Diet Section ================= */
+    if (dietId && finalPatientId) {
+      const diet = await Diet.findById(dietId);
 
-        await workout.save();
+      if (diet) {
+        const alreadyAssigned = diet.patients.some((p) => p.patient?.toString() === finalPatientId);
+
+        // Assign diet to patient if not already assigned
+        if (!alreadyAssigned) {
+          diet.patients.push({
+            patient: finalPatientId,
+            isActive: true,
+            assignedAt: new Date(),
+          });
+          await diet.save();
+        }
       }
     }
 

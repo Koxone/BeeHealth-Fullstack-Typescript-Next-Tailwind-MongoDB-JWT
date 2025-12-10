@@ -12,14 +12,14 @@ import BackButton from './components/BackButton';
 
 // Feedback Components
 import ClinicalRecordModal from './components/modals/historyModal/ClinicalRecordModal';
-import DeleteRecordModal from './components/modals/delete-record-modal/DeleteRecordModal';
-import LoadingState from '@/components/shared/feedback/LoadingState';
-import SuccessModal from '@/components/shared/feedback/SuccessModal';
-import DoctorCreateAppointmentModal from './components/modals/createAppointmentModal/DoctorCreateAppointmentModal';
-import CreateGoalModal from './components/modals/create-goal-modal/CreateGoalModal';
 import FullHistoryModal from './components/modals/full-history-modal/FullHistoryModal';
 import CreateFirstRecordModal from './components/modals/create-first-record-modal/CreateFirstRecordModal';
 import EditRecordModal from './components/modals/edit-record-modal/EditRecordModal';
+import DeleteRecordModal from './components/modals/delete-record-modal/DeleteRecordModal';
+import SuccessModal from '@/components/shared/feedback/SuccessModal';
+import DoctorCreateAppointmentModal from './components/modals/createAppointmentModal/DoctorCreateAppointmentModal';
+import CreateGoalModal from './components/modals/create-goal-modal/CreateGoalModal';
+import LoadingState from '@/components/shared/feedback/LoadingState';
 
 // Custom Hooks
 import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/get/useGetPatientClinicalRecords';
