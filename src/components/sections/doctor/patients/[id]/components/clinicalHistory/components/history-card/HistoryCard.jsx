@@ -82,7 +82,7 @@ function HistoryCard({ r, onEdit, specialty, onDelete, patientRecord, setShowEdi
               <div className="text-beehealth-green-primary-solid flex items-center gap-1.5 text-xs font-medium sm:gap-2">
                 <span className="truncate">{element.text}</span>
               </div>
-              <p className="text-sm font-medium text-gray-900">{value}</p>
+              <p className="text-sm font-medium text-gray-900 line-clamp-2">{value}</p>
             </div>
           );
         })}

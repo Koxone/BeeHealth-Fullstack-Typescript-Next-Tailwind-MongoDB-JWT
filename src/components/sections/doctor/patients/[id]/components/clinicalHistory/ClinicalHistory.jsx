@@ -1,10 +1,14 @@
-import { Plus, ClipboardList } from 'lucide-react';
+'use client';
+
+import { useState } from 'react';
+import { Plus, ClipboardList, ChevronLeft, ChevronRight } from 'lucide-react';
 import AddHistoryButton from './components/AddHistoryButton';
 import HistoryCard from './components/history-card/HistoryCard';
 import GoalButton from './components/GoalButton';
 import CreateFirstRecordButton from './components/CreateFirstRecordButton';
 
-/* Clinical history */
+const RECORDS_PER_PAGE = 5;
+
 export default function ClinicalHistory({
   onAdd,
   onEdit,
@@ -17,6 +21,23 @@ export default function ClinicalHistory({
   setShowCreateGoalModal,
   setShowEditRecordModal,
 }) {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalRecords = patientRecord?.length || 0;
+  const totalPages = Math.ceil(totalRecords / RECORDS_PER_PAGE);
+
+  const startIndex = (currentPage - 1) * RECORDS_PER_PAGE;
+  const endIndex = startIndex + RECORDS_PER_PAGE;
+  const visibleRecords = patientRecord?.slice(startIndex, endIndex) || [];
+
+  const handlePrevious = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleNext = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  };
+
   return (
     <div className="bg-beehealth-body-main rounded-2xl border border-(--med-gray-border) p-4 shadow-sm sm:p-6">
       {/* Header */}
@@ -37,14 +58,10 @@ export default function ClinicalHistory({
 
         <div className="flex items-center gap-4">
           {patientRecord?.length > 0 ? (
-            /* Add History Button */
             <AddHistoryButton onAdd={onAdd} />
           ) : (
-            /* First Record Button */
             <CreateFirstRecordButton onCreateNew={onCreateNew} />
           )}
-
-          {/* Patient Goals Button */}
           <GoalButton onClick={() => setShowCreateGoalModal(true)} />
         </div>
       </div>
@@ -52,7 +69,7 @@ export default function ClinicalHistory({
       {/* Records */}
       {patientRecord?.length > 0 ? (
         <div className="space-y-3 sm:space-y-4">
-          {patientRecord?.map((r, index) => {
+          {visibleRecords.map((r, index) => {
             const bgColors = [
               'bg-beehealth-green-primary-light',
               'bg-beehealth-blue-primary-light',
@@ -67,7 +84,6 @@ export default function ClinicalHistory({
                   animation: `fadeIn 0.3s ease-out ${index * 100}ms forwards`,
                 }}
               >
-                {/* History Card */}
                 <HistoryCard
                   specialty={specialty}
                   r={r}
@@ -81,6 +97,33 @@ export default function ClinicalHistory({
               </div>
             );
           })}
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="bg-beehealth-blue-primary-solid flex w-fit items-center gap-6 justify-self-center rounded-xl px-4 py-3">
+              <button
+                onClick={handlePrevious}
+                disabled={currentPage === 1}
+                className="hover:bg-beehealth-blue-primary-dark flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-white transition disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent"
+              >
+                <ChevronLeft className="h-4 w-4" />
+                Anterior
+              </button>
+
+              <span className="text-sm text-gray-600">
+                Página {currentPage} de {totalPages}
+              </span>
+
+              <button
+                onClick={handleNext}
+                disabled={currentPage === totalPages}
+                className="hover:bg-beehealth-blue-primary-dark flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-white transition disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent"
+              >
+                Siguiente
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
+          )}
         </div>
       ) : (
         <div className="bg-beehealth-body-main flex flex-col items-center justify-center rounded-xl border border-(--med-gray-border) py-12 text-center sm:py-16">

@@ -123,7 +123,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
       )}
 
       {/* Weight Chart */}
-      {specialty === 'weight' && <WeightChart patientRecord={patientRecord} />}
+      {specialty === 'weight' && <WeightChart id={id} />}
 
       {/* Full History Modal */}
       {showFullHistoryModal && (

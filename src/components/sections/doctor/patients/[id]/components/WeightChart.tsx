@@ -1,6 +1,5 @@
 'use client';
 
-/* chart */
 import {
   ResponsiveContainer,
   AreaChart,
@@ -11,31 +10,78 @@ import {
   Tooltip,
 } from 'recharts';
 import { TrendingUp } from 'lucide-react';
+import { useGetPatientWeightLogs } from '@/hooks/clinicalRecords/get/useGetPatientWeightLogs';
 
-export default function WeightChart({ patientRecord }) {
-  const formattedData = (patientRecord || [])
-    .map((rec) => {
-      if (!rec?.answers) return null;
+interface WeightLog {
+  _id: string;
+  patient: {
+    _id: string;
+    email: string;
+  };
+  clinicalRecord: {
+    _id: string;
+    recordDate: string;
+    createdAt: string;
+  } | null;
+  originalWeight: number;
+  currentWeight: number;
+  differenceFromPrevious: number;
+  differenceFromOriginal: number;
+  originalSize: number;
+  currentSize: number;
+  differenceSizeFromPrevious: number;
+  differenceSizeFromOriginal: number;
+  createdAt: string;
+  updatedAt: string;
+}
 
-      // Handle both object and array formats
-      let answersArray = [];
-      if (Array.isArray(rec.answers)) {
-        answersArray = rec.answers;
-      } else if (typeof rec.answers === 'object') {
-        answersArray = Object.values(rec.answers);
-      }
+interface ChartData {
+  fecha: string;
+  peso: number;
+  diferencia: number;
+}
 
-      const pesoAnswer = answersArray.find((a) => a?.question?.questionId === 7);
-      if (!pesoAnswer) return null;
+interface WeightChartProps {
+  id: string;
+}
+
+export default function WeightChart({ id }: WeightChartProps) {
+  const {
+    weightLogs,
+    loading: weightLogsLoading,
+    error: weightLogsError,
+    refetch: refetchWeightLogs,
+  } = useGetPatientWeightLogs(id);
+
+  // Filter out logs without clinicalRecord, sort by recordDate ascending, and format data
+  const formattedData: ChartData[] = (weightLogs || [])
+    .filter((log) => log.clinicalRecord?.recordDate)
+    .sort(
+      (a, b) =>
+        new Date(a.clinicalRecord!.recordDate).getTime() -
+        new Date(b.clinicalRecord!.recordDate).getTime()
+    )
+    .map((log, index) => {
+      const peso = index === 0 ? log.originalWeight : log.currentWeight;
 
       return {
-        fecha: new Date(rec.createdAt).toLocaleDateString('es-MX'),
-        peso: Number(pesoAnswer.value),
+        fecha: new Date(log.clinicalRecord!.recordDate).toLocaleDateString('es-MX'),
+        peso: Number(peso),
+        diferencia: log.differenceFromOriginal,
       };
-    })
-    .filter(Boolean);
+    });
 
-  const total = patientRecord?.length;
+  const total = formattedData.length;
+
+  if (weightLogsLoading) {
+    return (
+      <div className="bg-beehealth-body-main rounded-2xl border border-gray-200 p-6 shadow-lg">
+        <div className="flex h-[300px] items-center justify-center">
+          <p className="text-gray-500">Cargando datos...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-beehealth-body-main rounded-2xl border border-gray-200 p-6 shadow-lg">
@@ -78,6 +124,7 @@ export default function WeightChart({ patientRecord }) {
             <YAxis
               stroke="#6b7280"
               style={{ fontSize: '12px' }}
+              domain={['dataMin - 5', 'dataMax + 5']}
               label={{
                 value: 'Peso (kg)',
                 angle: -90,
@@ -91,6 +138,12 @@ export default function WeightChart({ patientRecord }) {
                 border: '2px solid #e5e7eb',
                 borderRadius: '12px',
                 boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+              }}
+              formatter={(value: number, name: string) => {
+                if (name === 'peso') return [`${value} kg`, 'Peso'];
+                if (name === 'diferencia')
+                  return [`${value > 0 ? '+' : ''}${value} kg`, 'Desde inicio'];
+                return [value, name];
               }}
               cursor={{ stroke: '#3b82f6', strokeWidth: 2 }}
             />
