@@ -230,6 +230,7 @@ export default function SharedInventory({ role, showButton = true }) {
       {showModal && !editingItem && (
         <CreateProductModal
           activeTab={activeTab}
+          role={role}
           onClose={() => setShowModal(false)}
           successRefresh={successRefresh}
         />

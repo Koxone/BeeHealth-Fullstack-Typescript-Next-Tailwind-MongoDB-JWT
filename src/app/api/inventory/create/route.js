@@ -46,7 +46,7 @@ export async function POST(req) {
     const user = await User.findById(userId);
 
     // Get user's specialty
-    const specialty = user?.specialty || 'weight';
+    const specialty = body.specialty || user?.specialty || 'weight';
 
     const quantity = Number(body.quantity);
     if (!body.name || isNaN(quantity)) {

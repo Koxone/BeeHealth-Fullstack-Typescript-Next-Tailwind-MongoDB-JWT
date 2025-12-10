@@ -11,7 +11,7 @@ import { getGradient, getIcon } from './utils/helpers';
 import { useEffect } from 'react';
 import { useModalClose } from '@/hooks/useModalClose';
 
-export default function CreateProductModal({ activeTab, onClose, successRefresh }) {
+export default function CreateProductModal({ activeTab, onClose, successRefresh, role }) {
   const { handleOverlayClick } = useModalClose(onClose);
 
   // Create Product Backend Handler
@@ -38,12 +38,12 @@ export default function CreateProductModal({ activeTab, onClose, successRefresh 
   // Render form based on active tab
   const renderForm = () => {
     if (activeTab === 'medicamentos') {
-      return <MedicationForm mode="add" onCancel={onClose} onSubmit={handleSubmit} />;
+      return <MedicationForm mode="add" role={role} onCancel={onClose} onSubmit={handleSubmit} />;
     }
     if (activeTab === 'recetas') {
-      return <PrescriptionForm mode="add" onCancel={onClose} onSubmit={handleSubmit} />;
+      return <PrescriptionForm mode="add" role={role} onCancel={onClose} onSubmit={handleSubmit} />;
     }
-    return <SupplyForm mode="add" onCancel={onClose} onSubmit={handleSubmit} />;
+    return <SupplyForm mode="add" role={role} onCancel={onClose} onSubmit={handleSubmit} />;
   };
 
   return (
@@ -104,6 +104,7 @@ export default function CreateProductModal({ activeTab, onClose, successRefresh 
           </div>
         </div>
 
+        {/* Body */}
         <div className="max-h-[calc(90vh-180px)] overflow-y-auto p-6">{renderForm()}</div>
       </div>
     </div>
