@@ -33,17 +33,19 @@ export default function ModalAssignDiet({
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="bg-beehealth-body-main/80 relative border-b border-red-100 px-6 py-6 backdrop-blur-xl">
-            <div className="bg-beehealth-blue-primary-solid absolute inset-0 opacity-5" />
+          <div
+            className="bg-beehealth-body-main/80 relative border-b border-red-100 bg-cover bg-center px-6 py-6 backdrop-blur-xl"
+            style={{
+              backgroundImage: `url(${dietToAssign?.images?.[0]})`,
+              backgroundColor: 'rgba(0,0,0,0.60)',
+              backgroundBlendMode: 'darken',
+            }}
+          >
             <div className="relative flex items-start justify-between">
               <div className="flex items-start gap-4">
-                <div className="bg-beehealth-blue-primary-solid rounded-2xl p-3 shadow-lg">
-                  <Apple className="h-7 w-7 text-white" />
-                </div>
-
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Asignar Dieta</h2>
-                  <p className="mt-1 text-sm text-gray-600">
+                  <h2 className="text-2xl font-bold text-white">Asignar Dieta</h2>
+                  <p className="mt-1 text-sm text-white">
                     Selecciona a qué pacientes deseas asignar esta dieta
                   </p>
                 </div>
