@@ -1,6 +1,6 @@
 'use client';
 
-import { X, Dumbbell, AlertCircle, Loader } from 'lucide-react';
+import { X, Dumbbell, AlertCircle, Loader, Trash2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 import BasicInfoSection from './components/basic/BasicInfoSection';
@@ -16,6 +16,8 @@ export default function ModalEditWorkout({
   editingWorkout,
   setShowSuccessModal,
   fetchWorkouts,
+  setWorkoutToDelete,
+  setShowDeleteModal,
 }) {
   // Edit Workout Custom Hook
   const { editWorkout, isLoading: loading, error } = useEditWorkout();
@@ -279,8 +281,14 @@ export default function ModalEditWorkout({
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="bg-beehealth-body-main/80 relative overflow-hidden border-b border-white/50 backdrop-blur-xl">
-            <div className={`bg-beehealth-blue-primary-light absolute inset-0`} />
+          <div
+            className="bg-beehealth-body-main/80 relative border-b border-red-100 bg-cover bg-center px-6 py-6 backdrop-blur-xl"
+            style={{
+              backgroundImage: `url(${editingWorkout?.images?.[0]})`,
+              backgroundColor: 'rgba(0,0,0,0.60)',
+              backgroundBlendMode: 'darken',
+            }}
+          >
             <div className="relative px-6 py-6 sm:px-8">
               <div className="flex items-start justify-between">
                 <div className="flex items-start gap-4">
@@ -293,10 +301,10 @@ export default function ModalEditWorkout({
                     </div>
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+                    <h2 className="text-2xl font-bold text-white sm:text-3xl">
                       Editar {editingWorkout?.name}
                     </h2>
-                    <p className="mt-1 flex items-center gap-2 text-sm text-gray-600">
+                    <p className="mt-1 flex items-center gap-2 text-sm text-white">
                       Modifica los detalles del ejercicio según sea necesario.
                     </p>
                   </div>
@@ -360,6 +368,20 @@ export default function ModalEditWorkout({
 
               {/* Actions */}
               <div className="flex gap-3">
+                {/* Delete Workout Button */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setWorkoutToDelete(editingWorkout);
+                    setShowEditModal(false);
+                    setShowDeleteModal(true);
+                  }}
+                  className="bg-beehealth-red-primary-solid hover:bg-beehealth-red-primary-solid-hover flex flex-1 items-center justify-center gap-2 rounded-lg py-2 text-sm font-medium text-white transition active:scale-95"
+                >
+                  <Trash2 className="h-4 w-4" />
+                  Eliminar ejercicio
+                </button>
+
                 <button
                   type="button"
                   onClick={() => setShowEditModal(false)}
