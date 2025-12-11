@@ -3,9 +3,7 @@
 import EmployeePatientCard from './EmployeePatientCard';
 
 export default function EmployeePatientsList({ currentUser, role, searchTerm, patients }) {
-  const sortedPatients = [...patients].sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-  );
+  const sortedPatients = [...patients].sort((a, b) => a.fullName.localeCompare(b.fullName));
   const filteredPatients = sortedPatients.filter((patient) => {
     const searchLower = searchTerm.toLowerCase();
     return (

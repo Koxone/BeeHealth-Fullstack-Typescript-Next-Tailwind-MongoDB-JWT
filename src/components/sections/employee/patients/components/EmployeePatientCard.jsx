@@ -19,7 +19,7 @@ export default function EmployeePatientCard({ patient, currentUser, role }) {
             className="h-12 w-12 rounded-full object-cover"
           />
         ) : (
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-blue-500 to-purple-500 font-semibold text-white">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-blue-500 to-purple-500 font-semibold text-white capitalize">
             {getInitials(patient?.fullName)}
           </div>
         )}
