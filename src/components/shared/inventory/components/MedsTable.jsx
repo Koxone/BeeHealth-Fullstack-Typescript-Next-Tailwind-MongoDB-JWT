@@ -33,7 +33,10 @@ export default function MedsTable({ rows, getStockStatus, onEdit, onDelete, onHi
                 Categoría
               </th>
               <th className="px-4 py-4 text-center text-xs font-semibold tracking-wider text-gray-600 uppercase">
-                Stock
+                Existencias
+              </th>
+              <th className="hidden px-4 py-4 text-right text-xs font-semibold tracking-wider text-gray-600 uppercase lg:table-cell">
+                Costo
               </th>
               <th className="hidden px-4 py-4 text-right text-xs font-semibold tracking-wider text-gray-600 uppercase lg:table-cell">
                 Precio
@@ -142,9 +145,21 @@ export default function MedsTable({ rows, getStockStatus, onEdit, onDelete, onHi
                             </>
                           )}
                         </span>
-                        {med?.quantity} / {med?.minStock}
+                        {med?.quantity}
                       </span>
                     </div>
+                  </td>
+
+                  {/* Cost */}
+                  <td className="hidden px-4 py-4 text-right lg:table-cell">
+                    <span
+                      className={clsx(
+                        'text-sm font-semibold',
+                        disabled ? 'text-gray-600' : 'text-gray-900'
+                      )}
+                    >
+                      ${parseFloat(med?.product?.costPrice).toFixed(2)}
+                    </span>
                   </td>
 
                   {/* Price */}
@@ -155,7 +170,7 @@ export default function MedsTable({ rows, getStockStatus, onEdit, onDelete, onHi
                         disabled ? 'text-gray-600' : 'text-gray-900'
                       )}
                     >
-                      ${parseFloat(med?.product?.costPrice).toFixed(2)}
+                      ${parseFloat(med?.product?.salePrice).toFixed(2)}
                     </span>
                   </td>
 
