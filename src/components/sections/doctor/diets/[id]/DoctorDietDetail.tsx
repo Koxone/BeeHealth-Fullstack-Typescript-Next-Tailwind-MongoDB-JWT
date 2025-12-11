@@ -1,10 +1,12 @@
 'use client';
 
-import { AlertCircle } from 'lucide-react';
-import { useGetAllDiets } from '@/hooks/diets/get/useGetAllDiets';
 import { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+
+// Custom Hooks
 import { useEditDiet } from '@/hooks/diets/edit/useEditDiet';
-import { useSearchParams } from 'next/navigation';
+import { useGetAllDiets } from '@/hooks/diets/get/useGetAllDiets';
+import { useDeleteDiet } from '@/hooks/diets/delete/useDeleteDiet';
 
 import AssignDiet from './components/AssignDiet';
 import PatientsAssignedViewer from './components/PatientsAssignedViewer';
@@ -25,11 +27,22 @@ import GoBackButton from '@/components/shared/diets/GoBackButton';
 import DietImage from './components/sections/DietImage';
 import Name from './components/sections/Name';
 import LoadingState from '@/components/shared/feedback/LoadingState';
+import Images from './components/sections/Images';
 
 // Feedback Components
 import SuccessModal from '@/components/shared/feedback/SuccessModal';
+import DeleteDietButton from './components/DeleteDietButton';
+import ErrorState from '@/components/shared/feedback/ErrorState';
+import DeleteModal from '@/components/shared/feedback/DeleteModal';
 
 export default function DoctorDietDetail({ params, specialty }) {
+  // Router search params
+  const searchParams = useSearchParams();
+
+  // Next.js router
+  const router = useRouter();
+
+  // Get diet ID from params
   const { id } = params;
 
   // Fetch all diets Custom Hook
@@ -41,12 +54,27 @@ export default function DoctorDietDetail({ params, specialty }) {
   // Edit Diet Custom Hook
   const { isLoading: isEditingDiet, error: editError, editDiet } = useEditDiet();
 
+  // Delete Diet Custom Hook
+  const { deleteDiet, isDeleting, error: deleteError } = useDeleteDiet();
+  const handleDelete = async () => {
+    await deleteDiet(id);
+    setShowSuccessModal(true);
+
+    setTimeout(() => {
+      setShowSuccessModal(false);
+      refetch();
+      router.push('/doctor/diets');
+    }, 1000);
+  };
+
   const diet = dietsData.find((d) => d._id === id);
 
   // Success modal state
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-  const searchParams = useSearchParams();
+  // Delete modal state
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   const mode = searchParams.get('mode');
   const [isEditing, setIsEditing] = useState(mode === 'edit');
   const [isReading, setIsReading] = useState(mode !== 'edit');
@@ -58,19 +86,14 @@ export default function DoctorDietDetail({ params, specialty }) {
     setIsReading(mode !== 'edit');
   }, [mode]);
 
+  // Loading state
   if (isLoading || isEditingDiet) {
     return <LoadingState />;
   }
 
+  // Error state
   if (error || !diet || editError) {
-    return (
-      <div className="flex h-full items-center justify-center">
-        <div className="space-y-4 text-center">
-          <AlertCircle className="mx-auto h-12 w-12 text-red-500" />
-          <p className="text-gray-600">Error al cargar la dieta</p>
-        </div>
-      </div>
-    );
+    return <ErrorState />;
   }
 
   return (
@@ -85,15 +108,29 @@ export default function DoctorDietDetail({ params, specialty }) {
 
       {/* Header */}
       <div className="mb-8">
-        {/* Go Back Button */}
-        <GoBackButton />
+        <div className="mb-4 flex items-center justify-between">
+          {/* Go Back Button */}
+          <GoBackButton />
+
+          {/* Delete Diet Button */}
+          <DeleteDietButton onClickDelete={() => setShowDeleteModal(true)} isLoading={isLoading} />
+        </div>
 
         {/* Hero section with image */}
         {diet?.images?.[0] && <DietImage diet={diet} />}
+        {isEditing && (
+          <Images
+            diet={diet}
+            isEditing={isEditing}
+            editDiet={editDiet}
+            refreshDiets={refreshDiets}
+            setShowSuccessModal={setShowSuccessModal}
+          />
+        )}
       </div>
 
       {/* Main content */}
-      <div className="mx-auto max-w-5xl px-0">
+      <div className="mx-auto px-0">
         {/* Title section */}
         <div className="mb-8 flex flex-col gap-6">
           <Name
@@ -246,6 +283,19 @@ export default function DoctorDietDetail({ params, specialty }) {
             )}
           </div>
         )}
+
+        {/* Delete Modal */}
+        <DeleteModal
+          isOpen={showDeleteModal}
+          itemName={diet?.name}
+          onClose={() => setShowDeleteModal(false)}
+          onDelete={handleDelete}
+          successMessage="La dieta ha sido eliminada exitosamente."
+          isDeleting={isDeleting}
+          title="Eliminar Dieta"
+          warningMessage="¿Estás seguro de que deseas eliminar esta dieta?"
+          warningDescription="Esta acción es permanente y no podrás recuperar la información."
+        />
 
         {/* Spacing at bottom */}
         <div className="h-8"></div>
