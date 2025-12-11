@@ -48,7 +48,7 @@ export default function ClinicalHistory({
           </div>
           <div>
             <h2 className="text-lg font-semibold text-(--med-text-dark) sm:text-xl">
-              Historial Clínico
+              Historial de Consultas para este paciente
             </h2>
             <p className="text-xs text-(--med-text-muted) sm:text-sm">
               Registros médicos del paciente

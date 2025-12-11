@@ -23,8 +23,7 @@ function HistoryCard({ r, onEdit, specialty, onDelete, patientRecord, setShowEdi
   const filtered = questions?.filter((q) => q?.version === 'quick' && q?.specialty === specialty);
 
   const DISEASE_QUESTION_IDS = [
-    27, 28, 29, 30, 31, 32, 39, 40, 41, 73, 74, 75, 76, 77, 78, 79, 81, 82, 87, 88, 89, 92, 93, 94,
-    95, 96,
+    27, 28, 29, 30, 31, 32, 39, 40, 41, 79, 81, 82, 87, 88, 89, 92, 93, 94, 95, 96,
   ];
 
   const { editClinicalRecord } = useEditClinicalRecord();
@@ -82,7 +81,7 @@ function HistoryCard({ r, onEdit, specialty, onDelete, patientRecord, setShowEdi
               <div className="text-beehealth-green-primary-solid flex items-center gap-1.5 text-xs font-medium sm:gap-2">
                 <span className="truncate">{element.text}</span>
               </div>
-              <p className="text-sm font-medium text-gray-900 line-clamp-2">{value}</p>
+              <p className="line-clamp-2 text-sm font-medium text-gray-900">{value}</p>
             </div>
           );
         })}
