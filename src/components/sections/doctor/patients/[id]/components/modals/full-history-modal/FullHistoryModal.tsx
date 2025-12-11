@@ -62,13 +62,12 @@ export default function FullHistoryModal({
 
     try {
       // Prepare answers array
-      const answers = Object.entries(formData).map(([questionId, value]) => {
-        const question = questions?.find((q) => q.questionId === parseInt(questionId, 10));
-        return {
-          questionId: question?._id,
-          value,
-        };
-      });
+     const answers = Object.entries(formData).map(([questionId, value]) => {
+  return {
+    questionId: parseInt(questionId, 10),  // ← Envía el questionId numérico
+    value,
+  };
+});
 
       // Call edit endpoint
       await editClinicalRecord(fullRecord._id, { answers });
