@@ -1,10 +1,12 @@
 'use client';
 
 import { AlertCircle } from 'lucide-react';
-import { useGetAllDiets } from '@/hooks/diets/get/useGetAllDiets';
 import { useEffect, useState } from 'react';
-import { useEditDiet } from '@/hooks/diets/edit/useEditDiet';
 import { useSearchParams } from 'next/navigation';
+
+// Custom Hooks
+import { useEditDiet } from '@/hooks/diets/edit/useEditDiet';
+import { useGetAllDiets } from '@/hooks/diets/get/useGetAllDiets';
 
 import AssignDiet from './components/AssignDiet';
 import PatientsAssignedViewer from './components/PatientsAssignedViewer';
@@ -25,6 +27,7 @@ import GoBackButton from '@/components/shared/diets/GoBackButton';
 import DietImage from './components/sections/DietImage';
 import Name from './components/sections/Name';
 import LoadingState from '@/components/shared/feedback/LoadingState';
+import Images from './components/sections/Images';
 
 // Feedback Components
 import SuccessModal from '@/components/shared/feedback/SuccessModal';
@@ -90,10 +93,19 @@ export default function DoctorDietDetail({ params, specialty }) {
 
         {/* Hero section with image */}
         {diet?.images?.[0] && <DietImage diet={diet} />}
+        {isEditing && (
+          <Images
+            diet={diet}
+            isEditing={isEditing}
+            editDiet={editDiet}
+            refreshDiets={refreshDiets}
+            setShowSuccessModal={setShowSuccessModal}
+          />
+        )}
       </div>
 
       {/* Main content */}
-      <div className="mx-auto max-w-5xl px-0">
+      <div className="mx-auto px-0">
         {/* Title section */}
         <div className="mb-8 flex flex-col gap-6">
           <Name
