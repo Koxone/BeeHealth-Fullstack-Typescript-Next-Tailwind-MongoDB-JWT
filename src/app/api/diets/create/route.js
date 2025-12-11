@@ -12,7 +12,7 @@ import Product from '@/models/Product';
 import User from '@/models/User';
 import Diet from '@/models/Diet';
 
-// @route    GET /api/diets/create
+// @route    POST /api/diets/create
 // @desc     Create a new diet
 // @access   Private
 export async function POST(req) {
@@ -21,12 +21,12 @@ export async function POST(req) {
     await connectDB();
 
     // Authenticate user
-    const authUser = await getAuthUser(req);
-    if (!authUser) {
-      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    const auth = await getAuthUser(req);
+    if (auth.error) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
 
-    const { userId } = authUser;
+    const { userId } = auth;
 
     // Parse request body
     const {
