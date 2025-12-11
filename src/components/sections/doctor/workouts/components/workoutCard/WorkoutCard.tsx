@@ -1,6 +1,6 @@
 'use client';
 
-import { Clock, Edit2, Trash2, User } from 'lucide-react';
+import { Clock, User } from 'lucide-react';
 import ActionsButtons from './components/ActionsButtons';
 
 const getNivelColor = (nivel) => {
@@ -12,13 +12,7 @@ const getNivelColor = (nivel) => {
   return map[nivel] || 'bg-gray-100 text-gray-800';
 };
 
-export default function WorkoutCard({
-  workout,
-  onOpen,
-  setShowDeleteModal,
-  handleEdit,
-  setWorkoutToDelete,
-}) {
+export default function WorkoutCard({ workout, onOpen, handleEdit, onClickAssign }) {
   return (
     <div
       onClick={onOpen}
@@ -60,12 +54,7 @@ export default function WorkoutCard({
         </div>
 
         {/* Doctor Actions */}
-        <ActionsButtons
-          handleEdit={handleEdit}
-          setShowDeleteModal={setShowDeleteModal}
-          setWorkoutToDelete={setWorkoutToDelete}
-          workout={workout}
-        />
+        <ActionsButtons handleEdit={handleEdit} workout={workout} onClickAssign={onClickAssign} />
       </div>
     </div>
   );

@@ -49,6 +49,7 @@ export default function ModalEditWorkout({
     setExistingImages(existingImages.filter((_, i) => i !== index));
   };
 
+  // Image Upload Function
   const uploadImage = async (file, index) => {
     if (!file) return null;
 
@@ -232,7 +233,7 @@ export default function ModalEditWorkout({
       patients: form.patients,
       name: form.name.trim(),
       type: form.type,
-      difficulty: form.difficulty,
+      difficulty: form.difficulty as 'Beginner' | 'Intermediate' | 'Advanced',
       duration: Number(form.duration),
       about: form.about.trim(),
       instructions,
@@ -243,7 +244,7 @@ export default function ModalEditWorkout({
     };
 
     try {
-      const res = await editWorkout(editingWorkout._id, payload);
+      await editWorkout(editingWorkout._id, payload);
       fetchWorkouts();
       setShowEditModal(false);
       setShowSuccessModal(true);
@@ -274,7 +275,7 @@ export default function ModalEditWorkout({
       {/* Modal Container */}
       <div className="relative inset-0 z-50 flex items-center justify-center p-3 sm:p-6">
         <div
-          className="animate-in fade-in zoom-in-95 bg-beehealth-body-main relative max-h-[95vh] w-full max-w-5xl overflow-hidden rounded-3xl shadow-2xl duration-300"
+          className="animate-in fade-in zoom-in-95 bg-beehealth-body-main relative max-h-[95vh] w-full overflow-hidden rounded-3xl shadow-2xl duration-300"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}

@@ -1,17 +1,19 @@
 'use client';
 
 import { useModalClose } from '@/hooks/useModalClose';
-import { X, AlertCircle, Apple } from 'lucide-react';
-import SharedAssignDiet from '@/components/shared/diets/SharedAssignDiet';
+import { X, AlertCircle, Apple, Dumbbell } from 'lucide-react';
+import SharedAssignWorkout from '@/components/shared/workouts/SharedAssignWorkout';
 
-export default function ModalAssignDiet({
-  dietToAssign,
+export default function ModalAssignWorkout({
+  workoutToAssign,
   setShowAssignModal,
   setShowSuccessModal,
   refetch,
 }) {
+  // Close Modal handler
   const { handleOverlayClick } = useModalClose(() => setShowAssignModal(false));
 
+  // Success handler
   const onSuccess = () => {
     refetch();
     setShowAssignModal(false);
@@ -36,17 +38,17 @@ export default function ModalAssignDiet({
           <div
             className="bg-beehealth-body-main/80 relative border-b border-red-100 bg-cover bg-center px-6 py-6 backdrop-blur-xl"
             style={{
-              backgroundImage: `url(${dietToAssign?.images?.[0]})`,
-              backgroundColor: 'rgba(0,0,0,0.60)',
+              backgroundImage: `url(${workoutToAssign?.images?.[0]})`,
+              backgroundColor: 'rgba(0,0,0,0.50)',
               backgroundBlendMode: 'darken',
             }}
           >
             <div className="relative flex items-start justify-between">
               <div className="flex items-start gap-4">
                 <div>
-                  <h2 className="text-2xl font-bold text-white">Asignar Dieta</h2>
+                  <h2 className="text-2xl font-bold text-white">Asignar Ejercicio</h2>
                   <p className="mt-1 text-sm text-white">
-                    Selecciona a qué pacientes deseas asignar esta dieta
+                    Selecciona a qué pacientes deseas asignar este ejercicio
                   </p>
                 </div>
               </div>
@@ -62,7 +64,7 @@ export default function ModalAssignDiet({
 
           {/* Content */}
           <div className="relative p-6">
-            {/* Aviso */}
+            {/* Advice */}
             <div className="border-beehealth-green-secondary-dark bg-beehealth-green-tertiary-solid mb-6 rounded-xl border-2 p-4 backdrop-blur-sm">
               <div className="flex items-start gap-3">
                 <AlertCircle className="text-beehealth-green-secondary-dark mt-0.5 h-5 w-5 shrink-0" />
@@ -71,41 +73,41 @@ export default function ModalAssignDiet({
                     ¿Cómo funciona?
                   </p>
                   <p className="text-beehealth-green-primary-solid mt-1 text-xs">
-                    Marca quiénes recibirán esta dieta. Si desmarcas a alguien, la dieta se
-                    eliminará de su plan nutricional.
+                    Marca quiénes recibirán este ejercicio. Si desmarcas a alguien, el ejercicio se
+                    eliminará de su plan de ejercicios.
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Dieta */}
+            {/* Workout */}
             <div className="bg-beehealth-body-main mb-6 overflow-hidden rounded-2xl border-2 border-gray-200 shadow-sm">
               <div className="bg-linear-to-r from-gray-50 to-gray-100 px-4 py-2">
                 <p className="text-xs font-semibold tracking-wide text-gray-600 uppercase">
-                  Dieta a asignar
+                  Ejercicio a asignar
                 </p>
               </div>
 
               <div className="space-y-4 p-4">
                 <div className="flex items-start gap-3">
                   <div className="bg-beehealth-green-tertiary-solid rounded-lg p-2">
-                    <Apple className="text-beehealth-green-secondary-dark h-5 w-5" />
+                    <Dumbbell className="text-beehealth-green-secondary-dark h-5 w-5" />
                   </div>
 
                   <div className="flex-1">
-                    <p className="text-lg font-bold text-gray-900">{dietToAssign?.name}</p>
+                    <p className="text-lg font-bold text-gray-700">{workoutToAssign?.name}</p>
                   </div>
                 </div>
 
-                <SharedAssignDiet
-                  dietId={dietToAssign?._id}
-                  diet={dietToAssign}
+                <SharedAssignWorkout
+                  workoutId={workoutToAssign?._id}
+                  workout={workoutToAssign}
                   onSuccess={onSuccess}
                 />
               </div>
             </div>
 
-            {/* Botón Cancelar */}
+            {/* Cancel Button */}
             <div className="flex">
               <button
                 onClick={() => setShowAssignModal(false)}

@@ -26,7 +26,7 @@ function Cautions({
               onChange={(e) => handleCautionInputChange(index, e.target.value)}
               placeholder={`Precaución ${index + 1}...`}
               className="bg-beehealth-body-main flex-1 resize-none rounded-xl border-2 border-gray-200 px-4 py-3.5 text-gray-900 shadow-sm transition-all duration-300 outline-none placeholder:text-gray-400"
-              rows="1"
+              rows="2"
             />
             {cautionInputs.length > 1 && (
               <button

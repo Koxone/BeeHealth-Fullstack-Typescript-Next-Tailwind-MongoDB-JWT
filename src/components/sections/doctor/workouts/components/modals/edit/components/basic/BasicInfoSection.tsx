@@ -1,6 +1,4 @@
 import { Info, Sparkles, Clock, Dumbbell, TrendingUp } from 'lucide-react';
-import React from 'react';
-import AssignWorkout from '../AssignWorkout';
 
 function BasicInfoSection({ form, setForm, getNivelColor }) {
   return (
@@ -109,26 +107,6 @@ function BasicInfoSection({ form, setForm, getNivelColor }) {
               </svg>
             </div>
           </div>
-        </div>
-
-        {/* Assign Workout */}
-        <div className="sm:col-span-2">
-          <AssignWorkout
-            selectedPatients={
-              form.patients?.map((p) => {
-                if (typeof p === 'string') return p;
-                if (p.patient && typeof p.patient === 'object') return p.patient._id;
-                if (p.patient) return p.patient;
-                return p._id;
-              }).filter(Boolean) || []
-            }
-            onChange={(newIds) => {
-              setForm({
-                ...form,
-                patients: newIds.map((id) => ({ patient: id })),
-              });
-            }}
-          />
         </div>
       </div>
     </div>
