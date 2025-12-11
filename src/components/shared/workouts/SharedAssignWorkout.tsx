@@ -28,9 +28,7 @@ export default function SharedAssignWorkout({
   const [selectedPatients, setSelectedPatients] = useState<string[]>([]);
   const [search, setSearch] = useState('');
 
-  // Hook to assign workout
-  const { patientToAssign, setPatientToAssign, isLoading, error, editPatients } =
-    useAssignWorkout();
+  const { isLoading, error, editPatients } = useAssignWorkout();
 
   // Filtrar pacientes por especialidad
   useEffect(() => {
@@ -43,7 +41,7 @@ export default function SharedAssignWorkout({
   // Pre-seleccionar pacientes ya asignados
   useEffect(() => {
     if (workout?.patients?.length > 0) {
-      const preSelected = workout.patients.map((p) => p.patient?._id);
+      const preSelected = workout.patients.map((p) => p.patient?._id || p.patient);
       setSelectedPatients(preSelected);
     }
   }, [workout]);
@@ -59,10 +57,8 @@ export default function SharedAssignWorkout({
   };
 
   const handleAssign = async () => {
-    const patientsPayload = selectedPatients.map((id) => ({ patient: id }));
     try {
-      await editPatients(workoutId, patientsPayload);
-
+      await editPatients(workoutId, selectedPatients);
       onSuccess();
     } catch (err) {
       console.error('Error assigning workout:', err);
@@ -124,6 +120,9 @@ export default function SharedAssignWorkout({
           </ul>
         </div>
       </div>
+
+      {/* Error message */}
+      {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
 
       {/* Assign button */}
       <button

@@ -2,7 +2,7 @@
 
 import { useModalClose } from '@/hooks/useModalClose';
 import { X, AlertCircle, Apple, Dumbbell } from 'lucide-react';
-import SharedAssignDiet from '@/components/shared/diets/SharedAssignDiet';
+import SharedAssignWorkout from '@/components/shared/workouts/SharedAssignWorkout';
 
 export default function ModalAssignWorkout({
   workoutToAssign,
@@ -12,7 +12,8 @@ export default function ModalAssignWorkout({
 }) {
   // Close Modal handler
   const { handleOverlayClick } = useModalClose(() => setShowAssignModal(false));
-  console.log(workoutToAssign);
+
+  // Success handler
   const onSuccess = () => {
     refetch();
     setShowAssignModal(false);
@@ -63,7 +64,7 @@ export default function ModalAssignWorkout({
 
           {/* Content */}
           <div className="relative p-6">
-            {/* Aviso */}
+            {/* Advice */}
             <div className="border-beehealth-green-secondary-dark bg-beehealth-green-tertiary-solid mb-6 rounded-xl border-2 p-4 backdrop-blur-sm">
               <div className="flex items-start gap-3">
                 <AlertCircle className="text-beehealth-green-secondary-dark mt-0.5 h-5 w-5 shrink-0" />
@@ -79,7 +80,7 @@ export default function ModalAssignWorkout({
               </div>
             </div>
 
-            {/* Ejercicio */}
+            {/* Workout */}
             <div className="bg-beehealth-body-main mb-6 overflow-hidden rounded-2xl border-2 border-gray-200 shadow-sm">
               <div className="bg-linear-to-r from-gray-50 to-gray-100 px-4 py-2">
                 <p className="text-xs font-semibold tracking-wide text-gray-600 uppercase">
@@ -98,15 +99,15 @@ export default function ModalAssignWorkout({
                   </div>
                 </div>
 
-                <SharedAssignDiet
-                  dietId={workoutToAssign?._id}
-                  diet={workoutToAssign}
+                <SharedAssignWorkout
+                  workoutId={workoutToAssign?._id}
+                  workout={workoutToAssign}
                   onSuccess={onSuccess}
                 />
               </div>
             </div>
 
-            {/* Botón Cancelar */}
+            {/* Cancel Button */}
             <div className="flex">
               <button
                 onClick={() => setShowAssignModal(false)}

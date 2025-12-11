@@ -10,11 +10,13 @@ export function useAssignWorkout() {
     setError(null);
 
     try {
+      const patientsPayload = patients.map((id) => ({ patient: id }));
+
       const res = await fetch(`/api/workouts/${workoutId}/edit`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({ patients }),
+        body: JSON.stringify({ patients: patientsPayload }),
       });
 
       if (!res.ok) {
@@ -37,5 +39,5 @@ export function useAssignWorkout() {
 // Usage Example:
 // const { patientToAssign, setPatientToAssign, isLoading, error, editPatients } = useAssignWorkout();
 
-// Asignar pacientes a un workout
+// Asignar pacientes a un workout (pasar array de strings)
 // await editPatients(workoutId, [patientId1, patientId2]);
