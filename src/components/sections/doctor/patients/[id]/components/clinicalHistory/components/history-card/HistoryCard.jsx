@@ -26,6 +26,8 @@ function HistoryCard({ r, onEdit, specialty, onDelete, patientRecord, setShowEdi
     27, 28, 29, 30, 31, 32, 39, 40, 41, 79, 81, 82, 87, 88, 89, 92, 93, 94, 95, 96,
   ];
 
+  // 38 quick, 49 quick, 89 short y quick, 91 short y quick, 94 short, 95 short, 115 quick, 122 123 124 126 short
+
   const { editClinicalRecord } = useEditClinicalRecord();
 
   const firstRecord = patientRecord?.find((record) => record.version === 'full');

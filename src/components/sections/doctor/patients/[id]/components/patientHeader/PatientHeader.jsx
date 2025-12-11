@@ -114,7 +114,7 @@ export default function PatientHeader({
           </div>
 
           <div>
-            <h1 className="text-4xl font-bold">
+            <h1 className="text-4xl font-bold capitalize">
               {patient?.patient?.fullName || 'Paciente sin historial clinico'}
             </h1>
             <p className="text-sm">

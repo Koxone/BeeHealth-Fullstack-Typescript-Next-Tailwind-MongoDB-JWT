@@ -52,7 +52,7 @@ export const metadata = {
     card: 'summary',
     title: 'BeeHealth',
     description: 'Gestión de salud y nutrición desde tu dispositivo.',
-    site: '@beehealth', // cámbialo si tienes handle, si no déjalo así
+    site: '@beehealth',
     images: ['/favicon-96x96.png'],
   },
 
@@ -78,7 +78,6 @@ export default function PublicLayout({ children }) {
   return (
     <html lang="es">
       <body className="bg-beehealth-body-main min-h-screen">
-        {/* React Query */}
         <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>
     </html>
