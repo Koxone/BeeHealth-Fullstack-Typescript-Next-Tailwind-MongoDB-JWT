@@ -42,13 +42,24 @@ function HistoryCard({ r, onEdit, specialty, onDelete, patientRecord, setShowEdi
         .map((answer) => answer.question.text)
     : [];
 
+  //
+  const dateParts = r.recordDate.substring(0, 10).split('-');
+  const year = dateParts[0];
+  const month = dateParts[1];
+  const day = dateParts[2];
+
+  const monthName = new Date(`${year}-${month}-15T12:00:00Z`).toLocaleDateString('es-MX', {
+    month: 'short',
+  });
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:gap-4">
       {/* Date block */}
       <div className="flex flex-col items-center justify-center text-center">
         <div className="bg-beehealth-blue-primary-light text-beehealth-blue-primary-dark border-beehealth-blue-primary-solid flex h-12 w-12 flex-col items-center justify-center rounded-lg border sm:h-14 sm:w-14">
           <span className="text-xs font-medium uppercase">
-            {new Date(r.recordDate).toLocaleDateString('es-MX', { month: 'short' })}
+            {new Date(`${r.recordDate.substring(0, 7)}-15T12:00:00Z`).toLocaleDateString('es-MX', {
+              month: 'short',
+            })}
           </span>
           <span className="text-base font-bold sm:text-lg">{r.recordDate.substring(8, 10)}</span>
         </div>
