@@ -10,29 +10,22 @@ interface TabsNavProps {
 
 export default function TabsNav({ activeTab, setActiveTab }: TabsNavProps) {
   return (
-    <div className="scrollbar-thin scrollbar-thumb-emerald-400/30 scrollbar-track-transparent bg-beehealth-body-main/80 flex w-full justify-between overflow-x-auto rounded-2xl border border-(--med-gray-border) p-1 shadow-sm backdrop-blur-sm">
+    <div className="flex w-full border-b border-gray-200">
       {tabs.map(({ name, icon: Icon }) => (
         <button
           key={name}
           onClick={() => setActiveTab(name)}
-          className={[
-            'group relative flex shrink-0 items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-300 sm:px-5 sm:py-3',
+          className={`relative flex flex-1 items-center justify-center gap-2 px-4 py-4 text-sm font-medium transition-all duration-300 ${
             activeTab === name
-              ? 'bg-linear-to-r from-emerald-500 to-teal-500 text-white shadow-md'
-              : 'text-(--med-text-dark) hover:bg-(--med-blue-light)/30 hover:text-emerald-600',
-          ].join(' ')}
+              ? 'bg-beehealth-blue-primary-solid rounded-lg text-white'
+              : 'rounded-lg text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+          }`}
         >
-          <Icon
-            className={`h-4 w-4 transition-all duration-300 ${
-              activeTab === name
-                ? 'scale-110 text-white'
-                : 'text-emerald-600 group-hover:scale-110 group-hover:text-emerald-700'
-            }`}
-          />
+          <Icon className="h-4 w-4" />
           <span className="whitespace-nowrap">{name}</span>
 
           {activeTab === name && (
-            <div className="bg-beehealth-body-main/70 absolute right-0 bottom-0 left-0 h-[3px] rounded-full shadow-md transition-all duration-300" />
+            <div className="bg-beehealth-blue-primary-dark text-beehealth-blue-primary-solid absolute right-0 bottom-0 left-0 h-0.5" />
           )}
         </button>
       ))}

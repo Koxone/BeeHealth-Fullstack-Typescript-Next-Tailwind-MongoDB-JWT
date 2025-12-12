@@ -5,7 +5,7 @@ export function useAssignDiet() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const editPatients = async (dietId, patients) => {
+  const editPatients = async (dietId, patients) => { 
     setIsLoading(true);
     setError(null);
 

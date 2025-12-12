@@ -1,14 +1,15 @@
 'use client';
 
-import { IClinicalRecord } from '@/types';
+import { IClinicalRecord, TabName } from '@/types';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
 
 import PatientHeader from './components/patientHeader/PatientHeader';
-import QuickStats from './components/QuickStats';
-import WeightChart from './components/WeightChart';
-import ClinicalHistory from './components/clinicalHistory/ClinicalHistory';
 import BackButton from './components/BackButton';
+import TabsNav from './components/TabsNav';
+import ConsultsTab from './components/tabs/consults/ConsultsTab';
+import DietsTab from './components/tabs/diets/DietsTab';
+import WorkoutsTab from './components/tabs/workouts/WorkoutsTab';
 
 // Feedback Components
 import ClinicalRecordModal from './components/modals/historyModal/ClinicalRecordModal';
@@ -19,6 +20,7 @@ import DeleteRecordModal from './components/modals/delete-record-modal/DeleteRec
 import SuccessModal from '@/components/shared/feedback/SuccessModal';
 import DoctorCreateAppointmentModal from './components/modals/createAppointmentModal/DoctorCreateAppointmentModal';
 import CreateGoalModal from './components/modals/create-goal-modal/CreateGoalModal';
+import ErrorState from '@/components/shared/feedback/ErrorState';
 import LoadingState from '@/components/shared/feedback/LoadingState';
 
 // Custom Hooks
@@ -70,8 +72,17 @@ export default function DoctorPatientDetail({ patient, specialty }) {
   // Create First Record Modal
   const [showCreateFirstRecordModal, setShowCreateFirstRecordModal] = useState<boolean>(false);
 
+  // Dental Tabs Nav
+  const [activeTab, setActiveTab] = useState<TabName>('Dietas');
+
+  // Loading State
   if (error || isLoading) {
     return <LoadingState />;
+  }
+
+  // Error State
+  if (error) {
+    return <ErrorState />;
   }
   return (
     <div className="h-full space-y-6 overflow-y-auto">
@@ -86,44 +97,36 @@ export default function DoctorPatientDetail({ patient, specialty }) {
         />
       </div>
 
-      {/* Quick Stats */}
-      <QuickStats patientRecord={patientRecord} specialty={specialty} patientId={id} />
+      {/* Tabs Nav */}
+      <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      {/* Weight Control Clinical Records */}
-      {specialty === 'weight' && (
-        <ClinicalHistory
-          specialty={specialty}
+      {/* Consults Tab */}
+      {activeTab === 'Consultas' && (
+        <ConsultsTab
+          patientId={id}
           patientRecord={patientRecord}
+          specialty={specialty}
           showDeleteModal={showDeleteModal}
           setShowDeleteModal={setShowDeleteModal}
-          onCreateNew={() => setShowCreateFirstRecordModal(true)}
-          // Add Section
-          onAdd={() => {
-            const lastRecord = patientRecord?.[0] || null;
-            setSelectedRecord(lastRecord);
-            setIsReadOnly(false);
-            setHistoryMode('create');
-            setShowHistoryModal(true);
-          }}
-          // Edit Section
-          onEdit={(record, readOnly) => {
-            setSelectedRecord(record);
-            setIsReadOnly(readOnly);
-            setHistoryMode(readOnly ? 'view' : 'edit');
-            setShowEditRecordModal(true);
-          }}
-          // Delete Section
-          onDelete={(record) => {
-            setSelectedRecord(record);
-            setShowDeleteModal(true);
-          }}
-          setShowCreateGoalModal={setShowCreateGoalModal}
+          setShowCreateFirstRecordModal={setShowCreateFirstRecordModal}
+          setSelectedRecord={setSelectedRecord}
+          setIsReadOnly={setIsReadOnly}
+          setHistoryMode={setHistoryMode}
+          setShowHistoryModal={setShowHistoryModal}
           setShowEditRecordModal={setShowEditRecordModal}
+          setShowCreateGoalModal={setShowCreateGoalModal}
         />
       )}
 
-      {/* Weight Chart */}
-      {specialty === 'weight' && <WeightChart id={id} />}
+      {/* Diets Tab */}
+      {activeTab === 'Dietas' && (
+        <DietsTab patientId={id} patientRecord={patientRecord} specialty={specialty} />
+      )}
+
+      {/* Workouts Tab */}
+      {activeTab === 'Ejercicios' && (
+        <WorkoutsTab patientId={id} patientRecord={patientRecord} specialty={specialty} />
+      )}
 
       {/* Full History Modal */}
       {showFullHistoryModal && (
