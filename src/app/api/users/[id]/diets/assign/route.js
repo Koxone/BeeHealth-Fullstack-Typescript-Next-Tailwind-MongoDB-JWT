@@ -49,8 +49,27 @@ export async function PATCH(req, { params }) {
 
     // Check if diet is already assigned
     const alreadyAssigned = user.diets.some((d) => d.diet.toString() === dietId);
+
+    // If already assigned, return success message
     if (alreadyAssigned) {
-      return NextResponse.json({ error: 'Diet already assigned to this user' }, { status: 400 });
+      const populatedUser = await User.findById(id).populate('diets.diet');
+
+      const safeUser = {
+        id: populatedUser._id,
+        fullName: populatedUser.fullName,
+        email: populatedUser.email,
+        phone: populatedUser.phone,
+        avatar: populatedUser.avatar,
+        role: populatedUser.role,
+        specialty: populatedUser.specialty,
+        diets: populatedUser.diets,
+        updatedAt: populatedUser.updatedAt,
+      };
+
+      return NextResponse.json(
+        { message: 'Diet already assigned', user: safeUser },
+        { status: 200 }
+      );
     }
 
     // Add diet to array

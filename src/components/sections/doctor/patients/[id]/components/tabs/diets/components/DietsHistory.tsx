@@ -40,7 +40,7 @@ const dietHistory = [
   },
 ];
 
-export default function DietsHistory() {
+export default function DietsHistory({ patientId }: { patientId: string }) {
   const getActionBadge = (action: string) => {
     switch (action) {
       case 'assigned':

@@ -5,17 +5,21 @@ import { ChevronDown } from 'lucide-react';
 
 // Custom Hooks
 import { useGetAllDiets } from '@/hooks/diets/get/useGetAllDiets';
-import { useAssignDietToPatient } from '@/hooks/diets/assign/useAssignDietToPatient';
 import { useGetUserById } from '@/hooks/users/useGetUserById';
+import { useAssignDiet } from '@/hooks/diets/assign/useAssignDiet';
+
+// Feedback Components
 import LoadingState from '../feedback/LoadingState';
 import ErrorState from '../feedback/ErrorState';
 
 export default function AssignDietToPatient({
   onSuccess,
   patientId,
+  setShowSuccessModal,
 }: {
   onSuccess?: () => void;
   patientId: string;
+  setShowSuccessModal?: (show: boolean) => void;
 }) {
   // Local States
   const [openDropdown, setDropdownOpen] = useState(false);
@@ -25,9 +29,6 @@ export default function AssignDietToPatient({
   // Fetch all diets with Custom Hook
   const { dietsData, isLoading: loadingDiets } = useGetAllDiets();
 
-  // Assign Diets with Custom Hook
-  const { assignDiets, isLoading: assigning, error: assignError } = useAssignDietToPatient();
-
   // Get Patient Data with Custom Hook
   const {
     userData,
@@ -36,13 +37,8 @@ export default function AssignDietToPatient({
     refetch: refetchUser,
   } = useGetUserById(patientId);
 
-  // Autofill input check boxes with assigned diets
-  useEffect(() => {
-    if (dietsData && dietsData.length > 0 && userData?.diets) {
-      const assignedDietIds = userData.diets.map((assignment) => assignment.diet);
-      setSelectedDiets(assignedDietIds);
-    }
-  }, [dietsData, userData]);
+  // Assign Diet with Custom Hook
+  const { assignDiet, isLoading: assigning, error: assignError } = useAssignDiet();
 
   const filteredList =
     dietsData?.filter((diet) => diet.name.toLowerCase().includes(search.toLowerCase())) || [];
@@ -53,12 +49,27 @@ export default function AssignDietToPatient({
 
   const handleAssign = async () => {
     try {
-      await assignDiets(patientId as string, selectedDiets);
+      for (const dietId of selectedDiets) {
+        await assignDiet({ patientId, dietId });
+      }
       onSuccess?.();
+      setShowSuccessModal(true);
+      setDropdownOpen(false);
+      setTimeout(() => {
+        setShowSuccessModal(false);
+      }, 1500);
     } catch (err) {
       console.error('Error assigning diets:', err);
     }
   };
+
+  // Autofill input check boxes with assigned diets
+  useEffect(() => {
+    if (dietsData && dietsData.length > 0 && userData?.diets) {
+      const assignedDietIds = userData.diets.map((assignment) => assignment.diet);
+      setSelectedDiets(assignedDietIds);
+    }
+  }, [dietsData, userData]);
 
   // Loading State
   if (loadingDiets) {
@@ -112,24 +123,37 @@ export default function AssignDietToPatient({
           </div>
 
           <ul className="divide-y divide-gray-100">
-            {filteredList.map((diet) => (
-              <li
-                key={diet._id}
-                className="flex cursor-pointer items-center gap-3 px-3 py-2 hover:bg-gray-50"
-                onClick={() => toggleDiet(diet._id)}
-              >
-                <input
-                  type="checkbox"
-                  checked={selectedDiets.includes(diet._id)}
-                  readOnly
-                  className="text-beehealth-blue-primary-solid h-4 w-4 rounded border-gray-300"
-                />
-                <div className="flex flex-col">
-                  <span className="text-sm font-medium text-gray-700">{diet.name}</span>
-                  {diet.category && <span className="text-xs text-gray-500">{diet.category}</span>}
-                </div>
-              </li>
-            ))}
+            {filteredList.map((diet) => {
+              const isSelected = selectedDiets.includes(diet._id);
+
+              return (
+                <li
+                  key={diet._id}
+                  onClick={() => {
+                    if (isSelected) return;
+                    toggleDiet(diet._id);
+                  }}
+                  className={`flex items-center gap-3 px-3 py-2 ${
+                    isSelected ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-gray-50'
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    disabled={isSelected}
+                    readOnly
+                    className="text-beehealth-blue-primary-solid pointer-events-none h-4 w-4 rounded border-gray-300"
+                  />
+
+                  <div className="flex flex-col">
+                    <span className="text-sm font-medium text-gray-700">{diet.name}</span>
+                    {diet.category && (
+                      <span className="text-xs text-gray-500">{diet.category}</span>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
 
             {filteredList.length === 0 && (
               <li className="px-3 py-4 text-center text-sm text-gray-500">
