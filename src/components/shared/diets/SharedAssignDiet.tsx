@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 
 // Custom Hooks
-import { useAssignDiet } from '@/hooks/diets/assign/useAssignDiet';
+import { useAssignPatientToDiet } from '@/hooks/diets/assign/useAssignPatientToDiet';
 import { useGetPatientsBySpecialty } from '@/hooks/patients/get/useGetPatientsBySpecialty';
 
 // Zustand Store
@@ -28,7 +28,7 @@ export default function SharedAssignDiet({
   const [selectedPatients, setSelectedPatients] = useState<string[]>([]);
   const [search, setSearch] = useState('');
 
-  const { editPatients, isLoading: assigning, error: assignError } = useAssignDiet();
+  const { editPatients, isLoading: assigning, error: assignError } = useAssignPatientToDiet();
 
   // Filtrar pacientes por especialidad
   useEffect(() => {

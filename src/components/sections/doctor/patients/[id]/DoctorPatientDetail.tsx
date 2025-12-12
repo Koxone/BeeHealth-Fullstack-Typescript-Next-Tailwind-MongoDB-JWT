@@ -119,9 +119,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
       )}
 
       {/* Diets Tab */}
-      {activeTab === 'Dietas' && (
-        <DietsTab patientId={id} patientRecord={patientRecord} specialty={specialty} />
-      )}
+      {activeTab === 'Dietas' && <DietsTab patientId={id} />}
 
       {/* Workouts Tab */}
       {activeTab === 'Ejercicios' && (

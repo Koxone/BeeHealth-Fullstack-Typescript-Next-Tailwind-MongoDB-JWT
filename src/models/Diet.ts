@@ -3,12 +3,6 @@ import { IUser } from './User';
 import { IClinicalRecord } from './records/ClinicalRecord';
 
 export interface IDiet {
-  patients: {
-    patient: mongoose.Types.ObjectId | IUser;
-    isActive: boolean;
-    assignedAt: Date;
-    finishedAt?: Date;
-  }[];
   clinicalRecord?: mongoose.Types.ObjectId | IClinicalRecord;
 
   description?: string;
@@ -48,15 +42,6 @@ export interface IDiet {
 const DietSchema = new Schema<IDiet>(
   {
     doctor: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-
-    patients: [
-      {
-        patient: { type: Schema.Types.ObjectId, ref: 'User' },
-        isActive: { type: Boolean, default: true },
-        assignedAt: { type: Date, default: Date.now },
-        finishedAt: { type: Date },
-      },
-    ],
 
     clinicalRecord: { type: Schema.Types.ObjectId, ref: 'ClinicalRecord' },
 

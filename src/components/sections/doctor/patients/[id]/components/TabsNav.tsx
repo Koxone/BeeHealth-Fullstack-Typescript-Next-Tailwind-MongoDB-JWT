@@ -10,15 +10,15 @@ interface TabsNavProps {
 
 export default function TabsNav({ activeTab, setActiveTab }: TabsNavProps) {
   return (
-    <div className="flex w-full border-b border-gray-200">
+    <div className="flex w-full gap-4 border-b border-gray-200">
       {tabs.map(({ name, icon: Icon }) => (
         <button
           key={name}
           onClick={() => setActiveTab(name)}
-          className={`relative flex flex-1 items-center justify-center gap-2 px-4 py-4 text-sm font-medium transition-all duration-300 ${
+          className={`relative flex flex-1 items-center justify-center gap-2 px-4 py-4 text-sm font-medium ${
             activeTab === name
               ? 'bg-beehealth-blue-primary-solid rounded-lg text-white'
-              : 'rounded-lg text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+              : 'bg-beehealth-blue-primary-solid/20 hover:bg-beehealth-blue-primary-solid-hover/40 rounded-lg text-gray-500 hover:text-gray-700'
           }`}
         >
           <Icon className="h-4 w-4" />

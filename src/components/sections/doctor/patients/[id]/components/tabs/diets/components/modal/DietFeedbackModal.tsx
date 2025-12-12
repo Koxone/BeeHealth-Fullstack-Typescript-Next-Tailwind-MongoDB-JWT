@@ -20,7 +20,6 @@ interface DietFeedbackModalProps {
     rating: number;
     doctorNotes: string;
   }) => Promise<void>;
-  formatDate: (date: string) => string;
   isProcessing?: boolean;
 }
 
@@ -28,7 +27,6 @@ export default function DietFeedbackModal({
   selectedDiet,
   setShowToggleModal,
   handleToggleDiet,
-  formatDate,
   isProcessing = false,
 }: DietFeedbackModalProps) {
   // Compliance state
@@ -49,6 +47,15 @@ export default function DietFeedbackModal({
   };
 
   const isDeactivating = selectedDiet.isActive;
+
+  // Date formatter
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('es-MX', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    });
+  };
 
   return (
     <div

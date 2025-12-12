@@ -9,9 +9,23 @@ interface IUser extends Document {
   avatar?: string;
   isActive: boolean;
   hasRecord: boolean;
-  resetToken?: string | null;
   role: 'patient' | 'doctor' | 'admin' | 'employee';
   specialty: 'weight' | 'dental' | 'stetic' | 'none';
+
+  diets?: {
+    diet: mongoose.Types.ObjectId;
+    isActive: boolean;
+    assignedAt: Date;
+    finishedAt?: Date;
+  }[];
+  workouts: {
+    workout: mongoose.Types.ObjectId;
+    isActive: boolean;
+    assignedAt: Date;
+    finishedAt?: Date;
+  }[];
+
+  resetToken?: string | null;
   lastVisit?: Date | null;
   createdAt?: Date;
   updatedAt?: Date;
@@ -28,6 +42,24 @@ const UserSchema = new Schema<IUser>(
     isActive: { type: Boolean, default: true },
     hasRecord: { type: Boolean, default: false },
     resetToken: { type: String, default: null },
+
+    diets: [
+      {
+        diet: { type: Schema.Types.ObjectId, ref: 'Diet' },
+        isActive: { type: Boolean, default: true },
+        assignedAt: { type: Date, default: Date.now },
+        finishedAt: { type: Date },
+      },
+    ],
+    workouts: [
+      {
+        workout: { type: Schema.Types.ObjectId, ref: 'Workout' },
+        isActive: { type: Boolean, default: true },
+        assignedAt: { type: Date, default: Date.now },
+        finishedAt: { type: Date },
+      },
+    ],
+
     role: { type: String, enum: ['patient', 'doctor', 'admin', 'employee'], default: 'patient' },
     specialty: { type: String, enum: ['weight', 'dental', 'stetic', 'none'], default: 'none' },
     lastVisit: { type: Date, default: null },

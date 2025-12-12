@@ -1,20 +1,10 @@
 import { z } from 'zod';
 import { doctorSchema } from './diets.doctor.schema';
-import { patientSchema } from '../patient.schema';
 
 export const dietSchema = z.object({
   _id: z.string(),
 
   doctor: doctorSchema,
-
-  patients: z.array(
-    z.object({
-      patient: patientSchema,
-      isActive: z.boolean(),
-      assignedAt: z.string(),
-      finishedAt: z.string().optional(),
-    })
-  ),
 
   name: z.string(),
   category: z.string().optional(),

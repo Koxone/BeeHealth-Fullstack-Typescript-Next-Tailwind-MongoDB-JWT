@@ -20,9 +20,7 @@ export async function GET(req) {
     // Connect to database
     await connectDB();
 
-    const diets = await Diet.find()
-      .populate('doctor', 'fullName email')
-      .populate('patients.patient', 'fullName email');
+    const diets = await Diet.find().populate('doctor', 'fullName email');
 
     return NextResponse.json({ diets }, { status: 200 });
   } catch (error) {
