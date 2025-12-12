@@ -78,7 +78,7 @@ export default function DoctorDietDetail({ params, specialty }) {
   const mode = searchParams.get('mode');
   const [isEditing, setIsEditing] = useState(mode === 'edit');
   const [isReading, setIsReading] = useState(mode !== 'edit');
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   // Sync when URL changes
   useEffect(() => {
@@ -153,7 +153,7 @@ export default function DoctorDietDetail({ params, specialty }) {
           </div>
 
           {/* Select Patient to assign the diet */}
-          <AssignPatientToDiet specialty={specialty} dietId={id} diet={diet} refetch={refetch} />
+          {/* <AssignPatientToDiet specialty={specialty} dietId={id} diet={diet} refetch={refetch} /> */}
 
           {/* Patients assigned to this diet */}
           {/* <PatientsAssignedViewer patients={diet.patients} /> */}
