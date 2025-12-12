@@ -2,16 +2,16 @@
 
 import { useState } from 'react';
 import { Utensils } from 'lucide-react';
+import ToggleDietCard from './components/ToggleDietCard';
 
 // Custom hooks
-import { useGetAllDiets } from '@/hooks/diets/get/useGetAllDiets';
+import { useGetAllDietsFromPatient } from '@/hooks/diets/get/useGetAllDietsFromPatient';
 
 // Feedback Components
 import DietFeedbackModal from '../DietFeedbackModal';
 
 // Types
 import type { IDiet } from '@/models/Diet';
-import ToggleDietCard from './components/ToggleDietCard';
 
 type DietWithId = IDiet & { _id: string };
 
@@ -24,13 +24,7 @@ export default function QuickToggleDiets({ patientId }: { patientId: string }) {
     isLoading: dietsLoading,
     error: dietsError,
     refetch: refetchDiets,
-  } = useGetAllDiets();
-
-  // Filter diets by patient
-  const dietsFiltered: DietWithId[] =
-    (dietsData?.filter((diet) =>
-      diet.patients?.some((p) => (p.patient as any)?._id === patientId)
-    ) as unknown as DietWithId[]) || [];
+  } = useGetAllDietsFromPatient(patientId);
 
   const [selectedDiet, setSelectedDiet] = useState<DietWithId | null>(null);
   const [showToggleModal, setShowToggleModal] = useState(false);
@@ -87,8 +81,13 @@ export default function QuickToggleDiets({ patientId }: { patientId: string }) {
 
         {/* Diet Card */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          {dietsFiltered.map((diet) => (
-            <ToggleDietCard key={diet?._id} diet={diet} handleDietClick={handleDietClick} />
+          {dietsData?.map((diet) => (
+            <ToggleDietCard
+              key={diet?._id}
+              diet={diet}
+              handleDietClick={handleDietClick}
+              patientId={patientId}
+            />
           ))}
         </div>
       </div>

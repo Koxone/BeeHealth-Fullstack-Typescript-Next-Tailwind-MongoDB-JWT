@@ -6,7 +6,7 @@ import { ChevronDown } from 'lucide-react';
 export default function AssignedDiets({ assignedDietsData }) {
   const dietsCount = assignedDietsData?.length || 0;
   const hasAssignedDiets = dietsCount > 0;
-  const assignedDiets = assignedDietsData || [];
+  const assignedDiets = assignedDietsData?.map((item) => item.diet) || [];
   const [isOpen, setIsOpen] = useState(false);
 
   return (

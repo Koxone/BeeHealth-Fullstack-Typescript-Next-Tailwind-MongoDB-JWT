@@ -6,9 +6,11 @@ import AssignedDiets from '@/components/sections/doctor/patients/[id]/components
 import AssignedWorkouts from '@/components/sections/doctor/patients/[id]/components/patientHeader/components/AssignedWorkouts';
 import FullHistoryButton from './components/FullHistoryButton';
 
+// Custom Hooks
 import { useGetAllWorkouts } from '@/hooks/workouts/get/useGetAllWorkouts';
 import { useGetAllDiets } from '@/hooks/diets/get/useGetAllDiets';
 import { useParams } from 'next/navigation';
+import { useGetAllDietsFromPatient } from '@/hooks/diets/get/useGetAllDietsFromPatient';
 
 export default function PatientHeader({
   onClickNew,
@@ -23,6 +25,13 @@ export default function PatientHeader({
     dental: 'Odontología',
     stetic: 'Tratamiento Estético',
   };
+
+  const {
+    dietsData,
+    isLoading: dietsLoading,
+    error: dietsError,
+    refetch: refetchDiets,
+  } = useGetAllDietsFromPatient(id?.toString());
 
   const filteredRecords = patientRecord?.filter((record) => record?.version === 'full') || [];
   const patient = filteredRecords?.[0] || null;
@@ -53,13 +62,9 @@ export default function PatientHeader({
   }
 
   const { workoutData } = useGetAllWorkouts();
-  const { dietsData } = useGetAllDiets();
 
   const assignedWorkoutsData = workoutData?.filter((workout) =>
     workout.patients?.some((p) => p.patient?._id === id)
-  );
-  const assignedDietsData = dietsData?.filter((diet) =>
-    diet.patients?.some((p) => p.patient?._id === id)
   );
 
   return (
@@ -106,7 +111,7 @@ export default function PatientHeader({
               />
 
               {/* Assigned Diets */}
-              <AssignedDiets assignedDietsData={assignedDietsData} />
+              <AssignedDiets assignedDietsData={dietsData} />
 
               {/* Assigned Workouts */}
               <AssignedWorkouts assignedWorkoutsData={assignedWorkoutsData} />

@@ -4,7 +4,7 @@ import { doctorSchema } from './diets.doctor.schema';
 export const dietSchema = z.object({
   _id: z.string(),
 
-  doctor: doctorSchema,
+  doctor: z.string(),
 
   name: z.string(),
   category: z.string().optional(),
