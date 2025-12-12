@@ -2,31 +2,47 @@
 
 import { useEffect, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { useParams } from 'next/navigation';
 
 // Custom Hooks
 import { useGetAllDiets } from '@/hooks/diets/get/useGetAllDiets';
 import { useAssignDietToPatient } from '@/hooks/diets/assign/useAssignDietToPatient';
+import { useGetUserById } from '@/hooks/users/useGetUserById';
+import LoadingState from '../feedback/LoadingState';
+import ErrorState from '../feedback/ErrorState';
 
-export default function AssignDietToPatient({ onSuccess }: { onSuccess?: () => void }) {
-  const { id: patientId } = useParams();
-
-  const { dietsData, isLoading: loadingDiets } = useGetAllDiets();
-  const { assignDiets, isLoading: assigning, error: assignError } = useAssignDietToPatient();
-
+export default function AssignDietToPatient({
+  onSuccess,
+  patientId,
+}: {
+  onSuccess?: () => void;
+  patientId: string;
+}) {
+  // Local States
   const [openDropdown, setDropdownOpen] = useState(false);
   const [selectedDiets, setSelectedDiets] = useState<string[]>([]);
   const [search, setSearch] = useState('');
 
-  // Pre-seleccionar dietas ya asignadas al paciente
+  // Fetch all diets with Custom Hook
+  const { dietsData, isLoading: loadingDiets } = useGetAllDiets();
+
+  // Assign Diets with Custom Hook
+  const { assignDiets, isLoading: assigning, error: assignError } = useAssignDietToPatient();
+
+  // Get Patient Data with Custom Hook
+  const {
+    userData,
+    isLoading: loadingUser,
+    error: userError,
+    refetch: refetchUser,
+  } = useGetUserById(patientId);
+
+  // Autofill input check boxes with assigned diets
   useEffect(() => {
-    if (dietsData && dietsData.length > 0) {
-      const preSelected = dietsData
-        .filter((diet) => diet.patients?.some((p) => p.patient?._id === patientId))
-        .map((diet) => diet._id);
-      setSelectedDiets(preSelected);
+    if (dietsData && dietsData.length > 0 && userData?.diets) {
+      const assignedDietIds = userData.diets.map((assignment) => assignment.diet);
+      setSelectedDiets(assignedDietIds);
     }
-  }, [dietsData, patientId]);
+  }, [dietsData, userData]);
 
   const filteredList =
     dietsData?.filter((diet) => diet.name.toLowerCase().includes(search.toLowerCase())) || [];
@@ -44,8 +60,14 @@ export default function AssignDietToPatient({ onSuccess }: { onSuccess?: () => v
     }
   };
 
+  // Loading State
   if (loadingDiets) {
-    return <div className="text-sm text-gray-500">Cargando dietas...</div>;
+    return <LoadingState />;
+  }
+
+  // Error State
+  if (userError) {
+    return <ErrorState />;
   }
 
   return (

@@ -9,7 +9,7 @@ export default function DietsTab({ patientId }) {
       <QuickToggleDiets patientId={patientId} />
 
       {/* Assign Section */}
-      <AssignDietToPatient />
+      <AssignDietToPatient patientId={patientId} />
 
       {/* Diets Tab */}
       <DietsHistory />
