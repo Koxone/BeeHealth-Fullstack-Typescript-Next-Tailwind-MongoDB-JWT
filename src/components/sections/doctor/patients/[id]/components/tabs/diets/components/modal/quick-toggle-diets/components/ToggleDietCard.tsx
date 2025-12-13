@@ -8,7 +8,6 @@ export default function ToggleDietCard({ diet, handleDietClick, patientId }) {
       year: 'numeric',
     });
   };
-
   return (
     <div
       className={`group relative overflow-hidden rounded-xl border-2 p-4 transition-all duration-300 ${

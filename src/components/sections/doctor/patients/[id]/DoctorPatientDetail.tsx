@@ -27,6 +27,8 @@ import LoadingState from '@/components/shared/feedback/LoadingState';
 import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/get/useGetPatientClinicalRecords';
 import { useDeleteClinicalRecord } from '@/hooks/clinicalRecords/delete/useDeleteClinicalRecord';
 import { useEditClinicalRecord } from '@/hooks/clinicalRecords/edit/useEditClinicalRecord';
+import { useGetUserById } from '@/hooks/users/useGetUserById';
+import { useGetAllDietsFromPatient } from '@/hooks/diets/get/useGetAllDietsFromPatient';
 
 export default function DoctorPatientDetail({ patient, specialty }) {
   // ID From URL Params
@@ -35,14 +37,31 @@ export default function DoctorPatientDetail({ patient, specialty }) {
 
   // Patient Clinical Record
   const [selectedRecord, setSelectedRecord] = useState<IClinicalRecord | null>(null);
+
+  // Fetch Patient Clinical Records with Custom Hook
   const {
     data: patientRecord,
     isLoading,
     error,
     refetch: fetchRecord,
   } = useGetPatientClinicalRecords(id);
-
   const currentPatientInfo = patientRecord?.[0];
+
+  // Fetch Patient Diets with Custom Hook
+  const {
+    dietsData,
+    isLoading: dietsLoading,
+    error: dietsError,
+    refetch: refetchDiets,
+  } = useGetAllDietsFromPatient(id?.toString());
+
+  // Fetch Patient Info with Custom Hook
+  const {
+    userData,
+    isLoading: userLoading,
+    error: userError,
+    refetch: refetchUser,
+  } = useGetUserById(id);
 
   // Success Modal
   const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
@@ -94,6 +113,8 @@ export default function DoctorPatientDetail({ patient, specialty }) {
           onClickNew={() => setShowCreateAppointmentModal(true)}
           onClickFullHistory={() => setShowFullHistoryModal(true)}
           onCreateNew={() => setShowCreateFirstRecordModal(true)}
+          id={id}
+          dietsData={dietsData}
         />
       </div>
 
@@ -119,7 +140,16 @@ export default function DoctorPatientDetail({ patient, specialty }) {
       )}
 
       {/* Diets Tab */}
-      {activeTab === 'Dietas' && <DietsTab patientId={id} />}
+      {activeTab === 'Dietas' && (
+        <DietsTab
+          patientId={id}
+          userData={userData}
+          refetchDiets={refetchDiets}
+          dietsData={dietsData}
+          dietsLoading={dietsLoading}
+          dietsError={dietsError}
+        />
+      )}
 
       {/* Workouts Tab */}
       {activeTab === 'Ejercicios' && (

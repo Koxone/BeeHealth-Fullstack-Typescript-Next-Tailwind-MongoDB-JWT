@@ -2,7 +2,7 @@ import mongoose, { Document, Model, Schema } from 'mongoose';
 import { IUser } from './User';
 import { IClinicalRecord } from './records/ClinicalRecord';
 
-export interface IDiet {
+export interface IDiet extends Document {
   clinicalRecord?: mongoose.Types.ObjectId | IClinicalRecord;
 
   description?: string;

@@ -1,37 +1,43 @@
-'use client';
-
 import { useState } from 'react';
 import { Utensils } from 'lucide-react';
 import ToggleDietCard from './components/ToggleDietCard';
 
-// Custom hooks
-import { useGetAllDietsFromPatient } from '@/hooks/diets/get/useGetAllDietsFromPatient';
-
 // Feedback Components
 import DietFeedbackModal from '../DietFeedbackModal';
+import LoadingState from '@/components/shared/feedback/LoadingState';
+import ErrorState from '@/components/shared/feedback/ErrorState';
 
 // Types
-import type { IDiet } from '@/models/Diet';
+import { UserDiet } from '@/types/diet/diet.types';
+import { ComplianceStatus } from '@/types/diet/diet.types';
 
-type DietWithId = IDiet & { _id: string };
-
-type ComplianceStatus = 'pending' | 'completed' | 'partial' | 'not_completed';
-
-export default function QuickToggleDiets({ patientId }: { patientId: string }) {
-  // Fetch all diets with Custom Hook
-  const {
-    dietsData,
-    isLoading: dietsLoading,
-    error: dietsError,
-    refetch: refetchDiets,
-  } = useGetAllDietsFromPatient(patientId);
-
-  const [selectedDiet, setSelectedDiet] = useState<DietWithId | null>(null);
-  const [showToggleModal, setShowToggleModal] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false);
+export default function QuickToggleDiets({
+  patientId,
+  userData,
+  setShowSuccessModal,
+  setSuccessTitle,
+  setSuccessMessage,
+  refetchDiets,
+  dietsData,
+  dietsLoading,
+  dietsError,
+}: {
+  patientId: string;
+  userData: any;
+  setShowSuccessModal: (show: boolean) => void;
+  setSuccessTitle: (title: string) => void;
+  setSuccessMessage: (message: string) => void;
+  refetchDiets: () => void;
+  dietsData: UserDiet[];
+  dietsLoading: boolean;
+  dietsError: any;
+}) {
+  const [selectedDiet, setSelectedDiet] = useState<UserDiet | null>(null);
+  const [showToggleModal, setShowToggleModal] = useState<boolean>(false);
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
   // Handle diet click
-  const handleDietClick = (diet: DietWithId) => {
+  const handleDietClick = (diet: UserDiet) => {
     setSelectedDiet(diet);
     setShowToggleModal(true);
   };
@@ -54,12 +60,12 @@ export default function QuickToggleDiets({ patientId }: { patientId: string }) {
 
   // Loading State
   if (dietsLoading) {
-    return <div className="text-sm text-gray-500">Cargando dietas...</div>;
+    return <LoadingState />;
   }
 
   // Error State
   if (dietsError) {
-    return <div className="text-sm text-red-500">Error al cargar las dietas.</div>;
+    return <ErrorState />;
   }
 
   return (
@@ -96,9 +102,14 @@ export default function QuickToggleDiets({ patientId }: { patientId: string }) {
       {showToggleModal && selectedDiet && (
         <DietFeedbackModal
           selectedDiet={selectedDiet}
+          userData={userData}
           setShowToggleModal={setShowToggleModal}
           handleToggleDiet={handleToggleDiet}
           isProcessing={isProcessing}
+          setShowSuccessModal={setShowSuccessModal}
+          setSuccessTitle={setSuccessTitle}
+          setSuccessMessage={setSuccessMessage}
+          refetchDiets={refetchDiets}
         />
       )}
     </div>

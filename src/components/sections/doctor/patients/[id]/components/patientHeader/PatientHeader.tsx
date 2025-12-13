@@ -8,30 +8,21 @@ import FullHistoryButton from './components/FullHistoryButton';
 
 // Custom Hooks
 import { useGetAllWorkouts } from '@/hooks/workouts/get/useGetAllWorkouts';
-import { useGetAllDiets } from '@/hooks/diets/get/useGetAllDiets';
-import { useParams } from 'next/navigation';
-import { useGetAllDietsFromPatient } from '@/hooks/diets/get/useGetAllDietsFromPatient';
 
 export default function PatientHeader({
   onClickNew,
   patientRecord,
   onClickFullHistory,
   onCreateNew,
+  id,
+  dietsData,
 }) {
-  const { id } = useParams();
   // Specialty map
   const specialtyLabels = {
     weight: 'Control de Peso',
     dental: 'Odontología',
     stetic: 'Tratamiento Estético',
   };
-
-  const {
-    dietsData,
-    isLoading: dietsLoading,
-    error: dietsError,
-    refetch: refetchDiets,
-  } = useGetAllDietsFromPatient(id?.toString());
 
   const filteredRecords = patientRecord?.filter((record) => record?.version === 'full') || [];
   const patient = filteredRecords?.[0] || null;

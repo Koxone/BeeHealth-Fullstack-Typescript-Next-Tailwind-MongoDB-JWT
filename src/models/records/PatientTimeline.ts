@@ -20,10 +20,6 @@ export interface IPatientTimeline extends Document {
   workout?: Types.ObjectId;
   clinicalRecord?: Types.ObjectId;
 
-  // Event metadata
-  title: string;
-  description?: string;
-
   // Snapshot of relevant data at the time of the event
   snapshot?: {
     dietName?: string;
@@ -67,9 +63,6 @@ const PatientTimelineSchema: Schema<IPatientTimeline> = new Schema(
     diet: { type: Schema.Types.ObjectId, ref: 'Diet' },
     workout: { type: Schema.Types.ObjectId, ref: 'Workout' },
     clinicalRecord: { type: Schema.Types.ObjectId, ref: 'ClinicalRecord' },
-
-    title: { type: String, required: true },
-    description: { type: String },
 
     snapshot: { type: Schema.Types.Mixed },
 

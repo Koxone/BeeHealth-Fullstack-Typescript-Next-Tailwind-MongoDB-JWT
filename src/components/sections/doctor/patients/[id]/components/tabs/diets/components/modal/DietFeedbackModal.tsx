@@ -1,49 +1,93 @@
 'use client';
 
 import { useState } from 'react';
-import { useModalClose } from '@/hooks/useModalClose';
-import { X, Loader, Power, PowerOff } from 'lucide-react';
+import { Loader, Power, PowerOff } from 'lucide-react';
 import DoctorNotes from './components/DoctorNotes';
 import Rating from './components/Rating';
 import Compliance from './components/Compliance';
 import DietCard from './components/DietCard';
 import Header from './components/Header';
-import type { IDiet } from '@/models/Diet';
 
-type ComplianceStatus = 'pending' | 'completed' | 'partial' | 'not_completed';
+// Types
+import type { ComplianceStatus } from '@/types/diet/diet.types';
+import type { DietFeedbackModalProps } from '@/types/diet/diet.types';
 
-interface DietFeedbackModalProps {
-  selectedDiet: IDiet;
-  setShowToggleModal: (show: boolean) => void;
-  handleToggleDiet: (complianceData?: {
-    status: ComplianceStatus;
-    rating: number;
-    doctorNotes: string;
-  }) => Promise<void>;
-  isProcessing?: boolean;
-}
+// Custom Hooks
+import { useToggleDiet } from '@/hooks/diets/toggle/useToggleDiet';
+import { useModalClose } from '@/hooks/useModalClose';
+
+import { useCreateTimelineEvent } from '@/hooks/timeline/useCreateTimelineEvent';
+import LoadingState from '@/components/shared/feedback/LoadingState';
+import ErrorState from '@/components/shared/feedback/ErrorState';
 
 export default function DietFeedbackModal({
   selectedDiet,
   setShowToggleModal,
+  setShowSuccessModal,
+  setSuccessTitle,
+  setSuccessMessage,
   handleToggleDiet,
   isProcessing = false,
+  userData,
+  refetchDiets,
 }: DietFeedbackModalProps) {
   // Compliance state
   const [complianceStatus, setComplianceStatus] = useState<ComplianceStatus>('pending');
-  const [rating, setRating] = useState(0);
-  const [hoveredRating, setHoveredRating] = useState(0);
-  const [doctorNotes, setDoctorNotes] = useState('');
+  const [rating, setRating] = useState<number>(0);
+  const [hoveredRating, setHoveredRating] = useState<number>(0);
+  const [doctorNotes, setDoctorNotes] = useState<string>('');
+
+  // Create Timeline Event Custom Hook
+  const { createTimelineEvent, isLoading, error } = useCreateTimelineEvent();
+
+  // Toggle Diet Custom Hook
+  const { toggleDiet, isLoading: toggleLoading, error: toggleError } = useToggleDiet();
 
   // Modal close hook
   const { handleOverlayClick } = useModalClose(() => setShowToggleModal(false));
 
+  // Find diet assignment info
+  const dietAssignment = userData?.diets?.find((d) => d.diet === selectedDiet.diet._id);
+  const isDietActive = dietAssignment?.isActive ?? false;
+
   const handleSubmit = async () => {
-    await handleToggleDiet({
-      status: complianceStatus,
-      rating,
-      doctorNotes,
-    });
+    if (isDietActive) {
+      try {
+        await toggleDiet({
+          patientId: userData?._id,
+          dietId: selectedDiet.diet._id,
+          isActive: false,
+        });
+        setShowToggleModal(false);
+        refetchDiets();
+        setShowSuccessModal(true);
+        setSuccessTitle('Dieta Desactivada');
+        setSuccessMessage('La dieta ha sido desactivada exitosamente.');
+        setTimeout(() => {
+          setShowSuccessModal(false);
+        }, 1500);
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      try {
+        await toggleDiet({
+          patientId: userData?._id,
+          dietId: selectedDiet.diet._id,
+          isActive: true,
+        });
+        setShowToggleModal(false);
+        refetchDiets();
+        setShowSuccessModal(true);
+        setSuccessTitle('Dieta Activada');
+        setSuccessMessage('La dieta ha sido activada exitosamente.');
+        setTimeout(() => {
+          setShowSuccessModal(false);
+        }, 1500);
+      } catch (err) {
+        console.error(err);
+      }
+    }
   };
 
   const isDeactivating = selectedDiet.isActive;
@@ -56,6 +100,16 @@ export default function DietFeedbackModal({
       year: 'numeric',
     });
   };
+
+  // Loading State
+  if (isProcessing || isLoading || toggleLoading) {
+    return <LoadingState />;
+  }
+
+  // Error State
+  if (error || toggleError) {
+    return <ErrorState />;
+  }
 
   return (
     <div

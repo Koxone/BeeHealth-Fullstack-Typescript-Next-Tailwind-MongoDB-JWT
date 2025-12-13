@@ -18,26 +18,26 @@ function DietCard({ selectedDiet, isDeactivating, formatDate }) {
             )}
           </div>
           <div className="flex-1">
-            <p className="text-lg font-bold text-gray-900">{selectedDiet.name}</p>
+            <p className="text-lg font-bold text-gray-900">{selectedDiet?.diet?.name}</p>
             <div className="mt-2 flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700">
-                {selectedDiet.category}
+                {selectedDiet?.diet?.category}
               </span>
               <span className="inline-flex items-center rounded-full bg-purple-100 px-3 py-1 text-xs font-semibold text-purple-700">
-                {selectedDiet.duration}
+                {selectedDiet?.diet?.duration}
               </span>
               <span
                 className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ${
-                  selectedDiet.isActive
+                  selectedDiet?.isActive
                     ? 'bg-green-100 text-green-700'
                     : 'bg-gray-100 text-gray-800'
                 }`}
               >
-                {selectedDiet.isActive ? 'Activa' : 'Inactiva'}
+                {selectedDiet?.isActive ? 'Activa' : 'Inactiva'}
               </span>
             </div>
             <p className="mt-2 text-xs text-gray-500">
-              Asignada: {formatDate(selectedDiet.assignedAt)}
+              Asignada: {formatDate(selectedDiet?.assignedAt)}
             </p>
           </div>
         </div>

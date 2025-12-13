@@ -1,5 +1,4 @@
 import { Loader, Power, PowerOff, X } from 'lucide-react';
-import React from 'react';
 
 function Header({ isDeactivating, selectedDiet, isProcessing, setShowToggleModal }) {
   return (
@@ -8,7 +7,7 @@ function Header({ isDeactivating, selectedDiet, isProcessing, setShowToggleModal
         isDeactivating ? 'border-red-100' : 'border-green-100'
       }`}
       style={{
-        backgroundImage: `url(${selectedDiet?.images?.[0]})`,
+        backgroundImage: `url(${selectedDiet?.diet?.images?.[0]})`,
         backgroundColor: 'rgba(0,0,0,0.70)',
         backgroundBlendMode: 'darken',
         backgroundSize: 'cover',
