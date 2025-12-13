@@ -4,10 +4,13 @@ import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
 
 export default function AssignedDiets({ assignedDietsData }) {
-  const dietsCount = assignedDietsData?.length || 0;
+  // Dropdown state
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const activeDiets = assignedDietsData?.filter((diet) => diet.isActive);
+  const dietsCount = activeDiets?.length || 0;
   const hasAssignedDiets = dietsCount > 0;
-  const assignedDiets = assignedDietsData || [];
-  const [isOpen, setIsOpen] = useState(false);
+  const assignedDiets = activeDiets?.map((item) => item) || [];
 
   return (
     <div className="bg-beehealth-green-primary-solid flex h-full flex-col justify-between space-y-2 rounded-lg p-2">
@@ -35,10 +38,10 @@ export default function AssignedDiets({ assignedDietsData }) {
               {assignedDiets.map((diet) => (
                 <Link
                   key={diet._id}
-                  href={`/doctor/diets/${diet._id}`}
+                  href={`/doctor/diets/${diet?.diet?._id}`}
                   className="block w-full px-3 py-2 text-sm text-gray-800 transition first:rounded-t-lg last:rounded-b-lg hover:bg-gray-100"
                 >
-                  {diet.name}
+                  {diet?.diet?.name}
                 </Link>
               ))}
             </div>

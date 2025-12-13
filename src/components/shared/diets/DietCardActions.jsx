@@ -5,13 +5,20 @@ export default function DietCardActions({ id, onClickAssign }) {
   return (
     <div className="flex gap-2">
       {/* View button */}
-      <button
+      {/* <button
         onClick={onClickAssign}
         className="bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-white transition active:scale-95"
       >
         <User className="h-4 w-4" />
         Asignar
-      </button>
+      </button> */}
+      <Link
+        href={`/doctor/diets/${id}?mode=read`}
+        className="bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-white transition active:scale-95"
+      >
+        <Eye className="h-4 w-4" />
+        Ver
+      </Link>
 
       {/* Edit button */}
       <Link

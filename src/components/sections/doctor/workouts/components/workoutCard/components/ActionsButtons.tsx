@@ -5,13 +5,13 @@ function ActionsButtons({ handleEdit, workout, onClickAssign }) {
   return (
     <div onClick={(e) => e.stopPropagation()} className="mt-4 flex gap-2">
       {/* Assign Button */}
-      <button
+      {/* <button
         onClick={onClickAssign}
         className="bg-beehealth-blue-primary-solid hover:bg-beehealth-blue-primary-solid-hover flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-white transition active:scale-95"
       >
         <User className="h-4 w-4" />
         Asignar
-      </button>
+      </button> */}
 
       {/* Edit Workout */}
       <button

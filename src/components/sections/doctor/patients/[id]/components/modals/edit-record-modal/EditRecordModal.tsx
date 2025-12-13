@@ -12,7 +12,7 @@ import LoadingState from '@/components/shared/feedback/LoadingState';
 // Custom Hooks
 import { useModalClose } from '@/hooks/useModalClose';
 import { useEditWorkout } from '@/hooks/workouts/edit/useEditWorkout';
-import { useAssignDiet } from '@/hooks/diets/assign/useAssignDiet';
+import { useAssignPatientToDiet } from '@/hooks/diets/assign/useAssignPatientToDiet';
 import { useEditClinicalRecord } from '@/hooks/clinicalRecords/edit/useEditClinicalRecord';
 
 export default function EditRecordModal({
@@ -32,7 +32,7 @@ export default function EditRecordModal({
 
   // Diet state
   const [dietSelected, setDietSelected] = useState(null);
-  const { editPatients } = useAssignDiet();
+  const { editPatients } = useAssignPatientToDiet();
 
   // Workout state
   const [workoutSelected, setWorkoutSelected] = useState(null);

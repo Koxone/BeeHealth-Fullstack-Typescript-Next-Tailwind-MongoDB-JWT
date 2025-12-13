@@ -11,7 +11,7 @@ import { useModalClose } from '@/hooks/useModalClose';
 import { useCreateClinicalRecordDoctor } from '@/hooks/clinicalRecords/create/useCreateClinicalRecordDoctor';
 import { useGetAllQuestions } from '@/hooks/clinicalRecords/get/useGetAllQuestions';
 import { useEditWorkout } from '@/hooks/workouts/edit/useEditWorkout';
-import { useAssignDiet } from '@/hooks/diets/assign/useAssignDiet';
+import { useAssignPatientToDiet } from '@/hooks/diets/assign/useAssignPatientToDiet';
 
 export default function ClinicalRecordModal({
   onClose,
@@ -29,7 +29,7 @@ export default function ClinicalRecordModal({
 
   // Diet state
   const [dietSelected, setDietSelected] = useState(null);
-  const { editPatients } = useAssignDiet();
+  const { editPatients } = useAssignPatientToDiet();
 
   // Workout state
   const [workoutSelected, setWorkoutSelected] = useState(null);
@@ -80,8 +80,8 @@ export default function ClinicalRecordModal({
       const question = filtered?.find((q) => q.questionId === parseInt(questionId, 10));
 
       return {
-        id: question?._id, 
-        questionId: question?.questionId, 
+        id: question?._id,
+        questionId: question?.questionId,
         value,
       };
     });

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export function useAssignDiet() {
+export function useAssignPatientToDiet() {
   const [patientToAssign, setPatientToAssign] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);

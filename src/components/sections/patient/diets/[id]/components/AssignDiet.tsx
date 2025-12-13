@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { ChevronDown, Check } from 'lucide-react';
 import { useGetAllPatients } from '@/hooks/patients/get/useGetAllPatients';
-import { useAssignDiet } from '@/hooks/diets/assign/useAssignDiet';
+import { useAssignPatientToDiet } from '@/hooks/diets/assign/useAssignPatientToDiet';
 
 export default function AssignDiet({
   specialty,
@@ -52,7 +52,7 @@ export default function AssignDiet({
     editPatients: assignDietToPatients,
     isLoading: assigning,
     error: assignError,
-  } = useAssignDiet();
+  } = useAssignPatientToDiet();
 
   const handleAssign = async () => {
     // convert selected ids to payload

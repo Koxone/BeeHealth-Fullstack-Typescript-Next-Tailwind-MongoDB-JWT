@@ -8,7 +8,6 @@ import { useEditDiet } from '@/hooks/diets/edit/useEditDiet';
 import { useGetAllDiets } from '@/hooks/diets/get/useGetAllDiets';
 import { useDeleteDiet } from '@/hooks/diets/delete/useDeleteDiet';
 
-import AssignDiet from './components/AssignDiet';
 import PatientsAssignedViewer from './components/PatientsAssignedViewer';
 import AllowedFoods from './components/sections/allowed/AllowedFoods';
 import AllowedLiquids from './components/sections/allowed/AllowedLiquids';
@@ -78,7 +77,7 @@ export default function DoctorDietDetail({ params, specialty }) {
   const mode = searchParams.get('mode');
   const [isEditing, setIsEditing] = useState(mode === 'edit');
   const [isReading, setIsReading] = useState(mode !== 'edit');
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   // Sync when URL changes
   useEffect(() => {
@@ -146,17 +145,20 @@ export default function DoctorDietDetail({ params, specialty }) {
             {diet?.category && <Category diet={diet} />}
 
             {/* Doctor Name */}
-            {diet?.doctor?.fullName && <DoctorName diet={diet} />}
+            {typeof diet?.doctor === 'object' && diet.doctor?.fullName && (
+              <DoctorName diet={diet} />
+            )}
 
             {/* Assigned Date */}
             {diet?.createdAt && <AssignedDate diet={diet} />}
           </div>
 
           {/* Select Patient to assign the diet */}
-          <AssignDiet specialty={specialty} dietId={id} diet={diet} refetch={refetch} />
+          {/* <AssignPatientToDiet specialty={specialty} dietId={id} diet={diet} refetch={refetch} /> */}
 
           {/* Patients assigned to this diet */}
-          <PatientsAssignedViewer patients={diet.patients} />
+          {/* <PatientsAssignedViewer patients={diet.patients} /> */}
+          <PatientsAssignedViewer patients={null} />
         </div>
 
         {/* Collapse toggle */}

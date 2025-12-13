@@ -182,10 +182,12 @@ export default function DoctorWorkouts({ role }) {
       {/* Edit modal */}
       {showEditModal && (
         <ModalEditWorkout
+          setShowDeleteModal={setShowDeleteModal}
           fetchWorkouts={fetchWorkouts}
           setShowEditModal={setShowEditModal}
           editingWorkout={editingWorkout}
           setShowSuccessModal={setShowSuccessModal}
+          setWorkoutToDelete={setWorkoutToDelete}
         />
       )}
 

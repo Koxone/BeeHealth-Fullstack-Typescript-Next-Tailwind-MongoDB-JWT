@@ -6,17 +6,17 @@ import AssignedDiets from '@/components/sections/doctor/patients/[id]/components
 import AssignedWorkouts from '@/components/sections/doctor/patients/[id]/components/patientHeader/components/AssignedWorkouts';
 import FullHistoryButton from './components/FullHistoryButton';
 
+// Custom Hooks
 import { useGetAllWorkouts } from '@/hooks/workouts/get/useGetAllWorkouts';
-import { useGetAllDiets } from '@/hooks/diets/get/useGetAllDiets';
-import { useParams } from 'next/navigation';
 
 export default function PatientHeader({
   onClickNew,
   patientRecord,
   onClickFullHistory,
   onCreateNew,
+  id,
+  dietsData,
 }) {
-  const { id } = useParams();
   // Specialty map
   const specialtyLabels = {
     weight: 'Control de Peso',
@@ -53,13 +53,9 @@ export default function PatientHeader({
   }
 
   const { workoutData } = useGetAllWorkouts();
-  const { dietsData } = useGetAllDiets();
 
   const assignedWorkoutsData = workoutData?.filter((workout) =>
     workout.patients?.some((p) => p.patient?._id === id)
-  );
-  const assignedDietsData = dietsData?.filter((diet) =>
-    diet.patients?.some((p) => p.patient?._id === id)
   );
 
   return (
@@ -106,7 +102,7 @@ export default function PatientHeader({
               />
 
               {/* Assigned Diets */}
-              <AssignedDiets assignedDietsData={assignedDietsData} />
+              <AssignedDiets assignedDietsData={dietsData} />
 
               {/* Assigned Workouts */}
               <AssignedWorkouts assignedWorkoutsData={assignedWorkoutsData} />
