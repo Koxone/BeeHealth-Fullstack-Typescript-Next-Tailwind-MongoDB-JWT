@@ -10,11 +10,6 @@ export interface DietFeedbackModalProps {
   setSuccessMessage: (message: string) => void;
   setShowToggleModal: (show: boolean) => void;
   refetchDiets: any;
-  handleToggleDiet: (complianceData?: {
-    status: ComplianceStatus;
-    rating: number;
-    doctorNotes: string;
-  }) => Promise<void>;
   isProcessing?: boolean;
 }
 

@@ -26,7 +26,6 @@ export default function DietFeedbackModal({
   setShowSuccessModal,
   setSuccessTitle,
   setSuccessMessage,
-  handleToggleDiet,
   isProcessing = false,
   userData,
   refetchDiets,

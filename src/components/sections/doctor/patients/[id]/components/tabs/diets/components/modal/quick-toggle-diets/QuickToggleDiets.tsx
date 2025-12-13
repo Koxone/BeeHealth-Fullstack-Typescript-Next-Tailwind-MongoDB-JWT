@@ -104,7 +104,6 @@ export default function QuickToggleDiets({
           selectedDiet={selectedDiet}
           userData={userData}
           setShowToggleModal={setShowToggleModal}
-          handleToggleDiet={handleToggleDiet}
           isProcessing={isProcessing}
           setShowSuccessModal={setShowSuccessModal}
           setSuccessTitle={setSuccessTitle}
