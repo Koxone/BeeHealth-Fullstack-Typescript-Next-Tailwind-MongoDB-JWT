@@ -71,7 +71,6 @@ export default function DoctorPatientDetail({ patient, specialty }) {
     error: timelineError,
     refetch: refetchTimeline,
   } = useGetUserEvents(id);
-  console.log(events)
 
   // Success Modal
   const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
