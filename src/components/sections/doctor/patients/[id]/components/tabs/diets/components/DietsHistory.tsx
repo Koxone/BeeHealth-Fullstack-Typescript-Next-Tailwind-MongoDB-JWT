@@ -14,6 +14,7 @@ export default function DietsHistory({
   timelineLoading: boolean;
   timelineError: any;
 }) {
+  // Function to get badge details based on action type
   const getActionBadge = (action: TimelineEventType) => {
     switch (action) {
       case 'diet_assigned':

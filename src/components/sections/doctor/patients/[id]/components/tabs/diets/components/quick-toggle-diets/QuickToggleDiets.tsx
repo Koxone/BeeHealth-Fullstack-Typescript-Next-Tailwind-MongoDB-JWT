@@ -3,13 +3,12 @@ import { Utensils } from 'lucide-react';
 import ToggleDietCard from './components/ToggleDietCard';
 
 // Feedback Components
-import DietFeedbackModal from '../DietFeedbackModal';
+import DietFeedbackModal from '../modal/DietFeedbackModal';
 import LoadingState from '@/components/shared/feedback/LoadingState';
 import ErrorState from '@/components/shared/feedback/ErrorState';
 
 // Types
 import { UserDiet } from '@/types/diet/diet.types';
-import { ComplianceStatus } from '@/types/diet/diet.types';
 
 export default function QuickToggleDiets({
   patientId,
@@ -40,22 +39,6 @@ export default function QuickToggleDiets({
   const handleDietClick = (diet: UserDiet) => {
     setSelectedDiet(diet);
     setShowToggleModal(true);
-  };
-
-  const handleToggleDiet = async (_complianceData?: {
-    status: ComplianceStatus;
-    rating: number;
-    doctorNotes: string;
-  }) => {
-    // Future: call API to toggle diet and save compliance
-    // Example:
-    // setIsProcessing(true);
-    // await toggleDietMutation(selectedDiet?._id, _complianceData);
-    // await refetchDiets();
-    // setIsProcessing(false);
-
-    setShowToggleModal(false);
-    await refetchDiets();
   };
 
   // Loading State

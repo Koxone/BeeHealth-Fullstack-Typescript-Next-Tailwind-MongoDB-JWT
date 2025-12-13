@@ -1,7 +1,8 @@
 'use client';
 
+// Library Imports
 import { IClinicalRecord, TabName } from '@/types';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 import PatientHeader from './components/patientHeader/PatientHeader';
@@ -32,8 +33,12 @@ import { useGetAllDietsFromPatient } from '@/hooks/diets/get/useGetAllDietsFromP
 import { useGetUserEvents } from '@/hooks/timeline/useGetUserEvents';
 
 export default function DoctorPatientDetail({ patient, specialty }) {
-  // ID From URL Params
+  // Library Hooks
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const params = useParams<{ id: string }>();
+
+  // ID From URL Params
   const id = params.id as string;
 
   // Patient Clinical Record
@@ -101,7 +106,13 @@ export default function DoctorPatientDetail({ patient, specialty }) {
   const [showCreateFirstRecordModal, setShowCreateFirstRecordModal] = useState<boolean>(false);
 
   // Dental Tabs Nav
-  const [activeTab, setActiveTab] = useState<TabName>('Dietas');
+  const activeTab = (searchParams.get('tab') as TabName) ?? 'Consultas';
+  const handleTabChange = (tab: TabName) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('tab', tab);
+
+    router.replace(`?${params.toString()}`, { scroll: false });
+  };
 
   // Loading State
   if (error || isLoading) {
@@ -128,7 +139,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
       </div>
 
       {/* Tabs Nav */}
-      <TabsNav activeTab={activeTab} setActiveTab={setActiveTab} />
+      <TabsNav activeTab={activeTab} onChangeTab={handleTabChange} />
 
       {/* Consults Tab */}
       {activeTab === 'Consultas' && (

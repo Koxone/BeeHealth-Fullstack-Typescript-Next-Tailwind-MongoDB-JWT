@@ -22,8 +22,10 @@ export function useGetPatientClinicalRecords(id: string) {
   const query = useQuery({
     queryKey: ['clinical-records', id],
     queryFn: fetchRecords,
-    enabled: Boolean(id),
     staleTime: 1000 * 60 * 2,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    enabled: Boolean(id),
     retry: 1,
   });
 

@@ -1,10 +1,11 @@
 import { useState } from 'react';
 
 import DietsHistory from '../diets/components/DietsHistory';
-import QuickToggleDiets from './components/modal/quick-toggle-diets/QuickToggleDiets';
+import QuickToggleDiets from './components/quick-toggle-diets/QuickToggleDiets';
 
 // Feedback Components
 import SuccessModal from '@/components/shared/feedback/SuccessModal';
+import AssignDietToPatient from '@/components/shared/diets/AssignDietToPatient';
 
 export default function DietsTab({
   patientId,
@@ -50,7 +51,7 @@ export default function DietsTab({
       />
 
       {/* Assign Section */}
-      {/* <AssignDietToPatient patientId={patientId} setShowSuccessModal={setShowSuccessModal} /> */}
+      <AssignDietToPatient patientId={patientId} setShowSuccessModal={setShowSuccessModal} />
 
       {/* Diets Tab */}
       <DietsHistory

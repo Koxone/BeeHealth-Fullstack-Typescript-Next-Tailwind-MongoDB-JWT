@@ -1,20 +1,19 @@
 'use client';
 
-import React from 'react';
 import { tabs, TabName } from '@/types';
 
 interface TabsNavProps {
   activeTab: TabName;
-  setActiveTab: React.Dispatch<React.SetStateAction<TabName>>;
+  onChangeTab: (tab: TabName) => void;
 }
 
-export default function TabsNav({ activeTab, setActiveTab }: TabsNavProps) {
+export default function TabsNav({ activeTab, onChangeTab }: TabsNavProps) {
   return (
     <div className="flex w-full gap-4 border-b border-gray-200">
       {tabs.map(({ name, icon: Icon }) => (
         <button
           key={name}
-          onClick={() => setActiveTab(name)}
+          onClick={() => onChangeTab(name)}
           className={`relative flex flex-1 items-center justify-center gap-2 px-4 py-4 text-sm font-medium ${
             activeTab === name
               ? 'bg-beehealth-blue-primary-solid rounded-lg text-white'
