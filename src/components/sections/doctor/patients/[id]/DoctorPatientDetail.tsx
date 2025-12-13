@@ -165,9 +165,9 @@ export default function DoctorPatientDetail({ patient, specialty }) {
       )}
 
       {/* Workouts Tab */}
-      {activeTab === 'Ejercicios' && (
+      {/* {activeTab === 'Ejercicios' && (
         <WorkoutsTab patientId={id} patientRecord={patientRecord} specialty={specialty} />
-      )}
+      )} */}
 
       {/* Full History Modal */}
       {showFullHistoryModal && (
