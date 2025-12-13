@@ -10,6 +10,7 @@ export interface DietFeedbackModalProps {
   setSuccessMessage: (message: string) => void;
   setShowToggleModal: (show: boolean) => void;
   refetchDiets: any;
+  refetchTimeline: any;
   isProcessing?: boolean;
 }
 

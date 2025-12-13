@@ -178,6 +178,7 @@ export default function DoctorPatientDetail({ patient, specialty }) {
           timelineError={timelineError}
           setShowHistoryCardFeedbackModal={setShowHistoryCardFeedbackModal}
           setSelectedHistoryCard={setSelectedHistoryCard}
+          refetchTimeline={refetchTimeline}
         />
       )}
 

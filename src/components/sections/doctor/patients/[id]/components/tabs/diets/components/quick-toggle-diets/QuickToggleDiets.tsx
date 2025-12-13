@@ -20,6 +20,7 @@ export default function QuickToggleDiets({
   dietsData,
   dietsLoading,
   dietsError,
+  refetchTimeline,
 }: {
   patientId: string;
   userData: any;
@@ -30,6 +31,7 @@ export default function QuickToggleDiets({
   dietsData: UserDiet[];
   dietsLoading: boolean;
   dietsError: any;
+  refetchTimeline: () => void;
 }) {
   const [selectedDiet, setSelectedDiet] = useState<UserDiet | null>(null);
   const [showToggleModal, setShowToggleModal] = useState<boolean>(false);
@@ -90,6 +92,7 @@ export default function QuickToggleDiets({
           isProcessing={isProcessing}
           setShowSuccessModal={setShowSuccessModal}
           setSuccessTitle={setSuccessTitle}
+          refetchTimeline={refetchTimeline}
           setSuccessMessage={setSuccessMessage}
           refetchDiets={refetchDiets}
         />

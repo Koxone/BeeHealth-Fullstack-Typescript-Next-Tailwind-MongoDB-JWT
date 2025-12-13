@@ -8,6 +8,7 @@ import jwt from 'jsonwebtoken';
 import Diet from '@/models/Diet';
 import User from '@/models/User';
 import Workout from '@/models/Workout';
+import PatientTimeline from '@/models/records/PatientTimeline';
 
 // Custom Hook
 import { getAuthUser } from '@/lib/auth/getAuthUser';
@@ -34,6 +35,13 @@ export async function PATCH(req, { params }) {
     if (!mongoose.Types.ObjectId.isValid(dietId)) {
       return NextResponse.json({ error: 'Invalid Diet ID format' }, { status: 400 });
     }
+
+    // Auth user
+    const auth = await getAuthUser(req);
+    if (!auth.ok) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
+    }
+    const { user: doctor } = auth;
 
     // Validate that user exists
     const user = await User.findById(id);
@@ -80,6 +88,23 @@ export async function PATCH(req, { params }) {
     });
 
     await user.save();
+
+    // Create timeline event
+    await PatientTimeline.create({
+      patient: user._id,
+      doctor: doctor._id,
+      eventType: 'diet_assigned',
+      diet: diet._id,
+      snapshot: {
+        dietName: diet.name,
+        category: diet.category,
+      },
+      compliance: {
+        status: 'pending',
+        doctorNotes: 'Primera vez asignada',
+      },
+      startDate: assignedAt ? new Date(assignedAt) : new Date(),
+    });
 
     // Populate diets
     const populatedUser = await User.findById(id).populate('diets.diet');

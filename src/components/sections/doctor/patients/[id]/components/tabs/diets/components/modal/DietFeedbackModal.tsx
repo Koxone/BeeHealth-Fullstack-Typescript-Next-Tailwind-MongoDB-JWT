@@ -30,6 +30,7 @@ export default function DietFeedbackModal({
   isProcessing = false,
   userData,
   refetchDiets,
+  refetchTimeline,
 }: DietFeedbackModalProps) {
   // Compliance state
   const [complianceStatus, setComplianceStatus] = useState<ComplianceStatus>('pending');
@@ -77,12 +78,13 @@ export default function DietFeedbackModal({
         });
 
         refetchDiets();
+        refetchTimeline();
         setShowSuccessModal(true);
         setSuccessTitle('Dieta Desactivada');
         setSuccessMessage('La dieta ha sido desactivada exitosamente.');
         setTimeout(() => {
           setShowSuccessModal(false);
-        }, 1500);
+        }, 1000);
       } catch (err) {
         console.error(err);
       }
@@ -107,12 +109,13 @@ export default function DietFeedbackModal({
         });
 
         refetchDiets();
+        refetchTimeline();
         setShowSuccessModal(true);
         setSuccessTitle('Dieta Activada');
         setSuccessMessage('La dieta ha sido activada exitosamente.');
         setTimeout(() => {
           setShowSuccessModal(false);
-        }, 1500);
+        }, 1000);
       } catch (err) {
         console.error(err);
       }

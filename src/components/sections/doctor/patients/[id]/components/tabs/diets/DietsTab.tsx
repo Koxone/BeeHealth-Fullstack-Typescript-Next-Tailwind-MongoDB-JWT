@@ -19,6 +19,7 @@ export default function DietsTab({
   timelineError,
   setShowHistoryCardFeedbackModal,
   setSelectedHistoryCard,
+  refetchTimeline,
 }: {
   patientId: string;
   userData: any;
@@ -31,6 +32,7 @@ export default function DietsTab({
   timelineError: any;
   setShowHistoryCardFeedbackModal: (show: boolean) => void;
   setSelectedHistoryCard: (card: any) => void;
+  refetchTimeline: () => void;
 }) {
   // Success Modal
   const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
@@ -52,10 +54,15 @@ export default function DietsTab({
         dietsData={dietsData}
         dietsLoading={dietsLoading}
         dietsError={dietsError}
+        refetchTimeline={refetchTimeline}
       />
 
       {/* Assign Section */}
-      <AssignDietToPatient patientId={patientId} setShowSuccessModal={setShowSuccessModal} />
+      <AssignDietToPatient
+        patientId={patientId}
+        setShowSuccessModal={setShowSuccessModal}
+        refetchTimeline={refetchTimeline}
+      />
 
       {/* Diets Tab */}
       <DietsHistory

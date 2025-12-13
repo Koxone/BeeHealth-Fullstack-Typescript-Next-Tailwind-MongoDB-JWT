@@ -16,10 +16,12 @@ export default function AssignDietToPatient({
   onSuccess,
   patientId,
   setShowSuccessModal,
+  refetchTimeline,
 }: {
   onSuccess?: () => void;
   patientId: string;
   setShowSuccessModal?: (show: boolean) => void;
+  refetchTimeline?: () => void;
 }) {
   // Local States
   const [openDropdown, setDropdownOpen] = useState(false);
@@ -53,6 +55,7 @@ export default function AssignDietToPatient({
         await assignDiet({ patientId, dietId });
       }
       onSuccess?.();
+      refetchTimeline?.();
       setShowSuccessModal(true);
       setDropdownOpen(false);
       setTimeout(() => {
@@ -87,7 +90,7 @@ export default function AssignDietToPatient({
         Asignar dietas al paciente
       </label>
       <label className="mb-2 text-xs tracking-wide text-gray-500">
-        Selecciona o desmarca las dietas que deseas asignar al paciente y guarda los cambios.
+        Selecciona las dietas que deseas asignar al paciente y guarda los cambios.
       </label>
 
       {/* Dropdown button */}
@@ -98,7 +101,7 @@ export default function AssignDietToPatient({
         <span>
           {selectedDiets.length === 0 && 'Seleccionar dietas'}
           {selectedDiets.length === 1 && '1 dieta seleccionada'}
-          {selectedDiets.length > 1 && `${selectedDiets.length} dietas seleccionadas`}
+          {selectedDiets.length > 1 && `${selectedDiets.length} dietas asignadas`}
         </span>
         <ChevronDown
           className={`h-4 w-4 text-gray-600 transition-transform ${openDropdown ? 'rotate-180' : ''}`}

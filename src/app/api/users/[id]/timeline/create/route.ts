@@ -97,6 +97,11 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       );
     }
 
+    // Ensure patient.diets is an array
+    if (!Array.isArray(patient.diets)) {
+      patient.diets = [];
+    }
+
     let finalSnapshot = snapshot;
     if (eventType === 'diet_completed' && diet) {
       const dietDoc = await Diet.findById(diet).lean();

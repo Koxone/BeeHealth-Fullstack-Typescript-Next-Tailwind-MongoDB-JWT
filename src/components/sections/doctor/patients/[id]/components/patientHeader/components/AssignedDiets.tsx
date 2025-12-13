@@ -26,7 +26,7 @@ export default function AssignedDiets({ assignedDietsData }) {
             onClick={() => setIsOpen(!isOpen)}
             className="bg-beehealth-green-secondary-solid hover:bg-beehealth-green-secondary-solid-hover flex w-full appearance-none items-center justify-between rounded-lg px-3 py-2 text-sm text-white focus:outline-none"
           >
-            {dietsCount === 1 ? assignedDiets[0].name : `${dietsCount} dietas asignadas`}
+            {dietsCount === 1 ? assignedDiets[0]?.diet?.name : `${dietsCount} dietas asignadas`}
             <ChevronDown
               size={18}
               className={`transition-transform ${isOpen ? 'rotate-180' : ''}`}
