@@ -8,7 +8,6 @@ import { useEditDiet } from '@/hooks/diets/edit/useEditDiet';
 import { useGetAllDiets } from '@/hooks/diets/get/useGetAllDiets';
 import { useDeleteDiet } from '@/hooks/diets/delete/useDeleteDiet';
 
-import AssignPatientToDiet from './components/AssignPatientToDiet';
 import PatientsAssignedViewer from './components/PatientsAssignedViewer';
 import AllowedFoods from './components/sections/allowed/AllowedFoods';
 import AllowedLiquids from './components/sections/allowed/AllowedLiquids';
@@ -146,7 +145,9 @@ export default function DoctorDietDetail({ params, specialty }) {
             {diet?.category && <Category diet={diet} />}
 
             {/* Doctor Name */}
-            {diet?.doctor?.fullName && <DoctorName diet={diet} />}
+            {typeof diet?.doctor === 'object' && diet.doctor?.fullName && (
+              <DoctorName diet={diet} />
+            )}
 
             {/* Assigned Date */}
             {diet?.createdAt && <AssignedDate diet={diet} />}

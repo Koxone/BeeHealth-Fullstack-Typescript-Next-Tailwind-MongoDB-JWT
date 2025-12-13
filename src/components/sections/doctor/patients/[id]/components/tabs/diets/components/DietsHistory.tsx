@@ -5,51 +5,11 @@ import LoadingState from '@/components/shared/feedback/LoadingState';
 import { Clock, History, CheckCircle, XCircle } from 'lucide-react';
 import { TimelineEventType } from '@/models/records/PatientTimeline';
 
-const dietHistory = [
-  {
-    _id: '1',
-    dietName: 'Bee Reset +',
-    action: 'assigned',
-    date: '2025-12-09T16:31:53.907Z',
-    doctor: 'Dr. Arturo Lemus',
-  },
-  {
-    _id: '2',
-    dietName: 'Dieta Mediterránea',
-    action: 'completed',
-    date: '2025-12-01T10:00:00.000Z',
-    doctor: 'Dr. Arturo Lemus',
-  },
-  {
-    _id: '3',
-    dietName: 'Dieta Mediterránea',
-    action: 'assigned',
-    date: '2025-11-15T10:00:00.000Z',
-    doctor: 'Dr. Arturo Lemus',
-  },
-  {
-    _id: '4',
-    dietName: 'Dieta Keto Básica',
-    action: 'cancelled',
-    date: '2025-10-20T14:00:00.000Z',
-    doctor: 'Dr. Arturo Lemus',
-  },
-  {
-    _id: '5',
-    dietName: 'Dieta Keto Básica',
-    action: 'assigned',
-    date: '2025-10-01T08:00:00.000Z',
-    doctor: 'Dr. Arturo Lemus',
-  },
-];
-
 export default function DietsHistory({
-  patientId,
   events,
   timelineLoading,
   timelineError,
 }: {
-  patientId: string;
   events: any;
   timelineLoading: boolean;
   timelineError: any;

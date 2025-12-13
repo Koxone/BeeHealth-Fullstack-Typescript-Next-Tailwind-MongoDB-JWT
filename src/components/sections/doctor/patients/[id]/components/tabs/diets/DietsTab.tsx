@@ -54,7 +54,6 @@ export default function DietsTab({
 
       {/* Diets Tab */}
       <DietsHistory
-        patientId={patientId}
         events={events}
         timelineLoading={timelineLoading}
         timelineError={timelineError}
