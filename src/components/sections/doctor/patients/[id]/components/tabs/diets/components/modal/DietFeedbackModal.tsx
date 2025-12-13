@@ -11,7 +11,6 @@ import Header from './components/Header';
 // Types
 import type { ComplianceStatus } from '@/types/diet/diet.types';
 import type { DietFeedbackModalProps } from '@/types/diet/diet.types';
-import { IPatientTimeline, TimelineEventType } from '@/models/records/PatientTimeline';
 
 // Custom Hooks
 import { useToggleDiet } from '@/hooks/diets/toggle/useToggleDiet';
@@ -21,7 +20,6 @@ import { useCreateTimelineEvent } from '@/hooks/timeline/useCreateTimelineEvent'
 // Feedback Components
 import LoadingState from '@/components/shared/feedback/LoadingState';
 import ErrorState from '@/components/shared/feedback/ErrorState';
-import { TimelineCreateRequest } from '@/types/timelines/timelines.types';
 
 export default function DietFeedbackModal({
   selectedDiet,
@@ -36,19 +34,8 @@ export default function DietFeedbackModal({
   // Compliance state
   const [complianceStatus, setComplianceStatus] = useState<ComplianceStatus>('pending');
   const [rating, setRating] = useState<number>(0);
-  const [eventType, setEventType] = useState<string>('');
   const [hoveredRating, setHoveredRating] = useState<number>(0);
   const [doctorNotes, setDoctorNotes] = useState<string>('');
-
-  // Compliance Form Data
-  const [timelineForm, setTimelineForm] = useState<TimelineCreateRequest>({
-    eventType: 'diet_assigned',
-    snapshot: {},
-    compliance: {
-      status: 'pending',
-    },
-    startDate: new Date(),
-  });
 
   // Create Timeline Event Custom Hook
   const { createTimelineEvent, isLoading, error } = useCreateTimelineEvent();
