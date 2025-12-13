@@ -121,19 +121,24 @@ export default function DietsHistory({
                   {/* Date */}
                   <div className="border-beehealth-blue-primary-light bg-beehealth-blue-primary-light flex h-12 w-12 flex-col items-center justify-center rounded-lg border text-center">
                     <span className="text-beehealth-blue-primary-dark text-xs font-medium uppercase">
-                      {new Date(record?.completedDate).toLocaleDateString('es-MX', {
-                        month: 'short',
-                      })}
+                      {new Date(record?.completedDate || record?.startDate).toLocaleDateString(
+                        'es-MX',
+                        {
+                          month: 'short',
+                        }
+                      )}
                     </span>
                     <span className="text-beehealth-blue-primary-dark text-lg font-bold">
-                      {new Date(record?.completedDate).getDate()}
+                      {new Date(record?.completedDate || record?.startDate).getDate()}
                     </span>
                   </div>
 
                   {/* Info */}
                   <div>
                     <p className="font-semibold text-gray-900">
-                      {record?.snapshot?.dietName || 'Nombre de dieta no disponible'}
+                      {record?.snapshot?.dietName ||
+                        record?.diet?.name ||
+                        'Nombre de dieta no disponible'}
                     </p>
                     <p className="text-sm text-gray-500">Por: {record?.doctor?.fullName}</p>
                   </div>

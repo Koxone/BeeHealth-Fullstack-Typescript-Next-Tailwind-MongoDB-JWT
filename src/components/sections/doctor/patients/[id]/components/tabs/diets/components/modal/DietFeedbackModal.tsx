@@ -80,7 +80,6 @@ export default function DietFeedbackModal({
           snapshot: {},
           compliance: {
             status: complianceStatus,
-            rating,
             doctorNotes,
             reviewedAt: new Date(),
             reviewedBy: userData._id,
@@ -107,6 +106,18 @@ export default function DietFeedbackModal({
           isActive: true,
         });
         setShowToggleModal(false);
+
+        await createTimelineEvent({
+          patientId: userData._id,
+          eventType: 'diet_assigned',
+          diet: selectedDiet.diet._id,
+          snapshot: {},
+          compliance: {
+            status: 'pending',
+          },
+          startDate: new Date(),
+        });
+
         refetchDiets();
         setShowSuccessModal(true);
         setSuccessTitle('Dieta Activada');
