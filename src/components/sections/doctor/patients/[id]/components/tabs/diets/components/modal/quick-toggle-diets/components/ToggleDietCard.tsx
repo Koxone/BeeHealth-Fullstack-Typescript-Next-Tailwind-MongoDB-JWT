@@ -9,9 +9,6 @@ export default function ToggleDietCard({ diet, handleDietClick, patientId }) {
     });
   };
 
-  const assignedDate = Math.floor((Date.now() - new Date(diet?.assignedAt).getTime()) / 86400000);
-  console.log(diet);
-
   return (
     <div
       className={`group relative overflow-hidden rounded-xl border-2 p-4 transition-all duration-300 ${
