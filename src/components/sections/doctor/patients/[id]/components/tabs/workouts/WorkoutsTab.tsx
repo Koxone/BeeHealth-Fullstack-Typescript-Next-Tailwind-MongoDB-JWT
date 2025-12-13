@@ -8,14 +8,10 @@ export default function WorkoutsTab({ patientId, patientRecord, specialty }) {
   return (
     <div className="flex flex-col gap-4">
       {/* Quick Stats */}
-      <QuickToggleWorkouts
-        patientId={patientId}
-        patientRecord={patientRecord}
-        specialty={specialty}
-      />
+      <QuickToggleWorkouts patientId={patientId} />
 
       {/* Assign Section */}
-      <SharedAssignWorkout patientId={patientId} />
+      {/* <SharedAssignWorkout patientId={patientId} /> */}
 
       {/* Workouts History */}
       <WorkoutsHistory patientId={patientId} />
