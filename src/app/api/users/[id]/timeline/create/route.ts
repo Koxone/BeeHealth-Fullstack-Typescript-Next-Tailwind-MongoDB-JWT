@@ -15,6 +15,8 @@ interface TimelineCreateRequest {
   snapshot?: IPatientTimeline['snapshot'];
   startDate?: Date;
   dietId?: string;
+  completedDate?: Date;
+  compliance?: IPatientTimeline['compliance'];
 }
 
 // @route    POST /api/patients/:id/timeline/create
@@ -26,27 +28,29 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     await connectDB();
 
     // Auth user
-    const authUser = await getAuthUser(req);
-    if (!authUser) {
-      return NextResponse.json(
-        {
-          ok: false,
-          error: {
-            code: 'UNAUTHORIZED',
-            message: 'User is not authenticated',
-            reason: 'Valid authentication credentials were not provided',
-          },
-        },
-        { status: 401 }
-      );
+    const auth = await getAuthUser(req);
+
+    if (!auth.ok) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
     }
+
+    const { user } = auth;
 
     // Get Patient ID from params
     const { id } = await params;
 
     // Get event data from request body
-    const { eventType, diet, workout, clinicalRecord, snapshot, startDate, dietId } =
-      (await req.json()) as TimelineCreateRequest;
+    const {
+      eventType,
+      diet,
+      workout,
+      clinicalRecord,
+      snapshot,
+      startDate,
+      completedDate,
+      compliance,
+      dietId,
+    } = (await req.json()) as TimelineCreateRequest;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json(
@@ -91,17 +95,30 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       );
     }
 
+    let finalSnapshot = snapshot;
+    if (eventType === 'diet_completed' && diet) {
+      const dietDoc = await Diet.findById(diet).lean();
+
+      if (dietDoc) {
+        finalSnapshot = {
+          dietName: dietDoc.name,
+          category: dietDoc.category,
+        };
+      }
+    }
+
     // Create timeline event
     const event = await PatientTimeline.create({
       patient: id,
-      doctor: authUser._id,
+      doctor: user._id,
       eventType,
       diet,
       workout,
       clinicalRecord,
-      snapshot,
+      snapshot: finalSnapshot,
       startDate,
-      compliance: { status: 'pending' },
+      completedDate,
+      compliance: compliance ?? { status: 'pending' },
     });
 
     // Handle diet-related events

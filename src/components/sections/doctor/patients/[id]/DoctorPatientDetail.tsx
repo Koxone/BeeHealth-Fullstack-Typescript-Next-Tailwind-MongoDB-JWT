@@ -29,6 +29,7 @@ import { useDeleteClinicalRecord } from '@/hooks/clinicalRecords/delete/useDelet
 import { useEditClinicalRecord } from '@/hooks/clinicalRecords/edit/useEditClinicalRecord';
 import { useGetUserById } from '@/hooks/users/useGetUserById';
 import { useGetAllDietsFromPatient } from '@/hooks/diets/get/useGetAllDietsFromPatient';
+import { useGetUserEvents } from '@/hooks/timeline/useGetUserEvents';
 
 export default function DoctorPatientDetail({ patient, specialty }) {
   // ID From URL Params
@@ -62,6 +63,15 @@ export default function DoctorPatientDetail({ patient, specialty }) {
     error: userError,
     refetch: refetchUser,
   } = useGetUserById(id);
+
+  // Fetch Patient Timeline Events with Custom Hook
+  const {
+    events,
+    isLoading: timelineLoading,
+    error: timelineError,
+    refetch: refetchTimeline,
+  } = useGetUserEvents(id);
+  console.log(events)
 
   // Success Modal
   const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
@@ -148,6 +158,9 @@ export default function DoctorPatientDetail({ patient, specialty }) {
           dietsData={dietsData}
           dietsLoading={dietsLoading}
           dietsError={dietsError}
+          events={events}
+          timelineLoading={timelineLoading}
+          timelineError={timelineError}
         />
       )}
 

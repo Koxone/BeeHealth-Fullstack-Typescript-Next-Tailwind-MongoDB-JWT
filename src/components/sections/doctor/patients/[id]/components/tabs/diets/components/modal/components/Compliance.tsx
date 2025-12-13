@@ -1,6 +1,6 @@
 import { ClipboardCheck } from 'lucide-react';
 
-type ComplianceStatus = 'pending' | 'completed' | 'partial' | 'not_completed';
+import { ComplianceStatus } from '@/types/diet/diet.types';
 
 const complianceOptions: { value: ComplianceStatus; label: string; color: string }[] = [
   { value: 'completed', label: 'Cumplió', color: 'bg-green-100 text-green-700 border-green-300' },
@@ -17,7 +17,13 @@ const complianceOptions: { value: ComplianceStatus; label: string; color: string
   { value: 'pending', label: 'Pendiente', color: 'bg-gray-100 text-gray-800 border-gray-300' },
 ];
 
-function Compliance({ complianceStatus, setComplianceStatus }) {
+function Compliance({
+  complianceStatus,
+  setComplianceStatus,
+}: {
+  complianceStatus: ComplianceStatus;
+  setComplianceStatus: (value: ComplianceStatus) => void;
+}) {
   return (
     <div className="mb-6">
       <div className="mb-3 flex items-center gap-2">

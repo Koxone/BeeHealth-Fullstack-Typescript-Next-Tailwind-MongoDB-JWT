@@ -13,6 +13,19 @@ export default function DietsTab({
   dietsData,
   dietsLoading,
   dietsError,
+  events,
+  timelineLoading,
+  timelineError,
+}: {
+  patientId: string;
+  userData: any;
+  refetchDiets: () => void;
+  dietsData: any;
+  dietsLoading: boolean;
+  dietsError: any;
+  events: any;
+  timelineLoading: boolean;
+  timelineError: any;
 }) {
   // Success Modal
   const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
@@ -40,7 +53,12 @@ export default function DietsTab({
       {/* <AssignDietToPatient patientId={patientId} setShowSuccessModal={setShowSuccessModal} /> */}
 
       {/* Diets Tab */}
-      <DietsHistory patientId={patientId} />
+      <DietsHistory
+        patientId={patientId}
+        events={events}
+        timelineLoading={timelineLoading}
+        timelineError={timelineError}
+      />
 
       {/* Success Modal */}
       {showSuccessModal && (

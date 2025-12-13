@@ -11,14 +11,17 @@ import Header from './components/Header';
 // Types
 import type { ComplianceStatus } from '@/types/diet/diet.types';
 import type { DietFeedbackModalProps } from '@/types/diet/diet.types';
+import { IPatientTimeline, TimelineEventType } from '@/models/records/PatientTimeline';
 
 // Custom Hooks
 import { useToggleDiet } from '@/hooks/diets/toggle/useToggleDiet';
 import { useModalClose } from '@/hooks/useModalClose';
-
 import { useCreateTimelineEvent } from '@/hooks/timeline/useCreateTimelineEvent';
+
+// Feedback Components
 import LoadingState from '@/components/shared/feedback/LoadingState';
 import ErrorState from '@/components/shared/feedback/ErrorState';
+import { TimelineCreateRequest } from '@/types/timelines/timelines.types';
 
 export default function DietFeedbackModal({
   selectedDiet,
@@ -33,8 +36,19 @@ export default function DietFeedbackModal({
   // Compliance state
   const [complianceStatus, setComplianceStatus] = useState<ComplianceStatus>('pending');
   const [rating, setRating] = useState<number>(0);
+  const [eventType, setEventType] = useState<string>('');
   const [hoveredRating, setHoveredRating] = useState<number>(0);
   const [doctorNotes, setDoctorNotes] = useState<string>('');
+
+  // Compliance Form Data
+  const [timelineForm, setTimelineForm] = useState<TimelineCreateRequest>({
+    eventType: 'diet_assigned',
+    snapshot: {},
+    compliance: {
+      status: 'pending',
+    },
+    startDate: new Date(),
+  });
 
   // Create Timeline Event Custom Hook
   const { createTimelineEvent, isLoading, error } = useCreateTimelineEvent();
@@ -58,6 +72,23 @@ export default function DietFeedbackModal({
           isActive: false,
         });
         setShowToggleModal(false);
+
+        await createTimelineEvent({
+          patientId: userData._id,
+          eventType: 'diet_completed',
+          diet: selectedDiet.diet._id,
+          snapshot: {},
+          compliance: {
+            status: complianceStatus,
+            rating,
+            doctorNotes,
+            reviewedAt: new Date(),
+            reviewedBy: userData._id,
+          },
+          startDate: new Date(),
+          completedDate: new Date(),
+        });
+
         refetchDiets();
         setShowSuccessModal(true);
         setSuccessTitle('Dieta Desactivada');

@@ -1,4 +1,5 @@
 import { Star } from 'lucide-react';
+import { useEffect } from 'react';
 
 function Rating({
   rating,

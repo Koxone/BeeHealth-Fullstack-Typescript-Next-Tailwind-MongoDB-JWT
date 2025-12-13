@@ -1,6 +1,9 @@
 'use client';
 
+import ErrorState from '@/components/shared/feedback/ErrorState';
+import LoadingState from '@/components/shared/feedback/LoadingState';
 import { Clock, History, CheckCircle, XCircle } from 'lucide-react';
+import { TimelineEventType } from '@/models/records/PatientTimeline';
 
 const dietHistory = [
   {
@@ -40,22 +43,32 @@ const dietHistory = [
   },
 ];
 
-export default function DietsHistory({ patientId }: { patientId: string }) {
-  const getActionBadge = (action: string) => {
+export default function DietsHistory({
+  patientId,
+  events,
+  timelineLoading,
+  timelineError,
+}: {
+  patientId: string;
+  events: any;
+  timelineLoading: boolean;
+  timelineError: any;
+}) {
+  const getActionBadge = (action: TimelineEventType) => {
     switch (action) {
-      case 'assigned':
+      case 'diet_assigned':
         return {
           label: 'Asignada',
           className: 'bg-blue-100 text-blue-700',
           icon: CheckCircle,
         };
-      case 'completed':
+      case 'diet_completed':
         return {
           label: 'Completada',
           className: 'bg-green-100 text-green-700',
           icon: CheckCircle,
         };
-      case 'cancelled':
+      case 'diet_removed':
         return {
           label: 'Cancelada',
           className: 'bg-red-100 text-red-700',
@@ -69,6 +82,16 @@ export default function DietsHistory({ patientId }: { patientId: string }) {
         };
     }
   };
+
+  // Loading State
+  if (timelineLoading) {
+    return <LoadingState />;
+  }
+
+  // Error State
+  if (timelineError) {
+    return <ErrorState />;
+  }
 
   return (
     <div className="space-y-6">
@@ -85,30 +108,34 @@ export default function DietsHistory({ patientId }: { patientId: string }) {
         </div>
 
         <div className="space-y-3">
-          {dietHistory.map((record) => {
-            const badge = getActionBadge(record.action);
+          {events?.map((record: any) => {
+            const badge = getActionBadge(record?.eventType);
             const BadgeIcon = badge.icon;
 
             return (
               <div
-                key={record._id}
+                key={record?._id}
                 className="bg-beehealth-green-primary-light hover:bg-beehealth-green-primary-light-hover flex items-center justify-between rounded-xl border border-gray-100 p-4 transition-colors"
               >
                 <div className="flex items-center gap-4">
                   {/* Date */}
                   <div className="border-beehealth-blue-primary-light bg-beehealth-blue-primary-light flex h-12 w-12 flex-col items-center justify-center rounded-lg border text-center">
                     <span className="text-beehealth-blue-primary-dark text-xs font-medium uppercase">
-                      {new Date(record.date).toLocaleDateString('es-MX', { month: 'short' })}
+                      {new Date(record?.completedDate).toLocaleDateString('es-MX', {
+                        month: 'short',
+                      })}
                     </span>
                     <span className="text-beehealth-blue-primary-dark text-lg font-bold">
-                      {new Date(record.date).getDate()}
+                      {new Date(record?.completedDate).getDate()}
                     </span>
                   </div>
 
                   {/* Info */}
                   <div>
-                    <p className="font-semibold text-gray-900">{record.dietName}</p>
-                    <p className="text-sm text-gray-500">Por: {record.doctor}</p>
+                    <p className="font-semibold text-gray-900">
+                      {record?.snapshot?.dietName || 'Nombre de dieta no disponible'}
+                    </p>
+                    <p className="text-sm text-gray-500">Por: {record?.doctor?.fullName}</p>
                   </div>
                 </div>
 
