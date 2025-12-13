@@ -8,6 +8,10 @@ export default function ToggleDietCard({ diet, handleDietClick, patientId }) {
       year: 'numeric',
     });
   };
+
+  const assignedDate = Math.floor((Date.now() - new Date(diet?.assignedAt).getTime()) / 86400000);
+  console.log(diet);
+
   return (
     <div
       className={`group relative overflow-hidden rounded-xl border-2 p-4 transition-all duration-300 ${
@@ -30,16 +34,27 @@ export default function ToggleDietCard({ diet, handleDietClick, patientId }) {
               <Calendar className="h-4 w-4 text-gray-400" />
               <span>Asignada: {formatDate(diet?.assignedAt as unknown as string)}</span>
             </div>
+
+            {/* Assignment Details */}
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-gray-400" />
-              <span>
-                Tiempo activa:{' '}
-                {Math.floor(
-                  (Date.now() - new Date(diet?.assignedAt as unknown as string).getTime()) /
-                    86400000
-                )}{' '}
-                Días
-              </span>
+              {diet.isActive ? (
+                <span>
+                  Tiempo activa:{' '}
+                  {Math.floor((Date.now() - new Date(diet.assignedAt).getTime()) / 86400000)} Días
+                </span>
+              ) : (
+                <span>
+                  Última vez asignada:{' '}
+                  {diet.finishedAt
+                    ? new Date(diet.finishedAt).toLocaleDateString('es-MX', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric',
+                      })
+                    : 'Nunca'}
+                </span>
+              )}
             </div>
           </div>
         </div>
