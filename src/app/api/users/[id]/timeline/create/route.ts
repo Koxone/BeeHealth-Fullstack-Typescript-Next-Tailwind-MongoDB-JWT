@@ -15,6 +15,7 @@ interface TimelineCreateRequest {
   snapshot?: IPatientTimeline['snapshot'];
   startDate?: Date;
   dietId?: string;
+  rating?: number;
   completedDate?: Date;
   compliance?: IPatientTimeline['compliance'];
 }
@@ -46,6 +47,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       workout,
       clinicalRecord,
       snapshot,
+      rating,
       startDate,
       completedDate,
       compliance,
@@ -115,6 +117,7 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       diet,
       workout,
       clinicalRecord,
+      rating,
       snapshot: finalSnapshot,
       startDate,
       completedDate,

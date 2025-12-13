@@ -9,10 +9,14 @@ export default function DietsHistory({
   events,
   timelineLoading,
   timelineError,
+  setShowHistoryCardFeedbackModal,
+  setSelectedHistoryCard,
 }: {
   events: any;
   timelineLoading: boolean;
   timelineError: any;
+  setShowHistoryCardFeedbackModal: (show: boolean) => void;
+  setSelectedHistoryCard: (card: any) => void;
 }) {
   // Function to get badge details based on action type
   const getActionBadge = (action: TimelineEventType) => {
@@ -76,6 +80,10 @@ export default function DietsHistory({
             return (
               <div
                 key={record?._id}
+                onClick={() => {
+                  setSelectedHistoryCard(record);
+                  setShowHistoryCardFeedbackModal(true);
+                }}
                 className="bg-beehealth-green-primary-light hover:bg-beehealth-green-primary-light-hover flex items-center justify-between rounded-xl border border-gray-100 p-4 transition-colors"
               >
                 <div className="flex items-center gap-4">

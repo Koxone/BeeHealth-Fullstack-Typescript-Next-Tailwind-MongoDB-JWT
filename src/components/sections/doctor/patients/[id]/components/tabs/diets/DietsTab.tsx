@@ -17,6 +17,8 @@ export default function DietsTab({
   events,
   timelineLoading,
   timelineError,
+  setShowHistoryCardFeedbackModal,
+  setSelectedHistoryCard,
 }: {
   patientId: string;
   userData: any;
@@ -27,6 +29,8 @@ export default function DietsTab({
   events: any;
   timelineLoading: boolean;
   timelineError: any;
+  setShowHistoryCardFeedbackModal: (show: boolean) => void;
+  setSelectedHistoryCard: (card: any) => void;
 }) {
   // Success Modal
   const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
@@ -58,6 +62,8 @@ export default function DietsTab({
         events={events}
         timelineLoading={timelineLoading}
         timelineError={timelineError}
+        setShowHistoryCardFeedbackModal={setShowHistoryCardFeedbackModal}
+        setSelectedHistoryCard={setSelectedHistoryCard}
       />
 
       {/* Success Modal */}

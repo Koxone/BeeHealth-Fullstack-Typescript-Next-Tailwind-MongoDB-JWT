@@ -23,6 +23,7 @@ import DoctorCreateAppointmentModal from './components/modals/createAppointmentM
 import CreateGoalModal from './components/modals/create-goal-modal/CreateGoalModal';
 import ErrorState from '@/components/shared/feedback/ErrorState';
 import LoadingState from '@/components/shared/feedback/LoadingState';
+import HistoryCardFeedbackModal from './components/tabs/diets/components/feedback-history-card-modal/HistoryCardFeedbackModal';
 
 // Custom Hooks
 import { useGetPatientClinicalRecords } from '@/hooks/clinicalRecords/get/useGetPatientClinicalRecords';
@@ -105,6 +106,10 @@ export default function DoctorPatientDetail({ patient, specialty }) {
   // Create First Record Modal
   const [showCreateFirstRecordModal, setShowCreateFirstRecordModal] = useState<boolean>(false);
 
+  // History Card Feedback Modal States
+  const [showHistoryCardFeedbackModal, setShowHistoryCardFeedbackModal] = useState<boolean>(false);
+  const [selectedHistoryCard, setSelectedHistoryCard] = useState<any>(null);
+
   // Dental Tabs Nav
   const activeTab = (searchParams.get('tab') as TabName) ?? 'Consultas';
   const handleTabChange = (tab: TabName) => {
@@ -171,6 +176,8 @@ export default function DoctorPatientDetail({ patient, specialty }) {
           events={events}
           timelineLoading={timelineLoading}
           timelineError={timelineError}
+          setShowHistoryCardFeedbackModal={setShowHistoryCardFeedbackModal}
+          setSelectedHistoryCard={setSelectedHistoryCard}
         />
       )}
 
@@ -262,6 +269,14 @@ export default function DoctorPatientDetail({ patient, specialty }) {
       {/* Create Goal Modal */}
       {showCreateGoalModal && (
         <CreateGoalModal patient={patient} onClose={() => setShowCreateGoalModal(false)} />
+      )}
+
+      {/* History Card Feedback Modal */}
+      {showHistoryCardFeedbackModal && (
+        <HistoryCardFeedbackModal
+          onClose={() => setShowHistoryCardFeedbackModal(false)}
+          selectedHistoryCard={selectedHistoryCard}
+        />
       )}
     </div>
   );

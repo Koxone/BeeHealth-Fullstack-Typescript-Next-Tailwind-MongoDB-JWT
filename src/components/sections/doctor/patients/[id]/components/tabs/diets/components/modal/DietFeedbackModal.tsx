@@ -68,6 +68,7 @@ export default function DietFeedbackModal({
           compliance: {
             status: complianceStatus,
             doctorNotes,
+            rating: rating,
             reviewedAt: new Date(),
             reviewedBy: userData._id,
           },
